@@ -1,12 +1,42 @@
-*.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# node_modules 
 
-# Package Files #
-*.jar
-*.war
-*.ear
+cm-client/node_modules
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# testing 
+cm-client/coverage
+
+# production
+cm-client/build
+
+cm-client/.DS_Store
+cm-client/.env
+cm-client/npm-debug.log*
+cm-client/yarn-debug.log*
+cm-client/yarn-error.log*
+
+
+# target 
+cm-server/target/
+
+# STS
+cm-server/.apt_generated
+cm-server/.classpath
+cm-server/.factorypath
+cm-server/.project
+cm-server/.settings
+cm-server/.springBeans
+
+#Idea
+**/.idea/*
+*.iws
+*.iml
+*.ipr
+
+# NetBeans #
+cm-server/nbproject/private/
+cm-server/build/
+cm-server/nbbuild/
+cm-server/dist/
+cm-server/nbdist/
+cm-server/.nb-gradle/
