@@ -22,3 +22,9 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.fab-button {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+}
