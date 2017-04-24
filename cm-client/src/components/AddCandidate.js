@@ -11,9 +11,11 @@ const cardStyle = {
     textAlign: 'center'
 };
 
+const titleText = {
+    paddingRight: 0
+};
+
 const title = {
-    paddingRight: 0,
-    textTransform: 'uppercase',
     fontSize: '24px'
 };
 
@@ -120,6 +122,7 @@ class AddCandidate extends React.Component {
                         <CardHeader
                             title="Add New Candidate"
                             titleStyle={title}
+                            textStyle={titleText}
                         />
                         <form onSubmit={this.handleSubmit}>
                             <TextField
