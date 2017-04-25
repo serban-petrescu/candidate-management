@@ -1,6 +1,8 @@
 package ro.msg.cm.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,9 @@ import javax.persistence.Id;
  */
 
 @Data
+
+@Getter
+@Setter
 @Entity
 public class Education {
     private @Id @GeneratedValue Long id;

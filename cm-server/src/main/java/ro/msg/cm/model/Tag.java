@@ -1,6 +1,8 @@
 package ro.msg.cm.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,20 +15,20 @@ import javax.persistence.OneToMany;
  */
 
 @Data
+@Getter
+@Setter
 @Entity
 public class Tag {
 
     private @Id @GeneratedValue Long id;
-    private String description;
-    private String tagType;
-    private String certifer;
+    private String description; // German, French, Java, Javascript, SQL
+    private String tagType; //Foreign, Programming Languages
 
     private Tag() {}
 
-    public Tag(String description, String tagType, String rating, String certifer) {
+    public Tag(String description, String tagType) {
         this.description = description;
         this.tagType = tagType;
-        this.certifer = certifer;
     }
 
 }

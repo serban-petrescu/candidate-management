@@ -55,7 +55,7 @@ public class DatabaseLoader implements CommandLineRunner {
         Education education  = new Education("Master", "UTCN","Information Technology");
 
         this.educationRepository.save(education);
-/*
+
 
 		this.candidateRepository.deleteAll();
 
@@ -68,16 +68,16 @@ public class DatabaseLoader implements CommandLineRunner {
 		this.candidateRepository.save(test);
 
 		this.tagRepository.deleteAll();
-		this.tagRepository.save(new Tag("German","language","CEFR",""));
-		this.tagRepository.save(new Tag("English","language", "CEFR",""));
-		Tag trial = new Tag ("Java","programming","School/Assessment","");
+		this.tagRepository.save(new Tag("German","foreign"));
+		this.tagRepository.save(new Tag("English","foreign"));
+		Tag trial = new Tag ("Java","programming");
 		this.tagRepository.save(trial);
         this.candidateRepository.save(test);
 
         this.candidateSkillsRepository.deleteAll();
         this.candidateSkillsRepository.save(new CandidateSkills(test,trial,"average"));
 
-*/
+
 
 
 	}

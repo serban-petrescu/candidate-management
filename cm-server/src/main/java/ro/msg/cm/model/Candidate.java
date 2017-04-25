@@ -1,13 +1,16 @@
 package ro.msg.cm.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.FetchType;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
+@Getter
+@Setter
 @Entity
 public class Candidate {
 
@@ -16,10 +19,13 @@ public class Candidate {
 	private String lastName;
 	private String phone;
 	private String email;
-	private @ManyToOne(fetch = FetchType.LAZY, optional = true) Education education;
+	private @ManyToOne
+	@JoinColumn(name="education_id", nullable = true) Education education;
 	private String educationStatus;
 	private int studyYear;
 	private String event;
+	private @OneToMany(mappedBy = "candidate") @OrderBy("tag ASC ")
+    List<CandidateSkills> candidateSkillsList;
 
 	private Candidate() {}
 
