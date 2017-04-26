@@ -1,21 +1,35 @@
-import React, { Component } from 'react';
-import logo from '../img/logo.svg';
-import CandidatesTable from './CandidatesTable';
+// React imports
+import React, {Component} from 'react';
+
+// Material-UI imports
+import {deepOrange500} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+// Component imports
+import CandidatesTableMUI from './CandidatesTableMUI'
+
 
 import './App.css';
 
+
+const muiTheme = getMuiTheme({
+    palette: {
+        accent1Color: deepOrange500
+    }
+});
+
+
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to Candidate-Management</h2>
-        </div>
-        <CandidatesTable/>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <MuiThemeProvider muiTheme={muiTheme}>
+                <div>
+                    <CandidatesTableMUI/>
+                </div>
+            </MuiThemeProvider>
+        );
+    }
 }
 
 export default App;

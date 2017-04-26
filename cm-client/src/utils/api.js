@@ -7,4 +7,4 @@ function fetchCandidates() {
     });
 }
 
-export {fetchCandidates};
+export default fetchCandidates;
