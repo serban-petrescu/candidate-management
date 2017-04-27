@@ -4,7 +4,6 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import Toggle from 'material-ui/Toggle';
-import DialogExampleModal from './Dialog';;
 
 const styles = {
   propContainer: {
