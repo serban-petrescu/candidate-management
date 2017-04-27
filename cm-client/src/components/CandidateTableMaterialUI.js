@@ -2,7 +2,9 @@ import React from 'react';
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
   from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
+import Dialog from 'material-ui/Dialog';
 import Toggle from 'material-ui/Toggle';
+import DialogExampleModal from './Dialog';;
 
 const styles = {
   propContainer: {
@@ -64,7 +66,8 @@ export default class TableExampleComplex extends React.Component {
       enableSelectAll: false,
       deselectOnClickaway: true,
       showCheckboxes: true,
-      height: '300px',
+       open: false,
+      height: '300px'
     };
   }
 
@@ -75,8 +78,13 @@ export default class TableExampleComplex extends React.Component {
   };
 
   handleChange = (event) => {
+      alert(event.currentTarget);
     this.setState({height: event.target.value});
   };
+    onRowClick(rows) {
+        console.log(rows);
+        this.state.open = true;
+  }
 
   render() {
     return (
@@ -87,6 +95,8 @@ export default class TableExampleComplex extends React.Component {
           fixedFooter={this.state.fixedFooter}
           selectable={this.state.selectable}
           multiSelectable={this.state.multiSelectable}
+          onRowSelection={this.onRowClick}
+
         >
           <TableHeader
             displaySelectAll={this.state.showCheckboxes}
@@ -98,7 +108,7 @@ export default class TableExampleComplex extends React.Component {
                 Super Header
               </TableHeaderColumn>
             </TableRow>
-            <TableRow onRowClick={this.handleChange}>
+            <TableRow >
               <TableHeaderColumn tooltip="The ID">ID</TableHeaderColumn>
               <TableHeaderColumn tooltip="The Name">Name</TableHeaderColumn>
               <TableHeaderColumn tooltip="The Status">Status</TableHeaderColumn>
@@ -115,6 +125,14 @@ export default class TableExampleComplex extends React.Component {
                 <TableRowColumn>{index}</TableRowColumn>
                 <TableRowColumn>{row.name}</TableRowColumn>
                 <TableRowColumn>{row.status}</TableRowColumn>
+                  <Dialog
+                            title="Dialog With Actions"
+
+                            modal={false}
+                            open={this.state.open}
+                            onRequestClose={this.handleClose} >
+                            The actions in this window were passed in as an array of React objects.
+                  </Dialog>
               </TableRow>
               ))}
           </TableBody>

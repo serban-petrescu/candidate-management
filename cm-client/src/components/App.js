@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from '../img/logo.svg';
 import CandidatesTable from './CandidatesTable';
-import TableExampleComplexn from './CandidateTableMaterialUI';
+import TableExampleComplex from './CandidateTableMaterialUI';
+import CandidateEditableTable from  './EditableTable'     ;
 import {deepOrange500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -43,11 +44,11 @@ class App extends Component {
           <h2>Welcome to Candidate-Management</h2>
         </div>
         <CandidatesTable/>
-          <TableExampleComplexn
-
-          />
+          <TableExampleComplex/>
+          <CandidateEditableTable/>
       </div>
         </MuiThemeProvider>
+
     );
   }
 }
