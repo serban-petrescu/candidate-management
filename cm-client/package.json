@@ -7,6 +7,8 @@
     "material-ui": "^0.17.4",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
+    "react-bootstrap": "^0.31.0",
+    "react-bootstrap-table": "^3.2.2",
     "react-dom": "^15.5.4",
     "react-tap-event-plugin": "^2.0.1"
   },
