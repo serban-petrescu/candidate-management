@@ -59,7 +59,6 @@ class CandidatesTableMUI extends React.Component {
         const headerColumns = createHeaderColumns();
         const tableRows = createTableRows(this.state.candidates);
 
-
         return (
             <Table>
                 <TableHeader>
