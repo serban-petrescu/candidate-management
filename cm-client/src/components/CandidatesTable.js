@@ -1,6 +1,6 @@
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn, InsertButton} from 'react-bootstrap-table';
-
+import { Tab, Tabs } from 'react-bootstrap';
 import {fetchCandidates} from '../utils/api';
 
 
@@ -9,21 +9,33 @@ import './CandidatesTable.css';
 
 export default class BasicTable extends React.Component {
 
+
     constructor(props) {
         super(props);
         this.state = {
-            candidates: null
-        }
+            candidates: null,
+            detailViewActiveTab:2
+        };
+        //use bellow if you don't use arrow function
+       // this.expandCandidateDetails = this.expandCandidateDetails.bind(this);
     }
 
     componentDidMount() {
         fetchCandidates().then(candidates => {
 
             this.setState({
-                candidates: candidates
+                candidates: candidates,
+                detailViewActiveTab: "dsadasda"
             });
         });
     }
+    handleSelect = (selectedTab) => {
+        // The active tab must be set into the state so that
+        // the Tabs component knows about the change and re-renders.
+        this.setState({
+          activeTab: selectedTab
+        });
+      }
 
     handleInsertButtonClick = (onClick) => {
         // Custom your onClick event here,
@@ -31,6 +43,18 @@ export default class BasicTable extends React.Component {
         console.log('This is my custom function for InserButton click event');
         onClick();
     }
+
+    expandCandidateDetails = (row) => {
+         let candidate = [];
+          candidate.push(row);
+          return (
+              <Tabs activeKey={this.state.activeTab} onSelect={this.handleSelect} id="controlled-tab-example">
+                      <Tab eventKey={1} title="Tab 1">Tab 1 content</Tab>
+                      <Tab eventKey={2} title="Tab 2">Tab 2 content</Tab>
+                      <Tab eventKey={3} title="Tab 3" >Tab 3 content</Tab>
+              </Tabs>
+          )
+      }
 
     createCustomInsertButton = (onClick) => {
         return (
@@ -59,28 +83,18 @@ export default class BasicTable extends React.Component {
         return true;
     }
 
-    expandCandidateDetails(row) {
-        return (
-            <div>
-                <h3>{row.firstName}</h3>
-                <h4>{row.studyYear}</h4>
-            </div>
-        )
-    }
 
 
     render() {
 
         let candidates = this.state.candidates;
 
-        const options = {
-            insertBtn: this.createCustomInsertButton
-        };
 
         return (
-            <BootstrapTable data={ candidates } options={options} pagination insertRow columnFilter expandableRow={this.isExpandableRow}
-                            expandComponent={ this.expandCandidateDetails}>
-                <TableHeaderColumn dataField='id' isKey={ true }>Candidate ID</TableHeaderColumn>
+            <BootstrapTable  exportCSV data={ candidates }  pagination insertRow columnFilter expandableRow={this.isExpandableRow}
+                            expandComponent={ this.expandCandidateDetails }>
+                <TableHeaderColumn hidden={true} dataField='id' isKey={ true }>Candidate ID</TableHeaderColumn>
+
                 <TableHeaderColumn dataField='firstName'>First Name</TableHeaderColumn>
                 <TableHeaderColumn dataField='lastName'>Last Name</TableHeaderColumn>
                 <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
