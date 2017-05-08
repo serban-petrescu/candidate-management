@@ -18,5 +18,4 @@ function addCandidate(candidate) {
         });
 }
 
-export {fetchCandidates};
-export {addCandidate};
+export {fetchCandidates, addCandidate};

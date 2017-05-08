@@ -1,8 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+import App from './components/App';
+import AddCandidate from './components/AddCandidate';
+
+
+
+ReactDOM.render((
+    <Router>
+        <div>
+            <Route exact={true} path="/" component={App}/>
+            <Route path="/addCandidate" component={AddCandidate}/>
+        </div>
+    </Router>
+    ), document.getElementById('root')
 );
