@@ -1,6 +1,8 @@
 package ro.msg.cm.controller;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,38 +24,42 @@ import ro.msg.cm.repository.CandidateRepository;
 @RequestMapping("/api/download")
 public class DownloadController {
 
-	private final CandidateRepository repo;
+    private final CandidateRepository repo;
 
-	@Autowired
-	public DownloadController(CandidateRepository repo) {
-		this.repo = repo;
-	}
+    @Autowired
+    public DownloadController(CandidateRepository repo) {
+        this.repo = repo;
+    }
 
-	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public void downloadCsv(@RequestBody List<Candidate> candidates, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public void downloadCsv(HttpServletResponse response) throws IOException {
 
-		String csvFileName = "candidates.csv";
+        String csvFileName = "candidates.csv";
+        response.setContentType("text/csv");
 
-		response.setContentType("text/csv");
+        // creates mock data
+        String headerKey = "Content-Disposition";
+        String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
+        response.setHeader(headerKey, headerValue);
+        createCSV(response.getWriter());
+        createCSV(new FileWriter(csvFileName));
 
-		// creates mock data
-		String headerKey = "Content-Disposition";
-		String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
-		response.setHeader(headerKey, headerValue);
+    }
 
 
-		// uses the Super CSV API to generate CSV data from the model data
-		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+    private void createCSV(Writer writer) throws IOException {
 
-		String[] header = { "firstName", "lastName" };
+        Iterable<Candidate> candidateList = repo.findAll();
+        // uses the Super CSV API to generate CSV data from the model data
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(writer, CsvPreference.STANDARD_PREFERENCE);
 
-		csvWriter.writeHeader(header);
+        String[] headerCandidate = {"firstName", "lastName", "phone", "email", "educationStatus", "studyYear", "event"};
+        csvWriter.writeHeader(headerCandidate);
 
-		for (Candidate candidate : candidates) {
-			csvWriter.write(candidate, header);
-		}
+        for (Candidate candidate : candidateList) {
+            csvWriter.write(candidate, headerCandidate);
+        }
 
-		csvWriter.close();
-
-	}
+        csvWriter.close();
+    }
 }

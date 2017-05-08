@@ -24,7 +24,7 @@ public class Tag {
     private String description; // German, French, Java, Javascript, SQL
     private String tagType; //Foreign, Programming Languages
 
-    private Tag() {}
+    public Tag() {}
 
     public Tag(String description, String tagType) {
         this.description = description;

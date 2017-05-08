@@ -27,7 +27,7 @@ public class Candidate {
 	private @OneToMany(mappedBy = "candidate") @OrderBy("tag ASC ")
     List<CandidateSkills> candidateSkillsList;
 
-	private Candidate() {}
+	public Candidate() {}
 
 	public Candidate(String firstName, String lastName) {
 		this(firstName,lastName,null,null);
