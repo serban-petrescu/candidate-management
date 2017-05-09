@@ -1,3 +1,13 @@
+function compare(string1, string2) {
+    if (string1 > string2) {
+        return 1;
+    }
+    else if (string1 < string2) {
+        return -1;
+    }
+    return 0;
+}
+
 /**
  * Compares two candidates based on two attributes of the candidate.
  * If the candidates are equal by the first criteria (attribute), the second criteria (attribute) will decide the order.
@@ -11,31 +21,13 @@
  */
 function sortByTwoCriteria(c1, c2, order, primaryCriteria, secondaryCriteria) {
 
-    if (order === 'asc') {
-        if (c1[primaryCriteria] > c2[primaryCriteria]) {
-            return 1;
-        }
-        else if (c1[primaryCriteria] < c2[primaryCriteria]) {
-            return -1;
-        }
-        else {
-            // if primary criteria is equal
-            return c1[secondaryCriteria] > c2[secondaryCriteria] ? 1 : -1;
-        }
-    } else {
-        if (c1[primaryCriteria] < c2[primaryCriteria]) {
-            return 1;
-        }
-        else if (c1[primaryCriteria] > c2[primaryCriteria]) {
-            return -1;
-        }
-        else {
-            // if primary criteria is equal
-            return c1[secondaryCriteria] < c2[secondaryCriteria] ? 1 : -1;
-        }
+    var sign = order === "asc" ? 1 : -1;
+    var comparationResult = sign * compare(c1[primaryCriteria], c2[primaryCriteria]);
+    if (comparationResult === 0) {
+        comparationResult = sign * compare(c1[secondaryCriteria], c2[secondaryCriteria]);
     }
+    return comparationResult;
 }
-
 
 /**
  * Sorting comparator for lastName of the candidate.
@@ -62,6 +54,5 @@ function sortByLastName(c1, c2, order) {
 function sortByFirstName(c1, c2, order) {
     return sortByTwoCriteria(c1, c2, order, "firstName", "lastName");
 }
-
 
 export {sortByLastName, sortByFirstName};

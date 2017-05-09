@@ -2,13 +2,9 @@ import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 import {fetchCandidates} from '../utils/api';
-import {sortByLastName} from '../utils/sorting-comparators';
+import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
 
 import './CandidatesTable.css';
-
-
-
-
 
 export default class BasicTable extends React.Component {
 
@@ -34,17 +30,13 @@ export default class BasicTable extends React.Component {
         });
     }
 
-
-
     render() {
-
         let candidates = this.state.candidates;
-
 
         return (
             <BootstrapTable data={ candidates } options={this.options} pagination columnFilter>
                 <TableHeaderColumn dataField='id' isKey={ true }>Candidate ID</TableHeaderColumn>
-                <TableHeaderColumn dataField='firstName' dataSort={true}>First Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='firstName' dataSort sortFunc={sortByFirstName}>First Name</TableHeaderColumn>
                 <TableHeaderColumn dataField='lastName' dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
                 <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
             </BootstrapTable>
