@@ -41,6 +41,17 @@ public class Candidate {
 
 	}
 
+	public Candidate(String firstName, String lastName, String phone, String email,String educationStatus, int studyYear, String event) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.email = email;
+		this.educationStatus = educationStatus;
+		this.studyYear = studyYear;
+		this.event = event;
+	}
+
+
 	public void setEducation(Education education)
 	{
 		this.education = education;
