@@ -48,7 +48,7 @@ public class DatabaseLoader implements CommandLineRunner {
 	public void run(String... strings) throws Exception {
 
 		// clean previous data in the table
-
+		             /*
         this.educationRepository.deleteAll();
         this.educationRepository.save(new Education("High-School","Marie Curie","Informatics"));
         this.educationRepository.save(new Education("Bachelor","UBB","Mathematics-Informatics"));
@@ -76,7 +76,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
         this.candidateSkillsRepository.deleteAll();
         this.candidateSkillsRepository.save(new CandidateSkills(test,trial,"average"));
-
+                      */
 
 
 
