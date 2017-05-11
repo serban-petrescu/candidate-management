@@ -9,6 +9,7 @@ function fetchCandidates() {
 
 function fetchSkillsForCandidate(url) {
     return axios.get(url).then(function (response) {
+        console.log(response.data._embedded.candidateSkillses);
         return response.data._embedded.candidateSkillses.map(function (key) {
             return {
                 tagLink: key._links.tag.href,
@@ -21,6 +22,8 @@ function fetchSkillsForCandidate(url) {
     });
 }
 function fetchTagForCandidateSkill(url) {
+    console.log("test");
+    console.log(url);
     return axios.get(url).then(function (response) {
 
         return{
@@ -43,7 +46,4 @@ function addCandidate(candidate) {
         });
 }
 
-export {fetchCandidates};
-export {addCandidate};
-export {fetchSkillsForCandidate};
-export {fetchTagForCandidateSkill};
+export {fetchCandidates, addCandidate,fetchSkillsForCandidate,fetchTagForCandidateSkill};

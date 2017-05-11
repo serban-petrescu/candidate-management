@@ -1,9 +1,12 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import {Card, CardHeader} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import {addCandidate} from '../utils/api';
+
+injectTapEventPlugin();
 
 import './AddCandidate.css';
 

@@ -3,7 +3,7 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Tab, Tabs} from 'react-bootstrap';
 import {fetchCandidates} from '../utils/api';
 import {fetchSkillsForCandidate} from '../utils/api';
-
+import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
 
 import './CandidatesTable.css';
 import {fetchTagForCandidateSkill} from "../utils/api";
@@ -58,7 +58,7 @@ class SkillsList extends React.Component {
     render() {
 
         return (
-            <ul>{this.state.tagLinks.map((data,index) => {
+            <ul>{this.state.tagLinks.map((data, index) => {
                 return ( < SkillItem key={index} tagLink={data.tagLink} rating={data.rating}/>);
             })}</ul>
         )
@@ -67,13 +67,18 @@ class SkillsList extends React.Component {
 
 export default class BasicTable extends React.Component {
 
-
     constructor(props) {
         super(props);
         this.state = {
             candidates: null,
             detailViewActiveTab: 2
         };
+
+
+        this.options = {
+            defaultSortName: 'lastName', //default sort column name
+            defaultSortOrder: 'asc' // default sort order
+        }
         //use bellow if you don't use arrow function
         // this.expandCandidateDetails = this.expandCandidateDetails.bind(this);
     }
@@ -116,11 +121,11 @@ export default class BasicTable extends React.Component {
     render() {
 
         return (
-            <BootstrapTable exportCSV data={this.state.candidates } pagination insertRow columnFilter expandableRow={this.isExpandableRow}
-                            expandComponent={ this.expandCandidateDetails }>
-                <TableHeaderColumn hidden={true} dataField='id' isKey={ true }>Candidate ID</TableHeaderColumn>
-                <TableHeaderColumn dataField='firstName'>First Name</TableHeaderColumn>
-                <TableHeaderColumn dataField='lastName'>Last Name</TableHeaderColumn>
+            <BootstrapTable data={this.state.candidates } options={this.options} pagination columnFilter expandComponent={ this.expandCandidateDetails }
+                            expandableRow={this.isExpandableRow}>
+                <TableHeaderColumn dataField='id' hidden={true} isKey={ true }>Candidate ID</TableHeaderColumn>
+                <TableHeaderColumn dataField='firstName' dataSort sortFunc={sortByFirstName}>First Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='lastName' dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
                 <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
                 <TableHeaderColumn dataField='phone'>Phone</TableHeaderColumn>
             </BootstrapTable>

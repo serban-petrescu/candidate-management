@@ -58,15 +58,6 @@ public class DatabaseLoader implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-
-	    if(!isDatabaseEmpty()){
-            emptyDatabase();
-	        }
-        loadFromMockDataCSV();
-
-
-        // clean previous data in the table
-
 	}
 
     private void emptyDatabase() {
