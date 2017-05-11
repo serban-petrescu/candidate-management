@@ -19,6 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.io.CsvBeanReader;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanReader;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.CandidateSkills;
 import ro.msg.cm.model.Education;
@@ -27,6 +33,12 @@ import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.repository.CandidateSkillsRepository;
 import ro.msg.cm.repository.EducationRepository;
 import ro.msg.cm.repository.TagRepository;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import java.io.*;
 
 @Component
 public class DatabaseLoader implements CommandLineRunner {
@@ -47,38 +59,101 @@ public class DatabaseLoader implements CommandLineRunner {
 	@Override
 	public void run(String... strings) throws Exception {
 
-		// clean previous data in the table
+	    if(!isDatabaseEmpty()){
+            emptyDatabase();
+	        }
+        loadFromMockDataCSV();
 
+
+        // clean previous data in the table
+
+	}
+
+    private void emptyDatabase() {
+        this.candidateSkillsRepository.deleteAll();
+        this.candidateRepository.deleteAll();
         this.educationRepository.deleteAll();
-        this.educationRepository.save(new Education("High-School","Marie Curie","Informatics"));
+        this.tagRepository.deleteAll();
+
+
+    }
+
+    private void loadFromMockDataCSV() {
+
+        String csvFile = "src/main/resources/MockDataCSV.csv";
+        String line = "";
+        String cvsSplitBy = ",";
+        String header=null;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+
+            while ((line = br.readLine()) != null) {
+                if (header==null)
+                    header = line;
+                    else
+                        {
+                // use comma as separator Header: id,first_name,last_name,email,event,phone,study_year,education_status,education_id
+                            String[] elements = line.split(cvsSplitBy);
+                            String firstName=elements[1];
+                String lastName=elements[2];
+                String phone=elements[5];
+                String email=elements[3];
+                Education education=this.educationRepository.findOne(Long.parseLong(elements[8]));
+
+                            String educationStatus=elements[7];
+                int studyYear=Integer.parseInt(elements[6]);
+                String event=elements[4];
+                            Candidate candidate = new Candidate(firstName,lastName,phone, email,educationStatus,studyYear, event);
+                            candidate.setEducation(education);
+
+                            this.candidateRepository.save(candidate);
+
+            }
+            }
+    } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+
+    private void defaultMockData(){
+	    emptyDatabase();
+       this.educationRepository.save(new Education("High-School","Marie Curie","Informatics"));
         this.educationRepository.save(new Education("Bachelor","UBB","Mathematics-Informatics"));
         Education education  = new Education("Master", "UTCN","Information Technology");
 
         this.educationRepository.save(education);
 
 
-		this.candidateRepository.deleteAll();
-
-		this.candidateRepository.save(new Candidate("Miralem", "Pjanic", "012986212","aaa@a.a"));
-		this.candidateRepository.save(new Candidate("Sami", "Khedira"));
-		this.candidateRepository.save(new Candidate("Mario", "Mandzukic"));
-		this.candidateRepository.save(new Candidate("Paulo", "Dybala"));
-		Candidate test = new Candidate("Alex", "Sandro");
+        this.candidateRepository.save(new Candidate("Miralem", "Pjanic", "012986212","aaa@a.a"));
+        this.candidateRepository.save(new Candidate("Sami", "Khedira"));
+        this.candidateRepository.save(new Candidate("Mario", "Mandzukic"));
+        this.candidateRepository.save(new Candidate("Paulo", "Dybala"));
+        Candidate test = new Candidate("Alex", "Sandro");
         test.setEducation(education);
-		this.candidateRepository.save(test);
-
-		this.tagRepository.deleteAll();
-		this.tagRepository.save(new Tag("German","foreign"));
-		this.tagRepository.save(new Tag("English","foreign"));
-		Tag trial = new Tag ("Java","programming");
-		this.tagRepository.save(trial);
         this.candidateRepository.save(test);
 
-        this.candidateSkillsRepository.deleteAll();
+        this.tagRepository.save(new Tag("German","foreign"));
+        this.tagRepository.save(new Tag("English","foreign"));
+        Tag trial = new Tag ("Java","programming");
+        this.tagRepository.save(trial);
+        this.candidateRepository.save(test);
+
+
         this.candidateSkillsRepository.save(new CandidateSkills(test,trial,"average"));
 
 
+    }
+
+    public boolean isDatabaseEmpty() {
+        Iterable<Candidate> cand = this.candidateRepository.findAll();
+        /*Iterable<Education> edu = this.educationRepository.findAll();
+        Iterable<Tag> tags = this.tagRepository.findAll();
+        Iterable<CandidateSkills> all = this.candidateSkillsRepository.findAll();*/
+        if (cand.iterator().hasNext()) return false;
+        else return true;
+    }
 
 
-	}
 }
