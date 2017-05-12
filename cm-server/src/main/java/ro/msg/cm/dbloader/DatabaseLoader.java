@@ -43,30 +43,48 @@ import java.io.*;
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
-	private final CandidateRepository candidateRepository;
-	private final TagRepository tagRepository;
-	private final EducationRepository educationRepository;
-	private final CandidateSkillsRepository candidateSkillsRepository;
+    private final CandidateRepository candidateRepository;
 
-	@Autowired
-	public DatabaseLoader(CandidateRepository candidateRepository, TagRepository tagRepository, EducationRepository educationRepository, CandidateSkillsRepository candidateSkillsRepository) {
-		this.candidateRepository = candidateRepository;
+    private final TagRepository tagRepository;
+
+    private final EducationRepository educationRepository;
+
+    private final CandidateSkillsRepository candidateSkillsRepository;
+
+    @Autowired
+    public DatabaseLoader(CandidateRepository candidateRepository, TagRepository tagRepository, EducationRepository educationRepository,
+            CandidateSkillsRepository candidateSkillsRepository) {
+        this.candidateRepository = candidateRepository;
         this.tagRepository = tagRepository;
         this.educationRepository = educationRepository;
         this.candidateSkillsRepository = candidateSkillsRepository;
-	}
+    }
 
-	@Override
-	public void run(String... strings) throws Exception {
-	}
+    @Override
+    public void run(String... strings) throws Exception {
+        if(!isDatabaseEmpty()){
+            emptyDatabase();
+             }
+         loadEducation();
+        loadFromMockDataCSV();
+
+        // clean previous data in the table
+
+    }
 
     private void emptyDatabase() {
         this.candidateSkillsRepository.deleteAll();
         this.candidateRepository.deleteAll();
-        this.educationRepository.deleteAll();
+       // this.educationRepository.deleteAll();
         this.tagRepository.deleteAll();
 
+    }
 
+    private void loadEducation() {
+        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics"));
+        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics"));
+        Education education = new Education("Master", "UTCN", "Information Technology");
+        this.educationRepository.save(education);
     }
 
     private void loadFromMockDataCSV() {
@@ -74,50 +92,48 @@ public class DatabaseLoader implements CommandLineRunner {
         String csvFile = "src/main/resources/MockDataCSV.csv";
         String line = "";
         String cvsSplitBy = ",";
-        String header=null;
+        String header = null;
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 
             while ((line = br.readLine()) != null) {
-                if (header==null)
+                if (header == null) {
                     header = line;
-                    else
-                        {
-                // use comma as separator Header: id,first_name,last_name,email,event,phone,study_year,education_status,education_id
-                            String[] elements = line.split(cvsSplitBy);
-                            String firstName=elements[1];
-                String lastName=elements[2];
-                String phone=elements[5];
-                String email=elements[3];
-                Education education=this.educationRepository.findOne(Long.parseLong(elements[8]));
+                } else {
+                    // use comma as separator Header: id,first_name,last_name,email,event,phone,study_year,education_status,education_id
+                    String[] elements = line.split(cvsSplitBy);
+                    String firstName = elements[1];
+                    String lastName = elements[2];
+                    String phone = elements[5];
+                    String email = elements[3];
+                    Education education = this.educationRepository.findOne(Long.parseLong(elements[8]));
 
-                            String educationStatus=elements[7];
-                int studyYear=Integer.parseInt(elements[6]);
-                String event=elements[4];
-                            Candidate candidate = new Candidate(firstName,lastName,phone, email,educationStatus,studyYear, event);
-                            candidate.setEducation(education);
+                    String educationStatus = elements[7];
+                    int studyYear = Integer.parseInt(elements[6]);
+                    String event = elements[4];
+                    Candidate candidate = new Candidate(firstName, lastName, phone, email, educationStatus, studyYear, event);
+                    candidate.setEducation(education);
 
-                            this.candidateRepository.save(candidate);
+                    this.candidateRepository.save(candidate);
 
+                }
             }
-            }
-    } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}
+    }
 
-    private void defaultMockData(){
-	    emptyDatabase();
-       this.educationRepository.save(new Education("High-School","Marie Curie","Informatics"));
-        this.educationRepository.save(new Education("Bachelor","UBB","Mathematics-Informatics"));
-        Education education  = new Education("Master", "UTCN","Information Technology");
+    private void defaultMockData() {
+        emptyDatabase();
+        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics"));
+        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics"));
+        Education education = new Education("Master", "UTCN", "Information Technology");
 
         this.educationRepository.save(education);
 
-
-        this.candidateRepository.save(new Candidate("Miralem", "Pjanic", "012986212","aaa@a.a"));
+        this.candidateRepository.save(new Candidate("Miralem", "Pjanic", "012986212", "aaa@a.a"));
         this.candidateRepository.save(new Candidate("Sami", "Khedira"));
         this.candidateRepository.save(new Candidate("Mario", "Mandzukic"));
         this.candidateRepository.save(new Candidate("Paulo", "Dybala"));
@@ -125,15 +141,13 @@ public class DatabaseLoader implements CommandLineRunner {
         test.setEducation(education);
         this.candidateRepository.save(test);
 
-        this.tagRepository.save(new Tag("German","foreign"));
-        this.tagRepository.save(new Tag("English","foreign"));
-        Tag trial = new Tag ("Java","programming");
+        this.tagRepository.save(new Tag("German", "foreign"));
+        this.tagRepository.save(new Tag("English", "foreign"));
+        Tag trial = new Tag("Java", "programming");
         this.tagRepository.save(trial);
         this.candidateRepository.save(test);
 
-
-        this.candidateSkillsRepository.save(new CandidateSkills(test,trial,"average"));
-
+        this.candidateSkillsRepository.save(new CandidateSkills(test, trial, "average"));
 
     }
 
@@ -142,9 +156,11 @@ public class DatabaseLoader implements CommandLineRunner {
         /*Iterable<Education> edu = this.educationRepository.findAll();
         Iterable<Tag> tags = this.tagRepository.findAll();
         Iterable<CandidateSkills> all = this.candidateSkillsRepository.findAll();*/
-        if (cand.iterator().hasNext()) return false;
-        else return true;
+        if (cand.iterator().hasNext()) {
+            return false;
+        } else {
+            return true;
+        }
     }
-
 
 }

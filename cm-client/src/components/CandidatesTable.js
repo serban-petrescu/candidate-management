@@ -6,9 +6,37 @@ import {fetchSkillsForCandidate} from '../utils/api';
 import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
 
 import './CandidatesTable.css';
-import {fetchTagForCandidateSkill} from "../utils/api";
+import {fetchEducationForCandidate,fetchTagForCandidateSkill} from "../utils/api";
 
+class EducationList extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            educationData: []
+        };
+    }
+
+    componentDidMount() {
+        fetchEducationForCandidate(this.props.educationLink).then(response => {
+                     console.log(response);
+            this.setState({
+                educationData: response
+            });
+        });
+    }
+
+    render() {
+
+        return (
+            <ul className="list-group">
+                {this.state.educationData.map(educationItem => {
+                      return (  <li className="list-group-item">{educationItem.educationType} - {educationItem.provider} -  {educationItem.description} - </li>)
+                })}
+            </ul>
+        )
+    }
+}
 class SkillItem extends React.Component {
 
     constructor(props) {
@@ -32,7 +60,7 @@ class SkillItem extends React.Component {
     render() {
 
         return (
-            <li>
+            <li className="list-group-item">
                 {this.state.tagType} : {this.state.description} : {this.state.rating}
             </li>
         )
@@ -58,7 +86,7 @@ class SkillsList extends React.Component {
     render() {
 
         return (
-            <ul>{this.state.tagLinks.map((data, index) => {
+            <ul className="list-group">{this.state.tagLinks.map((data, index) => {
                 return ( < SkillItem key={index} tagLink={data.tagLink} rating={data.rating}/>);
             })}</ul>
         )
@@ -109,7 +137,7 @@ export default class BasicTable extends React.Component {
 
             <Tabs onSelect={this.handleSelect} id="controlled-tab-example">
                 <Tab eventKey={1} title="Skills"><SkillsList skillsUrl={row._links.candidateSkillsList.href}/></Tab>
-                <Tab eventKey={2} title="Education">Event</Tab>
+                <Tab eventKey={2} title="Education">Not implemented yet/></Tab>
             </Tabs>
         )
     };

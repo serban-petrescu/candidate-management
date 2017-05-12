@@ -21,6 +21,20 @@ function fetchSkillsForCandidate(url) {
         console.log(error);
     });
 }
+function fetchEducationForCandidate(url) {
+    return axios.get(url).then(function (response) {
+        return response.data.map(function (key) {
+            console.log(response.data);
+            return {
+                educationType: key.educationType,
+                provider :   key.provider,
+                description: key.description
+            }
+        });
+    }).catch((error)=> {
+        console.log(error);
+    });
+}
 function fetchTagForCandidateSkill(url) {
     console.log("test");
     console.log(url);
@@ -46,4 +60,4 @@ function addCandidate(candidate) {
         });
 }
 
-export {fetchCandidates, addCandidate,fetchSkillsForCandidate,fetchTagForCandidateSkill};
+export {fetchEducationForCandidate,fetchCandidates, addCandidate,fetchSkillsForCandidate,fetchTagForCandidateSkill};
