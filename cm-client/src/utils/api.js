@@ -9,7 +9,6 @@ function fetchCandidates() {
 
 function fetchSkillsForCandidate(url) {
     return axios.get(url).then(function (response) {
-        console.log(response.data._embedded.candidateSkillses);
         return response.data._embedded.candidateSkillses.map(function (key) {
             return {
                 tagLink: key._links.tag.href,
@@ -23,21 +22,17 @@ function fetchSkillsForCandidate(url) {
 }
 function fetchEducationForCandidate(url) {
     return axios.get(url).then(function (response) {
-        return response.data.map(function (key) {
-            console.log(response.data);
             return {
-                educationType: key.educationType,
-                provider :   key.provider,
-                description: key.description
+                educationType: response.data.educationType,
+                provider :   response.data.provider,
+                description: response.data.description
             }
-        });
+
     }).catch((error)=> {
         console.log(error);
     });
 }
 function fetchTagForCandidateSkill(url) {
-    console.log("test");
-    console.log(url);
     return axios.get(url).then(function (response) {
 
         return{

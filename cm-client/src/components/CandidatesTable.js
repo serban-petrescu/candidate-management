@@ -13,15 +13,16 @@ class EducationList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            educationData: []
+            educationData: {}
         };
     }
 
     componentDidMount() {
         fetchEducationForCandidate(this.props.educationLink).then(response => {
-                     console.log(response);
             this.setState({
-                educationData: response
+                educationType: response.educationType,
+                provider :   response.provider,
+                description: response.description
             });
         });
     }
@@ -30,10 +31,18 @@ class EducationList extends React.Component {
 
         return (
             <ul className="list-group">
-                {this.state.educationData.map(educationItem => {
-                      return (  <li className="list-group-item">{educationItem.educationType} - {educationItem.provider} -  {educationItem.description} - </li>)
-                })}
-            </ul>
+                <li className="list-group-item">
+                    {this.state.educationType}
+                </li>
+
+                <li className="list-group-item">
+                    {this.state.provider}
+                </li>
+
+                <li className="list-group-item">
+                    {this.state.description}
+                </li>
+              </ul>
         )
     }
 }
@@ -137,7 +146,7 @@ export default class BasicTable extends React.Component {
 
             <Tabs onSelect={this.handleSelect} id="controlled-tab-example">
                 <Tab eventKey={1} title="Skills"><SkillsList skillsUrl={row._links.candidateSkillsList.href}/></Tab>
-                <Tab eventKey={2} title="Education">Not implemented yet/></Tab>
+                <Tab eventKey={2} title="Education"> <EducationList educationLink={row._links.education.href}/></Tab>
             </Tabs>
         )
     };
