@@ -1,15 +1,44 @@
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import {Tab, Tabs} from 'react-bootstrap';
+import {Tab, Tabs, Button} from 'react-bootstrap';
 import {fetchCandidates} from '../utils/api';
 import {fetchSkillsForCandidate} from '../utils/api';
 import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
-
+import EditCandidate from '../components/EditCandidate';
 import './CandidatesTable.css';
-import {fetchEducationForCandidate,fetchTagForCandidateSkill} from "../utils/api";
+import {deleteCandidate, fetchEducationForCandidate, fetchTagForCandidateSkill} from "../utils/api";
+
+
+class ModifyCandidate extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            candidate: this.props.candidate
+        };
+    }
+
+    render() {
+        return (
+            <ul className="list-group">
+
+                <li className="list-group-item">
+                    <EditCandidate candidate={this.state.candidate}/>
+                </li>
+                <li className="list-group-item">
+                    <Button type="submit" bsStyle="danger" onClick={this.removeCandidate}>Delete</Button>
+                </li>
+            </ul>
+        )
+    }
+
+    removeCandidate = () => {
+        deleteCandidate(this.state.candidate.id).then(response => {
+            alert("Candidate Deleted Succesfully")
+        });
+    }
+}
 
 class EducationList extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +50,7 @@ class EducationList extends React.Component {
         fetchEducationForCandidate(this.props.educationLink).then(response => {
             this.setState({
                 educationType: response.educationType,
-                provider :   response.provider,
+                provider: response.provider,
                 description: response.description
             });
         });
@@ -42,7 +71,7 @@ class EducationList extends React.Component {
                 <li className="list-group-item">
                     {this.state.description}
                 </li>
-              </ul>
+            </ul>
         )
     }
 }
@@ -147,6 +176,7 @@ export default class BasicTable extends React.Component {
             <Tabs onSelect={this.handleSelect} id="controlled-tab-example">
                 <Tab eventKey={1} title="Skills"><SkillsList skillsUrl={row._links.candidateSkillsList.href}/></Tab>
                 <Tab eventKey={2} title="Education"> <EducationList educationLink={row._links.education.href}/></Tab>
+                <Tab eventKey={3} title="Modify"> <ModifyCandidate candidate={row}/></Tab>
             </Tabs>
         )
     };
@@ -165,6 +195,7 @@ export default class BasicTable extends React.Component {
                 <TableHeaderColumn dataField='lastName' dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
                 <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
                 <TableHeaderColumn dataField='phone'>Phone</TableHeaderColumn>
+
             </BootstrapTable>
         );
     }

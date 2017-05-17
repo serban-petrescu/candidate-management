@@ -55,4 +55,28 @@ function addCandidate(candidate) {
         });
 }
 
-export {fetchEducationForCandidate,fetchCandidates, addCandidate,fetchSkillsForCandidate,fetchTagForCandidateSkill};
+function deleteCandidate(candidateId) {
+    let url = "http://localhost:8080/api/candidates/"+candidateId;
+    return axios.delete(url)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => {
+            return error;
+        });
+}
+
+
+function updateCandidate(candidate) {
+    let url = "http://localhost:8080/api/candidates/"+candidate.id;
+    console.log(candidate);
+    return axios.put(url, candidate)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => {
+            return error;
+        });
+}
+
+export {updateCandidate,deleteCandidate,fetchEducationForCandidate,fetchCandidates, addCandidate,fetchSkillsForCandidate,fetchTagForCandidateSkill};
