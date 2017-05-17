@@ -1,74 +1,41 @@
 import React from 'react';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+
 import {fetchCandidates} from '../utils/api';
 
-import './CandidatesTable.css'
 
-function CandidatesTableHeader(props) {
-    var tableHeader = ["Nume","Prenume"];
-    return (
-        <thead>
-        <tr>{
-            tableHeader.map((elem) => {
-                return (
-                    <th key={elem}>{elem}</th>
-                )
-            })
-        }
-        </tr>
-        </thead>
-    )
-}
-
-function CandidatesTableBody(props) {
-    var candidates = props.candidates;
-
-    return (
-        <tbody>
-        {
-            candidates.map( function (candidate) {
-                return (
-                    <tr key={candidate.id}>
-                        <td>{candidate.lastName}</td>
-                        <td>{candidate.firstName}</td>
-                     </tr>
-                )
-            })
-        }
-        </tbody>
-    )
-}
+import './CandidatesTable.css';
 
 
-class CandidatesTable extends React.Component {
+export default class BasicTable extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             candidates: null
         }
     }
 
-    componentDidMount(){
-        fetchCandidates().then( candidates => {
-            this.setState (function () {
-                return {
-                    candidates: candidates
-                }
+    componentDidMount() {
+        fetchCandidates().then(candidates => {
+
+            this.setState({
+                candidates: candidates
             });
         });
     }
 
-    render(){
+    render() {
+
+        let candidates = this.state.candidates;
+
         return (
-          <table>
-              <CandidatesTableHeader/>
-              {this.state.candidates != null ?
-                  <CandidatesTableBody candidates={this.state.candidates}/> : null
-              }
-          </table>
+            <BootstrapTable data={ candidates } pagination columnFilter>
+                <TableHeaderColumn dataField='id' isKey={ true }>Candidate ID</TableHeaderColumn>
+                <TableHeaderColumn dataField='firstName'>First Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='lastName'>Last Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
+            </BootstrapTable>
         );
     }
 }
-
-export default CandidatesTable;
