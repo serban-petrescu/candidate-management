@@ -17,7 +17,8 @@ export default class BasicTable extends React.Component {
 
         this.options = {
             defaultSortName: 'lastName', //default sort column name
-            defaultSortOrder: 'asc' // default sort order
+            defaultSortOrder: 'asc', // default sort order
+            paginationPosition: 'both'
         }
     }
 
@@ -30,15 +31,24 @@ export default class BasicTable extends React.Component {
         });
     }
 
+    getFilter(placeHolder) {
+        return {
+            type: 'RegexFilter',
+            placeholder: placeHolder,
+            delay: 1000
+        }
+    }
+
     render() {
         let candidates = this.state.candidates;
 
+
         return (
-            <BootstrapTable data={ candidates } options={this.options} pagination columnFilter>
-                <TableHeaderColumn dataField='id' isKey={ true }>Candidate ID</TableHeaderColumn>
-                <TableHeaderColumn dataField='firstName' dataSort sortFunc={sortByFirstName}>First Name</TableHeaderColumn>
-                <TableHeaderColumn dataField='lastName' dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
-                <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
+            <BootstrapTable data={ candidates } options={this.options} pagination search>
+                <TableHeaderColumn dataField='id' filter={this.getFilter('Candidate Id')} isKey={ true }>Candidate ID</TableHeaderColumn>
+                <TableHeaderColumn dataField='firstName' filter={this.getFilter('First Name')} dataSort sortFunc={sortByFirstName}>First Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='lastName' filter={this.getFilter('Last Name')} dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
             </BootstrapTable>
         );
     }
