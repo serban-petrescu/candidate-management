@@ -136,7 +136,8 @@ export default class BasicTable extends React.Component {
 
         this.options = {
             defaultSortName: 'lastName', //default sort column name
-            defaultSortOrder: 'asc' // default sort order
+            defaultSortOrder: 'asc', // default sort order
+            paginationPosition: 'both'
         }
         //use bellow if you don't use arrow function
         // this.expandCandidateDetails = this.expandCandidateDetails.bind(this);
@@ -188,17 +189,26 @@ export default class BasicTable extends React.Component {
         return true;
     }
 
+    getFilter(placeHolder) {
+        return {
+            type: 'RegexFilter',
+            placeholder: placeHolder,
+            delay: 1000
+        }
+    }
+
     render() {
+        let candidates = this.state.candidates;
+
 
         return (
             <BootstrapTable data={this.state.candidates } options={this.options} pagination columnFilter expandComponent={ this.expandCandidateDetails }
-                            expandableRow={this.isExpandableRow}>
-                <TableHeaderColumn dataField='id' hidden={true} isKey={ true }>Candidate ID</TableHeaderColumn>
-                <TableHeaderColumn dataField='firstName' dataSort sortFunc={sortByFirstName}>First Name</TableHeaderColumn>
-                <TableHeaderColumn dataField='lastName' dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
-                <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
+                                       expandableRow={this.isExpandableRow}>
+                <TableHeaderColumn dataField='id' filter={this.getFilter('Candidate Id')} isKey={ true }>Candidate ID</TableHeaderColumn>
+                <TableHeaderColumn dataField='firstName' filter={this.getFilter('First Name')} dataSort sortFunc={sortByFirstName}>First Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='lastName' filter={this.getFilter('Last Name')} dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
                 <TableHeaderColumn dataField='phone'>Phone</TableHeaderColumn>
-
             </BootstrapTable>
         );
     }
