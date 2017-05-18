@@ -137,8 +137,9 @@ export default class BasicTable extends React.Component {
         this.options = {
             defaultSortName: 'lastName', //default sort column name
             defaultSortOrder: 'asc', // default sort order
-            paginationPosition: 'both'
-        }
+            paginationPosition: 'both',
+            insertBtn: this.addCandidateButton
+        };
         //use bellow if you don't use arrow function
         // this.expandCandidateDetails = this.expandCandidateDetails.bind(this);
     }
@@ -152,6 +153,13 @@ export default class BasicTable extends React.Component {
             });
         });
     }
+
+    addCandidateButton = () => {
+        return (
+            <a href="addCandidate" className="btn btn-primary" role="button">Add Candidate</a>
+        );
+    };
+
 
     handlechange = ()=> {
         fetchCandidates().then(candidates => {
@@ -200,7 +208,7 @@ export default class BasicTable extends React.Component {
     render() {
         return (
             <BootstrapTable data={this.state.candidates } options={this.options} pagination exportCSV={true} expandComponent={ this.expandCandidateDetails }
-                                       expandableRow={this.isExpandableRow} search>
+                                       expandableRow={this.isExpandableRow} search insertRow>
                 <TableHeaderColumn dataField='id' filter={this.getFilter('Candidate Id')} isKey={ true }>Candidate ID</TableHeaderColumn>
                 <TableHeaderColumn dataField='firstName' filter={this.getFilter('First Name')} dataSort sortFunc={sortByFirstName}>First Name</TableHeaderColumn>
                 <TableHeaderColumn dataField='lastName' filter={this.getFilter('Last Name')} dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>

@@ -1,3 +1,5 @@
-.submit-button {
-    margin: 12px;
+/* AddCandidate component styling*/
+
+.btn-float-right {
+    float: right;
 }
