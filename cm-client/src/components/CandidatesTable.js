@@ -1,13 +1,13 @@
 import React from 'react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import {Tab, Tabs, Button} from 'react-bootstrap';
+import {Tab, Tabs} from 'react-bootstrap';
 import {fetchCandidates} from '../utils/api';
 import {fetchSkillsForCandidate} from '../utils/api';
 import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
 import EditCandidate from '../components/EditCandidate';
 import './CandidatesTable.css';
-import {deleteCandidate, fetchEducationForCandidate, fetchTagForCandidateSkill} from "../utils/api";
-
+import {fetchEducationForCandidate, fetchTagForCandidateSkill} from "../utils/api";
+import ConfirmationDialog from  '../components/ConfirmationDialog'
 
 class ModifyCandidate extends React.Component {
     constructor(props) {
@@ -22,22 +22,15 @@ class ModifyCandidate extends React.Component {
             <ul className="list-group">
 
                 <li className="list-group-item">
-                    <EditCandidate candidate={this.state.candidate}/>
+                    <EditCandidate refreshCandidateTable={this.props.refreshCandidateTable} candidate={this.state.candidate}/>
                 </li>
                 <li className="list-group-item">
-                    <Button type="submit" bsStyle="danger" onClick={this.removeCandidate}>Delete</Button>
+                    <ConfirmationDialog refreshCandidateTable={this.props.refreshCandidateTable} candidateId={this.state.candidate.id}/>
                 </li>
             </ul>
         )
     }
-
-    removeCandidate = () => {
-        deleteCandidate(this.state.candidate.id).then(response => {
-            alert("Candidate Deleted Succesfully")
-        });
-    }
 }
-
 class EducationList extends React.Component {
     constructor(props) {
         super(props);
@@ -159,6 +152,16 @@ export default class BasicTable extends React.Component {
         });
     }
 
+    handlechange = ()=> {
+        fetchCandidates().then(candidates => {
+
+            this.setState({
+                candidates: candidates,
+                detailViewActiveTab: "1"
+            });
+        });
+    };
+
     handleSelect = (selectedTab) => {
         // The active tab must be set into the state so that
         // the Tabs component knows about the change and re-renders.
@@ -176,7 +179,7 @@ export default class BasicTable extends React.Component {
             <Tabs onSelect={this.handleSelect} id="controlled-tab-example">
                 <Tab eventKey={1} title="Skills"><SkillsList skillsUrl={row._links.candidateSkillsList.href}/></Tab>
                 <Tab eventKey={2} title="Education"> <EducationList educationLink={row._links.education.href}/></Tab>
-                <Tab eventKey={3} title="Modify"> <ModifyCandidate candidate={row}/></Tab>
+                <Tab eventKey={3} title="Modify"> <ModifyCandidate refreshCandidateTable={this.handlechange} candidate={row}/></Tab>
             </Tabs>
         )
     };

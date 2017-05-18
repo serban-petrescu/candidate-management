@@ -31,11 +31,12 @@ class EditCandidate extends React.Component {
             }
         );
         console.log(this.state.candidate);
-    } ;
-    updateCandidatePersonalInfo = () =>{
+    };
+    updateCandidatePersonalInfo = () => {
         updateCandidate(this.state.candidate).then(response => {
-                     alert("CandidateUpdated Succesfully Updated")
-                   });
+            this.props.refreshCandidateTable();
+            this.setState({showModal: false});
+        });
     };
 
     render() {
@@ -89,20 +90,13 @@ class EditCandidate extends React.Component {
                                     <FormControl type="tel" name='phone' placeholder={this.state.candidate.phone} onChange={this.handleChange}/>
                                 </Col>
                             </FormGroup>
-
-                            <FormGroup>
-                                <Col smOffset={2} sm={10}>
-                                    <Button type="submit" onClick={this.updateCandidatePersonalInfo}>
-                                        Save
-                                    </Button>
-                                </Col>
-                            </FormGroup>
                         </Form>
-
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button  onClick={this._close}>Close</Button>
+                        <Button onClick={this._close}>Close</Button>
+                        <Button type="submit" onClick={this.updateCandidatePersonalInfo}>Save</Button>
                     </Modal.Footer>
+
                 </Modal>
             </div>
         )
