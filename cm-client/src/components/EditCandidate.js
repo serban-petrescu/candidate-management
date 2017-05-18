@@ -30,7 +30,6 @@ class EditCandidate extends React.Component {
                 candidate: {...this.state.candidate, [fieldName]: fieldVal}
             }
         );
-        console.log(this.state.candidate);
     };
     updateCandidatePersonalInfo = () => {
         updateCandidate(this.state.candidate).then(response => {

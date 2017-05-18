@@ -69,7 +69,6 @@ function deleteCandidate(candidateId) {
 
 function updateCandidate(candidate) {
     let url = "http://localhost:8080/api/candidates/"+candidate.id;
-    console.log(candidate);
     return axios.put(url, candidate)
         .then((response) => {
             return response;

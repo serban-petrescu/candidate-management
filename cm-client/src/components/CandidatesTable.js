@@ -198,11 +198,8 @@ export default class BasicTable extends React.Component {
     }
 
     render() {
-        let candidates = this.state.candidates;
-
-
         return (
-            <BootstrapTable data={this.state.candidates } options={this.options} pagination columnFilter expandComponent={ this.expandCandidateDetails }
+            <BootstrapTable data={this.state.candidates } options={this.options} pagination expandComponent={ this.expandCandidateDetails }
                                        expandableRow={this.isExpandableRow}>
                 <TableHeaderColumn dataField='id' filter={this.getFilter('Candidate Id')} isKey={ true }>Candidate ID</TableHeaderColumn>
                 <TableHeaderColumn dataField='firstName' filter={this.getFilter('First Name')} dataSort sortFunc={sortByFirstName}>First Name</TableHeaderColumn>
