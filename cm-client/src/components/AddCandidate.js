@@ -63,14 +63,14 @@ class AddCandidate extends React.Component {
         super(props);
         this.state = {
             emailAddress: '',
-            emailAddressValidationMsg: 'Email required!',
-            emailAddressValidationStatus: 'error',
+            emailAddressValidationMsg: '',
+            emailAddressValidationStatus: '',
             firstName: '',
-            firstNameValidationMsg: 'First name required!',
-            firstNameValidationStatus: 'error',
+            firstNameValidationMsg: '',
+            firstNameValidationStatus: '',
             lastName: '',
-            lastNameValidationMsg: 'Last name required!',
-            lastNameValidationStatus: 'error'
+            lastNameValidationMsg: '',
+            lastNameValidationStatus: ''
         };
 
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
