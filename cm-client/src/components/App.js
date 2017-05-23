@@ -1,14 +1,17 @@
-// React imports
-import React, {Component} from 'react';
-
+import React from 'react';
 import CandidatesTable from './CandidatesTable';
+import AddCandidate from './AddCandidate';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
-class App extends Component {
+class App extends React.Component {
     render() {
         return (
-            <div>
-                <CandidatesTable/>
-            </div>
+            <Router>
+                <div>
+                    <Route exact={true} path="/" component={CandidatesTable}/>
+                    <Route path="/addCandidate" component={AddCandidate}/>
+                </div>
+            </Router>
         );
     }
 }
