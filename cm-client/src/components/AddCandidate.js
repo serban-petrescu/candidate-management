@@ -29,14 +29,7 @@ class ButtonAddCandidate extends React.Component {
         this.props.submitCandidate()
             .then((response) => {
                 this.setState({isLoading: false});
-                console.log(response.status);
-
-                if (response.status === 201) {
-                    console.log('Candidate added successfully!');
-                }
-                else {
-                    console.log('An error has occured!')
-                }
+                this.props.setConfirmationStatus(response.status === 201);
             })
     };
 
@@ -64,16 +57,16 @@ class AddCandidate extends React.Component {
         this.state = {
             emailAddress: '',
             emailAddressValidationMsg: '',
-            emailAddressValidationStatus: '',
+            emailAddressValidationStatus: null,
             firstName: '',
             firstNameValidationMsg: '',
-            firstNameValidationStatus: '',
+            firstNameValidationStatus: null,
             lastName: '',
             lastNameValidationMsg: '',
-            lastNameValidationStatus: ''
+            lastNameValidationStatus: null,
+            confirmationMessage: '',
+            confirmationStatus: null
         };
-
-        this.handleChangeEmail = this.handleChangeEmail.bind(this);
     }
 
     handleChangeEmail = (e) => {
@@ -173,6 +166,17 @@ class AddCandidate extends React.Component {
         return addCandidate(candidate);
     };
 
+    setConfirmationStatus = (confirmationStatus) => {
+
+        let message = 'Candidate ' + this.state.firstName + ' ' +  this.state.lastName + ' ' ;
+        message = confirmationStatus ? message + ' succesfully added!' : message + "couldn't be added!";
+
+        this.setState({
+            confirmationMessage: message,
+            confirmationStatus: confirmationStatus
+        })
+    };
+
     formValid = () => {
         return (this.state.emailAddressValidationStatus === 'success' && this.state.firstNameValidationStatus === 'success' && this.state.lastNameValidationStatus === 'success')
     };
@@ -214,15 +218,21 @@ class AddCandidate extends React.Component {
                 </form>
                 <Row>
                     <Col xs={4} md={3}>
-                        <ButtonAddCandidate formValid={this.formValid()} submitCandidate={this.submitCandidate}/>
+                        <ButtonAddCandidate formValid={this.formValid()} submitCandidate={this.submitCandidate}
+                                            setConfirmationStatus={this.setConfirmationStatus}/>
                     </Col>
                     <Col xs={14} md={9}>
                         <Button className="btn-float-right" bsStyle="primary" href="/">Table Return</Button>
                     </Col>
                 </Row>
+
+
+                <Row>
+                    <Col xs={18} md={12}>
+                        <h2 className={this.state.confirmationStatus ? 'success-message' : 'error-message'}>{this.state.confirmationMessage}</h2>
+                    </Col>
+                </Row>
             </Grid>
-
-
         )
     }
 }

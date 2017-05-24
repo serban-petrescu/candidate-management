@@ -3,3 +3,11 @@
 .btn-float-right {
     float: right;
 }
+
+.success-message {
+    color: #51a351;
+}
+
+.error-message {
+    color: #bd362f;
+}
