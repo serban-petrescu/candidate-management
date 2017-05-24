@@ -64,6 +64,9 @@ class AddCandidate extends React.Component {
             lastName: '',
             lastNameValidationMsg: '',
             lastNameValidationStatus: null,
+            phoneNumber: '',
+            phoneNumberValidationMsg: '',
+            phoneNumberValidationStatus: null,
             confirmationMessage: '',
             confirmationStatus: null
         };
@@ -79,6 +82,8 @@ class AddCandidate extends React.Component {
             validationMessage = 'Email required!';
         }
         else {
+            // regex for testing the allowed email formats
+            // http://jsfiddle.net/ghvj4gy9/embedded/result,js/
             const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             let regexCheckResult = this.checkRegexAndGetMessage(emailAddress, regex);
             validationMessage = regexCheckResult.validationMessage;
@@ -137,6 +142,28 @@ class AddCandidate extends React.Component {
         })
     };
 
+    handleChangePhoneNumber = (e) => {
+        const phoneNumber = e.target.value;
+        let validationMessage = '';
+        let validationStatus = 'error';
+
+        if (phoneNumber === '') {
+            validationMessage = 'Phone number required';
+        }
+
+        else {
+            const regexCheckResult = this.checkRegexAndGetMessage(phoneNumber, /^(\+)?[0-9]{10,}$/);
+            validationMessage = regexCheckResult.validationMessage;
+            validationStatus = regexCheckResult.validationStatus;
+        }
+
+        this.setState({
+            phoneNumber: phoneNumber,
+            phoneNumberValidationMsg: validationMessage,
+            phoneNumberValidationStatus: validationStatus
+        })
+    };
+
     checkRegexAndGetMessage = (value, regex) => {
 
         let validationMessage = '';
@@ -161,7 +188,8 @@ class AddCandidate extends React.Component {
         let candidate = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-            email: this.state.emailAddress
+            email: this.state.emailAddress,
+            phone: this.state.phoneNumber
         };
         return addCandidate(candidate);
     };
@@ -184,6 +212,7 @@ class AddCandidate extends React.Component {
     render() {
         return (
             <Grid>
+                {/* Personal info section */}
                 <form>
                     <FieldGroup id="formFirstName"
                                 label="First Name"
@@ -215,21 +244,32 @@ class AddCandidate extends React.Component {
                                 onChange={this.handleChangeEmail}>
                     </FieldGroup>
 
+                    <FieldGroup id="formPhoneNumber"
+                                label="Phone number"
+                                validationState={this.state.phoneNumberValidationStatus}
+                                help={this.state.phoneNumberValidationMsg}
+                                type="text"
+                                value={this.state.phoneNumber}
+                                placeholder="Enter phone number"
+                                onChange={this.handleChangePhoneNumber}>
+                    </FieldGroup>
+
                 </form>
+                {/* Buttons section */}
                 <Row>
                     <Col xs={4} md={3}>
                         <ButtonAddCandidate formValid={this.formValid()} submitCandidate={this.submitCandidate}
                                             setConfirmationStatus={this.setConfirmationStatus}/>
                     </Col>
                     <Col xs={14} md={9}>
-                        <Button className="btn-float-right" bsStyle="primary" href="/">Table Return</Button>
+                        <Button id="btn-home" className="float-right" bsStyle="primary" href="/">Home</Button>
                     </Col>
                 </Row>
 
-
+                {/* Confirmation message section */}
                 <Row>
                     <Col xs={18} md={12}>
-                        <h2 className={this.state.confirmationStatus ? 'success-message' : 'error-message'}>{this.state.confirmationMessage}</h2>
+                        <h2 className={(this.state.confirmationStatus ? 'success-message' : 'error-message') + ' text-center'}>{this.state.confirmationMessage}</h2>
                     </Col>
                 </Row>
             </Grid>

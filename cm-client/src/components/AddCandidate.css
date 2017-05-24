@@ -1,7 +1,11 @@
 /* AddCandidate component styling*/
 
-.btn-float-right {
+.float-right {
     float: right;
+}
+
+#btn-home {
+    min-width: 100px;
 }
 
 .success-message {
