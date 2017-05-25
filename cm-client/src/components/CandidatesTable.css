@@ -1,3 +1,11 @@
+.list-group-item{
+    background-color: #FFFFFA !important;
+}
+.nav-tabs > li > a{
+    color: #786f6f;
+    font-size: 18px;
+    font-weight: 700;
+}
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
     background-color: #841439 !important;
     color: white !important;

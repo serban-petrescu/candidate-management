@@ -18,8 +18,8 @@ export default class TopNavbar extends React.Component {
                     </div>
 
                 </nav>
-                <div style={{marginTop: '100px'}} className="page-header">
-                    <h1>Candidate Management</h1>
+                <div style={{color:'#786f6f',marginTop: '100px',fontWeight: 'bold',fontSize:25}} className="page-header">
+                    <h1 style={{fontWeight: 'bold',fontSize:50}}>Candidate Management</h1>
                 </div>
             </div>
         );

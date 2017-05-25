@@ -1,5 +1,5 @@
 import React from 'react';
-import {ExportCSVButton,BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {SearchField,BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Tab, Tabs} from 'react-bootstrap';
 import {fetchCandidates} from '../utils/api';
 import {fetchSkillsForCandidate} from '../utils/api';
@@ -139,7 +139,8 @@ export default class BasicTable extends React.Component {
             defaultSortOrder: 'asc', // default sort order
             insertBtn: this.addCandidateButton,
             paginationPosition: 'bottom',
-            exportCSVBtn: this.CustomExportCSVButton
+            exportCSVBtn: this.CustomExportCSVButton,
+            searchField: this.CustomSearchField
         };
 
         //use bellow if you don't use arrow function
@@ -179,6 +180,11 @@ export default class BasicTable extends React.Component {
         this.setState({
             activeTab: selectedTab
         });
+    };
+    CustomSearchField = (props) => {
+      return (
+        <SearchField className="form-control" placeholder='Search ...'/>);
+
     };
 
     CustomExportCSVButton = (onClick) => {

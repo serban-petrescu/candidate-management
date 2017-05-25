@@ -43,6 +43,7 @@ class EditCandidate extends React.Component {
         return (
             <div>
                 <Button
+
                     bsStyle="primary"
                     onClick={this._open}>
                     Edit Candidate
