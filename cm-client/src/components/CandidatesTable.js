@@ -1,5 +1,5 @@
 import React from 'react';
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {ExportCSVButton,BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Tab, Tabs} from 'react-bootstrap';
 import {fetchCandidates} from '../utils/api';
 import {fetchSkillsForCandidate} from '../utils/api';
@@ -8,7 +8,7 @@ import EditCandidate from '../components/EditCandidate';
 import './CandidatesTable.css';
 import {fetchEducationForCandidate, fetchTagForCandidateSkill} from "../utils/api";
 import ConfirmationDialog from  '../components/ConfirmationDialog'
-
+import "roboto-fontface/css/roboto/roboto-fontface.css"
 class ModifyCandidate extends React.Component {
     constructor(props) {
         super(props);
@@ -137,8 +137,10 @@ export default class BasicTable extends React.Component {
         this.options = {
             defaultSortName: 'lastName', //default sort column name
             defaultSortOrder: 'asc', // default sort order
-            paginationPosition: 'both'
-        }
+            paginationPosition: 'bottom',
+            exportCSVBtn: this.CustomExportCSVButton
+
+        }  ;
         //use bellow if you don't use arrow function
         // this.expandCandidateDetails = this.expandCandidateDetails.bind(this);
     }
@@ -171,6 +173,12 @@ export default class BasicTable extends React.Component {
         });
     };
 
+    CustomExportCSVButton = (onClick) => {
+      return (
+        <button className="btn-lg" style={ { color: 'white' ,backgroundColor: '#841439'} } onClick={ onClick }>Export CSV</button>
+      );
+    };
+
     expandCandidateDetails = (row) => {
         let candidate = [];
         candidate.push(row);
@@ -197,15 +205,40 @@ export default class BasicTable extends React.Component {
         }
     }
 
+    headerStyle = {
+        fontSize: 22,
+        backgroundColor: "#841439",
+        color: 'white' ,
+        borderRadius: 5
+    };
+
+    bodyStyle = {
+        fontSize: 16,
+        fontFamily: "Roboto",
+        borderRadius: 5,
+        backgroundColor: '#f9f9f9'
+    };
+
+
     render() {
         return (
-            <BootstrapTable data={this.state.candidates } options={this.options} pagination exportCSV={true} expandComponent={ this.expandCandidateDetails }
-                                       expandableRow={this.isExpandableRow} search>
-                <TableHeaderColumn dataField='id' filter={this.getFilter('Candidate Id')} isKey={ true }>Candidate ID</TableHeaderColumn>
-                <TableHeaderColumn dataField='firstName' filter={this.getFilter('First Name')} dataSort sortFunc={sortByFirstName}>First Name</TableHeaderColumn>
-                <TableHeaderColumn dataField='lastName' filter={this.getFilter('Last Name')} dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
-                <TableHeaderColumn dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
-                <TableHeaderColumn dataField='phone'>Phone</TableHeaderColumn>
+            <BootstrapTable bodyStyle={this.bodyStyle} bordered={false}  hover={true} striped={true} headerStyle={this.headerStyle}
+                            data={this.state.candidates } options={this.options} pagination
+                            exportCSV={true} expandComponent={ this.expandCandidateDetails }
+                            expandableRow={this.isExpandableRow} search>
+
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
+                                   dataField='id' filter={this.getFilter('Candidate Id')} isKey={ true }>Candidate
+                    ID</TableHeaderColumn>
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
+                                   dataField='firstName' filter={this.getFilter('First Name')} dataSort sortFunc={sortByFirstName}>First
+                    Name</TableHeaderColumn>
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
+                                   dataField='lastName' filter={this.getFilter('Last Name')} dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
+                                   dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
+                                   dataField='phone'>Phone</TableHeaderColumn>
             </BootstrapTable>
         );
     }

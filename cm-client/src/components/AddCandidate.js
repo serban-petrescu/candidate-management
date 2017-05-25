@@ -15,6 +15,7 @@ const cardStyle = {
 };
 
 const titleText = {
+
     paddingRight: 0
 };
 

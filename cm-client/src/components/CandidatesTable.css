@@ -1,8 +1,16 @@
-.react-bs-table-container .react-bs-table-search-form {
-    margin-bottom: 0
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    background-color: #841439 !important;
+    color: white !important;
 }
 
+.react-bs-table-container .react-bs-table-search-form {
+    margin-bottom: 0;
+
+}
+
+
 .react-bs-table table {
+
     margin-bottom: 0;
     table-layout: fixed
 }
@@ -14,8 +22,6 @@
 }
 
 .react-bs-table {
-    border: 1px solid #ddd;
-    border-radius: 5px;
     margin: 5px 10px
 }
 
@@ -312,7 +318,9 @@ button.toast-close-button {
     right: 0;
     width: 100%
 }
-
+.pagination > .active > a{
+    background-color : #841439 !important;
+}
 .toast-bottom-full-width {
     bottom: 0;
     right: 0;
