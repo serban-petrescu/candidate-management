@@ -137,10 +137,11 @@ export default class BasicTable extends React.Component {
         this.options = {
             defaultSortName: 'lastName', //default sort column name
             defaultSortOrder: 'asc', // default sort order
+            insertBtn: this.addCandidateButton,
             paginationPosition: 'bottom',
             exportCSVBtn: this.CustomExportCSVButton
+        };
 
-        }  ;
         //use bellow if you don't use arrow function
         // this.expandCandidateDetails = this.expandCandidateDetails.bind(this);
     }
@@ -154,6 +155,13 @@ export default class BasicTable extends React.Component {
             });
         });
     }
+
+    addCandidateButton = () => {
+        return (
+            <a href="addCandidate" className="btn btn-primary" role="button">Add Candidate</a>
+        );
+    };
+
 
     handlechange = ()=> {
         fetchCandidates().then(candidates => {
@@ -225,7 +233,7 @@ export default class BasicTable extends React.Component {
             <BootstrapTable bodyStyle={this.bodyStyle} bordered={false}  hover={true} striped={true} headerStyle={this.headerStyle}
                             data={this.state.candidates } options={this.options} pagination
                             exportCSV={true} expandComponent={ this.expandCandidateDetails }
-                            expandableRow={this.isExpandableRow} search>
+                            expandableRow={this.isExpandableRow} search insertRow>
 
                 <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
                                    dataField='id' filter={this.getFilter('Candidate Id')} isKey={ true }>Candidate

@@ -1,161 +1,280 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import TextField from 'material-ui/TextField';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import {Card, CardHeader} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import {addCandidate} from '../utils/api';
+import {FormGroup, FormControl, ControlLabel, HelpBlock, Button, Grid, Row, Col} from 'react-bootstrap';
 
-injectTapEventPlugin();
+import {addCandidate} from '../utils/api';
 
 import './AddCandidate.css';
 
-const cardStyle = {
-    textAlign: 'center'
-};
+function FieldGroup({id, label, validationState, help, ...props}) {
+    return (
+        <FormGroup controlId={id} validationState={validationState}>
+            <ControlLabel>{label}</ControlLabel>
+            <FormControl {...props}/>
+            { help && <HelpBlock>{help}</HelpBlock>}
+        </FormGroup>
+    )
+}
 
-const titleText = {
+class ButtonAddCandidate extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: false
+        }
+    }
 
-    paddingRight: 0
-};
+    handleClick = () => {
+        this.setState({isLoading: true});
 
-const title = {
-    fontSize: '24px'
-};
+        this.props.submitCandidate()
+            .then((response) => {
+                this.setState({isLoading: false});
+                this.props.setConfirmationStatus(response.status === 201);
+            })
+    };
 
-const nameRegex = /^[a-z ,.'-]+$/i;
+    render() {
+        let isLoading = this.state.isLoading;
+        let isFormValid = this.props.formValid;
+
+        return (
+            <div>
+                <Button
+                    bsStyle="primary"
+                    disabled={isLoading || !isFormValid}
+                    onClick={!isLoading ? this.handleClick : null}>
+                    { isLoading ? 'Loading...' : 'Add Candidate'}
+                </Button>
+            </div>
+        )
+    }
+}
 
 class AddCandidate extends React.Component {
-
-    fnIsValid = false;
-    lnIsValid = false;
 
     constructor(props) {
         super(props);
         this.state = {
-            candidate: {
-                firstName: '',
-                lastName: ''
-            },
-            fnErrorText: 'First name is required',
-            lnErrorText: 'Last name is required'
+            emailAddress: '',
+            emailAddressValidationMsg: '',
+            emailAddressValidationStatus: null,
+            firstName: '',
+            firstNameValidationMsg: '',
+            firstNameValidationStatus: null,
+            lastName: '',
+            lastNameValidationMsg: '',
+            lastNameValidationStatus: null,
+            phoneNumber: '',
+            phoneNumberValidationMsg: '',
+            phoneNumberValidationStatus: null,
+            confirmationMessage: '',
+            confirmationStatus: null
         };
-
-        this.handlefnChange = this.handlefnChange.bind(this);
-        this.handlelnChange = this.handlelnChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handlefnChange = (e) => {
-        if (e.target.value === '') {
-            this.setState({
-                candidate: {
-                    ...this.state.candidate,
-                    firstName: e.target.value
-                },
-                lnErrorText: this.state.lnErrorText,
-                fnErrorText: 'First name is required'
-            })
-        } else if (!e.target.value.match(nameRegex)) {
-            this.setState({
-                candidate: {
-                    ...this.state.candidate,
-                    firstName: e.target.value
-                },
-                lnErrorText: this.state.lnErrorText,
-                fnErrorText: 'Invalid first name (should only contain letters)'
-            })
-        } else {
-            this.setState({
-                candidate: {
-                    ...this.state.candidate,
-                    firstName: e.target.value
-                },
-                lnErrorText: this.state.lnErrorText,
-                fnErrorText: ''
-            });
-            this.fnIsValid = true;
+    handleChangeEmail = (e) => {
+
+        const emailAddress = e.target.value;
+        let validationMessage = '';
+        let validationStatus = 'error';
+
+        if (emailAddress === '') {
+            validationMessage = 'Email required!';
+        }
+        else {
+            // regex for testing the allowed email formats
+            // http://jsfiddle.net/ghvj4gy9/embedded/result,js/
+            const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            let regexCheckResult = this.checkRegexAndGetMessage(emailAddress, regex);
+            validationMessage = regexCheckResult.validationMessage;
+            validationStatus = regexCheckResult.validationStatus;
+        }
+
+        this.setState({
+            emailAddress: emailAddress,
+            emailAddressValidationMsg: validationMessage,
+            emailAddressValidationStatus: validationStatus
+        })
+    };
+
+    handleChangeFirstName = (e) => {
+
+        const firstName = e.target.value;
+        let validationMessage = '';
+        let validationStatus = 'error';
+
+        if (firstName === '') {
+            validationMessage = 'First name required!';
+        }
+
+        else {
+            const regexCheckResult = this.checkRegexAndGetMessage(firstName, /^[a-zA-Z ]+$/);
+            validationMessage = regexCheckResult.validationMessage;
+            validationStatus = regexCheckResult.validationStatus;
+        }
+
+        this.setState({
+            firstName: firstName,
+            firstNameValidationMsg: validationMessage,
+            firstNameValidationStatus: validationStatus
+        })
+    };
+
+    handleChangeLastName = (e) => {
+        const lastName = e.target.value;
+        let validationMessage = '';
+        let validationStatus = 'error';
+
+        if (lastName === '') {
+            validationMessage = 'Last name required!';
+        }
+
+        else {
+            const regexCheckResult = this.checkRegexAndGetMessage(lastName, /^[a-zA-Z ]+$/);
+            validationMessage = regexCheckResult.validationMessage;
+            validationStatus = regexCheckResult.validationStatus;
+        }
+
+        this.setState({
+            lastName: lastName,
+            lastNameValidationMsg: validationMessage,
+            lastNameValidationStatus: validationStatus
+        })
+    };
+
+    handleChangePhoneNumber = (e) => {
+        const phoneNumber = e.target.value;
+        let validationMessage = '';
+        let validationStatus = 'error';
+
+        if (phoneNumber === '') {
+            validationMessage = 'Phone number required';
+        }
+
+        else {
+            const regexCheckResult = this.checkRegexAndGetMessage(phoneNumber, /^(\+)?[0-9]{10,}$/);
+            validationMessage = regexCheckResult.validationMessage;
+            validationStatus = regexCheckResult.validationStatus;
+        }
+
+        this.setState({
+            phoneNumber: phoneNumber,
+            phoneNumberValidationMsg: validationMessage,
+            phoneNumberValidationStatus: validationStatus
+        })
+    };
+
+    checkRegexAndGetMessage = (value, regex) => {
+
+        let validationMessage = '';
+        let validationStatus = '';
+
+        if (regex.test(value)) {
+            validationMessage = 'Valid!';
+            validationStatus = 'success';
+        }
+        else {
+            validationMessage = 'Invalid!';
+            validationStatus = 'error';
+        }
+
+        return {
+            validationMessage: validationMessage,
+            validationStatus: validationStatus
         }
     };
 
-    handlelnChange = (e) => {
-        if (e.target.value === '') {
-            this.setState({
-                candidate: {
-                    ...this.state.candidate,
-                    lastName: e.target.value
-                },
-                fnErrorText: this.state.fnErrorText,
-                lnErrorText: 'Last name is required'
-            })
-        } else if (!e.target.value.match(nameRegex)) {
-            this.setState({
-                candidate: {
-                    ...this.state.candidate,
-                    lastName: e.target.value
-                },
-                fnErrorText: this.state.fnErrorText,
-                lnErrorText: 'Invalid last name (should only contain letters)'
-            })
-        } else {
-            this.setState({
-                candidate: {
-                    ...this.state.candidate,
-                    lastName: e.target.value
-                },
-                fnErrorText: this.state.fnErrorText,
-                lnErrorText: ''
-            });
-            this.lnIsValid = true;
-        }
+    submitCandidate = () => {
+        let candidate = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.emailAddress,
+            phone: this.state.phoneNumber
+        };
+        return addCandidate(candidate);
     };
 
-    handleSubmit() {
-        addCandidate(this.state.candidate);
-    }
+    setConfirmationStatus = (confirmationStatus) => {
 
-    formIsValid() {
-        return this.fnIsValid && this.lnIsValid;
-    }
+        let message = 'Candidate ' + this.state.firstName + ' ' +  this.state.lastName + ' ' ;
+        message = confirmationStatus ? message + ' succesfully added!' : message + "couldn't be added!";
+
+        this.setState({
+            confirmationMessage: message,
+            confirmationStatus: confirmationStatus
+        })
+    };
+
+    formValid = () => {
+        return (this.state.emailAddressValidationStatus === 'success' && this.state.firstNameValidationStatus === 'success' && this.state.lastNameValidationStatus === 'success')
+    };
 
     render() {
         return (
-            <MuiThemeProvider>
-                <div>
-                    <Card style={cardStyle}>
-                        <CardHeader
-                            title="Add New Candidate"
-                            titleStyle={title}
-                            textStyle={titleText}
-                        />
-                        <form onSubmit={this.handleSubmit}>
-                            <TextField
-                                floatingLabelText="First Name"
-                                errorText={this.state.fnErrorText}
-                                value={this.state.candidate.firstName}
-                                onChange={this.handlefnChange}
-                            />
-                            <br/>
-                            <TextField
-                                floatingLabelText="Last Name"
-                                errorText={this.state.lnErrorText}
-                                value={this.state.candidate.lastName}
-                                onChange={this.handlelnChange}
-                            />
-                            <br/>
-                            <RaisedButton
-                                className="submit-button"
-                                label="Add Candidate"
-                                primary={true}
-                                disabled={!this.formIsValid()}
-                                onTouchTap={this.handleSubmit}
-                                href="/"
-                            />
-                        </form>
-                    </Card>
-                </div>
-            </MuiThemeProvider>
-        );
+            <Grid>
+                {/* Personal info section */}
+                <form>
+                    <FieldGroup id="formFirstName"
+                                label="First Name"
+                                validationState={this.state.firstNameValidationStatus}
+                                help={this.state.firstNameValidationMsg}
+                                type="text"
+                                value={this.state.firstName}
+                                placeholder="Enter first name"
+                                onChange={this.handleChangeFirstName}>
+                    </FieldGroup>
+
+                    <FieldGroup id="formLastName"
+                                label="Last Name"
+                                validationState={this.state.lastNameValidationStatus}
+                                help={this.state.lastNameValidationMsg}
+                                type="text"
+                                value={this.state.lastName}
+                                placeholder="Enter last name"
+                                onChange={this.handleChangeLastName}>
+                    </FieldGroup>
+
+                    <FieldGroup id="formEmailAddress"
+                                label="Email address"
+                                validationState={this.state.emailAddressValidationStatus}
+                                help={this.state.emailAddressValidationMsg}
+                                type="text"
+                                value={this.state.emailAddress}
+                                placeholder="Enter email"
+                                onChange={this.handleChangeEmail}>
+                    </FieldGroup>
+
+                    <FieldGroup id="formPhoneNumber"
+                                label="Phone number"
+                                validationState={this.state.phoneNumberValidationStatus}
+                                help={this.state.phoneNumberValidationMsg}
+                                type="text"
+                                value={this.state.phoneNumber}
+                                placeholder="Enter phone number"
+                                onChange={this.handleChangePhoneNumber}>
+                    </FieldGroup>
+
+                </form>
+                {/* Buttons section */}
+                <Row>
+                    <Col xs={4} md={3}>
+                        <ButtonAddCandidate formValid={this.formValid()} submitCandidate={this.submitCandidate}
+                                            setConfirmationStatus={this.setConfirmationStatus}/>
+                    </Col>
+                    <Col xs={14} md={9}>
+                        <Button id="btn-home" className="float-right" bsStyle="primary" href="/">Home</Button>
+                    </Col>
+                </Row>
+
+                {/* Confirmation message section */}
+                <Row>
+                    <Col xs={18} md={12}>
+                        <h2 className={(this.state.confirmationStatus ? 'success-message' : 'error-message') + ' text-center'}>{this.state.confirmationMessage}</h2>
+                    </Col>
+                </Row>
+            </Grid>
+        )
     }
 }
+
 export default AddCandidate;

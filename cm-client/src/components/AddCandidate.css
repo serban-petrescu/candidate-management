@@ -1,3 +1,17 @@
-.submit-button {
-    margin: 12px;
+/* AddCandidate component styling*/
+
+.float-right {
+    float: right;
+}
+
+#btn-home {
+    min-width: 100px;
+}
+
+.success-message {
+    color: #51a351;
+}
+
+.error-message {
+    color: #bd362f;
 }
