@@ -158,7 +158,7 @@ export default class BasicTable extends React.Component {
 
     addCandidateButton = () => {
         return (
-            <a href="addCandidate" className="btn btn-primary" role="button">Add Candidate</a>
+            <a href="addCandidate" className="btn-lg" role="button" style={ {color: 'white' ,backgroundColor: '#841439'} }>Add Candidate</a>
         );
     };
 
@@ -183,7 +183,9 @@ export default class BasicTable extends React.Component {
 
     CustomExportCSVButton = (onClick) => {
       return (
-        <button className="btn-lg" style={ { color: 'white' ,backgroundColor: '#841439'} } onClick={ onClick }>Export CSV</button>
+
+        <a  className="btn-lg" role="button" onClick={ onClick } style={ {marginRight:25, color: 'white' ,backgroundColor: '#841439'} }>Export CSV</a>
+
       );
     };
 
