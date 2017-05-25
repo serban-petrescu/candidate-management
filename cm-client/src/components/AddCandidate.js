@@ -5,6 +5,8 @@ import {addCandidate} from '../utils/api';
 
 import './AddCandidate.css';
 
+let btnStyle = {color: 'white', backgroundColor: '#841439'};
+
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
         <FormGroup controlId={id} validationState={validationState}>
@@ -25,11 +27,11 @@ class ButtonAddCandidate extends React.Component {
 
     handleClick = () => {
         this.setState({isLoading: true});
-
+        this.props.setConfirmationStatus('pending');
         this.props.submitCandidate()
             .then((response) => {
                 this.setState({isLoading: false});
-                this.props.setConfirmationStatus(response.status === 201);
+                this.props.setConfirmationStatus(response.status === 201 ? 'success' : 'failed');
             })
     };
 
@@ -40,7 +42,7 @@ class ButtonAddCandidate extends React.Component {
         return (
             <div>
                 <Button
-                    bsStyle="primary"
+                    style={btnStyle}
                     disabled={isLoading || !isFormValid}
                     onClick={!isLoading ? this.handleClick : null}>
                     { isLoading ? 'Loading...' : 'Add Candidate'}
@@ -196,8 +198,14 @@ class AddCandidate extends React.Component {
 
     setConfirmationStatus = (confirmationStatus) => {
 
-        let message = 'Candidate ' + this.state.firstName + ' ' +  this.state.lastName + ' ' ;
-        message = confirmationStatus ? message + ' succesfully added!' : message + "couldn't be added!";
+        let message = '';
+        if (confirmationStatus === 'pending') {
+            message = '...';
+        }
+        else {
+            message = 'Candidate ' + this.state.firstName + ' ' +  this.state.lastName + ' ' ;
+            message = confirmationStatus === 'success' ? message + ' succesfully added!' : message + "couldn't be added!";
+        }
 
         this.setState({
             confirmationMessage: message,
@@ -262,14 +270,14 @@ class AddCandidate extends React.Component {
                                             setConfirmationStatus={this.setConfirmationStatus}/>
                     </Col>
                     <Col xs={14} md={9}>
-                        <Button id="btn-home" className="float-right" bsStyle="primary" href="/">Home</Button>
+                        <Button id="btn-home" className="float-right" style={btnStyle} href="/">Home</Button>
                     </Col>
                 </Row>
 
                 {/* Confirmation message section */}
                 <Row>
                     <Col xs={18} md={12}>
-                        <h2 className={(this.state.confirmationStatus ? 'success-message' : 'error-message') + ' text-center'}>{this.state.confirmationMessage}</h2>
+                        <h2 className={(this.state.confirmationStatus ? 'success-message' : 'error-message') + ' text-center'} style={{color: '#841439'}}>{this.state.confirmationMessage}</h2>
                     </Col>
                 </Row>
             </Grid>
