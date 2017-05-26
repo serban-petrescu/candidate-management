@@ -21,10 +21,8 @@ class ConfirmationDialog extends React.Component {
         this.setState({showModal: false});
     }
 
-    open(event) {
-
+    open() {
         this.setState({showModal: true});
-        event.stopPropagation() ;
     }
 
     removeCandidate = () => {
