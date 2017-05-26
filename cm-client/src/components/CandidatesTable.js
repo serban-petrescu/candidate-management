@@ -1,5 +1,5 @@
 import React from 'react';
-import {SearchField,BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {SearchField, BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Tab, Tabs} from 'react-bootstrap';
 import {fetchCandidates} from '../utils/api';
 import {fetchSkillsForCandidate} from '../utils/api';
@@ -20,12 +20,8 @@ class ModifyCandidate extends React.Component {
     render() {
         return (
             <ul className="list-group">
-
                 <li className="list-group-item">
-                    <EditCandidate refreshCandidateTable={this.props.refreshCandidateTable} candidate={this.state.candidate}/>
-                </li>
-                <li className="list-group-item">
-                    <ConfirmationDialog refreshCandidateTable={this.props.refreshCandidateTable} candidateId={this.state.candidate.id}/>
+                To be added
                 </li>
             </ul>
         )
@@ -124,9 +120,12 @@ class SkillsList extends React.Component {
     }
 }
 
+
 export default class BasicTable extends React.Component {
 
     constructor(props) {
+
+
         super(props);
         this.state = {
             candidates: null,
@@ -140,12 +139,20 @@ export default class BasicTable extends React.Component {
             insertBtn: this.addCandidateButton,
             paginationPosition: 'bottom',
             exportCSVBtn: this.CustomExportCSVButton,
-            searchField: this.CustomSearchField
+            searchField: this.CustomSearchField,
+            expandBy: 'column'
         };
 
         //use bellow if you don't use arrow function
         // this.expandCandidateDetails = this.expandCandidateDetails.bind(this);
     }
+
+    actionsFormatter = (cell, row) => {
+        return (<div style={{display: "inline"}}>
+            <EditCandidate refreshCandidateTable={this.handlechange} candidate={row}/>
+            <ConfirmationDialog refreshCandidateTable={this.handlechange} candidateId={row.id}/>
+        </div>);
+    };
 
     componentDidMount() {
         fetchCandidates().then(candidates => {
@@ -159,13 +166,14 @@ export default class BasicTable extends React.Component {
 
     addCandidateButton = () => {
         return (
-            <a href="addCandidate" className="btn-lg" role="button" style={ {color: 'white' ,backgroundColor: '#841439'} }>Add Candidate</a>
+            <a href="addCandidate" className="btn-lg" role="button" style={ {color: 'white', backgroundColor: '#841439'} }>Add Candidate</a>
         );
     };
 
 
     handlechange = ()=> {
         fetchCandidates().then(candidates => {
+
 
             this.setState({
                 candidates: candidates,
@@ -182,17 +190,17 @@ export default class BasicTable extends React.Component {
         });
     };
     CustomSearchField = (props) => {
-      return (
-        <SearchField className="form-control" placeholder='Search ...'/>);
+        return (
+            <SearchField className="form-control" placeholder='Search ...'/>);
 
     };
 
     CustomExportCSVButton = (onClick) => {
-      return (
+        return (
 
-        <a  className="btn-lg" role="button" onClick={ onClick } style={ {marginRight:25, color: 'white' ,backgroundColor: '#841439'} }>Export CSV</a>
+            <a className="btn-lg" role="button" onClick={ onClick } style={ {marginRight: 25, color: 'white', backgroundColor: '#841439'} }>Export CSV</a>
 
-      );
+        );
     };
 
     expandCandidateDetails = (row) => {
@@ -209,9 +217,6 @@ export default class BasicTable extends React.Component {
         )
     };
 
-    isExpandableRow(row) {
-        return true;
-    }
 
     getFilter(placeHolder) {
         return {
@@ -224,7 +229,7 @@ export default class BasicTable extends React.Component {
     headerStyle = {
         fontSize: 22,
         backgroundColor: "#841439",
-        color: 'white' ,
+        color: 'white',
         borderRadius: 5
     };
 
@@ -235,26 +240,34 @@ export default class BasicTable extends React.Component {
         backgroundColor: '#f9f9f9'
     };
 
+    isExpandableRow = (row) => {
+            return true;
+    };
 
     render() {
+
         return (
-            <BootstrapTable bodyStyle={this.bodyStyle} bordered={false}  hover={true} striped={true} headerStyle={this.headerStyle}
+            <BootstrapTable bodyStyle={this.bodyStyle} bordered={false} hover={true} striped={true} headerStyle={this.headerStyle}
                             data={this.state.candidates } options={this.options} pagination
                             exportCSV={true} expandComponent={ this.expandCandidateDetails }
                             expandableRow={this.isExpandableRow} search insertRow>
 
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
                                    dataField='id' filter={this.getFilter('Candidate Id')} isKey={ true }>Candidate
                     ID</TableHeaderColumn>
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
                                    dataField='firstName' filter={this.getFilter('First Name')} dataSort sortFunc={sortByFirstName}>First
                     Name</TableHeaderColumn>
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
                                    dataField='lastName' filter={this.getFilter('Last Name')} dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
                                    dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center', } }
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
                                    dataField='phone'>Phone</TableHeaderColumn>
+                <TableHeaderColumn expandable={false}  dataField='id' dataFormat={ this.actionsFormatter } tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} }
+                                   thStyle={ {'textAlign': 'center',} }>
+                    Actions
+                </TableHeaderColumn>
             </BootstrapTable>
         );
     }

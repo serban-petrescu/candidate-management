@@ -11,7 +11,7 @@ export default class TopNavbar extends React.Component {
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <a className="navbar-brand" href="#">
-                                <img alt="Brand" src={msgLogo} width={100} height={35}/>
+                                <img href="http://localhost:3000" alt="Brand" src={msgLogo} width={100} height={35}/>
                             </a>
 
                         </div>

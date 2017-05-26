@@ -21,8 +21,10 @@ class ConfirmationDialog extends React.Component {
         this.setState({showModal: false});
     }
 
-    open() {
+    open(event) {
+
         this.setState({showModal: true});
+        event.stopPropagation() ;
     }
 
     removeCandidate = () => {
@@ -36,12 +38,10 @@ class ConfirmationDialog extends React.Component {
     render() {
 
         return (
-            <div>
-                <Button
-                    bsStyle="danger"
-                    onClick={this._open}>
-                    Delete Candidate
-                </Button>
+            <div style={{display: "inline"}}>
+                <button  onClick={this._open }type="button" className="btn-defaultCustom btn btn-default">
+                                 <span style={{color:"red"}} className="glyphicon glyphicon-remove" />
+                </button>
 
                 <Modal show={this.state.showModal} onHide={this._close}>
                     <Modal.Header closeButton>

@@ -41,13 +41,10 @@ class EditCandidate extends React.Component {
     render() {
 
         return (
-            <div>
-                <Button
-
-                    bsStyle="primary"
-                    onClick={this._open}>
-                    Edit Candidate
-                </Button>
+            <div style={{display: "inline"}}>
+                <button onClick={this._open} type="button" className="btn-defaultCustom btn btn-default">
+                  <span style={{color:"blue"}}className="glyphicon glyphicon-pencil" />
+                </button>
 
                 <Modal show={this.state.showModal} onHide={this._close}>
                     <Modal.Header closeButton>

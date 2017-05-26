@@ -1,8 +1,7 @@
 import React from 'react';
 import {FormGroup, FormControl, ControlLabel, HelpBlock, Button, Grid, Row, Col} from 'react-bootstrap';
-
 import {addCandidate} from '../utils/api';
-
+import TopNavbar from './TopNavbar';
 import './AddCandidate.css';
 
 let btnStyle = {color: 'white', backgroundColor: '#841439'};
@@ -40,7 +39,9 @@ class ButtonAddCandidate extends React.Component {
         let isFormValid = this.props.formValid;
 
         return (
+
             <div>
+
                 <Button
                     style={btnStyle}
                     disabled={isLoading || !isFormValid}
@@ -219,6 +220,8 @@ class AddCandidate extends React.Component {
 
     render() {
         return (
+        <div>
+        <TopNavbar/>
             <Grid>
                 {/* Personal info section */}
                 <form>
@@ -281,6 +284,7 @@ class AddCandidate extends React.Component {
                     </Col>
                 </Row>
             </Grid>
+            </div>
         )
     }
 }
