@@ -6,15 +6,16 @@
     "axios": "^0.16.1",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
-    "material-ui": "^0.17.4",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
     "react-bootstrap-table": "^3.2.2",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
+    "redux-promise": "^0.5.3",
     "roboto-fontface": "^0.7.0"
   },
   "devDependencies": {
