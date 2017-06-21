@@ -5,9 +5,8 @@ import {fetchCandidates} from '../utils/api';
 import {fetchSkillsForCandidate} from '../utils/api';
 import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
 import EditCandidate from '../components/EditCandidate';
-import './CandidatesTable.css';
 import {fetchEducationForCandidate, fetchTagForCandidateSkill} from "../utils/api";
-import ConfirmationDialog from  '../components/ConfirmationDialog'
+import ConfirmationDialog from  '../containers/ConfirmationDialog'
 import "roboto-fontface/css/roboto/roboto-fontface.css"
 class ModifyCandidate extends React.Component {
     constructor(props) {

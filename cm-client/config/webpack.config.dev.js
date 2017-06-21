@@ -111,14 +111,21 @@ module.exports = {
                     // https://github.com/facebookincubator/create-react-app/issues/1713
                     /\.(js|jsx)(\?.*)?$/,
                     /\.css$/,
+                    /\.less$/,
                     /\.json$/,
-                    /\.svg$/
+                    /\.svg$/,
+                    /\.(eot|woff|woff2|ttf|png|jpg)$/
+
                 ],
                 loader: 'url',
                 query: {
                     limit: 10000,
                     name: 'static/media/[name].[hash:8].[ext]'
                 }
+            },
+            {
+                test: /\.(eot|woff|woff2|ttf|png|jpg)$/,
+                loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
             },
             // Process JS with Babel.
             {
@@ -147,6 +154,9 @@ module.exports = {
             {
                 test: /\.json$/,
                 loader: 'json'
+            },{
+              test: /\.less$/,
+              loader: "style-loader!css-loader!less-loader"
             },
             // "file" loader for svg
             {

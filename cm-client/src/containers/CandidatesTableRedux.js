@@ -5,10 +5,10 @@ import {fetchCandidates} from '../utils/api';
 import {fetchSkillsForCandidate} from '../utils/api';
 import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
 import EditCandidate from '../components/EditCandidate';
-import '../components/CandidatesTable.css';
 import {fetchEducationForCandidate, fetchTagForCandidateSkill} from "../utils/api";
 import ConfirmationDialog from  './ConfirmationDialog';
-import "roboto-fontface/css/roboto/roboto-fontface.css";
+import '../less/candidateTable.less';
+import "../less/roboto.less";
 
 import { connect } from 'react-redux';
 import { selectCandidate, loadCandidates } from '../actions/index';
@@ -167,7 +167,7 @@ class BasicTable extends React.Component {
 
     addCandidateButton = () => {
         return (
-            <a href="addCandidate" className="btn-lg" role="button" style={ {color: 'white', backgroundColor: '#841439'} }>Add Candidate</a>
+            <a href="addCandidate" className="btn-lg candidateCustomButton" role="button">Add Candidate</a>
         );
     };
 
@@ -199,7 +199,7 @@ class BasicTable extends React.Component {
     CustomExportCSVButton = (onClick) => {
         return (
 
-            <a className="btn-lg" role="button" onClick={ onClick } style={ {marginRight: 25, color: 'white', backgroundColor: '#841439'} }>Export CSV</a>
+            <a className="btn-lg candidateCustomButton" role="button" onClick={ onClick }  style={ {marginRight: 25}}>Export CSV</a>
 
         );
     };
@@ -227,19 +227,7 @@ class BasicTable extends React.Component {
         }
     }
 
-    headerStyle = {
-        fontSize: 22,
-        backgroundColor: "#841439",
-        color: 'white',
-        borderRadius: 5
-    };
 
-    bodyStyle = {
-        fontSize: 16,
-        fontFamily: "Roboto",
-        borderRadius: 5,
-        backgroundColor: '#f9f9f9'
-    };
 
     isExpandableRow = (row) => {
         return true;
@@ -248,7 +236,7 @@ class BasicTable extends React.Component {
     render() {
 
         return (
-            <BootstrapTable bodyStyle={this.bodyStyle} bordered={false} hover={true} striped={true} headerStyle={this.headerStyle}
+            <BootstrapTable tableBodyClass='candidateTableBodyClass' tableHeaderClass='candidateTableHeaderClass' bordered={false} hover={true} striped={true}
                             data={this.props.candidates } options={this.options} pagination
                             exportCSV={true} expandComponent={ this.expandCandidateDetails }
                             expandableRow={this.isExpandableRow} search insertRow>

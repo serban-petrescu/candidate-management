@@ -13,9 +13,7 @@ import $ from 'jquery';
 window.$ = $;
 // bootstrap
 import 'bootstrap';
-// bootstrap css
-import 'bootstrap/dist/css/bootstrap.css'
-
+import './less/main.less'
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 

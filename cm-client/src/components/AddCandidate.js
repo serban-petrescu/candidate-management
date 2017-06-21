@@ -2,7 +2,7 @@ import React from 'react';
 import {FormGroup, FormControl, ControlLabel, HelpBlock, Button, Grid, Row, Col} from 'react-bootstrap';
 import {addCandidate} from '../utils/api';
 import TopNavbar from './TopNavbar';
-import './AddCandidate.css';
+import '../less/addCandidate.less';
 
 let btnStyle = {color: 'white', backgroundColor: '#841439'};
 
