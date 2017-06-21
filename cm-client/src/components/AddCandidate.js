@@ -4,8 +4,6 @@ import {addCandidate} from '../utils/api';
 import TopNavbar from './TopNavbar';
 import '../less/addCandidate.less';
 
-let btnStyle = {color: 'white', backgroundColor: '#841439'};
-
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
         <FormGroup controlId={id} validationState={validationState}>
@@ -43,7 +41,7 @@ class ButtonAddCandidate extends React.Component {
             <div>
 
                 <Button
-                    style={btnStyle}
+                    className={'candidateCustomButton'}
                     disabled={isLoading || !isFormValid}
                     onClick={!isLoading ? this.handleClick : null}>
                     { isLoading ? 'Loading...' : 'Add Candidate'}
@@ -273,14 +271,14 @@ class AddCandidate extends React.Component {
                                             setConfirmationStatus={this.setConfirmationStatus}/>
                     </Col>
                     <Col xs={14} md={9}>
-                        <Button id="btn-home" className="float-right" style={btnStyle} href="/">Home</Button>
+                        <Button id="btn-home" className="float-right candidateCustomButton" href="/">Home</Button>
                     </Col>
                 </Row>
 
                 {/* Confirmation message section */}
                 <Row>
                     <Col xs={18} md={12}>
-                        <h2 className={(this.state.confirmationStatus ? 'success-message' : 'error-message') + ' text-center'} style={{color: '#841439'}}>{this.state.confirmationMessage}</h2>
+                        <h2 className={(this.state.confirmationStatus ? 'success-message' : 'error-message') + ' text-center'}>{this.state.confirmationMessage}</h2>
                     </Col>
                 </Row>
             </Grid>
