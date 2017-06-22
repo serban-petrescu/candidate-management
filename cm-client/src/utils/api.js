@@ -49,7 +49,10 @@ function addCandidate(candidate) {
     let url = "http://localhost:8080/api/candidates";
     return axios.post(url, candidate)
         .then((response) => {
-            return response;
+            return {
+                response,
+                candidate
+            };
         })
         .catch((error) => {
             return error;

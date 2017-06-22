@@ -1,9 +1,10 @@
-import {fetchCandidates, deleteCandidate,updateCandidate} from '../utils/api';
+import {fetchCandidates, deleteCandidate,updateCandidate, addCandidate as insertCandidate} from '../utils/api';
 
 export const LOAD_CANDIDATES = 'LOAD_CANDIDATES';
 export const SELECT_CANDIDATE = 'SELECT_CANDIDATE';
 export const REMOVE_CANDIDATE = 'DELETE_CANDIDATE';
 export const EDIT_CANDIDATE = 'EDIT_CANDIDATE';
+export const ADD_CANDIDATE = 'ADD_CANDIDATE';
 
 export function selectCandidate(candidate) {
     // selectCandidate is an ActionCreator, it needs to return an action,
@@ -28,16 +29,24 @@ export function removeCandidate(candidateId) {
     // (an object with type property )
     return {
         type: REMOVE_CANDIDATE,
-        payload: deleteCandidate(candidateId),
+        payload: deleteCandidate(candidateId)
     }
 }
 
 
 export function editCandidate(candidate) {
-    // deleteCandidate is an action creator, it needs to return an action
-    // (an object with type property )
     return {
         type: EDIT_CANDIDATE,
-        payload: updateCandidate(candidate),
+        payload: updateCandidate(candidate)
     }
 }
+
+
+export function addCandidate(candidate) {
+    //imported addCandidate as insert
+    return {
+        type: ADD_CANDIDATE,
+        payload: insertCandidate(candidate)
+    }
+}
+

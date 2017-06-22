@@ -1,4 +1,4 @@
-import {LOAD_CANDIDATES, REMOVE_CANDIDATE, EDIT_CANDIDATE} from '../actions'
+import {LOAD_CANDIDATES, REMOVE_CANDIDATE, EDIT_CANDIDATE,ADD_CANDIDATE} from '../actions'
 const updateCandidate = (state, candidate) => {
 
     const index = state.findIndex(item => {
@@ -13,11 +13,13 @@ const updateCandidate = (state, candidate) => {
         ...state.slice(index + 1)
     ];
 };
+
 export default function (state = [], action) {
 
     switch (action.type) {
+        case ADD_CANDIDATE:
+            return [action.payload.candidate,...state];
         case EDIT_CANDIDATE:
-
             return updateCandidate(state, action.payload.candidate);
         case LOAD_CANDIDATES:
             return action.payload;

@@ -13,7 +13,7 @@ class EditCandidate extends React.Component {
             candidate: this.props.candidate
         };
         this._open = () => this.open();
-        this._close = ()=> this.close();
+        this._close = () => this.close();
     }
 
     close() {
@@ -42,7 +42,7 @@ class EditCandidate extends React.Component {
         return (
             <div style={{display: "inline"}}>
                 <button onClick={this._open} type="button" className="btn-defaultCustom btn btn-default">
-                  <span style={{color:"blue"}} className="glyphicon glyphicon-pencil" />
+                    <span style={{color: "blue"}} className="glyphicon glyphicon-pencil"/>
                 </button>
 
                 <Modal show={this.state.showModal} onHide={this._close}>
@@ -99,18 +99,9 @@ class EditCandidate extends React.Component {
     }
 }
 
-
-function mapStateToProps(state) {
-    return {
-        candidates: state.candidates
-    };
-}
-// Anything returned from this function will end up as props
-// on the ConfirmationDialog component
 function mapDispatchToProps(dispatch) {
-    // whenever deleteCandidate is called, the result should be passed
-    // to all our reducers
-    return bindActionCreators({ editCandidate: editCandidate}, dispatch);
+
+    return bindActionCreators({editCandidate: editCandidate}, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditCandidate);
+export default connect(null, mapDispatchToProps)(EditCandidate);

@@ -1,8 +1,11 @@
 import React from 'react';
 import {FormGroup, FormControl, ControlLabel, HelpBlock, Button, Grid, Row, Col} from 'react-bootstrap';
-import {addCandidate} from '../utils/api';
+import {addCandidate} from '../actions/index';
 import TopNavbar from './TopNavbar';
 import '../less/addCandidate.less';
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import ButtonAddCandidate from './ButtonAddCandidate'
 
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
@@ -12,43 +15,6 @@ function FieldGroup({id, label, validationState, help, ...props}) {
             { help && <HelpBlock>{help}</HelpBlock>}
         </FormGroup>
     )
-}
-
-class ButtonAddCandidate extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: false
-        }
-    }
-
-    handleClick = () => {
-        this.setState({isLoading: true});
-        this.props.setConfirmationStatus('pending');
-        this.props.submitCandidate()
-            .then((response) => {
-                this.setState({isLoading: false});
-                this.props.setConfirmationStatus(response.status === 201 ? 'success' : 'failed');
-            })
-    };
-
-    render() {
-        let isLoading = this.state.isLoading;
-        let isFormValid = this.props.formValid;
-
-        return (
-
-            <div>
-
-                <Button
-                    className={'candidateCustomButton'}
-                    disabled={isLoading || !isFormValid}
-                    onClick={!isLoading ? this.handleClick : null}>
-                    { isLoading ? 'Loading...' : 'Add Candidate'}
-                </Button>
-            </div>
-        )
-    }
 }
 
 class AddCandidate extends React.Component {
@@ -192,7 +158,7 @@ class AddCandidate extends React.Component {
             email: this.state.emailAddress,
             phone: this.state.phoneNumber
         };
-        return addCandidate(candidate);
+        return this.props.addCandidate(candidate);
     };
 
     setConfirmationStatus = (confirmationStatus) => {
@@ -287,4 +253,8 @@ class AddCandidate extends React.Component {
     }
 }
 
-export default AddCandidate;
+function mapDispatchToProps(dispatch) {
+
+    return bindActionCreators({addCandidate: addCandidate}, dispatch);
+}
+export default connect(null, mapDispatchToProps)(AddCandidate);
