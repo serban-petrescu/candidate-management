@@ -2,6 +2,7 @@ import React from 'react';
 import msgLogo from '../assets/images/msgLogo.png'
 import "roboto-fontface/css/roboto/roboto-fontface.css"
 import '../less/candidateTopNavbar.less'
+import {ROOT_URL} from '../actions/index';
 export default class TopNavbar extends React.Component {
 
     render() {
@@ -12,7 +13,7 @@ export default class TopNavbar extends React.Component {
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <a className="navbar-brand" href="#">
-                                <img href="http://localhost:3000" alt="Brand" src={msgLogo} width={100} height={35}/>
+                                <img href="${ROOT_URL}:3000" alt="Brand" src={msgLogo} width={100} height={35}/>
                             </a>
 
                         </div>

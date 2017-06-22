@@ -1,12 +1,51 @@
 import axios from 'axios';
 
-function fetchCandidates() {
+function fetchCandidates(url) {
 
-    let url = "http://localhost:8080/api/candidates";
     return axios.get(url).then(function (response) {
         return response.data._embedded.candidates;
     });
 }
+
+function deleteCandidate(url, candidateId) {
+    return axios.delete(url)
+        .then((response) => {
+            return {
+                response,
+                candidateId
+            };
+        })
+        .catch((error) => {
+            return error;
+        });
+}
+
+function updateCandidate(url, candidate) {
+    return axios.put(url, candidate)
+        .then((response) => {
+            return {
+                response,
+                candidate
+            };
+        })
+        .catch((error) => {
+            return error;
+        });
+}
+
+function addCandidate(url,candidate) {
+    return axios.post(url, candidate)
+        .then((response) => {
+            return {
+                response,
+                candidate
+            };
+        })
+        .catch((error) => {
+            return error;
+        });
+}
+
 
 function fetchSkillsForCandidate(url) {
     return axios.get(url).then(function (response) {
@@ -45,47 +84,6 @@ function fetchTagForCandidateSkill(url) {
         console.log(error);
     });
 }
-function addCandidate(candidate) {
-    let url = "http://localhost:8080/api/candidates";
-    return axios.post(url, candidate)
-        .then((response) => {
-            return {
-                response,
-                candidate
-            };
-        })
-        .catch((error) => {
-            return error;
-        });
-}
 
-function deleteCandidate(candidateId) {
-    let url = "http://localhost:8080/api/candidates/" + candidateId;
-    return axios.delete(url)
-        .then((response) => {
-            return {
-                response,
-                candidateId
-            };
-        })
-        .catch((error) => {
-            return error;
-        });
-}
-
-
-function updateCandidate(candidate) {
-    let url = "http://localhost:8080/api/candidates/" + candidate.id;
-    return axios.put(url, candidate)
-        .then((response) => {
-            return {
-                response,
-                candidate
-            };
-        })
-        .catch((error) => {
-            return error;
-        });
-}
 
 export {updateCandidate, deleteCandidate, fetchEducationForCandidate, fetchCandidates, addCandidate, fetchSkillsForCandidate, fetchTagForCandidateSkill};

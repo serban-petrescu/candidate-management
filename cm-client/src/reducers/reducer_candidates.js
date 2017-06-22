@@ -23,7 +23,6 @@ export default function (state = [], action) {
             return updateCandidate(state, action.payload.candidate);
         case LOAD_CANDIDATES:
             return action.payload;
-            
         case REMOVE_CANDIDATE:
             const responseStatus = action.payload.response.status;
             if (responseStatus >= 200 && responseStatus < 300) {
