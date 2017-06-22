@@ -1,5 +1,4 @@
 import React from 'react';
-import CandidatesTable from './CandidatesTable';
 import CandidatesTableRedux from '../containers/CandidatesTableRedux';
 import TopNavbar from './TopNavbar';
 

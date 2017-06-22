@@ -13,35 +13,35 @@ function fetchSkillsForCandidate(url) {
         return response.data._embedded.candidateSkillses.map(function (key) {
             return {
                 tagLink: key._links.tag.href,
-                rating :   key.rating,
+                rating: key.rating,
                 certifier: key.certifier
             }
         });
-    }).catch((error)=> {
+    }).catch((error) => {
         console.log(error);
     });
 }
 function fetchEducationForCandidate(url) {
     return axios.get(url).then(function (response) {
-            return {
-                educationType: response.data.educationType,
-                provider :   response.data.provider,
-                description: response.data.description
-            }
+        return {
+            educationType: response.data.educationType,
+            provider: response.data.provider,
+            description: response.data.description
+        }
 
-    }).catch((error)=> {
+    }).catch((error) => {
         console.log(error);
     });
 }
 function fetchTagForCandidateSkill(url) {
     return axios.get(url).then(function (response) {
 
-        return{
+        return {
             id: response.data.id,
-            description:response.data.description,
+            description: response.data.description,
             tagType: response.data.tagType
         }
-    }).catch((error)=> {
+    }).catch((error) => {
         console.log(error);
     });
 }
@@ -57,7 +57,7 @@ function addCandidate(candidate) {
 }
 
 function deleteCandidate(candidateId) {
-    let url = "http://localhost:8080/api/candidates/"+candidateId;
+    let url = "http://localhost:8080/api/candidates/" + candidateId;
     return axios.delete(url)
         .then((response) => {
             return {
@@ -72,14 +72,17 @@ function deleteCandidate(candidateId) {
 
 
 function updateCandidate(candidate) {
-    let url = "http://localhost:8080/api/candidates/"+candidate.id;
+    let url = "http://localhost:8080/api/candidates/" + candidate.id;
     return axios.put(url, candidate)
         .then((response) => {
-            return response;
+            return {
+                response,
+                candidate
+            };
         })
         .catch((error) => {
             return error;
         });
 }
 
-export {updateCandidate,deleteCandidate,fetchEducationForCandidate,fetchCandidates, addCandidate,fetchSkillsForCandidate,fetchTagForCandidateSkill};
+export {updateCandidate, deleteCandidate, fetchEducationForCandidate, fetchCandidates, addCandidate, fetchSkillsForCandidate, fetchTagForCandidateSkill};

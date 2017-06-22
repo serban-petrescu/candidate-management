@@ -6,6 +6,7 @@ export default function (state=null, action) { // if state is undefined set it t
     switch (action.type) {
         case SELECT_CANDIDATE:
             return action.payload;
+        default:
     }
 
     return state;

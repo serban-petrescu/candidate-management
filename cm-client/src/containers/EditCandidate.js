@@ -1,6 +1,8 @@
 import React from 'react';
 import {Button, Modal, Form, FormGroup, Col, FormControl, ControlLabel} from 'react-bootstrap';
-import {updateCandidate} from "../utils/api";
+import {bindActionCreators} from "redux";
+import {editCandidate} from "../actions/index";
+import {connect} from "react-redux";
 
 class EditCandidate extends React.Component {
 
@@ -32,18 +34,15 @@ class EditCandidate extends React.Component {
         );
     };
     updateCandidatePersonalInfo = () => {
-        updateCandidate(this.state.candidate).then(response => {
-            this.props.refreshCandidateTable();
-            this.setState({showModal: false});
-        });
+        this.props.editCandidate(this.state.candidate);
+        this.setState({showModal: false});
     };
 
     render() {
-
         return (
             <div style={{display: "inline"}}>
                 <button onClick={this._open} type="button" className="btn-defaultCustom btn btn-default">
-                  <span style={{color:"blue"}}className="glyphicon glyphicon-pencil" />
+                  <span style={{color:"blue"}} className="glyphicon glyphicon-pencil" />
                 </button>
 
                 <Modal show={this.state.showModal} onHide={this._close}>
@@ -57,7 +56,7 @@ class EditCandidate extends React.Component {
                                     First Name
                                 </Col>
                                 <Col sm={6}>
-                                    <FormControl type="text" name='firstName' placeholder={this.state.candidate.firstName} onChange={this.handleChange}/>
+                                    <FormControl type="text" name='firstName' value={this.state.candidate.firstName} onChange={this.handleChange}/>
                                 </Col>
                             </FormGroup>
 
@@ -66,7 +65,7 @@ class EditCandidate extends React.Component {
                                     Last Name
                                 </Col>
                                 <Col sm={6}>
-                                    <FormControl type="text" name='lastName' placeholder={this.state.candidate.lastName} onChange={this.handleChange}/>
+                                    <FormControl type="text" name='lastName' value={this.state.candidate.lastName} onChange={this.handleChange}/>
                                 </Col>
                             </FormGroup>
 
@@ -75,7 +74,7 @@ class EditCandidate extends React.Component {
                                     Email
                                 </Col>
                                 <Col sm={6}>
-                                    <FormControl type="email" name='email' placeholder={this.state.candidate.email} onChange={this.handleChange}/>
+                                    <FormControl type="email" name='email' value={this.state.candidate.email} onChange={this.handleChange}/>
                                 </Col>
                             </FormGroup>
 
@@ -84,7 +83,7 @@ class EditCandidate extends React.Component {
                                     Phone
                                 </Col>
                                 <Col sm={6}>
-                                    <FormControl type="tel" name='phone' placeholder={this.state.candidate.phone} onChange={this.handleChange}/>
+                                    <FormControl type="tel" name='phone' value={this.state.candidate.phone} onChange={this.handleChange}/>
                                 </Col>
                             </FormGroup>
                         </Form>
@@ -100,4 +99,18 @@ class EditCandidate extends React.Component {
     }
 }
 
-export default EditCandidate;
+
+function mapStateToProps(state) {
+    return {
+        candidates: state.candidates
+    };
+}
+// Anything returned from this function will end up as props
+// on the ConfirmationDialog component
+function mapDispatchToProps(dispatch) {
+    // whenever deleteCandidate is called, the result should be passed
+    // to all our reducers
+    return bindActionCreators({ editCandidate: editCandidate}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditCandidate);

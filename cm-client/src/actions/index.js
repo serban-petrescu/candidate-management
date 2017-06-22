@@ -1,9 +1,9 @@
-import {fetchCandidates, deleteCandidate} from '../utils/api';
+import {fetchCandidates, deleteCandidate,updateCandidate} from '../utils/api';
 
 export const LOAD_CANDIDATES = 'LOAD_CANDIDATES';
 export const SELECT_CANDIDATE = 'SELECT_CANDIDATE';
 export const REMOVE_CANDIDATE = 'DELETE_CANDIDATE';
-
+export const EDIT_CANDIDATE = 'EDIT_CANDIDATE';
 
 export function selectCandidate(candidate) {
     // selectCandidate is an ActionCreator, it needs to return an action,
@@ -15,7 +15,6 @@ export function selectCandidate(candidate) {
 }
 
 export function loadCandidates() {
-
     //payload is a promise that will be unwrapped by the redux-promise middleware
     return {
         type: LOAD_CANDIDATES,
@@ -30,5 +29,15 @@ export function removeCandidate(candidateId) {
     return {
         type: REMOVE_CANDIDATE,
         payload: deleteCandidate(candidateId),
+    }
+}
+
+
+export function editCandidate(candidate) {
+    // deleteCandidate is an action creator, it needs to return an action
+    // (an object with type property )
+    return {
+        type: EDIT_CANDIDATE,
+        payload: updateCandidate(candidate),
     }
 }

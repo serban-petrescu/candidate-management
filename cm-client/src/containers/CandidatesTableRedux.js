@@ -4,14 +4,14 @@ import {Tab, Tabs} from 'react-bootstrap';
 import {fetchCandidates} from '../utils/api';
 import {fetchSkillsForCandidate} from '../utils/api';
 import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
-import EditCandidate from '../components/EditCandidate';
+import EditCandidate from './EditCandidate';
 import {fetchEducationForCandidate, fetchTagForCandidateSkill} from "../utils/api";
 import ConfirmationDialog from  './ConfirmationDialog';
 import '../less/candidateTable.less';
 import "../less/roboto.less";
 
 import { connect } from 'react-redux';
-import { selectCandidate, loadCandidates } from '../actions/index';
+import { selectCandidate, loadCandidates} from '../actions/index';
 
 import { bindActionCreators } from 'redux';
 
@@ -152,7 +152,7 @@ class BasicTable extends React.Component {
 
     actionsFormatter = (cell, row) => {
         return (<div style={{display: "inline"}} onClick={() => this.props.selectCandidate(row)}>
-            <EditCandidate refreshCandidateTable={this.handlechange} candidate={row}/>
+            <EditCandidate candidate={row}/>
             <ConfirmationDialog/>
         </div>);
     };
@@ -172,16 +172,6 @@ class BasicTable extends React.Component {
     };
 
 
-    handlechange = ()=> {
-        fetchCandidates().then(candidates => {
-
-
-            this.setState({
-                candidates: candidates,
-                detailViewActiveTab: "1"
-            });
-        });
-    };
 
     handleSelect = (selectedTab) => {
         // The active tab must be set into the state so that
