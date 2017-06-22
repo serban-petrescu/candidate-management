@@ -1,5 +1,5 @@
 import React from 'react';
-import CandidatesTableRedux from '../containers/CandidatesTableRedux';
+import CandidatesTableRedux from '../containers/CandidatesTable';
 import TopNavbar from './TopNavbar';
 
 const Home = () => {

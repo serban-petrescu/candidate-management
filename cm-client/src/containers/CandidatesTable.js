@@ -1,133 +1,20 @@
 import React from 'react';
 import {SearchField, BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {Tab, Tabs} from 'react-bootstrap';
-import {fetchCandidates} from '../utils/api';
-import {fetchSkillsForCandidate} from '../utils/api';
 import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
 import EditCandidate from './EditCandidate';
-import {fetchEducationForCandidate, fetchTagForCandidateSkill} from "../utils/api";
 import ConfirmationDialog from  './ConfirmationDialog';
 import '../less/candidateTable.less';
 import "../less/roboto.less";
-
-import { connect } from 'react-redux';
-import { selectCandidate, loadCandidates} from '../actions/index';
-
-import { bindActionCreators } from 'redux';
-
-class ModifyCandidate extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            candidate: this.props.candidate
-        };
-    }
-
-    render() {
-        return (
-            <ul className="list-group">
-                <li className="list-group-item">
-                    To be added
-                </li>
-            </ul>
-        )
-    }
-}
-class EducationList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            educationData: {}
-        };
-    }
-
-    componentDidMount() {
-        fetchEducationForCandidate(this.props.educationLink).then(response => {
-            this.setState({
-                educationType: response.educationType,
-                provider: response.provider,
-                description: response.description
-            });
-        });
-    }
-
-    render() {
-
-        return (
-            <ul className="list-group">
-                <li className="list-group-item">
-                    {this.state.educationType}
-                </li>
-
-                <li className="list-group-item">
-                    {this.state.provider}
-                </li>
-
-                <li className="list-group-item">
-                    {this.state.description}
-                </li>
-            </ul>
-        )
-    }
-}
-class SkillItem extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            description: "",
-            tagType: "",
-            rating: props.rating
-        };
-    }
-
-    componentDidMount() {
-        fetchTagForCandidateSkill(this.props.tagLink).then(data => {
-            this.setState({
-                description: data.description,
-                tagType: data.tagType,
-            });
-        });
-    }
-
-    render() {
-
-        return (
-            <li className="list-group-item">
-                {this.state.tagType} : {this.state.description} : {this.state.rating}
-            </li>
-        )
-    }
-}
-class SkillsList extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            tagLinks: []
-        };
-    }
-
-    componentDidMount() {
-        fetchSkillsForCandidate(this.props.skillsUrl).then(data => {
-            this.setState({
-                tagLinks: data
-            });
-        });
-    }
-
-    render() {
-
-        return (
-            <ul className="list-group">{this.state.tagLinks.map((data, index) => {
-                return ( < SkillItem key={index} tagLink={data.tagLink} rating={data.rating}/>);
-            })}</ul>
-        )
-    }
-}
+import SkillsList from '../components/SkillsList'
+import {connect} from 'react-redux';
+import {selectCandidate, loadCandidates} from '../actions/index';
+import {bindActionCreators} from 'redux';
+import EducationList from "../components/EducationList";
 
 
-class BasicTable extends React.Component {
+
+class CandidatesTable extends React.Component {
 
     constructor(props) {
 
@@ -139,8 +26,8 @@ class BasicTable extends React.Component {
 
 
         this.options = {
-            defaultSortName: 'lastName', //default sort column name
-            defaultSortOrder: 'asc', // default sort order
+            defaultSortName: 'lastName',
+            defaultSortOrder: 'asc',
             insertBtn: this.addCandidateButton,
             paginationPosition: 'bottom',
             exportCSVBtn: this.CustomExportCSVButton,
@@ -172,15 +59,12 @@ class BasicTable extends React.Component {
     };
 
 
-
     handleSelect = (selectedTab) => {
-        // The active tab must be set into the state so that
-        // the Tabs component knows about the change and re-renders.
         this.setState({
             activeTab: selectedTab
         });
     };
-    CustomSearchField = (props) => {
+    CustomSearchField = () => {
         return (
             <SearchField className="form-control" placeholder='Search ...'/>);
 
@@ -189,7 +73,7 @@ class BasicTable extends React.Component {
     CustomExportCSVButton = (onClick) => {
         return (
 
-            <a className="btn-lg candidateCustomButton" role="button" onClick={ onClick }  style={ {marginRight: 25}}>Export CSV</a>
+            <a className="btn-lg candidateCustomButton" role="button" onClick={ onClick } style={ {marginRight: 25}}>Export CSV</a>
 
         );
     };
@@ -198,16 +82,14 @@ class BasicTable extends React.Component {
         let candidate = [];
         candidate.push(row);
 
-      /*  return (
+         return (
 
-            <Tabs onSelect={this.handleSelect} id="controlled-tab-example">
-                <Tab eventKey={1} title="Skills"><SkillsList skillsUrl={row._links.candidateSkillsList.href}/></Tab>
-                <Tab eventKey={2} title="Education"> <EducationList educationLink={row._links.education.href}/></Tab>
-                <Tab eventKey={3} title="Modify"> <ModifyCandidate refreshCandidateTable={this.handlechange} candidate={row}/></Tab>
-            </Tabs>
-        )*/
+         <Tabs onSelect={this.handleSelect} id="controlled-tab-example">
+         <Tab eventKey={1} title="Skills"><SkillsList skillsUrl={row._links.candidateSkillsList.href}/></Tab>
+         <Tab eventKey={2} title="Education"> <EducationList educationLink={row._links.education.href}/></Tab>
+         </Tabs>
+         )
     };
-
 
     getFilter(placeHolder) {
         return {
@@ -216,10 +98,7 @@ class BasicTable extends React.Component {
             delay: 1000
         }
     }
-
-
-
-    isExpandableRow = (row) => {
+    isExpandableRow = () => {
         return true;
     };
 
@@ -243,7 +122,8 @@ class BasicTable extends React.Component {
                                    dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
                 <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
                                    dataField='phone'>Phone</TableHeaderColumn>
-                <TableHeaderColumn expandable={false}  dataField='id' dataFormat={ this.actionsFormatter } tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} }
+                <TableHeaderColumn expandable={false} dataField='id' dataFormat={ this.actionsFormatter }
+                                   tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} }
                                    thStyle={ {'textAlign': 'center',} }>
                     Actions
                 </TableHeaderColumn>
@@ -251,7 +131,6 @@ class BasicTable extends React.Component {
         );
     }
 }
-
 function mapStateToProps(state) {
     return {
         candidates: state.candidates
@@ -262,8 +141,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     // whenever deleteCandidate is called, the result should be passed
     // to all our reducers
-    return bindActionCreators({ selectCandidate: selectCandidate, loadCandidates: loadCandidates}, dispatch);
+    return bindActionCreators({selectCandidate: selectCandidate, loadCandidates: loadCandidates}, dispatch);
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(BasicTable);
+export default connect(mapStateToProps, mapDispatchToProps)(CandidatesTable);

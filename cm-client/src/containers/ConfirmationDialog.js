@@ -1,6 +1,3 @@
-/**
- * Created by blajv on 18.05.2017.
- */
 import React from 'react';
 import {Button, Modal} from 'react-bootstrap';
 import { connect } from 'react-redux';
