@@ -13,18 +13,17 @@ import {bindActionCreators} from 'redux';
 import EducationList from "../components/EducationList";
 
 
-
+/**
+ * Main Component containing the table where all the Candidates will be viewed and
+ * processed.
+ */
 class CandidatesTable extends React.Component {
 
     constructor(props) {
-
+        // State does not contain candidate because they are kept in the global state
         super(props);
-        this.state = {
-            candidates: null,
-            detailViewActiveTab: 2
-        };
 
-
+        // We have 3 custom components
         this.options = {
             defaultSortName: 'lastName',
             defaultSortOrder: 'asc',
@@ -37,6 +36,13 @@ class CandidatesTable extends React.Component {
 
     }
 
+    /**
+     * In the Actions tab of the table we have to wrap the candidate info and pass it down to
+     * two other components: Edit and delete.
+     * @param cell
+     * @param row
+     * @returns {XML}
+     */
     actionsFormatter = (cell, row) => {
         return (<div style={{display: "inline"}} onClick={() => this.props.selectCandidate(row)}>
             <EditCandidate candidate={row}/>
@@ -45,9 +51,6 @@ class CandidatesTable extends React.Component {
     };
 
     componentDidMount() {
-        this.setState({
-            detailViewActiveTab: "1"
-        });
         this.props.loadCandidates();
 
     }
@@ -58,12 +61,6 @@ class CandidatesTable extends React.Component {
         );
     };
 
-
-    handleSelect = (selectedTab) => {
-        this.setState({
-            activeTab: selectedTab
-        });
-    };
     CustomSearchField = () => {
         return (
             <SearchField className="form-control" placeholder='Search ...'/>);
@@ -77,20 +74,29 @@ class CandidatesTable extends React.Component {
 
         );
     };
-
+    /**
+     * Called when a user clicks on a row. For each row, two tabs will be displayed one containing
+     * the Skill and one containing the Education list.
+     * @param row containing candidate information. row is actually a candidate
+     * @returns {JSX}
+     */
     expandCandidateDetails = (row) => {
         let candidate = [];
         candidate.push(row);
 
-         return (
-
-         <Tabs onSelect={this.handleSelect} id="controlled-tab-example">
-         <Tab eventKey={1} title="Skills"><SkillsList skillsUrl={row._links.candidateSkillsList.href}/></Tab>
-         <Tab eventKey={2} title="Education"> <EducationList educationLink={row._links.education.href}/></Tab>
-         </Tabs>
-         )
+        return (
+            <Tabs id="controlled-tab-example">
+                <Tab eventKey={1} title="Skills"><SkillsList skillsUrl={row._links.candidateSkillsList.href}/></Tab>
+                <Tab eventKey={2} title="Education"> <EducationList educationLink={row._links.education.href}/></Tab>
+            </Tabs>
+        )
     };
 
+    /**
+     * Placeholder for each of the filters
+     * @param placeHolder field name where filter input will be placed
+     * @returns {{type: string, placeholder: *, delay: number}}
+     */
     getFilter(placeHolder) {
         return {
             type: 'RegexFilter',
@@ -98,10 +104,18 @@ class CandidatesTable extends React.Component {
             delay: 1000
         }
     }
+
     isExpandableRow = () => {
         return true;
     };
 
+    /**
+     * Bootstrap table instance. The table is built based on the data provided in data={this.props.candidates} and the header columns.
+     *  Each Header Column has a dataField which coincides with the a field present in a row(candidate) dataField='id'. The table is automatically built
+     *  based on these two pieces of information. The custom components are fed to the table through the options property.
+     *  @link http://allenfang.github.io/react-bootstrap-table/example.html#custom
+        * @returns {XML}
+     */
     render() {
 
         return (

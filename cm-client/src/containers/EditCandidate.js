@@ -3,7 +3,15 @@ import {Button, Modal, Form, FormGroup, Col, FormControl, ControlLabel} from 're
 import {bindActionCreators} from "redux";
 import {editCandidate} from "../actions/index";
 import {connect} from "react-redux";
-
+/**
+ * Component used when the used clicks on the edit button.
+ * An internal state containing a candidate will be used.
+ * We do not keep the candidate in the redux global state because whenever
+ * the user will type a letter the candidate will be updated and maybe at the end
+ * the user will not press save but still the candidate will be changed.
+ * Using an internal state lets us only update the global redux state when the user pressed
+ * on save.
+ */
 class EditCandidate extends React.Component {
 
     constructor(props) {
@@ -16,14 +24,29 @@ class EditCandidate extends React.Component {
         this._close = () => this.close();
     }
 
+    /**
+     * Close the edit dialog
+     */
     close() {
         this.setState({showModal: false});
     }
 
+    /**
+     * Open the edit dialog
+     */
     open() {
         this.setState({showModal: true});
     }
 
+    /**
+     * Whenever a user types something on one of the inputs, handle change will update the candidate info
+     * based on the field name taken from the event. For example when typing something into email input:
+     * fieldName will be taken from inputs name attribute --> event.target.name = email
+     * fieldVal will be take from inputs value attribute --> event.target.value = whatever user typed;
+     * {...this.state.candidate, [fieldName]: fieldVal} a new candidate object created from the old candidate's fields
+     * having their fieldName(email) update with the fieldVal(whatever user typed)
+     * @param event
+     */
     handleChange = (event) => {
         let fieldName = event.target.name;
         let fieldVal = event.target.value;
@@ -98,10 +121,16 @@ class EditCandidate extends React.Component {
         )
     }
 }
-
+/**
+ * Hook components up to redux actions without having a dependency on redux using
+ * bindActionsCreators function.
+ * @returns {{editCandidate: editCandidate}|B|N}
+ */
 function mapDispatchToProps(dispatch) {
 
     return bindActionCreators({editCandidate: editCandidate}, dispatch);
 }
-
+/**
+ * Connect components to the redux store of the application
+ */
 export default connect(null, mapDispatchToProps)(EditCandidate);

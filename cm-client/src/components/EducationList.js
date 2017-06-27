@@ -3,6 +3,10 @@
  */
 import React from 'react';
 import {fetchEducationForCandidate} from "../utils/api";
+/**
+ * Component used to display all the education data of the selected candidate
+ * by accessing the Education tab.
+ */
 export default class EducationList extends React.Component {
     constructor(props) {
         super(props);

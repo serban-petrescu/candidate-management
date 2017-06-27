@@ -3,6 +3,9 @@
  */
 import React from 'react';
 import { fetchTagForCandidateSkill} from "../utils/api";
+/**
+ * Component which describes a single set of skills a candidate has
+ */
 export default class SkillItem extends React.Component {
 
     constructor(props) {

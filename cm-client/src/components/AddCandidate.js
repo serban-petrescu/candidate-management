@@ -16,7 +16,9 @@ function FieldGroup({id, label, validationState, help, ...props}) {
         </FormGroup>
     )
 }
-
+/**
+ * Component handling the add operation of a candidate
+ */
 class AddCandidate extends React.Component {
 
     constructor(props) {

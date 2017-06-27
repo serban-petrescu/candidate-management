@@ -2,7 +2,9 @@ import React from 'react';
 import msgLogo from '../assets/images/msgLogo.png'
 import "roboto-fontface/css/roboto/roboto-fontface.css"
 import '../less/candidateTopNavbar.less'
-import {ROOT_URL} from '../actions/index';
+/**
+ * Component containing the msg logo and the top navigation bar
+ */
 export default class TopNavbar extends React.Component {
 
     render() {

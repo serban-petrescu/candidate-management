@@ -1,5 +1,9 @@
 import React from "react";
 import {Button} from 'react-bootstrap';
+/**
+ *  Add the candidate to the candidate list based on the
+ *  candidate received as props.
+ */
 export default class ButtonAddCandidate extends React.Component {
     constructor(props) {
         super(props);
