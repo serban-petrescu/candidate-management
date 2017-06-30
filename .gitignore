@@ -26,6 +26,7 @@ cm-server/.factorypath
 cm-server/.project
 cm-server/.settings
 cm-server/.springBeans
+cm-server/.properties
 
 #Idea
 **/.idea/*
@@ -40,3 +41,7 @@ cm-server/nbbuild/
 cm-server/dist/
 cm-server/nbdist/
 cm-server/.nb-gradle/
+
+
+#config.propertie
+config.properties
