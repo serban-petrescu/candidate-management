@@ -1,5 +1,6 @@
 package ro.msg.cm.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Candidate {
 
 	private @Id @GeneratedValue Long id;
@@ -26,6 +28,8 @@ public class Candidate {
 	private String event;
 	private @OneToMany(mappedBy = "candidate") @OrderBy("tag ASC ")
     List<CandidateSkills> candidateSkillsList;
+	private @OneToMany(mappedBy = "candidate")
+	List<CandidateNotes> candidateNotesList;
 
 	public Candidate() {}
 
