@@ -11,6 +11,7 @@ import {connect} from 'react-redux';
 import {selectCandidate, loadCandidates} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import EducationList from "../components/EducationList";
+import NotesList from "../components/NotesList";
 
 
 /**
@@ -88,6 +89,7 @@ class CandidatesTable extends React.Component {
             <Tabs id="controlled-tab-example">
                 <Tab eventKey={1} title="Skills"><SkillsList skillsUrl={row._links.candidateSkillsList.href}/></Tab>
                 <Tab eventKey={2} title="Education"> <EducationList educationLink={row._links.education.href}/></Tab>
+                <Tab eventKey={3} title="Notes"><NotesList notesUrl={row._links.candidateNotesList.href}/></Tab>
             </Tabs>
         )
     };

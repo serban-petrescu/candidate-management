@@ -133,5 +133,48 @@ function fetchTagForCandidateSkill(url) {
     });
 }
 
+/**
+ * Get a list of all the notes a candidate has. Iterate over each response using
+ * the map function and for every object return a newly create object containing the
+ * relevant information.
+ * @param url to which the GET request should be made
+ * @returns {Promise} containing a list of objects each having a status and a note
+ */
+function fetchNotesForCandidate(url) {
+    return axios.get(url).then(function (response) {
+        return response.data._embedded.candidateNoteses.map(function (key) {
+            return {
+                status: key.status,
+                note: key.note,
+                date:key.date
+            }
+        });
+    }).catch((error) => {
+        console.log(error);
+    });
+}
 
-export {updateCandidate, deleteCandidate, fetchEducationForCandidate, fetchCandidates, addCandidate, fetchSkillsForCandidate, fetchTagForCandidateSkill};
+/**
+ * Add a candidate note to the list of available candidate notes.
+ * Return a Promise containing the response and the added note.
+ * The promise will be red by middleware module and sent to reducer as an Object.
+ * @param url to which the POST request should be made
+ * @param note - object of type note containing the new candidate
+ * @returns {Promise}
+ */
+function addCandidateNote(url, note) {
+    console.log(note);
+    return axios.post(url, note)
+        .then((response) => {
+            return {
+                response,
+                note
+            };
+        })
+        .catch((error) => {
+            return error;
+        });
+}
+
+
+export {updateCandidate, deleteCandidate, fetchEducationForCandidate, fetchCandidates, addCandidate, fetchSkillsForCandidate, fetchTagForCandidateSkill,fetchNotesForCandidate,addCandidateNote};
