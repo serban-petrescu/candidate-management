@@ -153,7 +153,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
         this.candidateSkillsRepository.save(new CandidateSkills(test, trial, "average"));
 
-        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference"));
+        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference",null));
 
     }
 

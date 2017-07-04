@@ -15,19 +15,20 @@ import java.sql.Date;
 @Getter
 @Setter
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CandidateNotes {
     private @Id @GeneratedValue Long id;
-    private @ManyToOne @JoinColumn(name="candidate_id") Candidate candidate;
+    private @ManyToOne(fetch = FetchType.EAGER) @JoinColumn(name="candidate_id", insertable=true) Candidate candidate;
     private String status;
     private String note;
     private Date date;
 
     public CandidateNotes(){}
 
-    public CandidateNotes(Candidate candidate, String status, String note){
+    public CandidateNotes(Candidate candidate, String status, String note, Date date){
         this.candidate=candidate;
         this.status = status;
         this.note=note;
+        this.date=date;
     }
 }
