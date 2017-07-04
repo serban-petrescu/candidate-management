@@ -22,7 +22,6 @@ export default class ButtonAddCandidateNote extends React.Component {
 
     render() {
         let isLoading = this.state.isLoading;
-        let isFormValid = this.props.formValid;
 
         return (
 

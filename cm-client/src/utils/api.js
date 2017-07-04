@@ -154,6 +154,7 @@ function fetchNotesForCandidate(url) {
     });
 }
 
+
 /**
  * Add a candidate note to the list of available candidate notes.
  * Return a Promise containing the response and the added note.

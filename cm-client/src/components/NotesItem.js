@@ -1,5 +1,4 @@
 import React from 'react';
-import {fetchNotesForCandidate} from "../utils/api";
 /**
  * Component used to display all the notes data of the selected candidate
  * by accessing the Notes tab.
@@ -10,7 +9,9 @@ export default class NotesItem extends React.Component {
         this.state = {
             date: props.date,
             status: props.status,
-            note:props.note};
+            note:props.note,
+            candidate:props.candidate
+        };
     }
 
     render() {

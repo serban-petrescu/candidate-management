@@ -9,6 +9,8 @@ export const ADD_CANDIDATE_NOTE = 'ADD_CANDIDATE_NOTE';
 export const ROOT_URL = "http://localhost";
 export const PORT = 8080;
 export const CANDIDATES_URL = `${ROOT_URL}:${PORT}/api/candidates`;
+export const CANDIDATES_NOTES_URL = `${ROOT_URL}:${PORT}/api/candidateNoteses`;
+
 /**
  * Actions are plain JavaScript objects. Actions must have a type property that indicates the type of action being performed.
  * Actions are payloads of information that send data from your application to your store. They are the only source of information for the store.
@@ -64,11 +66,12 @@ export function addCandidate(candidate) {
     }
 }
 
-export function addCandidateNote(note) {
-    let ADD_URL = CANDIDATES_URL;
+export function     addCandidateNote(note) {
+    let ADD_URL = CANDIDATES_NOTES_URL;
     return {
         type: ADD_CANDIDATE_NOTE,
         payload: insertCandidateNote(ADD_URL, note)
     }
 }
+
 

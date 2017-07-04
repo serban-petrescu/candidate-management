@@ -1,6 +1,5 @@
 import React from 'react';
 import AddCandidate from './AddCandidate';
-import AddNote from './AddNote';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Home from './Home'
 /**
@@ -15,11 +14,11 @@ class App extends React.Component {
                 <div>
                     <Route exact={true} path="/" component={Home}/>
                     <Route path="/addCandidate" component={AddCandidate}/>
-                    <Route path="/addCandidateNote" component={AddNote}/>
+
                 </div>
             </Router>
         );
     }
 }
-
+// <Route path="/addCandidateNote" component={AddNote}/>
 export default App;
