@@ -146,7 +146,7 @@ function fetchNotesForCandidate(url) {
             return {
                 status: key.status,
                 note: key.note,
-                date:key.date
+                date: key.date
             }
         });
     }).catch((error) => {
@@ -159,23 +159,47 @@ function fetchNotesForCandidate(url) {
  * Add a candidate note to the list of available candidate notes.
  * Return a Promise containing the response and the added note.
  * The promise will be red by middleware module and sent to reducer as an Object.
- * @param url to which the POST request should be made
+ * @param notesUrl to which the POST request should be made
+ * @param candidatesUrl url of candidate which should be bound to the added note's candidate
  * @param note - object of type note containing the new candidate
  * @returns {Promise}
  */
-function addCandidateNote(url, note) {
+function addCandidateNote(notesUrl, candidatesUrl, note) {
     console.log(note);
-    return axios.post(url, note)
+
+    // first, create note
+    let axiosResponse = axios.post(notesUrl, note)
         .then((response) => {
-            return {
-                response,
-                note
-            };
+            // this put request need text/uri-list as content type
+            axios.defaults.headers.put['Content-Type'] = 'text/uri-list';
+            // then, bind the candidate entity to the note's candidate
+            axios.put(notesUrl + "/" + response.data.id + "/candidate"
+                , candidatesUrl + "/" + note.candidate_id)
+                .then((response) => {
+                    return {response, note};
+                }).catch((error) => {
+                return error;
+            });
         })
         .catch((error) => {
             return error;
         });
+
+    // revert content type header of put requests to the default value
+    axios.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+
+    return axiosResponse;
 }
 
 
-export {updateCandidate, deleteCandidate, fetchEducationForCandidate, fetchCandidates, addCandidate, fetchSkillsForCandidate, fetchTagForCandidateSkill,fetchNotesForCandidate,addCandidateNote};
+export {
+    updateCandidate,
+    deleteCandidate,
+    fetchEducationForCandidate,
+    fetchCandidates,
+    addCandidate,
+    fetchSkillsForCandidate,
+    fetchTagForCandidateSkill,
+    fetchNotesForCandidate,
+    addCandidateNote
+};

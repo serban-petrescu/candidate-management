@@ -68,9 +68,10 @@ export function addCandidate(candidate) {
 
 export function     addCandidateNote(note) {
     let ADD_URL = CANDIDATES_NOTES_URL;
+
     return {
         type: ADD_CANDIDATE_NOTE,
-        payload: insertCandidateNote(ADD_URL, note)
+        payload: insertCandidateNote(ADD_URL, CANDIDATES_URL, note)
     }
 }
 
