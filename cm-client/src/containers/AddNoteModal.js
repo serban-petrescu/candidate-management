@@ -17,14 +17,11 @@ class AddNoteModal extends React.Component {
 
     constructor(props) {
         super(props);
-        var today = new Date(),
-            date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-            this.props.candidate.candidateNotesList = this.props.existingCandidateNotes;
         this.state = {
             showModal: false,
             candidate: this.props.candidate,
             candidate_id:this.props.candidate.id,
-            date:date,
+            date:getPrettyDate(),
             status: '',
             note: '',
             confirmationMessage: '',
@@ -72,7 +69,7 @@ class AddNoteModal extends React.Component {
             status: this.state.status,
             note: this.state.note
         };
-        this.props.addCandidateNote(candidateNote);
+        this.props.addCandidateNote(candidateNote,this.state.candidate);
         this.setState({showModal: false});
     };
 
@@ -126,6 +123,14 @@ class AddNoteModal extends React.Component {
             </div>
         )
     }
+}
+
+function getPrettyDate(){
+    var today = new Date();
+    var prettyMonth = ((today.getMonth() + 1)<10)?'-0':'-';
+    var prettyDay = (today.getDate()<10)?'-0':'-';
+    var date = today.getFullYear()+ prettyMonth+(today.getMonth()+1) + prettyDay+today.getDate();
+    return date;
 }
 /**
  * Hook components up to redux actions without having a dependency on redux using

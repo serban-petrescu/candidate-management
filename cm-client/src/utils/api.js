@@ -164,8 +164,7 @@ function fetchNotesForCandidate(url) {
  * @param note - object of type note containing the new candidate
  * @returns {Promise}
  */
-function addCandidateNote(notesUrl, candidatesUrl, note) {
-    console.log(note);
+function addCandidateNote(notesUrl, candidatesUrl, note,candidate) {
 
     // first, create note
     let axiosResponse = axios.post(notesUrl, note)
@@ -173,10 +172,10 @@ function addCandidateNote(notesUrl, candidatesUrl, note) {
             // this put request need text/uri-list as content type
             axios.defaults.headers.put['Content-Type'] = 'text/uri-list';
             // then, bind the candidate entity to the note's candidate
-            axios.put(notesUrl + "/" + response.data.id + "/candidate"
+            return axios.put(notesUrl + "/" + response.data.id + "/candidate"
                 , candidatesUrl + "/" + note.candidate_id)
                 .then((response) => {
-                    return {response, note};
+                    return {response, note,candidate};
                 }).catch((error) => {
                 return error;
             });

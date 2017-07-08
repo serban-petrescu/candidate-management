@@ -66,12 +66,12 @@ export function addCandidate(candidate) {
     }
 }
 
-export function     addCandidateNote(note) {
+export function     addCandidateNote(note,candidate) {
     let ADD_URL = CANDIDATES_NOTES_URL;
 
     return {
         type: ADD_CANDIDATE_NOTE,
-        payload: insertCandidateNote(ADD_URL, CANDIDATES_URL, note)
+        payload: insertCandidateNote(ADD_URL, CANDIDATES_URL, note,candidate)
     }
 }
 

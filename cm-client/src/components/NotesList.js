@@ -12,10 +12,10 @@ export default class NotesList extends React.Component {
 
     constructor(props) {
         super(props);
+        let candidateA = props.candidate;
+        candidateA.candidateNotesList=[];
         this.state = {
-            candidate:props.candidate,
-            data:[]
-
+            candidate:candidateA
         };
         this.options = {
             insertBtn: this.addCandidateNoteButton,
@@ -27,12 +27,10 @@ export default class NotesList extends React.Component {
 
     componentDidMount() {
         fetchNotesForCandidate(this.props.notesUrl).then(data => {
-            console.log("data",data);
-
-            this.setState({
-                data:data
-
-                           });
+            //console.log("data",data);
+            let candidateA = this.state.candidate;
+            candidateA.candidateNotesList=data;
+            this.setState({candidate: candidateA});
         });
     }
 
@@ -62,7 +60,7 @@ export default class NotesList extends React.Component {
     render(){
         return (
             <BootstrapTable tableBodyClass='candidateNotesTableBodyClass' tableHeaderClass='candidateNotesTableHeaderClass' bordered={false} hover={true} striped={true}
-                            data={this.state.data}  options={this.options} insertRow >
+                            data={this.state.candidate.candidateNotesList}  options={this.options} insertRow >
 
                 <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
                                    dataField='date' isKey={true}>Date</TableHeaderColumn>
