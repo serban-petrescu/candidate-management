@@ -1,6 +1,6 @@
 import axios from 'axios';
 /*
-* Add a candidate to the list of available candidates.
+* Add a candidate.
 * Return a Promise containing the response and the added candidate.
 * The promise will be red by middleware module and sent to reducer as an Object.
 * @param url to which the POST request should be made
