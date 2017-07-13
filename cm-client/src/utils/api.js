@@ -162,6 +162,7 @@ function fetchNotesForCandidate(url) {
  * @param notesUrl to which the POST request should be made
  * @param candidatesUrl url of candidate which should be bound to the added note's candidate
  * @param note - object of type note containing the new candidate
+ * @param candidate - object of type candidate whose note it is
  * @returns {Promise}
  */
 function addCandidateNote(notesUrl, candidatesUrl, note,candidate) {

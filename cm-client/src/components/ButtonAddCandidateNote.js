@@ -13,7 +13,6 @@ export default class ButtonAddCandidateNote extends React.Component {
     }
 
     handleClick = () => {
-      //  this.props.setConfirmationStatus('pending');
         this.props.submitCandidateNote()
             .then((response) => {
                 this.props.setConfirmationStatus(response.payload.response.status === 201 ? 'success' : 'failed');

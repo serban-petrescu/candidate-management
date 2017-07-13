@@ -30,14 +30,12 @@ export function selectCandidate(candidate) {
     }
 }
 
-
 export function loadCandidates() {
     return {
         type: LOAD_CANDIDATES,
         payload: fetchCandidates(CANDIDATES_URL)
     }
 }
-
 
 export function removeCandidate(candidateId) {
     // deleteCandidate is an action creator, it needs to return an action
@@ -59,19 +57,16 @@ export function editCandidate(candidate) {
 }
 
 export function addCandidate(candidate) {
-    let ADD_URL = CANDIDATES_URL;
     return {
         type: ADD_CANDIDATE,
-        payload: insertCandidate(ADD_URL, candidate)
+        payload: insertCandidate(CANDIDATES_URL, candidate)
     }
 }
 
 export function     addCandidateNote(note,candidate) {
-    let ADD_URL = CANDIDATES_NOTES_URL;
-
     return {
         type: ADD_CANDIDATE_NOTE,
-        payload: insertCandidateNote(ADD_URL, CANDIDATES_URL, note,candidate)
+        payload: insertCandidateNote(CANDIDATES_NOTES_URL, CANDIDATES_URL, note,candidate)
     }
 }
 
