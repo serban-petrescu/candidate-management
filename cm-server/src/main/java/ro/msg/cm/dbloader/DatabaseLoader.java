@@ -25,14 +25,8 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
-import ro.msg.cm.model.Candidate;
-import ro.msg.cm.model.CandidateSkills;
-import ro.msg.cm.model.Education;
-import ro.msg.cm.model.Tag;
-import ro.msg.cm.repository.CandidateRepository;
-import ro.msg.cm.repository.CandidateSkillsRepository;
-import ro.msg.cm.repository.EducationRepository;
-import ro.msg.cm.repository.TagRepository;
+import ro.msg.cm.model.*;
+import ro.msg.cm.repository.*;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -51,25 +45,34 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private final CandidateSkillsRepository candidateSkillsRepository;
 
+    private final CandidateNotesRepository candidateNotesRepository;
+
     @Autowired
     public DatabaseLoader(CandidateRepository candidateRepository, TagRepository tagRepository, EducationRepository educationRepository,
-            CandidateSkillsRepository candidateSkillsRepository) {
+                          CandidateSkillsRepository candidateSkillsRepository, CandidateNotesRepository candidateNotesRepository) {
         this.candidateRepository = candidateRepository;
         this.tagRepository = tagRepository;
         this.educationRepository = educationRepository;
         this.candidateSkillsRepository = candidateSkillsRepository;
+        this.candidateNotesRepository = candidateNotesRepository;
     }
 
     @Override
     public void run(String... strings) throws Exception {
-        if(!isDatabaseEmpty()){
+  /*      if(!isDatabaseEmpty()){
             emptyDatabase();
              }
          loadEducation();
         loadFromMockDataCSV();
 
         // clean previous data in the table
-
+        Education education = new Education("Master", "UTCN", "Information Technology");
+        this.educationRepository.save(education);
+        Candidate test = new Candidate("Candidate", "Notes");
+        test.setEducation(education);
+        this.candidateRepository.save(test);
+        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference"));
+*/
     }
 
     private void emptyDatabase() {
@@ -139,6 +142,7 @@ public class DatabaseLoader implements CommandLineRunner {
         this.candidateRepository.save(new Candidate("Paulo", "Dybala"));
         Candidate test = new Candidate("Alex", "Sandro");
         test.setEducation(education);
+
         this.candidateRepository.save(test);
 
         this.tagRepository.save(new Tag("German", "foreign"));
@@ -148,6 +152,8 @@ public class DatabaseLoader implements CommandLineRunner {
         this.candidateRepository.save(test);
 
         this.candidateSkillsRepository.save(new CandidateSkills(test, trial, "average"));
+
+        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference",null));
 
     }
 

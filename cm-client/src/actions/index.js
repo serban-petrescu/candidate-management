@@ -1,13 +1,16 @@
-import {fetchCandidates, deleteCandidate,updateCandidate, addCandidate as insertCandidate} from '../utils/api';
+import {fetchCandidates, deleteCandidate,updateCandidate, addCandidate as insertCandidate, addCandidateNote as insertCandidateNote} from '../utils/api';
 
 export const LOAD_CANDIDATES = 'LOAD_CANDIDATES';
 export const SELECT_CANDIDATE = 'SELECT_CANDIDATE';
 export const REMOVE_CANDIDATE = 'DELETE_CANDIDATE';
 export const EDIT_CANDIDATE = 'EDIT_CANDIDATE';
 export const ADD_CANDIDATE = 'ADD_CANDIDATE';
+export const ADD_CANDIDATE_NOTE = 'ADD_CANDIDATE_NOTE';
 export const ROOT_URL = "http://localhost";
 export const PORT = 8080;
 export const CANDIDATES_URL = `${ROOT_URL}:${PORT}/api/candidates`;
+export const CANDIDATES_NOTES_URL = `${ROOT_URL}:${PORT}/api/candidateNoteses`;
+
 /**
  * Actions are plain JavaScript objects. Actions must have a type property that indicates the type of action being performed.
  * Actions are payloads of information that send data from your application to your store. They are the only source of information for the store.
@@ -27,14 +30,12 @@ export function selectCandidate(candidate) {
     }
 }
 
-
 export function loadCandidates() {
     return {
         type: LOAD_CANDIDATES,
         payload: fetchCandidates(CANDIDATES_URL)
     }
 }
-
 
 export function removeCandidate(candidateId) {
     // deleteCandidate is an action creator, it needs to return an action
@@ -56,10 +57,17 @@ export function editCandidate(candidate) {
 }
 
 export function addCandidate(candidate) {
-    let ADD_URL = CANDIDATES_URL;
     return {
         type: ADD_CANDIDATE,
-        payload: insertCandidate(ADD_URL, candidate)
+        payload: insertCandidate(CANDIDATES_URL, candidate)
     }
 }
+
+export function     addCandidateNote(note,candidate) {
+    return {
+        type: ADD_CANDIDATE_NOTE,
+        payload: insertCandidateNote(CANDIDATES_NOTES_URL, CANDIDATES_URL, note,candidate)
+    }
+}
+
 

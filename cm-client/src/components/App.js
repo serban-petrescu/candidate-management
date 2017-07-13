@@ -14,10 +14,11 @@ class App extends React.Component {
                 <div>
                     <Route exact={true} path="/" component={Home}/>
                     <Route path="/addCandidate" component={AddCandidate}/>
+
                 </div>
             </Router>
         );
     }
 }
-
+// <Route path="/addCandidateNote" component={AddNote}/>
 export default App;

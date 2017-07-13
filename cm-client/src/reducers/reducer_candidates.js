@@ -1,4 +1,4 @@
-import {LOAD_CANDIDATES, REMOVE_CANDIDATE, EDIT_CANDIDATE, ADD_CANDIDATE} from '../actions'
+import {LOAD_CANDIDATES, REMOVE_CANDIDATE, EDIT_CANDIDATE, ADD_CANDIDATE, ADD_CANDIDATE_NOTE} from '../actions'
 /**
  * Updates the candidates list and return a newly created object containing the state
  * with the update candidate
@@ -24,6 +24,24 @@ const updateCandidate = (state, candidate) => {
         ...state.slice(index + 1)
     ];
 };
+
+/**
+ * Update the Candidate Note List with the newly added List*/
+const updateCandidateNotes = (state, note)=>{
+    //find the index of the element that should be updated based on the element's id
+    const index = state.findIndex(item => {
+        return item.id === note.candidate_id
+    });
+    let candidate = state[index];
+    candidate.candidateNotesList=[note, ...candidate.candidateNotesList];
+    return [
+        ...state.slice(0, index),
+       candidate,
+        ...state.slice(index + 1)
+    ];
+
+}
+
 /**
  * Match the actions dispatched to this reducer. The constants are imported from
  * ../actions/index.js so the action name will be consistent throughout the calls.
@@ -48,7 +66,9 @@ export default function (state = [], action) {
                 });
             }
             break;
-        default:
+        case ADD_CANDIDATE_NOTE:
+            console.log(action.payload);
+            return updateCandidateNotes(state, action.payload.note);
 
     }
     return state;
