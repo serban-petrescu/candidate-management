@@ -18,21 +18,17 @@ package ro.msg.cm.dbloader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.io.CsvBeanReader;
-import org.supercsv.io.CsvBeanWriter;
-import org.supercsv.io.ICsvBeanReader;
-import org.supercsv.io.ICsvBeanWriter;
-import org.supercsv.prefs.CsvPreference;
+
 import ro.msg.cm.model.*;
 import ro.msg.cm.repository.*;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import java.io.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
+
 
 @Component
 public class DatabaseLoader implements CommandLineRunner {
@@ -59,34 +55,43 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-  /*      if(!isDatabaseEmpty()){
+       // loadData();
+    }
+
+    public void loadData() throws Exception {
+        if (!isDatabaseEmpty()) {
             emptyDatabase();
-             }
-         loadEducation();
+        }
+        loadEducation();
         loadFromMockDataCSV();
 
         // clean previous data in the table
-        Education education = new Education("Master", "UTCN", "Information Technology");
+        Education education = new Education("Master", "UTCN", "Information Technology",2);
         this.educationRepository.save(education);
-        Candidate test = new Candidate("Candidate", "Notes");
-        test.setEducation(education);
-        this.candidateRepository.save(test);
-        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference"));
-*/
+
+
+//        Candidate test = new Candidate("Candidate", "Notes");
+//        Date date = new Date();
+//        Candidate test = new Candidate("first","lastname","phone","mail","education",2,"string", date);
+//        test.setEducation(education);
+//        this.candidateRepository.save(test);
+//
+//        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference",date));
+
     }
 
     private void emptyDatabase() {
         this.candidateSkillsRepository.deleteAll();
         this.candidateRepository.deleteAll();
-       // this.educationRepository.deleteAll();
+        // this.educationRepository.deleteAll();
         this.tagRepository.deleteAll();
 
     }
 
     private void loadEducation() {
-        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics"));
-        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics"));
-        Education education = new Education("Master", "UTCN", "Information Technology");
+        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics",3));
+        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics",4));
+        Education education = new Education("Master", "UTCN", "Information Technology",2);
         this.educationRepository.save(education);
     }
 
@@ -112,9 +117,16 @@ public class DatabaseLoader implements CommandLineRunner {
                     Education education = this.educationRepository.findOne(Long.parseLong(elements[8]));
 
                     String educationStatus = elements[7];
-                    int studyYear = Integer.parseInt(elements[6]);
+                    int originalStudyYear = Integer.parseInt(elements[6]);
                     String event = elements[4];
-                    Candidate candidate = new Candidate(firstName, lastName, phone, email, educationStatus, studyYear, event);
+                    Date dateOfAdding = null;
+                    String dateToTransform = elements[9];
+                    if (!dateToTransform.equals("0000-00-00 00:00") || !dateToTransform.isEmpty()) {
+                        dateOfAdding = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateToTransform);
+
+                    }
+
+                    Candidate candidate = new Candidate(firstName, lastName, phone, email, educationStatus, originalStudyYear, event, dateOfAdding);
                     candidate.setEducation(education);
 
                     this.candidateRepository.save(candidate);
@@ -125,14 +137,16 @@ public class DatabaseLoader implements CommandLineRunner {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
     private void defaultMockData() {
         emptyDatabase();
-        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics"));
-        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics"));
-        Education education = new Education("Master", "UTCN", "Information Technology");
+        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics",3));
+        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics",4));
+        Education education = new Education("Master", "UTCN", "Information Technology",2);
 
         this.educationRepository.save(education);
 
@@ -153,7 +167,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
         this.candidateSkillsRepository.save(new CandidateSkills(test, trial, "average"));
 
-        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference",null));
+        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference", null));
 
     }
 
