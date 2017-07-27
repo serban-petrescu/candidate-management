@@ -24,7 +24,9 @@ class CandidatesTable extends React.Component {
         // State does not contain candidate because they are kept in the global state
         super(props);
 
-        // We have 3 custom components
+        // We have 4 custom components
+        // using the deleteBtn as an workaround for missing additionalButtons functionality
+        // alternative :https://github.com/AllenFang/react-bootstrap-table/commit/7e9b799d9ea555c374023fff179040c2ced6d6c0
         this.options = {
             defaultSortName: 'lastName',
             defaultSortOrder: 'asc',
@@ -32,7 +34,8 @@ class CandidatesTable extends React.Component {
             paginationPosition: 'bottom',
             exportCSVBtn: this.CustomExportCSVButton,
             searchField: this.CustomSearchField,
-            expandBy: 'column'
+            expandBy: 'column',
+            deleteBtn: this.importButton,
         };
 
     }
@@ -58,7 +61,13 @@ class CandidatesTable extends React.Component {
 
     addCandidateButton = () => {
         return (
-            <a href="addCandidate" className="btn-lg candidateCustomButton" role="button">Add Candidate</a>
+            <a href="addCandidate" className="btn-lg candidateCustomButton" role="button" style={ {marginRight: 25}}>Add Candidate</a>
+        );
+    };
+
+    importButton = () => {
+        return (
+            <a href="import" className="btn-lg candidateCustomButton" role="button">Import CSV</a>
         );
     };
 
@@ -111,6 +120,8 @@ class CandidatesTable extends React.Component {
         return true;
     };
 
+
+
     /**
      * Bootstrap table instance. The table is built based on the data provided in data={this.props.candidates} and the header columns.
      *  Each Header Column has a dataField which coincides with the a field present in a row(candidate) dataField='id'. The table is automatically built
@@ -124,7 +135,7 @@ class CandidatesTable extends React.Component {
             <BootstrapTable tableBodyClass='candidateTableBodyClass' tableHeaderClass='candidateTableHeaderClass' bordered={false} hover={true} striped={true}
                             data={this.props.candidates } options={this.options} pagination
                             exportCSV={true} expandComponent={ this.expandCandidateDetails }
-                            expandableRow={this.isExpandableRow} search insertRow>
+                            expandableRow={this.isExpandableRow} search insertRow deleteRow>
 
                 <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
                                    dataField='id' filter={this.getFilter('Candidate Id')} isKey={ true }>Candidate
@@ -147,6 +158,32 @@ class CandidatesTable extends React.Component {
         );
     }
 }
+class BootstrapTableMSG extends BootstrapTable {
+    constructor(props) {
+        // State does not contain candidate because they are kept in the global state
+        super(props);
+
+        // We have 4 custom components
+        this.options = {
+            defaultSortName: 'lastName',
+            defaultSortOrder: 'asc',
+            insertBtn: this.addCandidateButton,
+            paginationPosition: 'bottom',
+            exportCSVBtn: this.CustomExportCSVButton,
+            searchField: this.CustomSearchField,
+            expandBy: 'column',
+            deleteBtn: this.importButton,
+        };
+
+    }
+    renderToolBar() {
+        const { selectRow, insertRow, deleteRow, search, additionalButtons, children } = this.props;
+        const enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
+        if (enableShowOnlySelected
+            || insertRow){}
+    }
+}
+
 function mapStateToProps(state) {
     return {
         candidates: state.candidates

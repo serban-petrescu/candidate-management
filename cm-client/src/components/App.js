@@ -1,7 +1,8 @@
 import React from 'react';
 import AddCandidate from './AddCandidate';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import Home from './Home'
+import Home from './Home';
+import Import from './Import';
 /**
  * Each route will be identified in a <Route> component. The <Route> component will take two properties:
  * path and component. When a path matches the path given to the <Route> component, it will return
@@ -14,6 +15,7 @@ class App extends React.Component {
                 <div>
                     <Route exact={true} path="/" component={Home}/>
                     <Route path="/addCandidate" component={AddCandidate}/>
+                    <Route path="/import" component={Import}/>
 
                 </div>
             </Router>
