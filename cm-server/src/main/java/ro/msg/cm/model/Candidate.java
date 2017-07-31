@@ -32,7 +32,7 @@ public class Candidate {
 	private @OneToMany(mappedBy = "candidate")
 	List<CandidateNotes> candidateNotesList;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfAdding;
 
 	@Transient

@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 
 @Component
@@ -55,7 +56,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-       // loadData();
+        //  loadData();
     }
 
     public void loadData() throws Exception {
@@ -66,7 +67,7 @@ public class DatabaseLoader implements CommandLineRunner {
         loadFromMockDataCSV();
 
         // clean previous data in the table
-        Education education = new Education("Master", "UTCN", "Information Technology",2);
+        Education education = new Education("Master", "UTCN", "Information Technology", 2);
         this.educationRepository.save(education);
 
 
@@ -89,9 +90,9 @@ public class DatabaseLoader implements CommandLineRunner {
     }
 
     private void loadEducation() {
-        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics",3));
-        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics",4));
-        Education education = new Education("Master", "UTCN", "Information Technology",2);
+        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics", 3));
+        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics", 4));
+        Education education = new Education("Master", "UTCN", "Information Technology", 2);
         this.educationRepository.save(education);
     }
 
@@ -120,10 +121,13 @@ public class DatabaseLoader implements CommandLineRunner {
                     int originalStudyYear = Integer.parseInt(elements[6]);
                     String event = elements[4];
                     Date dateOfAdding = null;
-                    String dateToTransform = elements[9];
-                    if (!dateToTransform.equals("0000-00-00 00:00") || !dateToTransform.isEmpty()) {
-                        dateOfAdding = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateToTransform);
 
+
+                    String dateToTransform = elements[9];
+                    if (!dateToTransform.equals("0000-00-00") || !dateToTransform.isEmpty()) {
+                        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+                        d.setTimeZone(TimeZone.getTimeZone("UTC"));
+                        dateOfAdding = d.parse(dateToTransform);
                     }
 
                     Candidate candidate = new Candidate(firstName, lastName, phone, email, educationStatus, originalStudyYear, event, dateOfAdding);
@@ -144,9 +148,9 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private void defaultMockData() {
         emptyDatabase();
-        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics",3));
-        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics",4));
-        Education education = new Education("Master", "UTCN", "Information Technology",2);
+        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics", 3));
+        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics", 4));
+        Education education = new Education("Master", "UTCN", "Information Technology", 2);
 
         this.educationRepository.save(education);
 
