@@ -103,7 +103,9 @@ public class DatabaseLoader implements CommandLineRunner {
         String cvsSplitBy = ",";
         String header = null;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        InputStream is = getClass().getResourceAsStream("/MockDataCSV.csv");
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 
             while ((line = br.readLine()) != null) {
                 if (header == null) {
