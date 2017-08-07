@@ -1,17 +1,14 @@
 package ro.msg.cm.controller;
 
-import java.net.URI;
-import java.util.Properties;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import ro.msg.cm.configuration.PropertiesLoader;
 import ro.msg.cm.model.GoogleResponse;
 import ro.msg.cm.model.GoogleValidationCode;
+
+import java.net.URI;
+import java.util.Properties;
 
 /**
  * Client app will send a request using a validation code as a payload (GoogleValidationCode).

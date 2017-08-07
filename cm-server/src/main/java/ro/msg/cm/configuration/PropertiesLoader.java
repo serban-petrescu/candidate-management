@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- Properties loader class
+ * Properties loader class
  */
 public class PropertiesLoader {
 

@@ -8,48 +8,43 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Getter
 @Setter
 @Entity
+@Table(name = "candidate_not_validated")
+
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Candidate {
-
+public class CandidateNotValidated {
     private @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "email")
     private String email;
-    private @ManyToOne
-    @JoinColumn(name = "education_id", nullable = true)
-    Education education;
+    @Column(name = "education_status")
     private String educationStatus;
+    @Column(name = "original_study_year")
     private int originalStudyYear;
+    @Column(name = "event")
     private String event;
-    private @OneToMany(mappedBy = "candidate")
-    @OrderBy("tag ASC ")
-    List<CandidateSkills> candidateSkillsList;
-    private @OneToMany(mappedBy = "candidate")
-    List<CandidateNotes> candidateNotesList;
-
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateOfAdding;
 
-    @Transient
-    private int currentStudyYear;
-
-    public Candidate() {
+    public CandidateNotValidated() {
     }
 
-    public Candidate(String firstName, String lastName) {
+    public CandidateNotValidated(String firstName, String lastName) {
         this(firstName, lastName, null, null);
     }
 
-    public Candidate(String firstName, String lastName, String phone, String email) {
+    public CandidateNotValidated(String firstName, String lastName, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -57,7 +52,7 @@ public class Candidate {
 
     }
 
-    public Candidate(String firstName, String lastName, String phone, String email, String educationStatus, int originalStudyYear, String event, Date dateOfAdding) {
+    public CandidateNotValidated(String firstName, String lastName, String phone, String email, String educationStatus, int originalStudyYear, String event, Date dateOfAdding) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -68,10 +63,4 @@ public class Candidate {
         this.dateOfAdding = dateOfAdding;
 
     }
-
-
-    public void setEducation(Education education) {
-        this.education = education;
-    }
-
 }

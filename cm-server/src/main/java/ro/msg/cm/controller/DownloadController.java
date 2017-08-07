@@ -1,11 +1,5 @@
 package ro.msg.cm.controller;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,9 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
-
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.repository.CandidateRepository;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 
 @RestController
 @RequestMapping("/api/download")

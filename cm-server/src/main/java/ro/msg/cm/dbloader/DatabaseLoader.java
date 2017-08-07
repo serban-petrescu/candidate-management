@@ -18,15 +18,12 @@ package ro.msg.cm.dbloader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import ro.msg.cm.model.*;
 import ro.msg.cm.repository.*;
 
 import java.io.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -56,7 +53,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-          loadData();
+        //    loadData();
     }
 
     public void loadData() throws Exception {
