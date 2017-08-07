@@ -69,10 +69,11 @@ public class UpdateStudyYearController {
     }
 
     private int determineYearBasedOnDuration(Candidate candidate) throws ParseException {
-
         int currentStudyYear = calculateStudyYear(candidate);
-        if (currentStudyYear > getDurationOfStudy(candidate)) {
-            currentStudyYear = -1;
+        if (candidate.getEducation() != null) {
+            if (currentStudyYear > getDurationOfStudy(candidate)) {
+                currentStudyYear = -1;
+            }
         }
         return currentStudyYear;
     }
@@ -83,27 +84,27 @@ public class UpdateStudyYearController {
 
     private int getMonthOfStartingUniversityYear() throws ParseException {
         Date startYearDate = appendCurrentYearToMonthDayFormatDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startYearDate);
-        return calendar.get(Calendar.MONTH) + 1;
+        return calculateCalendarMonth(startYearDate);
     }
 
     private int getMonthOfCurrentYear() {
         Date currentDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
-        return calendar.get(Calendar.MONTH) + 1;
+        return calculateCalendarMonth(currentDate);
     }
 
     private int getMonthOfAddingYear(Candidate candidate) {
         Date addingDate = candidate.getDateOfAdding();
+        return calculateCalendarMonth(addingDate);
+    }
+
+    private int calculateCalendarMonth(Date addingDate) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(addingDate);
         return calendar.get(Calendar.MONTH) + 1;
     }
 
     private Date appendCurrentYearToMonthDayFormatDate() throws ParseException {
-        int year = Calendar.getInstance().get(Calendar.YEAR);
+        int year = Calendar.getInstance().get(YEAR);
         String yearString = Integer.toString(year);
         SimpleDateFormat dateformatMMDD = new SimpleDateFormat("MM-dd");
         Date startYearDate = getStartYearDateFromConfigurationFile();

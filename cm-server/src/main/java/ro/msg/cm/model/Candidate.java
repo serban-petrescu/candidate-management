@@ -58,10 +58,7 @@ public class Candidate {
     }
 
     public Candidate(String firstName, String lastName, String phone, String email, String educationStatus, int originalStudyYear, String event, Date dateOfAdding) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.email = email;
+        this(firstName, lastName, phone, email);
         this.educationStatus = educationStatus;
         this.originalStudyYear = originalStudyYear;
         this.event = event;

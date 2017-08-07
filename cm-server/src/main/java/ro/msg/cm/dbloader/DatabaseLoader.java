@@ -53,7 +53,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        //    loadData();
+        //   loadData();
     }
 
     public void loadData() throws Exception {
@@ -119,15 +119,13 @@ public class DatabaseLoader implements CommandLineRunner {
                     String educationStatus = elements[7];
                     int originalStudyYear = Integer.parseInt(elements[6]);
                     String event = elements[4];
-                    Date dateOfAdding = null;
-
+                    Date dateOfAdding;
 
                     String dateToTransform = elements[9];
-                    if (!dateToTransform.equals("0000-00-00") || !dateToTransform.isEmpty()) {
-                        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
-                        d.setTimeZone(TimeZone.getTimeZone("UTC"));
-                        dateOfAdding = d.parse(dateToTransform);
-                    }
+
+                    SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+                    d.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    dateOfAdding = d.parse(dateToTransform);
 
                     Candidate candidate = new Candidate(firstName, lastName, phone, email, educationStatus, originalStudyYear, event, dateOfAdding);
                     candidate.setEducation(education);

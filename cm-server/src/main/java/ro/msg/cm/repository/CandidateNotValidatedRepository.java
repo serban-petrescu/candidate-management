@@ -27,19 +27,19 @@ public interface CandidateNotValidatedRepository extends CrudRepository<Candidat
     void insertIntoCandidateNotValidated(String last_name, int original_study_year);
 
     @Modifying
-    @Query(value = "INSERT INTO candidate(date_of_adding,education_status,email,first_name, last_name,original_study_year,phone) " +
-            " SELECT date_of_adding,education_status,email,first_name, last_name,original_study_year,phone FROM candidate_not_validated", nativeQuery = true)
+    @Query(value = "INSERT INTO candidate(date_of_adding,education_status,email,first_name, last_name,original_study_year,phone,education_id) " +
+            " SELECT date_of_adding,education_status,email,first_name, last_name,original_study_year,phone,education_id FROM candidate_not_validated", nativeQuery = true)
     void insertAll();
 
     @Modifying
-    @Query(value = "INSERT INTO candidate(date_of_adding,education_status,email,first_name, last_name,original_study_year,phone) " +
-            " SELECT date_of_adding,education_status,email,first_name, last_name,original_study_year,phone FROM candidate_not_validated WHERE id=(?1)",
+    @Query(value = "INSERT INTO candidate(date_of_adding,education_status,email,first_name, last_name,original_study_year,phone,education_id) " +
+            " SELECT date_of_adding,education_status,email,first_name, last_name,original_study_year,phone,education_id FROM candidate_not_validated WHERE id=(?1)",
             nativeQuery = true)
     void insertById(Long id);
 
     @Modifying
-    @Query(value = "INSERT INTO candidate(date_of_adding,education_status,email,first_name, last_name,original_study_year,phone) " +
-            " SELECT date_of_adding,education_status,email,first_name, last_name,original_study_year,phone FROM candidate_not_validated WHERE id IN (?1)",
+    @Query(value = "INSERT INTO candidate(date_of_adding,education_status,email,first_name, last_name,original_study_year,phone,education_id) " +
+            " SELECT date_of_adding,education_status,email,first_name, last_name,original_study_year,phone,education_id FROM candidate_not_validated WHERE id IN (?1)",
             nativeQuery = true)
     void insertByListOfIds(List<Long> listOfIds);
 }

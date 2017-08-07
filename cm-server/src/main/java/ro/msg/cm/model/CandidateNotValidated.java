@@ -37,6 +37,10 @@ public class CandidateNotValidated {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateOfAdding;
 
+    private @ManyToOne
+    @JoinColumn(name = "education_id")
+    Education education;
+
     public CandidateNotValidated() {
     }
 
@@ -53,10 +57,7 @@ public class CandidateNotValidated {
     }
 
     public CandidateNotValidated(String firstName, String lastName, String phone, String email, String educationStatus, int originalStudyYear, String event, Date dateOfAdding) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.email = email;
+        this(firstName, lastName, phone, email);
         this.educationStatus = educationStatus;
         this.originalStudyYear = originalStudyYear;
         this.event = event;
