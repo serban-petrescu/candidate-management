@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import ro.msg.cm.util.UpdateStudyYearUtils;
 
 import javax.persistence.*;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -68,6 +70,11 @@ public class Candidate {
 	public void setEducation(Education education)
 	{
 		this.education = education;
+	}
+
+	@PostLoad
+	public void computeCurrentStudyYear() throws ParseException {
+		this.currentStudyYear = UpdateStudyYearUtils.determineYearBasedOnDuration(this);
 	}
 
 }

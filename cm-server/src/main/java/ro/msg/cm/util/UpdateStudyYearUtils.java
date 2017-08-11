@@ -1,14 +1,9 @@
-package ro.msg.cm.controller;
+package ro.msg.cm.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.StartYearProperties;
-import ro.msg.cm.repository.CandidateRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,36 +13,27 @@ import java.util.Locale;
 
 import static java.util.Calendar.YEAR;
 
-@RestController
-@RequestMapping("/api/update")
-public class UpdateStudyYearController {
-    private final CandidateRepository candidateRepository;
-    private final StartYearProperties startYearProperties;
+@Component
+public class UpdateStudyYearUtils {
+
+    private static StartYearProperties startYearProperties;
 
     @Autowired
-    public UpdateStudyYearController(CandidateRepository candidateRepository, StartYearProperties startYearProperties) {
-        this.candidateRepository = candidateRepository;
-        this.startYearProperties = startYearProperties;
-
+    public UpdateStudyYearUtils(StartYearProperties startYearProperties) {
+        UpdateStudyYearUtils.startYearProperties = startYearProperties;
     }
 
-    @RequestMapping(value = "/universityYear", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-
-    public Iterable<Candidate> updateUniversityYear() throws ParseException {
-        Iterable<Candidate> candidates = findAll();
-
-        for (Candidate candidate : candidates) {
-            candidate.setCurrentStudyYear(determineYearBasedOnDuration(candidate));
+    public static int determineYearBasedOnDuration(Candidate candidate) throws ParseException {
+        int currentStudyYear = calculateStudyYear(candidate);
+        if (candidate.getEducation() != null) {
+            if (currentStudyYear > getDurationOfStudy(candidate)) {
+                currentStudyYear = -1;
+            }
         }
-
-        return candidates;
+        return currentStudyYear;
     }
 
-    private Iterable<Candidate> findAll() {
-        return candidateRepository.findAll();
-    }
-
-    private int calculateStudyYear(Candidate candidate) throws ParseException {
+    private static int calculateStudyYear(Candidate candidate) throws ParseException {
         Date currentDate = new Date();
 
         int currentStudyYear;
@@ -69,42 +55,33 @@ public class UpdateStudyYearController {
 
     }
 
-    private int determineYearBasedOnDuration(Candidate candidate) throws ParseException {
-
-        int currentStudyYear = calculateStudyYear(candidate);
-        if (currentStudyYear > getDurationOfStudy(candidate)) {
-            currentStudyYear = -1;
-        }
-        return currentStudyYear;
-    }
-
-    private int getDurationOfStudy(Candidate candidate) {
+    private static int getDurationOfStudy(Candidate candidate) {
         return candidate.getEducation().getDuration();
     }
 
-    private int getMonthOfStartingUniversityYear() throws ParseException {
+    private static int getMonthOfStartingUniversityYear() throws ParseException {
         Date startYearDate = appendCurrentYearToMonthDayFormatDate();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startYearDate);
-        return calendar.get(Calendar.MONTH) + 1;
+        return calculateCalendarMonth(startYearDate);
     }
 
-    private int getMonthOfCurrentYear() {
+    private static int getMonthOfCurrentYear() {
         Date currentDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
-        return calendar.get(Calendar.MONTH) + 1;
+        return calculateCalendarMonth(currentDate);
     }
 
-    private int getMonthOfAddingYear(Candidate candidate) {
+    private static int getMonthOfAddingYear(Candidate candidate) {
         Date addingDate = candidate.getDateOfAdding();
+        return calculateCalendarMonth(addingDate);
+    }
+
+    private static int calculateCalendarMonth(Date addingDate) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(addingDate);
         return calendar.get(Calendar.MONTH) + 1;
     }
 
-    private Date appendCurrentYearToMonthDayFormatDate() throws ParseException {
-        int year = Calendar.getInstance().get(Calendar.YEAR);
+    private static Date appendCurrentYearToMonthDayFormatDate() throws ParseException {
+        int year = Calendar.getInstance().get(YEAR);
         String yearString = Integer.toString(year);
         SimpleDateFormat dateformatMMDD = new SimpleDateFormat("MM-dd");
         Date startYearDate = getStartYearDateFromConfigurationFile();
@@ -115,11 +92,11 @@ public class UpdateStudyYearController {
 
     }
 
-    private Date getStartYearDateFromConfigurationFile() {
+    private static Date getStartYearDateFromConfigurationFile() {
         return startYearProperties.getStartYearDate();
     }
 
-    private int getDiffYears(Date first, Date last) {
+    private static int getDiffYears(Date first, Date last) {
         Calendar currentDate = getCalendar(first);
         Calendar dateOfAdding = getCalendar(last);
         return dateOfAdding.get(YEAR) - currentDate.get(YEAR);
