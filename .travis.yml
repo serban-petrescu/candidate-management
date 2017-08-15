@@ -1,5 +1,4 @@
 language: java
-dist: trusty
 jdk: oraclejdk8
 script:
   - mvn clean install -X
@@ -9,4 +8,4 @@ cache:
   - node_modules
   - node
 env:
-  - CI="false"
+  - CI=false
