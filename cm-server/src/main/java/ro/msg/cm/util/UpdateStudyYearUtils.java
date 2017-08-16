@@ -83,16 +83,14 @@ public class UpdateStudyYearUtils {
     private static Date appendCurrentYearToMonthDayFormatDate() throws ParseException {
         int year = Calendar.getInstance().get(YEAR);
         String yearString = Integer.toString(year);
-        SimpleDateFormat dateformatMMDD = new SimpleDateFormat("MM-dd");
-        Date startYearDate = getStartYearDateFromConfigurationFile();
-        StringBuilder nowYYYYMMDD = new StringBuilder(dateformatMMDD.format(startYearDate));
-        String yearStringTotal = yearString + "-" + nowYYYYMMDD;
+        String startYearDate = getStartYearDateFromConfigurationFile();
+        String yearStringTotal = yearString + "-" + startYearDate;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return df.parse(yearStringTotal);
 
     }
 
-    private static Date getStartYearDateFromConfigurationFile() {
+    private static String getStartYearDateFromConfigurationFile() {
         return startYearProperties.getStartYearDate();
     }
 
