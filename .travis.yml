@@ -1,0 +1,11 @@
+language: java
+jdk: oraclejdk8
+script:
+  - mvn clean install -X
+cache:
+  directories:
+  - "$HOME/.m2"
+  - node_modules
+  - node
+env:
+  - CI=""
