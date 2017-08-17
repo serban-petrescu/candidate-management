@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties
 public class RecaptchaProperties {
 
-    @Value("${PROXYHOST:#{''}}")
+    @Value("${ro.msg.cm.captcha.proxy-host:#{null}}")
     private String proxyHost;
 
-    @Value("${PROXYPORT:#{''}}")
-    private String proxyPort;
+    @Value("${ro.msg.cm.captcha.proxy-port:#{null}}")
+    private Integer proxyPort;
 
-    @Value("${GOOGLESECRET:#{''}}")
+    @Value("${ro.msg.cm.captcha.google-secret:#{null}}")
     private String googleSecret;
 }
