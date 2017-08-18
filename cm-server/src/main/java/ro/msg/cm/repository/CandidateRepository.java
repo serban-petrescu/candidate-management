@@ -19,5 +19,5 @@ import org.springframework.data.repository.CrudRepository;
 import ro.msg.cm.model.Candidate;
 
 public interface CandidateRepository extends CrudRepository<Candidate, Long> {
-
+    Iterable<Candidate> findAll();
 }

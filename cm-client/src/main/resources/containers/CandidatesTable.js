@@ -3,7 +3,7 @@ import {SearchField, BootstrapTable, TableHeaderColumn} from 'react-bootstrap-ta
 import {Tab, Tabs} from 'react-bootstrap';
 import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
 import EditCandidate from './EditCandidate';
-import ConfirmationDialog from  './ConfirmationDialog';
+import ConfirmationDialog from './ConfirmationDialog';
 import '../less/candidateTable.less';
 import "../less/roboto.less";
 import SkillsList from '../components/SkillsList'

@@ -1,4 +1,4 @@
-import {LOAD_CANDIDATES, REMOVE_CANDIDATE, EDIT_CANDIDATE, ADD_CANDIDATE, ADD_CANDIDATE_NOTE} from '../actions'
+import {LOAD_CANDIDATES, REMOVE_CANDIDATE, EDIT_CANDIDATE, ADD_CANDIDATE, ADD_CANDIDATE_NOTE} from '../actions/index'
 /**
  * Updates the candidates list and return a newly created object containing the state
  * with the update candidate

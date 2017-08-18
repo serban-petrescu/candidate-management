@@ -1,7 +1,7 @@
 import React from "react";
 import {Button} from 'react-bootstrap';
 /**
- *  Add the candidate to the candidate list based on the
+ *  Add the candidate note to the candidate note list based on the
  *  candidate received as props.
  */
 export default class ButtonAddCandidateNote extends React.Component {
@@ -13,28 +13,23 @@ export default class ButtonAddCandidateNote extends React.Component {
     }
 
     handleClick = () => {
-        this.setState({isLoading: true});
-        this.props.setConfirmationStatus('pending');
-        this.props.submitCandidate()
+        this.props.submitCandidateNote()
             .then((response) => {
-                this.setState({isLoading: false});
                 this.props.setConfirmationStatus(response.payload.response.status === 201 ? 'success' : 'failed');
             })
     };
 
     render() {
         let isLoading = this.state.isLoading;
-        let isFormValid = this.props.formValid;
 
         return (
 
             <div>
 
                 <Button
-                    className={'candidateCustomButton'}
-                    disabled={isLoading || !isFormValid}
+                    className={'candidateNoteCustomButton'}
                     onClick={!isLoading ? this.handleClick : null}>
-                    { isLoading ? 'Loading...' : 'Add Candidate'}
+                    { isLoading ? 'Loading...' : 'Add Note'}
                 </Button>
             </div>
         )

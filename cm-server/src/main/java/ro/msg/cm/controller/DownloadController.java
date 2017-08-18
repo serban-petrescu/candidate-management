@@ -3,13 +3,10 @@ package ro.msg.cm.controller;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,7 +50,7 @@ public class DownloadController {
         // uses the Super CSV API to generate CSV data from the model data
         ICsvBeanWriter csvWriter = new CsvBeanWriter(writer, CsvPreference.STANDARD_PREFERENCE);
 
-        String[] headerCandidate = {"firstName", "lastName", "phone", "email", "educationStatus", "studyYear", "event"};
+        String[] headerCandidate = {"firstName", "lastName", "phone", "email", "educationStatus", "originalStudyYear", "event"};
         csvWriter.writeHeader(headerCandidate);
 
         for (Candidate candidate : candidateList) {
