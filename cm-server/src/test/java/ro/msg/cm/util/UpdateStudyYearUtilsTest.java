@@ -1,14 +1,8 @@
 package ro.msg.cm.util;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import ro.msg.cm.Main;
 import ro.msg.cm.model.*;
 
 import java.text.ParseException;
@@ -18,20 +12,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@WebAppConfiguration
 public class UpdateStudyYearUtilsTest {
 
-    @Autowired
-    private UpdateStudyYearUtils updateStudyYearUtils;
+    private static UpdateStudyYearUtils updateStudyYearUtils;
 
-    @Autowired
-    private StartYearProperties startYearProperties = new StartYearProperties();
+    @BeforeClass
+    public static void setUp() {
+        StartYearProperties underTest = new StartYearProperties();
+        underTest.setStartYearDate("10-01");
+        updateStudyYearUtils = new UpdateStudyYearUtils(underTest);
 
-    @Before
-    public void setUp() {
-        updateStudyYearUtils = new UpdateStudyYearUtils(startYearProperties);
     }
 
     @Test
@@ -138,5 +128,6 @@ public class UpdateStudyYearUtilsTest {
     private int determineYearBasedOnDuration(Candidate candidate) throws ParseException {
         return updateStudyYearUtils.determineYearBasedOnDuration(candidate);
     }
+
 
 }
