@@ -23,6 +23,13 @@ public class UpdateStudyYearUtils {
         UpdateStudyYearUtils.startYearProperties = startYearProperties;
     }
 
+    /**
+     * Method that calculate the current study year based on the duration of study
+     *
+     * @param candidate Candidate
+     * @return int - the current study year
+     * @throws ParseException indicates if errors occurred
+     */
     public static int determineYearBasedOnDuration(Candidate candidate) throws ParseException {
         int currentStudyYear = calculateStudyYear(candidate);
         if (candidate.getEducation() != null) {
@@ -33,26 +40,32 @@ public class UpdateStudyYearUtils {
         return currentStudyYear;
     }
 
+    /**
+     * Method that retrieves the current study year for a given candidate
+     *
+     * @param candidate Candidate
+     * @return int - The year of study reported on today
+     * @throws ParseException indicates if errors occurred
+     */
     private static int calculateStudyYear(Candidate candidate) throws ParseException {
         Date currentDate = new Date();
-
-        int currentStudyYear;
 
         int originalStudyYear = candidate.getOriginalStudyYear();
         int diffYears = getDiffYears(candidate.getDateOfAdding(), currentDate);
 
-        if (diffYears > 0 && (getMonthOfAddingYear(candidate) < (getMonthOfStartingUniversityYear()))) {
-            currentStudyYear = diffYears + originalStudyYear;
-        } else if (diffYears > 0 && (getMonthOfAddingYear(candidate) >= (getMonthOfStartingUniversityYear()))) {
-            currentStudyYear = (diffYears - 1) + originalStudyYear;
-        } else if (diffYears == 0 && (getMonthOfAddingYear(candidate) < getMonthOfStartingUniversityYear() &&
-                getMonthOfStartingUniversityYear() < getMonthOfCurrentYear())) {
-            currentStudyYear = ++originalStudyYear;
-        } else {
-            currentStudyYear = candidate.getOriginalStudyYear();
+        if (diffYears > 0 && (getMonthOfAddingYear(candidate) < getMonthOfStartingUniversityYear())) {
+            return diffYears + originalStudyYear;
         }
-        return currentStudyYear;
 
+        if (diffYears > 0 && (getMonthOfAddingYear(candidate) >= (getMonthOfStartingUniversityYear()))) {
+            return (diffYears - 1) + originalStudyYear;
+        }
+
+        if (diffYears == 0 && (getMonthOfAddingYear(candidate) < getMonthOfStartingUniversityYear() &&
+                getMonthOfStartingUniversityYear() < getMonthOfCurrentYear())) {
+            return ++originalStudyYear;
+        }
+        return originalStudyYear;
     }
 
     private static int getDurationOfStudy(Candidate candidate) {
