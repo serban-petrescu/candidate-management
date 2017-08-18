@@ -32,10 +32,8 @@ public class UpdateStudyYearUtils {
      */
     public static int determineYearBasedOnDuration(Candidate candidate) throws ParseException {
         int currentStudyYear = calculateStudyYear(candidate);
-        if (candidate.getEducation() != null) {
-            if (currentStudyYear > getDurationOfStudy(candidate)) {
-                currentStudyYear = -1;
-            }
+        if (candidate.getEducation() != null && currentStudyYear > getDurationOfStudy(candidate)) {
+            currentStudyYear = -1;
         }
         return currentStudyYear;
     }

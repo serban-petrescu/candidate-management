@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Main.class)
+@SpringBootTest
 @WebAppConfiguration
 public class UpdateStudyYearUtilsTest {
 
