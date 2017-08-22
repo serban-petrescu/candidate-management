@@ -16,8 +16,11 @@
 package ro.msg.cm.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RestResource;
 import ro.msg.cm.model.Candidate;
 
 public interface CandidateRepository extends CrudRepository<Candidate, Long> {
+    @Override
+    @RestResource(exported = false)
     Iterable<Candidate> findAll();
 }
