@@ -22,8 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/import")
@@ -45,94 +46,95 @@ public class ImportDatabase {
 
     @RequestMapping(value = "/education", method = RequestMethod.POST)
     public void importEducation(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.print("YUHU");
+
         Field[] fs = Education.class.getDeclaredFields();
         List<String> fields = new ArrayList<String>();
         for (Field field : fs) {
             fields.add(field.getName().toString());
         }
-        System.out.print("response content");
-        System.out.print(request.getInputStream());
-        importCSV(educationRepository,Education.class.getSimpleName(),request.getInputStream(), fields);
-
+        printRequestDetail(false,request);
+        //importCSV(educationRepository,Education.class.getSimpleName(),request.getInputStream(), fields);
+        importEducationCSV(request.getInputStream());
     }
 
+    private void printRequestDetail(boolean debug, HttpServletRequest request)throws IOException{
+        if(!debug) return;
+        System.out.print(request.getMethod());
+        Enumeration params = request.getParameterNames();
+        while(params.hasMoreElements()){
+            String paramName = (String)params.nextElement();
+            System.out.println("Parameter Name - "+paramName+", Value - "+request.getParameter(paramName));
+        }
+        Enumeration headerNames = request.getHeaderNames();
+        while(headerNames.hasMoreElements()) {
+            String headerName = (String)headerNames.nextElement();
+            System.out.println("Header Name - " + headerName + ", Value - " + request.getHeader(headerName));
+        }
+        String result = new BufferedReader(new InputStreamReader(request.getInputStream()))
+                .lines().collect(Collectors.joining("\n"));
+        System.out.println(result.length());
+        System.out.println(result);
 
-    private void importCSV(Repository rep, String tableName, InputStream csvContent, List<String> headers) {
+    }
+    private void importCSV(Repository rep, String tableName, InputStream csvContent, List<String> headers) throws IOException {
 
         String line = "";
         String cvsSplitBy = ",";
         String header=null;
 
         BufferedReader in = new BufferedReader(new InputStreamReader(csvContent));
-        try{
-        StringBuilder responseData = new StringBuilder();
-        while((line = in.readLine()) != null) {
-            responseData.append(line);
-        }
-        System.out.print("!"+responseData);
-        }
-        catch (IOException e ){System.out.print("Something went wrong");}
+        try {
+            while ((line = in.readLine()) != null) {
+                header=(header==null)?line:header;
+                String[] elements = line.split(cvsSplitBy);
+                if(rep instanceof Education){
+                Education education = new Education();
+                Method[] mts = Education.class.getMethods();
+                education = null;
+                    //(EducationRepository)rep.save(education);}
 
-        /* try (BufferedReader br = new BufferedReader(csvContent)) {
-
-            while ((line = csvContent.read()) != 1) {
-                if (header==null)
-                    header = line;
-                else
-                {
-                    // use comma as separator Header: id,first_name,last_name,email,event,phone,study_year,education_status,education_id
-                    Education education = new Education();
-                    String[] elements = line.split(cvsSplitBy);
-                    Method[] mts = Education.class.getMethods();
-
-                    this.educationRepository.save(education);
-
-                }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        }
+        }
+        catch (IOException e ){
+            System.out.print("Something went wrong");}
     }
-    private void loadFromMockDataCSV() {
-
-        String csvFile = "src/main/resources/MockDataCSV.csv";
+    private void importEducationCSV(InputStream csvContent) throws IOException{
+        System.out.println("import education csv");
         String line = "";
-        String cvsSplitBy = ",";
-        String header=null;
+        String cvsSplitBy = ", ";
+        String[] headers = null;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-
-            while ((line = br.readLine()) != null) {
-                if (header==null)
-                    header = line;
-                else
-                {
-                    // use comma as separator Header: id,first_name,last_name,email,event,phone,study_year,education_status,education_id
-                    String[] elements = line.split(cvsSplitBy);
-                    String firstName=elements[1];
-                    String lastName=elements[2];
-                    String phone=elements[5];
-                    String email=elements[3];
-                    Education education=this.educationRepository.findOne(Long.parseLong(elements[8]));
-
-                    String educationStatus=elements[7];
-                    int studyYear=Integer.parseInt(elements[6]);
-                    String event=elements[4];
-                    Candidate candidate = new Candidate(firstName,lastName,phone, email,educationStatus,studyYear, event);
-                    candidate.setEducation(education);
-
-                    this.candidateRepository.save(candidate);
-
+        BufferedReader in = new BufferedReader(new InputStreamReader(csvContent));
+        try {
+            while ((line = in.readLine()) != null) {
+                if(headers==null){
+                    headers=line.split(cvsSplitBy);
+                    System.out.println(headers);
+                    continue;
                 }
+                String[] elements = line.split(cvsSplitBy);
+                Education education = new Education();
+                Method[] mts = Education.class.getMethods();
+                System.out.println(mts);
+                for (Method m : mts) {
+                    for ( int index = 0;index<headers.length; index++) {
+                        String headerElement = headers[index];
+                        if(m.getName().equalsIgnoreCase("set" + headerElement)){
+                            try {
+                                m.invoke(education, elements[index]);
+                                // Handle any exceptions thrown by method to be invoked.
+                            } catch (Exception x) {
+                               x.printStackTrace();
+                            }
+                        }
+                    }
+                }
+                this.educationRepository.save(education);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
+        }
+        catch (IOException e ){
+            System.out.print("Something went wrong");}
+    }
 }
