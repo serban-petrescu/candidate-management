@@ -193,17 +193,15 @@ function addCandidateNote(notesUrl, candidatesUrl, note,candidate) {
 
 function importCSV(files, importEducationUrl) {
    // TODO
-    axios.defaults.headers.put['Content-Type'] = 'text/csv';
-    const data = new FormData();
-    data.append('pemain_data[uploaded_file]', files);
-    let axiosResponse = axios.post("http://localhost:8080/api/import/education").then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    })
-    // return axios.get(url).then(function..)
-    axios.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
-    return axiosResponse;
+
+    const config = { headers: { 'Content-Type': 'text/csv' } };
+    console.log("Should have a file");
+    console.log(files);
+    let educationLink = "http://localhost:8080/api/import/education";
+    return axios.post(educationLink,files,config)
+        .then((response) => {console.log(response)})
+        .catch((error) => {console.log(error)});
+
 }
 
 export {
