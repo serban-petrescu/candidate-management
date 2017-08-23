@@ -1,15 +1,25 @@
-import {fetchCandidates, deleteCandidate,updateCandidate, addCandidate as insertCandidate, addCandidateNote as insertCandidateNote} from '../utils/api';
+import {
+    fetchCandidates,
+    deleteCandidate,
+    updateCandidate,
+    addCandidate as insertCandidate,
+    addCandidateNote as insertCandidateNote
+} from '../utils/CandidatesAPI';
 
-export const LOAD_CANDIDATES = 'LOAD_CANDIDATES';
-export const SELECT_CANDIDATE = 'SELECT_CANDIDATE';
-export const REMOVE_CANDIDATE = 'DELETE_CANDIDATE';
-export const EDIT_CANDIDATE = 'EDIT_CANDIDATE';
-export const ADD_CANDIDATE = 'ADD_CANDIDATE';
-export const ADD_CANDIDATE_NOTE = 'ADD_CANDIDATE_NOTE';
-export const ROOT_URL = "http://localhost";
-export const PORT = 8080;
-export const CANDIDATES_URL = `${ROOT_URL}:${PORT}/api/candidates`;
-export const CANDIDATES_NOTES_URL = `${ROOT_URL}:${PORT}/api/candidateNoteses`;
+export const
+    LOAD_CANDIDATES = 'LOAD_CANDIDATES',
+
+    ADD_CANDIDATE = 'ADD_CANDIDATE',
+    EDIT_CANDIDATE = 'EDIT_CANDIDATE',
+    REMOVE_CANDIDATE = 'DELETE_CANDIDATE',
+
+    SELECT_CANDIDATE = 'SELECT_CANDIDATE',
+
+    VALIDATE_CANDIDATE = 'VALIDATE_CANDIDATE',
+    REJECT_CANDIDATE = 'REJECT_CANDIDATE',
+
+    ADD_CANDIDATE_NOTE = 'ADD_CANDIDATE_NOTE';
+
 
 /**
  * Actions are plain JavaScript objects. Actions must have a type property that indicates the type of action being performed.
@@ -33,40 +43,45 @@ export function selectCandidate(candidate) {
 export function loadCandidates() {
     return {
         type: LOAD_CANDIDATES,
-        payload: fetchCandidates(CANDIDATES_URL)
+        payload: fetchCandidates()
     }
 }
 
 export function removeCandidate(candidateId) {
     // deleteCandidate is an action creator, it needs to return an action
     // (an object with type property )
-    let DELETE_URL = CANDIDATES_URL +"/"+ candidateId;
     return {
         type: REMOVE_CANDIDATE,
-        payload: deleteCandidate(DELETE_URL,candidateId)
+        payload: deleteCandidate(candidateId)
     }
 }
 
 
 export function editCandidate(candidate) {
-    let EDIT_URL = CANDIDATES_URL +"/"+ candidate.id;
     return {
         type: EDIT_CANDIDATE,
-        payload: updateCandidate(EDIT_URL,candidate)
+        payload: updateCandidate(candidate)
     }
 }
 
 export function addCandidate(candidate) {
     return {
         type: ADD_CANDIDATE,
-        payload: insertCandidate(CANDIDATES_URL, candidate)
+        payload: insertCandidate(candidate)
     }
 }
 
-export function     addCandidateNote(note,candidate) {
+export function addCandidateNote(note, candidate) {
     return {
         type: ADD_CANDIDATE_NOTE,
-        payload: insertCandidateNote(CANDIDATES_NOTES_URL, CANDIDATES_URL, note,candidate)
+        payload: insertCandidateNote(note, candidate)
+    }
+}
+
+export function validateCandidate(candidate) {
+    return {
+        type: VALIDATE_CANDIDATE,
+        payload: validateCandidate(candidate)
     }
 }
 

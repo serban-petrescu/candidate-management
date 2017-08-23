@@ -2,7 +2,7 @@
  * Created by blajv on 22.06.2017.
  */
 import React from 'react';
-import { fetchTagForCandidateSkill} from "../utils/api";
+import { fetchTagForCandidateSkill} from "../utils/CandidatesAPI";
 /**
  * Component which describes a single set of skills a candidate has
  */
