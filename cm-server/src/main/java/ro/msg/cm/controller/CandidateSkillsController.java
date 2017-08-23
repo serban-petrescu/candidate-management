@@ -25,7 +25,7 @@ public class CandidateSkillsController {
         this.candidateSkillsRepository = candidateSkillsRepository;
     }
 
-    @RequestMapping(value = "/candidates/{id}//candidateSkillsList", method = RequestMethod.GET, produces = "application/hal+json")
+    @RequestMapping(value = "/candidates/{id}/candidateSkillsList", method = RequestMethod.GET, produces = "application/hal+json")
     @ResponseBody
     public Resource getCandidateSkills(@PathVariable(value = "id") Long id) {
         CandidateSkills a = candidateSkillsRepository.findOne(id);
