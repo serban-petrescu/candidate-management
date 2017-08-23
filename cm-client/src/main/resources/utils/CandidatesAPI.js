@@ -1,9 +1,8 @@
-import getBasePath from "./BasePath";
+import getBaseURL from './BasePath';
 import axios from 'axios';
 
-const
-    CANDIDATES_URL = `${getBasePath}/api/candidates`,
-    CANDIDATES_NOTES_URL = `${getBasePath}/api/candidateNoteses`;
+const CANDIDATES_URL = `${getBaseURL()}/api/candidates`,
+    CANDIDATES_NOTES_URL = `${getBaseURL()}/api/candidateNoteses`;
 
 
 function getCandidateURLById(sId) {
