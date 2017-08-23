@@ -191,14 +191,12 @@ function addCandidateNote(notesUrl, candidatesUrl, note,candidate) {
     return axiosResponse;
 }
 
-function importCSV(files, importEducationUrl) {
-   // TODO
-
+function importCSV(files, importUrl) {
     const config = { headers: { 'Content-Type': 'text/csv' } };
     console.log("Should have a file");
     console.log(files);
-    let educationLink = "http://localhost:8080/api/import/education";
-    return axios.post(educationLink,files,config)
+    //let educationLink = "http://localhost:8080/api/import/education";
+    return axios.post(importUrl,files,config)
         .then((response) => {console.log(response)})
         .catch((error) => {console.log(error)});
 
