@@ -2,7 +2,8 @@ import getBaseURL from './BasePath';
 import axios from 'axios';
 
 const CANDIDATES_URL = `${getBaseURL()}/api/candidates`,
-    CANDIDATES_NOTES_URL = `${getBaseURL()}/api/candidateNoteses`;
+      CANDIDATES_NOTES_URL = `${getBaseURL()}/api/candidateNoteses`,
+      CANDIDATES_VALIDATION_URL = `${getBaseURL()}/api/validation`;
 
 
 function getCandidateURLById(sId) {
@@ -181,7 +182,7 @@ function addCandidateNote(oNote, oCandidate) {
     // first, create note
     let axiosResponse = axios.post(CANDIDATES_NOTES_URL, oNote)
         .then((response) => {
-        let sURL = `${CANDIDATES_NOTES_URL}/${response.data.id}/candidate`;
+            let sURL = `${CANDIDATES_NOTES_URL}/${response.data.id}/candidate`;
             // this put request need text/uri-list as content type
             axios.defaults.headers.put['Content-Type'] = 'text/uri-list';
             // then, bind the oCandidate entity to the note's oCandidate
@@ -202,6 +203,17 @@ function addCandidateNote(oNote, oCandidate) {
     return axiosResponse;
 }
 
+function validateCandidates(oCandidates) {
+    return axios.post(CANDIDATES_VALIDATION_URL, oCandidates)
+        .then((response) => {
+            return {
+                response
+            };
+        })
+        .catch((error) => {
+            return error;
+        });
+}
 
 export {
     updateCandidate,
@@ -212,5 +224,6 @@ export {
     fetchSkillsForCandidate,
     fetchTagForCandidateSkill,
     fetchNotesForCandidate,
-    addCandidateNote
+    addCandidateNote,
+    validateCandidates
 };

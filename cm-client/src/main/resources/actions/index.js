@@ -3,7 +3,8 @@ import {
     deleteCandidate,
     updateCandidate,
     addCandidate as insertCandidate,
-    addCandidateNote as insertCandidateNote
+    addCandidateNote as insertCandidateNote,
+    validateCandidates as validate
 } from '../utils/CandidatesAPI';
 
 export const
@@ -15,8 +16,7 @@ export const
 
     SELECT_CANDIDATE = 'SELECT_CANDIDATE',
 
-    VALIDATE_CANDIDATE = 'VALIDATE_CANDIDATE',
-    REJECT_CANDIDATE = 'REJECT_CANDIDATE',
+    VALIDATE_CANDIDATES = 'VALIDATE_CANDIDATES',
 
     ADD_CANDIDATE_NOTE = 'ADD_CANDIDATE_NOTE';
 
@@ -78,11 +78,12 @@ export function addCandidateNote(note, candidate) {
     }
 }
 
-export function validateCandidate(candidate) {
+export function validateCandidates(aCandidates) {
     return {
-        type: VALIDATE_CANDIDATE,
-        payload: validateCandidate(candidate)
+        type: VALIDATE_CANDIDATES,
+        payload: validate(aCandidates)
     }
 }
+
 
 
