@@ -7,7 +7,7 @@ import '../less/candidateTable.less';
 import "../less/roboto.less";
 import SkillsList from '../components/SkillsList'
 import {connect} from 'react-redux';
-import {loadCandidates, selectCandidate} from '../actions/index';
+import {loadCandidates, selectCandidate} from '../actions/CandidateActions';
 import {bindActionCreators} from 'redux';
 import EducationList from "../components/EducationList";
 import NotesList from "../components/NotesList";

@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Modal, Form, FormGroup, Col, FormControl, ControlLabel} from 'react-bootstrap';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {addCandidateNote} from '../actions/index';
+import {addCandidateNote} from '../actions/CandidateActions';
 
 /**
  * Component used when the used clicks on the edit button.

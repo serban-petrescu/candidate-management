@@ -1,4 +1,4 @@
-import {LOAD_CANDIDATES, REMOVE_CANDIDATE, EDIT_CANDIDATE, ADD_CANDIDATE, ADD_CANDIDATE_NOTE} from '../actions/index'
+import {LOAD_CANDIDATES, REMOVE_CANDIDATE, EDIT_CANDIDATE, ADD_CANDIDATE, ADD_CANDIDATE_NOTE} from '../actions/CandidateActions'
 /**
  * Updates the candidates list and return a newly created object containing the state
  * with the update candidate
@@ -44,7 +44,7 @@ const updateCandidateNotes = (state, note)=>{
 
 /**
  * Match the actions dispatched to this reducer. The constants are imported from
- * ../actions/index.js so the action name will be consistent throughout the calls.
+ * ../actions/CandidateActions.js so the action name will be consistent throughout the calls.
  * @param state
  * @param action
  * @returns {*}

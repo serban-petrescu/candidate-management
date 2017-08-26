@@ -2,8 +2,7 @@ import getBaseURL from './BasePath';
 import axios from 'axios';
 
 const CANDIDATES_URL = `${getBaseURL()}/api/candidates`,
-      CANDIDATES_NOTES_URL = `${getBaseURL()}/api/candidateNoteses`,
-      CANDIDATES_VALIDATION_URL = `${getBaseURL()}/api/validation`;
+      CANDIDATES_NOTES_URL = `${getBaseURL()}/api/candidateNoteses`;
 
 
 function getCandidateURLById(sId) {
@@ -203,27 +202,17 @@ function addCandidateNote(oNote, oCandidate) {
     return axiosResponse;
 }
 
-function validateCandidates(oCandidates) {
-    return axios.post(CANDIDATES_VALIDATION_URL, oCandidates)
-        .then((response) => {
-            return {
-                response
-            };
-        })
-        .catch((error) => {
-            return error;
-        });
-}
-
 export {
-    updateCandidate,
-    deleteCandidate,
-    fetchEducationForCandidate,
-    fetchCandidates,
     addCandidate,
+
+    fetchCandidates,
+    fetchEducationForCandidate,
     fetchSkillsForCandidate,
     fetchTagForCandidateSkill,
     fetchNotesForCandidate,
+
+    updateCandidate,
+    deleteCandidate,
+
     addCandidateNote,
-    validateCandidates
 };

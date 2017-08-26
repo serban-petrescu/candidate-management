@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Modal} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {removeCandidate} from '../actions/index';
+import {removeCandidate} from '../actions/CandidateActions';
 import {bindActionCreators} from 'redux'
 
 class ConfirmationDialog extends React.Component {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormGroup, FormControl, ControlLabel, HelpBlock, Button, Grid, Row, Col} from 'react-bootstrap';
-import {addCandidate} from '../actions/index';
+import {addCandidate} from '../actions/CandidateActions';
 import TopNavbar from './TopNavbar';
 import '../less/addCandidate.less';
 import {bindActionCreators} from "redux";
