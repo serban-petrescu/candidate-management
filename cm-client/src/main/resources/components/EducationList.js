@@ -2,7 +2,7 @@
  * Created by blajv on 22.06.2017.
  */
 import React from 'react';
-import {fetchEducationForCandidate} from "../utils/CandidatesAPI";
+import {fetchEducationForCandidate} from "../utils/CandidateAPI";
 /**
  * Component used to display all the education data of the selected candidate
  * by accessing the Education tab.

@@ -4,7 +4,7 @@ import {
     updateCandidate,
     addCandidate as insertCandidate,
     addCandidateNote as insertCandidateNote
-} from '../utils/CandidatesAPI';
+} from '../utils/CandidateAPI';
 
 
 export const

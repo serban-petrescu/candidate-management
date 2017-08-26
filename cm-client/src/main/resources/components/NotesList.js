@@ -1,5 +1,5 @@
 import React from 'react';
-import {fetchNotesForCandidate} from "../utils/CandidatesAPI";
+import {fetchNotesForCandidate} from "../utils/CandidateAPI";
 import { BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import '../less/candidateNotesTable.less';
 import AddNoteModal from "../containers/AddNoteModal";

@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import SkillItem from "./SkillItem";
-import {fetchSkillsForCandidate} from "../utils/CandidatesAPI";
+import {fetchSkillsForCandidate} from "../utils/CandidateAPI";
 /**
  * Component used to display all the skills of the selected candidate
  * by accessing the Skills tab. Skills List is built from a a list of SkillItem.
