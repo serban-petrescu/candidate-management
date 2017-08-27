@@ -62,7 +62,7 @@ public class DownloadController {
         String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
         response.setHeader(headerKey, headerValue);
 
-        String[] headers={"id","educationType","provider","description","duration"};
+        String[] headers={"educationType","provider","description","duration"};
         createCSV(response.getWriter(), educationRepository,headers);
         createCSV(new FileWriter(csvFileName),educationRepository, headers);
 
@@ -78,7 +78,7 @@ public class DownloadController {
         String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
         response.setHeader(headerKey, headerValue);
 
-        String[] headers={"id","description","tagType"};
+        String[] headers={"description","tagType"};
         createCSV(response.getWriter(),tagRepository,headers);
         createCSV(new FileWriter(csvFileName),tagRepository,headers);
 

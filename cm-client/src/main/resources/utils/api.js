@@ -1,4 +1,5 @@
 import axios from 'axios';
+import FileDownload from 'react-file-download';
 /**
  * Returns all the candidates available from the backend
  * @param url to which the GET request should be made
@@ -202,6 +203,15 @@ function importCSV(files, importUrl) {
 
 }
 
+function exportCSV(exportUrl,filename){
+    let csv = filename+'.csv';
+    return axios.post(exportUrl)
+        .then((response) => {
+            FileDownload(response.data, csv);
+        })
+        .catch((error) => {console.log(error)});
+}
+
 export {
     updateCandidate,
     deleteCandidate,
@@ -212,5 +222,6 @@ export {
     fetchTagForCandidateSkill,
     fetchNotesForCandidate,
     addCandidateNote,
-    importCSV
+    importCSV,
+    exportCSV
 };
