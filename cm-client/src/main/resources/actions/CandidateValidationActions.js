@@ -2,7 +2,7 @@ import {
     fetchCandidates as fetchNotValidated,
     validateCandidates as validate,
     updateCandidate as updateNotValidated
-} from '../utils/CandidatesValidationAPI';
+} from '../utils/CandidateValidationAPI';
 
 
 export const

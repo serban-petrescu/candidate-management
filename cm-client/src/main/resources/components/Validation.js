@@ -11,9 +11,6 @@ const Validation = () => {
         <div>
             <TopNavbar/>
             <CandidatesValidationTable/>
-            <div className="col-md-12 text-center">
-                <button id="singlebutton" name="singlebutton" className="btn-lg candidateCustomButton">Validate</button>
-            </div>
         </div>
     );
 };
