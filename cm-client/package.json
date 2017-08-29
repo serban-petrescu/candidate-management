@@ -19,7 +19,8 @@
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
     "redux-promise": "^0.5.3",
-    "roboto-fontface": "^0.7.0"
+    "roboto-fontface": "^0.7.0",
+    "file-saver": "latest"
   },
   "devDependencies": {
     "autoprefixer": "6.7.2",
