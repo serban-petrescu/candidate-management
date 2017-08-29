@@ -55,33 +55,24 @@ public class DownloadController {
     public void downloadEducationCsv(HttpServletResponse response) throws IOException {
 
         String csvFileName = "education.csv";
-        response.setContentType("text/csv");
-
-        // creates mock data
-        String headerKey = "Content-Disposition";
-        String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
-        response.setHeader(headerKey, headerValue);
-
         String[] headers={"educationType","provider","description","duration"};
-        createCSV(response.getWriter(), educationRepository,headers);
-        createCSV(new FileWriter(csvFileName),educationRepository, headers);
+        writeResponse(response, csvFileName, headers,educationRepository);
 
     }
     @RequestMapping(value = "/tag", method = RequestMethod.POST)
     public void downloadTagCsv(HttpServletResponse response) throws IOException {
-
+        String[] headers = {"description", "tagType"};
         String csvFileName = "tag.csv";
-        response.setContentType("text/csv");
+        writeResponse(response, csvFileName, headers, tagRepository);
+    }
 
+    private void writeResponse(HttpServletResponse response,String csvFileName, String[] headers,CrudRepository repository) throws IOException {
+        response.setContentType("text/csv");
         // creates mock data
         String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
         response.setHeader(headerKey, headerValue);
-
-        String[] headers={"description","tagType"};
-        createCSV(response.getWriter(),tagRepository,headers);
-        createCSV(new FileWriter(csvFileName),tagRepository,headers);
-
+        createCSV(response.getWriter(),repository,headers);
     }
 
     private void createCSV(Writer writer, CrudRepository repo, String[] headers) throws IOException {

@@ -68,18 +68,17 @@ public class ImportDatabase {
 
     private void importCSV(Class table, InputStream csvContent, CrudRepository rep) throws IOException {
         String line ;
-        String cvsSplitBy = ", ";
-        String headerCsvSplitBy = ",";
+        String csvSplitBy = ",";
         String[] headers = null;
         BufferedReader in = new BufferedReader(new InputStreamReader(csvContent));
         try {
             while ((line = in.readLine()) != null) {
                 if (headers == null) {
-                    headers = line.split(headerCsvSplitBy);
+                    headers = line.split(csvSplitBy);
                     System.out.println(Arrays.toString(headers));
                     continue;
                 }
-                String[] elements = line.split(cvsSplitBy);
+                String[] elements = line.split(csvSplitBy);
                 Object importObject = table.newInstance();
                 Method[] mts = table.getDeclaredMethods();
                 for (Method m : mts) {
