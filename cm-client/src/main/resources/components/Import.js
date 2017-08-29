@@ -4,7 +4,6 @@
 import React from 'react';
 import {importEducation, importTag, exportTag, exportEducation} from "../actions/index";
 import '../less/addCandidate.less';
-import FileSaver from 'file-saver';
 
 /**
  * Component used to import data like Education and Tags
@@ -44,11 +43,7 @@ export default class Import extends React.Component {
 
 
     exportEducationCSV(event){
-        exportEducation().then(csv=>{
-            console.log(csv);
-            FileSaver.saveAs(csv,"education.csv");
-
-        })
+        exportEducation();
     }
 
 
