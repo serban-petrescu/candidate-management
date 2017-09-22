@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import {AppRegistry,StyleSheet,Text,Image,View,Button,TextInput} from 'react-native';
 import {addCandidate} from "./actions/index";
+import { AsyncStorage } from 'react-native';
 
 
 export default class mobile extends Component {
@@ -36,19 +37,29 @@ export default class mobile extends Component {
             email: this.state.email,
             phone: this.state.phone,
             studyYear:this.state.studyYear,
-            education:this.determineExistingEducation(this.state.education)
+            education:this.state.education
 
         };
-        addCandidate(candidate);
+        //addCandidate(candidate);
+        this.saveOffline(candidate);
         //return ;
     };
-    /**
-     * Education is a separate entity so we need to determine if it is already in the database,
-     * otherwise create it
-     * Implementation should follow
-     * TODO
-     **/
-    determineExistingEducation(education) {
+
+    saveOffline(candidate) {
+        try {
+            let candidateList = AsyncStorage.getItem('@MySuperStore:key');
+            this.setState(state.candidateList);
+            if (candidateList !== null) {
+                // We have data!!
+                console.log(JSON.stringify(candidateList));
+            }
+            else candidateList =[];
+            candidateList.push(candidate);
+            AsyncStorage.setItem('@MySuperStore:key', candidateList);
+            return candidateList;
+        } catch (error) {
+            // Error retrieving data
+        }
     }
 
     /**

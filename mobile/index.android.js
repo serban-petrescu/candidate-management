@@ -1,58 +1,44 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, Image, View, Button, TextInput, ToastAndroid} from 'react-native';
 import {addCandidateAndroid} from "./actions/index";
-
-
+import { AsyncStorage } from 'react-native';
+export const CANDIDATE_STORAGE = 'candidates';
 export default class mobile2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lastName: '',
-            firstName: '',
+            name: '',
             email: '',
-            phone: '',
-            studyYear: '',
-            education: '',
+            phone: ''
         };
+        var candidates = [];
+        AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(candidates));
+
     }
 
-    /**
-     * Set the candidate information and
-     * sends the information to the backend
-     * TODO education, education status & event
-     *
-     * */
+    /*Set the candidate information*/
     submitCandidate = () => {
 
         let candidate = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
+            name: this.state.name,
             email: this.state.email,
-            phone: this.state.phone,
-            studyYear: this.state.studyYear,
-            education: this.determineExistingEducation(this.state.education)
-
+            phone: this.state.phone
         };
-        let toastMessage = `Thanks for submitting your application ${this.state.lastName} ${this.state.firstName}`;
-        ToastAndroid.show(toastMessage, ToastAndroid.SHORT);
-        addCandidateAndroid(candidate);
+        // let toastMessage = `Thanks for submitting your application ${this.state.lastName} ${this.state.firstName}`;
+        // ToastAndroid.show(toastMessage, ToastAndroid.SHORT);
+        // addCandidateAndroid(candidate);
 
+        try {
+            var candidates = AsyncStorage.getItem(CANDIDATE_STORAGE);
+            candidates = JSON.parse(candidates);
+            candidates.push(candidate);
+            AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(candidates));
+
+        } catch (error) {
+            // Error retrieving data
+        }
     };
 
-    /**
-     * Education is a separate entity so we need to determine if it is already in the database,
-     * otherwise create it
-     * Implementation should follow
-     * TODO
-     **/
-    determineExistingEducation(education) {
-    }
 
     /**
      * Renders the form for the candidates to fill and submit
@@ -65,25 +51,16 @@ export default class mobile2 extends Component {
         return (
             <View>
                 <Image source={require('./assets/images/msgLogo.png')} style={styles.logo}/>
-                <Text style={styles.textMsg}>Last Name</Text>
-                <TextInput style={styles.textInputMsg} onChangeText={(lastName) => this.setState({lastName})}
-                           placeholder='Popescu' value={this.state.lastName}/>
-                <Text style={styles.textMsg}>First Name</Text>
-                <TextInput style={styles.textInputMsg} onChangeText={(firstName) => this.setState({firstName})}
-                           placeholder='Maria' value={this.state.firstName}/>
-                <Text style={styles.textMsg}>Email</Text>
-                <TextInput style={styles.textInputMsg} onChangeText={(email) => this.setState({email})}
-                           placeholder='test@gmail.com' value={this.state.email}/>
-                <Text style={styles.textMsg}>Phone</Text>
-                <TextInput style={styles.textInputMsg} onChangeText={(phone) => this.setState({phone})}
-                           placeholder='0712345678' value={this.state.phone}/>
-                <Text style={styles.textMsg}>Education</Text>
-                <TextInput style={styles.textInputMsg} onChangeText={(education) => this.setState({education})}
-                           placeholder='UTCN-AC eng' value={this.state.education}/>
-                <Text style={styles.textMsg}>Study Year</Text>
-                <TextInput style={styles.textInputMsg} onChangeText={(studyYear) => this.setState({studyYear})}
-                           placeholder='3' value={this.state.studyYear}/>
-                <Button color='#841439' title="Submit" onPress={this.submitCandidate}/>
+                 <Text style={styles.textMsg}>Name</Text>
+                 <TextInput style={styles.textInputMsg} onChangeText={(name) => this.setState({name})}
+                 placeholder='Popescu' value={this.state.name}/>
+                 <Text style={styles.textMsg}>Email</Text>
+                 <TextInput style={styles.textInputMsg} onChangeText={(email) => this.setState({email})}
+                 placeholder='test@gmail.com' value={this.state.email}/>
+                 <Text style={styles.textMsg}>Phone</Text>
+                 <TextInput style={styles.textInputMsg} onChangeText={(phone) => this.setState({phone})}
+                 placeholder='0712345678' value={this.state.phone}/>
+                 <Button color='#841439' title="Submit" onPress={this.submitCandidate}/>
             </View>
         );
     }
