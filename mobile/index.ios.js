@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import {AppRegistry,StyleSheet,Text,Image,View,Button,TextInput} from 'react-native';
-import {addCandidate} from "./actions/index";
+import {addCandidate} from "./app/actions/index";
 import { AsyncStorage } from 'react-native';
 
 
@@ -72,7 +72,7 @@ export default class mobile extends Component {
     render() {
     return (
         <View>
-            <Image source={require('./assets/images/msgLogo.png')}  style={styles.logo} />
+            <Image source={require('./app/assets/images/msgLogo.png')} style={styles.logo} />
             <Text style={styles.textMsg}>Last Name</Text>
             <TextInput style={styles.textInputMsg} onChangeText={(lastName) => this.setState({lastName})} placeholder='Popescu' value={this.state.lastName} />
             <Text style={styles.textMsg}>First Name</Text>
