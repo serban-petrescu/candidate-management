@@ -14,13 +14,13 @@ import java.util.TimeZone;
 
 public class UpdateUniversityYearUtilsTest {
 
-    private static UpdateUniversityYearUtils updateUniversityYearUtils;
+    private static CandidateUtils updateUniversityYearUtils;
 
     @BeforeClass
     public static void setUp() {
         StartYearProperties underTest = new StartYearProperties();
         underTest.setStartYearDate("10-01");
-        updateUniversityYearUtils = new UpdateUniversityYearUtils(underTest);
+        updateUniversityYearUtils = new CandidateUtils(underTest);
 
     }
 

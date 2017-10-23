@@ -2,15 +2,11 @@ package ro.msg.cm.model;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 @Data
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "ro.msg.cm.startUniversityYear")
 public class StartYearProperties {
-
-    @DateTimeFormat(pattern = "MM-dd")
-    private String startYearDate;
-
+    private String startYearDate = "10-01";
 }

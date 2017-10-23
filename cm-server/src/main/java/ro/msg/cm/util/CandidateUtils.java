@@ -1,13 +1,12 @@
 package ro.msg.cm.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.StartYearProperties;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -15,16 +14,12 @@ import java.util.TimeZone;
 import static java.util.Calendar.YEAR;
 
 @Component
-@Scope(value = "prototype")
-public class UpdateUniversityYearUtils {
-
-    private final Date today = new Date();
-    private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-    private final StartYearProperties startYearProperties;
+public class CandidateUtils {
+    private final String startYearDate;
 
     @Autowired
-    public UpdateUniversityYearUtils(StartYearProperties startYearProperties) {
-        this.startYearProperties = startYearProperties;
+    public CandidateUtils(StartYearProperties startYearProperties) {
+        this.startYearDate = startYearProperties.getStartYearDate();
     }
 
     /**
@@ -32,9 +27,8 @@ public class UpdateUniversityYearUtils {
      *
      * @param candidate Candidate
      * @return int - the current study year
-     * @throws ParseException indicates if errors occurred
      */
-    public int determineYearBasedOnDuration(Candidate candidate) throws ParseException {
+    public int determineYearBasedOnDuration(Candidate candidate) {
         int currentStudyYear = calculateStudyYear(candidate);
         if (candidate.getEducation() != null && currentStudyYear > getDurationOfStudy(candidate)) {
             currentStudyYear = -1;
@@ -47,10 +41,9 @@ public class UpdateUniversityYearUtils {
      *
      * @param candidate Candidate
      * @return int - The year of study reported on today
-     * @throws ParseException indicates if errors occurred
      */
-    private int calculateStudyYear(Candidate candidate) throws ParseException {
-
+    private int calculateStudyYear(Candidate candidate) {
+        Date today = new Date();
         int originalStudyYear = candidate.getOriginalStudyYear();
         int diffYears = getDiffYears(candidate.getDateOfAdding(), today);
 
@@ -63,8 +56,8 @@ public class UpdateUniversityYearUtils {
         }
 
         if (diffYears == 0 && (getMonthOfAddingYear(candidate) < getMonthOfStartingUniversityYear() &&
-                getMonthOfStartingUniversityYear() < getMonthOfCurrentYear())) {
-            return ++originalStudyYear;
+            getMonthOfStartingUniversityYear() < calculateCalendarMonth(today))) {
+            return originalStudyYear + 1;
         }
         return originalStudyYear;
     }
@@ -73,13 +66,9 @@ public class UpdateUniversityYearUtils {
         return candidate.getEducation().getDuration();
     }
 
-    private int getMonthOfStartingUniversityYear() throws ParseException {
+    private int getMonthOfStartingUniversityYear() {
         Date startYearDate = appendCurrentYearToMonthDayFormatDate();
         return calculateCalendarMonth(startYearDate);
-    }
-
-    private int getMonthOfCurrentYear() {
-        return calculateCalendarMonth(today);
     }
 
     private int getMonthOfAddingYear(Candidate candidate) {
@@ -93,17 +82,9 @@ public class UpdateUniversityYearUtils {
         return calendar.get(Calendar.MONTH) + 1;
     }
 
-    private Date appendCurrentYearToMonthDayFormatDate() throws ParseException {
-        int year = Calendar.getInstance().get(YEAR);
-        String yearString = Integer.toString(year);
-        String startYearDate = getStartYearDateFromConfigurationFile();
-        String yearStringTotal = yearString + "-" + startYearDate;
-        return df.parse(yearStringTotal);
-
-    }
-
-    private String getStartYearDateFromConfigurationFile() {
-        return startYearProperties.getStartYearDate();
+    private Date appendCurrentYearToMonthDayFormatDate() {
+        String dateAsString = Integer.toString(Calendar.getInstance().get(YEAR)) + "-" + startYearDate;
+        return Date.from(LocalDate.parse(dateAsString).atStartOfDay().toInstant(ZoneOffset.UTC));
     }
 
     private int getDiffYears(Date first, Date last) {

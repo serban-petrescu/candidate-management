@@ -18,15 +18,15 @@ package ro.msg.cm.dbloader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import ro.msg.cm.model.*;
 import ro.msg.cm.repository.*;
 
-import java.io.*;
-
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -56,29 +56,17 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        //  loadData();
+        // loadData();
     }
 
-    public void loadData() throws Exception {
+    private void loadData() throws Exception {
         if (!isDatabaseEmpty()) {
             emptyDatabase();
         }
         loadEducation();
         loadFromMockDataCSV();
-
-        // clean previous data in the table
         Education education = new Education("Master", "UTCN", "Information Technology", 2);
         this.educationRepository.save(education);
-
-
-//        Candidate test = new Candidate("Candidate", "Notes");
-//        Date date = new Date();
-//        Candidate test = new Candidate("first","lastname","phone","mail","education",2,"string", date);
-//        test.setEducation(education);
-//        this.candidateRepository.save(test);
-//
-//        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference",date));
-
     }
 
     private void emptyDatabase() {
@@ -98,12 +86,13 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private void loadFromMockDataCSV() {
 
-        String csvFile = "src/main/resources/MockDataCSV.csv";
+        String csvFile = "/MockDataCSV.csv";
         String line = "";
         String cvsSplitBy = ",";
         String header = null;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(DatabaseLoader.class
+            .getResourceAsStream(csvFile)))) {
 
             while ((line = br.readLine()) != null) {
                 if (header == null) {
@@ -130,7 +119,8 @@ public class DatabaseLoader implements CommandLineRunner {
                         dateOfAdding = d.parse(dateToTransform);
                     }
 
-                    Candidate candidate = new Candidate(firstName, lastName, phone, email, educationStatus, originalStudyYear, event, dateOfAdding);
+                    Candidate candidate =
+                        new Candidate(firstName, lastName, phone, email, educationStatus, originalStudyYear, event, dateOfAdding);
                     candidate.setEducation(education);
 
                     this.candidateRepository.save(candidate);
@@ -175,16 +165,8 @@ public class DatabaseLoader implements CommandLineRunner {
 
     }
 
-    public boolean isDatabaseEmpty() {
-        Iterable<Candidate> cand = this.candidateRepository.findAll();
-        /*Iterable<Education> edu = this.educationRepository.findAll();
-        Iterable<Tag> tags = this.tagRepository.findAll();
-        Iterable<CandidateSkills> all = this.candidateSkillsRepository.findAll();*/
-        if (cand.iterator().hasNext()) {
-            return false;
-        } else {
-            return true;
-        }
+    private boolean isDatabaseEmpty() {
+        return !this.candidateRepository.findAll().iterator().hasNext();
     }
 
 }
