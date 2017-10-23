@@ -1,20 +1,16 @@
 package ro.msg.cm.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Data
-@Getter
-@Setter
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@NoArgsConstructor
 public class Candidate {
 
 	private @Id @GeneratedValue Long id;
@@ -23,11 +19,13 @@ public class Candidate {
 	private String phone;
 	private String email;
 	private @ManyToOne
-	@JoinColumn(name="education_id", nullable = true) Education education;
-	private String educationStatus;
-	private int originalStudyYear;
+    @JoinColumn(name = "education_id")
+    Education education;
+    private String educationStatus;
+    private int originalStudyYear;
 	private String event;
-	private @OneToMany(mappedBy = "candidate") @OrderBy("tag ASC ")
+    private @OneToMany(mappedBy = "candidate")
+    @OrderBy("tag ASC")
     List<CandidateSkills> candidateSkillsList;
 	private @OneToMany(mappedBy = "candidate")
 	List<CandidateNotes> candidateNotesList;
@@ -37,8 +35,6 @@ public class Candidate {
 
 	@Transient
 	private int currentStudyYear;
-
-	public Candidate() {}
 
 	public Candidate(String firstName, String lastName) {
 		this(firstName,lastName,null,null);
@@ -61,13 +57,7 @@ public class Candidate {
 		this.originalStudyYear = originalStudyYear;
 		this.event = event;
 		this.dateOfAdding = dateOfAdding;
-
 	}
 
-
-	public void setEducation(Education education)
-	{
-		this.education = education;
-	}
 
 }

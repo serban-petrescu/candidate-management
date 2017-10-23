@@ -138,6 +138,12 @@ class CandidatesTable extends React.Component {
                                    dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
                 <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
                                    dataField='phone'>Phone</TableHeaderColumn>
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
+                                   dataField='originalStudyYear'>Original Study Year</TableHeaderColumn>
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
+                                   dataField='dateOfAdding'>Entry Date</TableHeaderColumn>
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
+                                   dataField='currentStudyYear'>Current Study Year</TableHeaderColumn>
                 <TableHeaderColumn expandable={false} dataField='id' dataFormat={ this.actionsFormatter }
                                    tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} }
                                    thStyle={ {'textAlign': 'center',} }>
