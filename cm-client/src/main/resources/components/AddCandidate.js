@@ -23,6 +23,10 @@ class AddCandidate extends React.Component {
 
     constructor(props) {
         super(props);
+        this.setInitialValues();
+    }
+
+    setInitialValues = () => {
         this.state = {
             emailAddress: '',
             emailAddressValidationMsg: '',
@@ -39,7 +43,7 @@ class AddCandidate extends React.Component {
             confirmationMessage: '',
             confirmationStatus: null
         };
-    }
+    };
 
     handleChangeEmail = (e) => {
 
@@ -170,8 +174,9 @@ class AddCandidate extends React.Component {
             message = '...';
         }
         else {
-            message = 'Candidate ' + this.state.firstName + ' ' +  this.state.lastName + ' ' ;
+            message = 'Candidate ' + this.state.firstName + ' ' + this.state.lastName + ' ';
             message = confirmationStatus === 'success' ? message + ' succesfully added!' : message + "couldn't be added!";
+            this.setInitialValues();
         }
 
         this.setState({
