@@ -1,20 +1,18 @@
 package ro.msg.cm.controller;
 
-import org.apache.http.HttpHost;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateCustomizer;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import ro.msg.cm.model.GoogleResponse;
 import ro.msg.cm.model.GoogleValidationCode;
 import ro.msg.cm.model.RecaptchaProperties;
 
-import java.net.URI;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 
 /**
  * Client app will send a request using a validation code as a payload (GoogleValidationCode).
@@ -28,40 +26,32 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/verify")
 public class VerifyRecaptcha {
-
-    private static RecaptchaProperties recaptchaProperties;
+    private static final String GOOGLE_API_URL =
+        "https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={code}";
+    private RecaptchaProperties properties;
 
     @Autowired
-    public VerifyRecaptcha(RecaptchaProperties recaptchaProperties) {
-        VerifyRecaptcha.recaptchaProperties = recaptchaProperties;
+    public VerifyRecaptcha(RecaptchaProperties properties) {
+        this.properties = properties;
     }
 
     @RequestMapping(value = "/googleverify", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public GoogleResponse getGRecaptchaResponse(@RequestBody GoogleValidationCode googleRecaptcha) {
-        RestTemplate restTemplate = new RestTemplate();
-        URI verifyUri = URI.create(String.format("https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s", recaptchaProperties.getGoogleSecret(), googleRecaptcha.getValidationCode()));
-        VerifyRecaptcha.ProxyCustomizer proxyCustomizer = new VerifyRecaptcha.ProxyCustomizer();
-        proxyCustomizer.customize(restTemplate);
-        return restTemplate.getForObject(verifyUri, GoogleResponse.class);
+        RestTemplate restTemplate = new RestTemplate(buildRequestFactory());
+        return restTemplate.getForObject(GOOGLE_API_URL, GoogleResponse.class, properties.getGoogleSecret(),
+            googleRecaptcha.getValidationCode());
     }
 
-    static class ProxyCustomizer implements RestTemplateCustomizer {
-
-        @Override
-        public void customize(RestTemplate restTemplate) {
-            String proxyHost = recaptchaProperties.getProxyHost();
-            Integer proxyPort = recaptchaProperties.getProxyPort();
-            HttpClient httpClient;
-
-            if (proxyPort == null || proxyHost == null || proxyHost.isEmpty()) {
-                httpClient = HttpClientBuilder.create().build();
-            } else {
-                httpClient = HttpClientBuilder.create()
-                                              .setRoutePlanner(new DefaultProxyRoutePlanner(new HttpHost(proxyHost, proxyPort))).build();
-            }
-            restTemplate.setRequestFactory(
-                    new HttpComponentsClientHttpRequestFactory(httpClient));
+    private ClientHttpRequestFactory buildRequestFactory() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        if (!StringUtils.isEmpty(properties.getProxyHost()) && properties.getProxyPort() != null) {
+            factory.setProxy(buildProxy());
         }
+        return factory;
+    }
+
+    private Proxy buildProxy() {
+        return new Proxy(Proxy.Type.HTTP, new InetSocketAddress(properties.getProxyHost(), properties.getProxyPort()));
     }
 }
