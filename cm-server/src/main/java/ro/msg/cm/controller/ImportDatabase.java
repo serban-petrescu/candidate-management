@@ -4,108 +4,79 @@ package ro.msg.cm.controller;
  * Created by oana on 5/16/17.
  */
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ro.msg.cm.dbloader.DatabaseLoader;
+import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.Education;
 import ro.msg.cm.model.Tag;
+import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.repository.EducationRepository;
 import ro.msg.cm.repository.TagRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/import")
 public class ImportDatabase {
 
     private final TagRepository tagRepository;
     private final EducationRepository educationRepository;
+    private final CandidateRepository candidateRepository;
 
     @Autowired
-    public ImportDatabase(TagRepository tagRepository, EducationRepository educationRepository) {
+    public ImportDatabase(TagRepository tagRepository, EducationRepository educationRepository, CandidateRepository candidateRepository) {
 
         this.tagRepository = tagRepository;
         this.educationRepository = educationRepository;
+        this.candidateRepository = candidateRepository;
     }
 
     @RequestMapping(value = "/education", method = RequestMethod.POST)
     public void importEducation(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        printRequestDetail(false, request);
-        importCSV(Education.class, request.getInputStream(), this.educationRepository);
+        logRequestDetail(request);
+        DatabaseLoader.importCSV(request.getInputStream(), educationRepository,Education.class);
     }
 
     @RequestMapping(value = "/tag", method = RequestMethod.POST)
     public void importTag(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        printRequestDetail(false, request);
-        importCSV(Tag.class, request.getInputStream(), this.tagRepository);
+        logRequestDetail(request);
+        DatabaseLoader.importCSV(request.getInputStream(), tagRepository, Tag.class);
     }
 
-    private void printRequestDetail(boolean debug, HttpServletRequest request) throws IOException {
-        if (!debug) return;
-        System.out.print(request.getMethod());
+    @RequestMapping(value = "/candidate", method = RequestMethod.POST)
+    public void importCandidate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        logRequestDetail(request);
+        DatabaseLoader.importCSV(request.getInputStream(), candidateRepository, Candidate.class);
+    }
+
+    /**
+     * Logs the details like header names, parameters names and content of the request
+     * only on debug level
+     * */
+    private void logRequestDetail(HttpServletRequest request) throws IOException {
+        log.debug(request.getMethod());
         Enumeration params = request.getParameterNames();
         while (params.hasMoreElements()) {
             String paramName = (String) params.nextElement();
-            System.out.println("Parameter Name - " + paramName + ", Value - " + request.getParameter(paramName));
+            log.debug("Parameter Name - " + paramName + ", Value - " + request.getParameter(paramName));
         }
         Enumeration headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String headerName = (String) headerNames.nextElement();
-            System.out.println("Header Name - " + headerName + ", Value - " + request.getHeader(headerName));
+            log.debug("Header Name - " + headerName + ", Value - " + request.getHeader(headerName));
         }
         String result = new BufferedReader(new InputStreamReader(request.getInputStream()))
                 .lines().collect(Collectors.joining("\n"));
-        System.out.println(result.length());
-        System.out.println(result);
+        log.debug("Result length is" + result.length());
+        log.debug(result);
 
     }
 
-    private void importCSV(Class table, InputStream csvContent, CrudRepository rep) throws IOException {
-        String line ;
-        String csvSplitBy = ",";
-        String[] headers = null;
-        BufferedReader in = new BufferedReader(new InputStreamReader(csvContent));
-        try {
-            while ((line = in.readLine()) != null) {
-                if (headers == null) {
-                    headers = line.split(csvSplitBy);
-                    System.out.println(Arrays.toString(headers));
-                    continue;
-                }
-                String[] elements = line.split(csvSplitBy);
-                Object importObject = table.newInstance();
-                Method[] mts = table.getDeclaredMethods();
-                for (Method m : mts) {
-                    for (int index = 0; index < headers.length; index++) {
-                        String headerElement = headers[index].replaceAll("_","").toLowerCase();
-                        if ((m.getName().toLowerCase()).startsWith("set" + headerElement)) {
-                            try {
-                                Class<?>[] parameterTypes = m.getParameterTypes();
-                                if (parameterTypes[0].isPrimitive()) {
-                                    m.invoke(importObject, Integer.parseInt(elements[index]));
-                                } else {
-                                    m.invoke(importObject, elements[index]);
-                                }
-                                // Handle any exceptions thrown by method to be invoked.
-                            } catch (Exception x) {
-                                x.printStackTrace();
-                            }
-                        }
-                    }
-                }
-                rep.save(importObject);
-            }
-
-        } catch (IOException e) {
-            System.out.print("Something went wrong");
-        } catch (IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
-    }
 }

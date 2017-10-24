@@ -46,8 +46,6 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <version>${spring-version}</version>
         </dependency>
-
-
         <!-- Other dependencies for Spring-->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -61,7 +59,11 @@
             <artifactId>super-csv</artifactId>
             <version>${supercsv-version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.univocity</groupId>
+            <artifactId>univocity-parsers</artifactId>
+            <version>2.5.8</version>
+        </dependency>
         <!-- Database dependencies -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -75,7 +77,7 @@
             <version>${mysql-version}</version>
         </dependency>
 
-        <!-- Internal dependencies -->
+         <!--Internal dependencies-->
         <dependency>
             <groupId>ro.msg.cm</groupId>
             <artifactId>cm-client</artifactId>
