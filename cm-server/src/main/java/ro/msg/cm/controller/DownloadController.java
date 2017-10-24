@@ -1,18 +1,9 @@
 package ro.msg.cm.controller;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
@@ -23,6 +14,15 @@ import ro.msg.cm.model.Tag;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.repository.EducationRepository;
 import ro.msg.cm.repository.TagRepository;
+import ro.msg.cm.types.CandidateCheck;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.Writer;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/download")
@@ -39,7 +39,7 @@ public class DownloadController {
        this.tagRepository =tagRepository;
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @PostMapping("/list")
     public void downloadCandidateCsv(HttpServletResponse response) throws IOException {
         String[] headers= {"firstName", "lastName", "phone", "email", "educationStatus", "originalStudyYear", "event"};
         writeResponse(response, candidateRepository, Candidate.class);
@@ -47,12 +47,13 @@ public class DownloadController {
     }
 
 
-    @RequestMapping(value = "/education", method = RequestMethod.POST)
+    @PostMapping("/education")
     public void downloadEducationCsv(HttpServletResponse response) throws IOException {
         writeResponse(response, educationRepository, Education.class);
 
     }
-    @RequestMapping(value = "/tag", method = RequestMethod.POST)
+
+    @PostMapping("/tag")
     public void downloadTagCsv(HttpServletResponse response) throws IOException {
         writeResponse(response, tagRepository, Tag.class);
     }
@@ -71,7 +72,13 @@ public class DownloadController {
 
     private void createCSV(Writer writer, CrudRepository repo, Class obj) throws IOException {
         String[] headers = determineHeader(obj);
-        Iterable repoList = repo.findAll();
+        Iterable repoList;
+        // This is in place to read only the valid candidates
+        if (repo instanceof CandidateRepository) {
+            repoList = ((CandidateRepository) repo).findAllByCheckCandidate(CandidateCheck.VALIDATED);
+        } else {
+            repoList = repo.findAll();
+        }
         // uses the Super CSV API to generate CSV data from the model data
         ICsvBeanWriter csvWriter = new CsvBeanWriter(writer, CsvPreference.STANDARD_PREFERENCE);
         csvWriter.writeHeader(headers);
