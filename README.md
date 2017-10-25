@@ -25,8 +25,7 @@ npm run start
 ```
 5. For cm-external
 
-Go to resourcer/config.resources
-  Uncomment and set the following properties:
-    PROXYHOST
-    PROXYPORT
-    GOOGLESECRET
+Go to resourcer/config.resources, uncomment and set the following properties:
+- PROXYHOST
+- PROXYPORT
+- GOOGLESECRET

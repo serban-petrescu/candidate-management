@@ -6,7 +6,7 @@ import EditCandidate from './EditCandidate';
 import ConfirmationDialog from './ConfirmationDialog';
 import '../less/candidateTable.less';
 import "../less/roboto.less";
-import SkillsList from '../components/SkillsList'
+import SkillsList from '../components/SkillsList';
 import {connect} from 'react-redux';
 import {selectCandidate, loadCandidates} from '../actions/index';
 import {bindActionCreators} from 'redux';
@@ -100,7 +100,7 @@ class CandidatesTable extends React.Component {
                 <Tab eventKey={2} title="Education"> <EducationList educationLink={row._links.education.href}/></Tab>
                 <Tab eventKey={3} title="Notes"><NotesList notesUrl={row._links.candidateNotesList.href} candidate={row}/></Tab>
             </Tabs>
-        )
+        );
     };
 
     /**
@@ -113,7 +113,7 @@ class CandidatesTable extends React.Component {
             type: 'RegexFilter',
             placeholder: placeHolder,
             delay: 1000
-        }
+        };
     }
 
     isExpandableRow = () => {
@@ -149,6 +149,12 @@ class CandidatesTable extends React.Component {
                                    dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
                 <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
                                    dataField='phone'>Phone</TableHeaderColumn>
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
+                                   dataField='originalStudyYear'>Original Study Year</TableHeaderColumn>
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
+                                   dataField='dateOfAdding'>Entry Date</TableHeaderColumn>
+                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
+                                   dataField='currentStudyYear'>Current Study Year</TableHeaderColumn>
                 <TableHeaderColumn expandable={false} dataField='id' dataFormat={ this.actionsFormatter }
                                    tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} }
                                    thStyle={ {'textAlign': 'center',} }>
@@ -156,31 +162,6 @@ class CandidatesTable extends React.Component {
                 </TableHeaderColumn>
             </BootstrapTable>
         );
-    }
-}
-class BootstrapTableMSG extends BootstrapTable {
-    constructor(props) {
-        // State does not contain candidate because they are kept in the global state
-        super(props);
-
-        // We have 4 custom components
-        this.options = {
-            defaultSortName: 'lastName',
-            defaultSortOrder: 'asc',
-            insertBtn: this.addCandidateButton,
-            paginationPosition: 'bottom',
-            exportCSVBtn: this.CustomExportCSVButton,
-            searchField: this.CustomSearchField,
-            expandBy: 'column',
-            deleteBtn: this.importButton,
-        };
-
-    }
-    renderToolBar() {
-        const { selectRow, insertRow, deleteRow, search, additionalButtons, children } = this.props;
-        const enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
-        if (enableShowOnlySelected
-            || insertRow){}
     }
 }
 
@@ -194,7 +175,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     // whenever deleteCandidate is called, the result should be passed
     // to all our reducers
-    return bindActionCreators({selectCandidate: selectCandidate, loadCandidates: loadCandidates}, dispatch);
+    return bindActionCreators({selectCandidate, loadCandidates}, dispatch);
 }
 
 
