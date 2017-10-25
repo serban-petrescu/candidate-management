@@ -88,7 +88,7 @@ function fetchSkillsForCandidate(url) {
                 tagLink: key._links.tag.href,
                 rating: key.rating,
                 certifier: key.certifier
-            };
+            }
         });
     }).catch((error) => {
         console.log(error);
@@ -198,8 +198,8 @@ function importCSV(files, importUrl) {
     console.log(files);
     //let educationLink = "http://localhost:8080/api/import/education";
     return axios.post(importUrl,files,config)
-        .then((response) => {console.log(response);})
-        .catch((error) => {console.log(error);});
+        .then((response) => {console.log(response)})
+        .catch((error) => {console.log(error)});
 
 }
 
@@ -209,7 +209,7 @@ function exportCSV(exportUrl,filename){
         .then((response) => {
             FileDownload(response.data, csv);
         })
-        .catch((error) => {console.log(error);});
+        .catch((error) => {console.log(error)});
 }
 
 export {

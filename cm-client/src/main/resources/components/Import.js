@@ -13,7 +13,7 @@ export default class Import extends React.Component {
         super(props);
         this.state = {
             file: null
-        };
+        }
     }
     uploadEducationCSV(event) {
         importEducation(this.state.file).then(response => {
@@ -63,7 +63,7 @@ export default class Import extends React.Component {
                 <input className="btn-defaultCustom btn btn-default" type="submit" value="Upload" onClick={this.uploadTagCSV.bind(this)}/>
                 <label>-</label>
                 <input className="btn-defaultCustom btn btn-default" type="submit" value="Download" onClick={this.exportTagCSV} />
-            </div>);
+            </div>)
 
 
     }

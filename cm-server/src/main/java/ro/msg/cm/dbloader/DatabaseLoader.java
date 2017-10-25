@@ -106,38 +106,4 @@ public class DatabaseLoader implements CommandLineRunner {
             log.error("Error at saving the entries");
         }
     }
-
-    private void defaultMockData() {
-        emptyDatabase();
-        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics", 3));
-        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics", 4));
-        Education education = new Education("Master", "UTCN", "Information Technology", 2);
-
-        this.educationRepository.save(education);
-
-        this.candidateRepository.save(new Candidate("Miralem", "Pjanic", "012986212", "aaa@a.a"));
-        this.candidateRepository.save(new Candidate("Sami", "Khedira"));
-        this.candidateRepository.save(new Candidate("Mario", "Mandzukic"));
-        this.candidateRepository.save(new Candidate("Paulo", "Dybala"));
-        Candidate test = new Candidate("Alex", "Sandro");
-        test.setEducation(education);
-
-        this.candidateRepository.save(test);
-
-        this.tagRepository.save(new Tag("German", "foreign"));
-        this.tagRepository.save(new Tag("English", "foreign"));
-        Tag trial = new Tag("Java", "programming");
-        this.tagRepository.save(trial);
-        this.candidateRepository.save(test);
-
-        this.candidateSkillsRepository.save(new CandidateSkills(test, trial, "average"));
-
-        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference", null));
-
-    }
-
-    private boolean isDatabaseEmpty() {
-        return !this.candidateRepository.findAll().iterator().hasNext();
-    }
-
 }
