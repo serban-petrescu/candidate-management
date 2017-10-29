@@ -1,6 +1,3 @@
-/**
- * Created by oana on 14.07.2017.
- */
 import React from 'react';
 import {importEducation, importTag, exportTag, exportEducation} from "../actions/index";
 import '../less/addCandidate.less';
@@ -13,36 +10,32 @@ export default class Import extends React.Component {
         super(props);
         this.state = {
             file: null
-        }
+        };
     }
     uploadEducationCSV(event) {
-        importEducation(this.state.file).then(response => {
-            console.log('response received');
-            this.setState({});
-        });
+        importEducation(this.state.file);
+        this.setState({});
         event.preventDefault();
     }
     uploadTagCSV(event) {
-        importTag(this.state.file).then(response => {
-            console.log('response received');
-            this.setState({});
-        });
+        importTag(this.state.file);
+        this.setState({});
         event.preventDefault();
     }
 
     onChange(e){
-        var myFile = e.target.files[0];
+        let myFile = e.target.files[0];
         console.log(e.target.files[0]);
         this.setState({file: myFile});
 
     }
 
-    exportTagCSV(event){
+    static exportTagCSV(){
         exportTag();
     }
 
 
-    exportEducationCSV(event){
+    static exportEducationCSV(){
         exportEducation();
     }
 
@@ -56,14 +49,14 @@ export default class Import extends React.Component {
                 <input type="file" onChange={this.onChange.bind(this)} name="newcsv" id="newcsv" ref="newcsv"/><br/>
                 <input className="btn-defaultCustom btn btn-default" type="submit" value="Upload" onClick={this.uploadEducationCSV.bind(this)}/>
                 <label>-</label>
-                <input className="btn-defaultCustom btn btn-default" type="submit" value="Download" onClick={this.exportEducationCSV} /><br/>
+                <input className="btn-defaultCustom btn btn-default" type="submit" value="Download" onClick={Import.exportEducationCSV} /><br/>
                 <br/>
                 <label for="Skills">Skills</label>
                 <input type="file" onChange={this.onChange.bind(this)} name="newcsv2" id="newcsv2" ref="newcsv2"/><br/>
                 <input className="btn-defaultCustom btn btn-default" type="submit" value="Upload" onClick={this.uploadTagCSV.bind(this)}/>
                 <label>-</label>
-                <input className="btn-defaultCustom btn btn-default" type="submit" value="Download" onClick={this.exportTagCSV} />
-            </div>)
+                <input className="btn-defaultCustom btn btn-default" type="submit" value="Download" onClick={Import.exportTagCSV} />
+            </div>);
 
 
     }

@@ -94,7 +94,7 @@ export function     importTag(file) {
 }
 
 export function     exportTag() {
-    return exportCSV(EXPORT_TAG_URL,'Tag')
+    return exportCSV(EXPORT_TAG_URL,'Tag');
 }
 
 export function     exportEducation() {

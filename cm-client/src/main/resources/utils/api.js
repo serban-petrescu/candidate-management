@@ -1,5 +1,5 @@
 import axios from 'axios';
-import FileDownload from 'react-file-download';
+import fileDownload from 'react-file-download';
 /**
  * Returns all the candidates available from the backend
  * @param url to which the GET request should be made
@@ -198,8 +198,8 @@ function importCSV(files, importUrl) {
     console.log(files);
     //let educationLink = "http://localhost:8080/api/import/education";
     return axios.post(importUrl,files,config)
-        .then((response) => {console.log(response)})
-        .catch((error) => {console.log(error)});
+        .then((response) => {console.log(response);})
+        .catch((error) => {console.log(error);});
 
 }
 
@@ -207,9 +207,9 @@ function exportCSV(exportUrl,filename){
     let csv = filename+'.csv';
     return axios.post(exportUrl)
         .then((response) => {
-            FileDownload(response.data, csv);
+            fileDownload(response.data, csv);
         })
-        .catch((error) => {console.log(error)});
+        .catch((error) => {console.log(error);});
 }
 
 export {

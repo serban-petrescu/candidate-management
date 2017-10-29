@@ -158,31 +158,6 @@ class CandidatesTable extends React.Component {
         );
     }
 }
-class BootstrapTableMSG extends BootstrapTable {
-    constructor(props) {
-        // State does not contain candidate because they are kept in the global state
-        super(props);
-
-        // We have 4 custom components
-        this.options = {
-            defaultSortName: 'lastName',
-            defaultSortOrder: 'asc',
-            insertBtn: this.addCandidateButton,
-            paginationPosition: 'bottom',
-            exportCSVBtn: this.CustomExportCSVButton,
-            searchField: this.CustomSearchField,
-            expandBy: 'column',
-            deleteBtn: this.importButton,
-        };
-
-    }
-    renderToolBar() {
-        const { selectRow, insertRow, deleteRow, search, additionalButtons, children } = this.props;
-        const enableShowOnlySelected = selectRow && selectRow.showOnlySelected;
-        if (enableShowOnlySelected
-            || insertRow){}
-    }
-}
 
 function mapStateToProps(state) {
     return {
