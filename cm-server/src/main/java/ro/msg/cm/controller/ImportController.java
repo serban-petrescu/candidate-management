@@ -1,9 +1,5 @@
 package ro.msg.cm.controller;
 
-/**
- * Created by oana on 5/16/17.
- */
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +20,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/api/import")
-public class ImportDatabase {
+public class ImportController {
 
     private final TagRepository tagRepository;
     private final EducationRepository educationRepository;
     private final CandidateRepository candidateRepository;
 
     @Autowired
-    public ImportDatabase(TagRepository tagRepository, EducationRepository educationRepository, CandidateRepository candidateRepository) {
+    public ImportController(TagRepository tagRepository, EducationRepository educationRepository, CandidateRepository candidateRepository) {
 
         this.tagRepository = tagRepository;
         this.educationRepository = educationRepository;
@@ -40,20 +36,20 @@ public class ImportDatabase {
 
     @RequestMapping(value = "/education", method = RequestMethod.POST)
     public void importEducation(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logRequestDetail(request);
         DatabaseLoader.importCSV(request.getInputStream(), educationRepository,Education.class);
-    }
+        logRequestDetail(request);
+}
 
     @RequestMapping(value = "/tag", method = RequestMethod.POST)
     public void importTag(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logRequestDetail(request);
         DatabaseLoader.importCSV(request.getInputStream(), tagRepository, Tag.class);
+        logRequestDetail(request);
     }
 
     @RequestMapping(value = "/candidate", method = RequestMethod.POST)
     public void importCandidate(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logRequestDetail(request);
         DatabaseLoader.importCSV(request.getInputStream(), candidateRepository, Candidate.class);
+        logRequestDetail(request);
     }
 
     /**
@@ -72,11 +68,12 @@ public class ImportDatabase {
             String headerName = (String) headerNames.nextElement();
             log.debug("Header Name - " + headerName + ", Value - " + request.getHeader(headerName));
         }
+        /*You can only read the InputStream once, when you actually import it.
         String result = new BufferedReader(new InputStreamReader(request.getInputStream()))
                 .lines().collect(Collectors.joining("\n"));
         log.debug("Result length is" + result.length());
         log.debug(result);
-
+        */
     }
 
 }

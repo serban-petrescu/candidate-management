@@ -23,14 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
-
-import ro.msg.cm.configuration.PropertiesLoader;
 import ro.msg.cm.model.*;
 import ro.msg.cm.repository.*;
 
 import java.io.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Properties;
 
 @Slf4j
 @Component
@@ -46,18 +45,17 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private final CandidateNotesRepository candidateNotesRepository;
 
-    public static final String IMPORT_MOCK = "importMock";
-
-    public static final String MOCK_CSV_FILE = "mockCSV";
+    private final MockProperties mockProperties;
 
     @Autowired
     public DatabaseLoader(CandidateRepository candidateRepository, TagRepository tagRepository, EducationRepository educationRepository,
-                          CandidateSkillsRepository candidateSkillsRepository, CandidateNotesRepository candidateNotesRepository) {
+                          CandidateSkillsRepository candidateSkillsRepository, CandidateNotesRepository candidateNotesRepository, MockProperties mockProperties) {
         this.candidateRepository = candidateRepository;
         this.tagRepository = tagRepository;
         this.educationRepository = educationRepository;
         this.candidateSkillsRepository = candidateSkillsRepository;
         this.candidateNotesRepository = candidateNotesRepository;
+        this.mockProperties = mockProperties;
     }
 
     @Override
@@ -66,13 +64,10 @@ public class DatabaseLoader implements CommandLineRunner {
     }
 
     private void mock() {
-        Properties properties= PropertiesLoader.loadPropertiesFile("./global.properties");
-        String mock = properties.getProperty(IMPORT_MOCK);
-        if(Boolean.valueOf(mock)){
+        if(mockProperties.getEnabled()){
             emptyDatabase();
             try {
-                String csvFile = properties.getProperty(MOCK_CSV_FILE);
-                importCSV(new FileInputStream(csvFile),candidateRepository,Candidate.class);
+                importCandidate(new FileInputStream(mockProperties.getLocation()));
             } catch (FileNotFoundException e) {
                 log.error("Csv file not found");
             }
@@ -86,24 +81,40 @@ public class DatabaseLoader implements CommandLineRunner {
         this.tagRepository.deleteAll();
     }
 
+
+    private static <T> List processBeans(InputStream csvContent, Class<T> tClass) {
+
+        BeanListProcessor<T> rowProcessor = new BeanListProcessor<>(tClass);
+        CsvParserSettings parserSettings = new CsvParserSettings();
+        parserSettings.setRowProcessor(rowProcessor);
+        parserSettings.setHeaderExtractionEnabled(true);
+        CsvParser parser = new CsvParser(parserSettings);
+        //this submits all rows parsed from the input to the BeanListProcessor
+        parser.parse(csvContent);
+        List<T> beans = rowProcessor.getBeans();
+        return beans;
+
+    }
+
     /**
      * Imports the CSV into the repository
      * @param csvContent the content of the csv to be imported
      * @param rep the corresponding repository for storing the new data
      * @param tClass class for the to-be-imported records*/
     public static <T> void importCSV(InputStream csvContent, CrudRepository rep, Class<T> tClass) {
-        try {
-            BeanListProcessor<T> rowProcessor = new BeanListProcessor<T>(tClass);
-            CsvParserSettings parserSettings = new CsvParserSettings();
-            parserSettings.setRowProcessor(rowProcessor);
-            parserSettings.setHeaderExtractionEnabled(true);
-            CsvParser parser = new CsvParser(parserSettings);
-            //this submits all rows parsed from the input to the BeanListProcessor
-            parser.parse(csvContent);
-            List<T> beans = rowProcessor.getBeans();
-            rep.save(beans);
-        } catch (Exception e) {
-            log.error("Error at saving the entries");
+        List beans = processBeans(csvContent,tClass);
+        rep.save(beans);
+    }
+
+    private void importCandidate(InputStream csvContent) {
+        List<Candidate> beans = processBeans(csvContent,Candidate.class);
+        Education education = new Education("Mock Education Type","Mock Provider","Mock Descriptions",4);
+        educationRepository.save(education);
+        Date date = Date.valueOf(LocalDate.now());
+        for(Candidate bean:beans){
+            bean.setEducation(education);
+            bean.setDateOfAdding(date);
         }
+        candidateRepository.save(beans);
     }
 }

@@ -77,12 +77,19 @@
             <version>${mysql-version}</version>
         </dependency>
 
-         <!--Internal dependencies-->
+        <!-- Internal dependencies -->
         <dependency>
             <groupId>ro.msg.cm</groupId>
             <artifactId>cm-client</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+
+
     </dependencies>
 
 
@@ -104,6 +111,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
         </plugins>
 
