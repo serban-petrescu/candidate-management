@@ -1,6 +1,7 @@
 package ro.msg.cm.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.univocity.parsers.annotations.Parsed;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,22 +15,29 @@ import java.util.List;
 public class Candidate {
 
 	private @Id @GeneratedValue Long id;
+	@Parsed
 	private String firstName;
+	@Parsed
 	private String lastName;
+	@Parsed
 	private String phone;
+	@Parsed
 	private String email;
 	private @ManyToOne
     @JoinColumn(name = "education_id")
     Education education;
+	@Parsed
     private String educationStatus;
+	@Parsed
     private int originalStudyYear;
+    @Parsed
 	private String event;
     private @OneToMany(mappedBy = "candidate")
     @OrderBy("tag ASC")
     List<CandidateSkills> candidateSkillsList;
 	private @OneToMany(mappedBy = "candidate")
 	List<CandidateNotes> candidateNotesList;
-
+	@Parsed
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfAdding;
 

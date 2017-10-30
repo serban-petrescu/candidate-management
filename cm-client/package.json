@@ -13,12 +13,14 @@
     "react-bootstrap": "^0.31.0",
     "react-bootstrap-table": "^3.2.2",
     "react-dom": "^15.5.4",
+    "react-file-reader": "^1.1.1",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
     "redux-promise": "^0.5.3",
-    "roboto-fontface": "^0.7.0"
+    "roboto-fontface": "^0.7.0",
+    "react-file-download": "latest"
   },
   "devDependencies": {
     "autoprefixer": "6.7.2",

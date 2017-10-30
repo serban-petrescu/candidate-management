@@ -15,22 +15,23 @@
  */
 package ro.msg.cm.dbloader;
 
+import com.univocity.parsers.common.processor.BeanListProcessor;
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import ro.msg.cm.model.*;
 import ro.msg.cm.repository.*;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.io.*;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 
-
+@Slf4j
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
@@ -44,129 +45,76 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private final CandidateNotesRepository candidateNotesRepository;
 
+    private final MockProperties mockProperties;
+
     @Autowired
     public DatabaseLoader(CandidateRepository candidateRepository, TagRepository tagRepository, EducationRepository educationRepository,
-                          CandidateSkillsRepository candidateSkillsRepository, CandidateNotesRepository candidateNotesRepository) {
+                          CandidateSkillsRepository candidateSkillsRepository, CandidateNotesRepository candidateNotesRepository, MockProperties mockProperties) {
         this.candidateRepository = candidateRepository;
         this.tagRepository = tagRepository;
         this.educationRepository = educationRepository;
         this.candidateSkillsRepository = candidateSkillsRepository;
         this.candidateNotesRepository = candidateNotesRepository;
+        this.mockProperties = mockProperties;
     }
 
     @Override
     public void run(String... strings) throws Exception {
-        // loadData();
+        mock();
     }
 
-    private void loadData() throws Exception {
-        if (!isDatabaseEmpty()) {
+    private void mock() {
+        if(mockProperties.getEnabled()){
             emptyDatabase();
+            try {
+                importCandidate(new FileInputStream(mockProperties.getLocation()));
+            } catch (FileNotFoundException e) {
+                log.error("Csv file not found");
+            }
         }
-        loadEducation();
-        loadFromMockDataCSV();
-        Education education = new Education("Master", "UTCN", "Information Technology", 2);
-        this.educationRepository.save(education);
     }
-
     private void emptyDatabase() {
+        this.candidateNotesRepository.deleteAll();
         this.candidateSkillsRepository.deleteAll();
         this.candidateRepository.deleteAll();
-        // this.educationRepository.deleteAll();
+        this.educationRepository.deleteAll();
         this.tagRepository.deleteAll();
+    }
+
+
+    private static <T> List processBeans(InputStream csvContent, Class<T> tClass) {
+
+        BeanListProcessor<T> rowProcessor = new BeanListProcessor<>(tClass);
+        CsvParserSettings parserSettings = new CsvParserSettings();
+        parserSettings.setRowProcessor(rowProcessor);
+        parserSettings.setHeaderExtractionEnabled(true);
+        CsvParser parser = new CsvParser(parserSettings);
+        //this submits all rows parsed from the input to the BeanListProcessor
+        parser.parse(csvContent);
+        List<T> beans = rowProcessor.getBeans();
+        return beans;
 
     }
 
-    private void loadEducation() {
-        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics", 3));
-        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics", 4));
-        Education education = new Education("Master", "UTCN", "Information Technology", 2);
-        this.educationRepository.save(education);
+    /**
+     * Imports the CSV into the repository
+     * @param csvContent the content of the csv to be imported
+     * @param rep the corresponding repository for storing the new data
+     * @param tClass class for the to-be-imported records*/
+    public static <T> void importCSV(InputStream csvContent, CrudRepository rep, Class<T> tClass) {
+        List beans = processBeans(csvContent,tClass);
+        rep.save(beans);
     }
 
-    private void loadFromMockDataCSV() {
-
-        String csvFile = "/MockDataCSV.csv";
-        String line = "";
-        String cvsSplitBy = ",";
-        String header = null;
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(DatabaseLoader.class
-            .getResourceAsStream(csvFile)))) {
-
-            while ((line = br.readLine()) != null) {
-                if (header == null) {
-                    header = line;
-                } else {
-                    // use comma as separator Header: id,first_name,last_name,email,event,phone,study_year,education_status,education_id
-                    String[] elements = line.split(cvsSplitBy);
-                    String firstName = elements[1];
-                    String lastName = elements[2];
-                    String phone = elements[5];
-                    String email = elements[3];
-                    Education education = this.educationRepository.findOne(Long.parseLong(elements[8]));
-
-                    String educationStatus = elements[7];
-                    int originalStudyYear = Integer.parseInt(elements[6]);
-                    String event = elements[4];
-                    Date dateOfAdding = null;
-
-
-                    String dateToTransform = elements[9];
-                    if (!dateToTransform.equals("0000-00-00") || !dateToTransform.isEmpty()) {
-                        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
-                        d.setTimeZone(TimeZone.getTimeZone("UTC"));
-                        dateOfAdding = d.parse(dateToTransform);
-                    }
-
-                    Candidate candidate =
-                        new Candidate(firstName, lastName, phone, email, educationStatus, originalStudyYear, event, dateOfAdding);
-                    candidate.setEducation(education);
-
-                    this.candidateRepository.save(candidate);
-
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+    private void importCandidate(InputStream csvContent) {
+        List<Candidate> beans = processBeans(csvContent,Candidate.class);
+        Education education = new Education("Mock Education Type","Mock Provider","Mock Descriptions",4);
+        educationRepository.save(education);
+        Date date = Date.valueOf(LocalDate.now());
+        for(Candidate bean:beans){
+            bean.setEducation(education);
+            bean.setDateOfAdding(date);
         }
+        candidateRepository.save(beans);
     }
-
-    private void defaultMockData() {
-        emptyDatabase();
-        this.educationRepository.save(new Education("High-School", "Marie Curie", "Informatics", 3));
-        this.educationRepository.save(new Education("Bachelor", "UBB", "Mathematics-Informatics", 4));
-        Education education = new Education("Master", "UTCN", "Information Technology", 2);
-
-        this.educationRepository.save(education);
-
-        this.candidateRepository.save(new Candidate("Miralem", "Pjanic", "012986212", "aaa@a.a"));
-        this.candidateRepository.save(new Candidate("Sami", "Khedira"));
-        this.candidateRepository.save(new Candidate("Mario", "Mandzukic"));
-        this.candidateRepository.save(new Candidate("Paulo", "Dybala"));
-        Candidate test = new Candidate("Alex", "Sandro");
-        test.setEducation(education);
-
-        this.candidateRepository.save(test);
-
-        this.tagRepository.save(new Tag("German", "foreign"));
-        this.tagRepository.save(new Tag("English", "foreign"));
-        Tag trial = new Tag("Java", "programming");
-        this.tagRepository.save(trial);
-        this.candidateRepository.save(test);
-
-        this.candidateSkillsRepository.save(new CandidateSkills(test, trial, "average"));
-
-        this.candidateNotesRepository.save(new CandidateNotes(test, "NEW", "Registered Java Conference", null));
-
-    }
-
-    private boolean isDatabaseEmpty() {
-        return !this.candidateRepository.findAll().iterator().hasNext();
-    }
-
 }
