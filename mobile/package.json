@@ -13,7 +13,10 @@
     "react-native-elements": "^0.17.0",
     "react-native-storage": "^0.2.2",
     "react-native-toast": "^1.0.1",
-    "react-navigation": "^1.0.0-beta.11"
+    "react-navigation": "^1.0.0-beta.11",
+    "react-native-vector-icons/FontAwesome": "latest",
+    "react-native-vector-icons": "latest",
+    "react-native-textinput-effects":"latest"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
