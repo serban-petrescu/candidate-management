@@ -1,6 +1,7 @@
 import React from 'react';
 import AddCandidate from './AddCandidate';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {HashRouter as Router, Route} from 'react-router-dom';
+import TopNavbar from './TopNavbar';
 import Home from './Home'
 /**
  * Each route will be identified in a <Route> component. The <Route> component will take two properties:
@@ -12,6 +13,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
+                    <TopNavbar/>
                     <Route exact={true} path="/" component={Home}/>
                     <Route path="/addCandidate" component={AddCandidate}/>
 

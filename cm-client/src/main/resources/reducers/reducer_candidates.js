@@ -53,7 +53,7 @@ export default function (state = [], action) {
 
     switch (action.type) {
         case ADD_CANDIDATE:
-            return [action.payload.candidate, ...state];
+            return [action.payload.response.data, ...state];
         case EDIT_CANDIDATE:
             return updateCandidate(state, action.payload.candidate);
         case LOAD_CANDIDATES:

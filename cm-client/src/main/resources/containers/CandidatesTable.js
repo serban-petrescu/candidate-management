@@ -58,7 +58,7 @@ class CandidatesTable extends React.Component {
 
     addCandidateButton = () => {
         return (
-            <a href="addCandidate" className="btn-lg candidateCustomButton" role="button">Add Candidate</a>
+            <a href="#/addCandidate" className="btn-lg candidateCustomButton" role="button">Add Candidate</a>
         );
     };
 
