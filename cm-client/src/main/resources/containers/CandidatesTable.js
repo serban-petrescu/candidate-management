@@ -126,21 +126,16 @@ class CandidatesTable extends React.Component {
                             exportCSV={true} expandComponent={ this.expandCandidateDetails }
                             expandableRow={this.isExpandableRow} search insertRow>
 
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
-                                   dataField='id' filter={this.getFilter('Candidate Id')} isKey={ true }>Candidate
-                    ID</TableHeaderColumn>
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
-                                   dataField='firstName' filter={this.getFilter('First Name')} dataSort sortFunc={sortByFirstName}>First
+                <TableHeaderColumn dataField='id' filter={this.getFilter('Id')} isKey={ true }
+                    width="70">Id</TableHeaderColumn>
+                <TableHeaderColumn dataField='firstName' filter={this.getFilter('First Name')} dataSort
+                                   sortFunc={sortByFirstName}>First
                     Name</TableHeaderColumn>
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
-                                   dataField='lastName' filter={this.getFilter('Last Name')} dataSort sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
-                                   dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
-                                   dataField='phone'>Phone</TableHeaderColumn>
-                <TableHeaderColumn expandable={false} dataField='id' dataFormat={ this.actionsFormatter }
-                                   tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} }
-                                   thStyle={ {'textAlign': 'center',} }>
+                <TableHeaderColumn dataField='lastName' filter={this.getFilter('Last Name')} dataSort
+                                   sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
+                <TableHeaderColumn dataField='phone'>Phone</TableHeaderColumn>
+                <TableHeaderColumn expandable={false} dataField='actions' dataFormat={ this.actionsFormatter } width="120">
                     Actions
                 </TableHeaderColumn>
             </BootstrapTable>
