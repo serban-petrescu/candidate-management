@@ -1,4 +1,5 @@
-import {fetchCandidates, deleteCandidate,updateCandidate, addCandidate as insertCandidate, addCandidateNote as insertCandidateNote} from '../utils/api';
+import {fetchCandidates, deleteCandidate,updateCandidate, addCandidate as insertCandidate, addCandidateNote as insertCandidateNote, importCSV, exportCSV} from '../utils/api';
+
 
 export const LOAD_CANDIDATES = 'LOAD_CANDIDATES';
 export const SELECT_CANDIDATE = 'SELECT_CANDIDATE';
@@ -6,10 +7,18 @@ export const REMOVE_CANDIDATE = 'DELETE_CANDIDATE';
 export const EDIT_CANDIDATE = 'EDIT_CANDIDATE';
 export const ADD_CANDIDATE = 'ADD_CANDIDATE';
 export const ADD_CANDIDATE_NOTE = 'ADD_CANDIDATE_NOTE';
+export const IMPORT_EDUCATION ='IMPORT_EDUCATION';
+export const IMPORT_TAG='IMPORT_TAG';
+export const EXPORT_EDUCATION ='EXPORT_EDUCATION';
+export const EXPORT_TAG='EXPORT_TAG';
 export const ROOT_URL = "http://localhost";
 export const PORT = 8080;
 export const CANDIDATES_URL = `${ROOT_URL}:${PORT}/api/candidates`;
 export const CANDIDATES_NOTES_URL = `${ROOT_URL}:${PORT}/api/candidateNoteses`;
+export const IMPORT_EDUCATION_URL =`${ROOT_URL}:${PORT}/api/import/education`;
+export const IMPORT_TAG_URL =`${ROOT_URL}:${PORT}/api/import/tag`;
+export const EXPORT_EDUCATION_URL =`${ROOT_URL}:${PORT}/api/download/education`;
+export const EXPORT_TAG_URL =`${ROOT_URL}:${PORT}/api/download/tag`;
 
 /**
  * Actions are plain JavaScript objects. Actions must have a type property that indicates the type of action being performed.
@@ -70,4 +79,25 @@ export function     addCandidateNote(note,candidate) {
     }
 }
 
+export function     importEducation(file) {
+    return {
+        type: IMPORT_EDUCATION,
+        payload: importCSV(file,IMPORT_EDUCATION_URL)
+    }
+}
 
+export function     importTag(file) {
+    return {
+        type: IMPORT_TAG,
+        payload: importCSV(file,IMPORT_TAG_URL)
+    }
+}
+
+export function     exportTag() {
+    return exportCSV(EXPORT_TAG_URL,'Tag');
+}
+
+export function     exportEducation() {
+    return exportCSV(EXPORT_EDUCATION_URL,'Education');
+
+}

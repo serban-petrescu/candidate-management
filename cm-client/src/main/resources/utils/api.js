@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fileDownload from 'react-file-download';
 /**
  * Returns all the candidates available from the backend
  * @param url to which the GET request should be made
@@ -191,6 +192,25 @@ function addCandidateNote(notesUrl, candidatesUrl, note,candidate) {
     return axiosResponse;
 }
 
+function importCSV(files, importUrl) {
+    const config = { headers: { 'Content-Type': 'text/csv' } };
+    console.log("Should have a file");
+    console.log(files);
+    //let educationLink = "http://localhost:8080/api/import/education";
+    return axios.post(importUrl,files,config)
+        .then((response) => {console.log(response);})
+        .catch((error) => {console.log(error);});
+
+}
+
+function exportCSV(exportUrl,filename){
+    let csv = filename+'.csv';
+    return axios.post(exportUrl)
+        .then((response) => {
+            fileDownload(response.data, csv);
+        })
+        .catch((error) => {console.log(error);});
+}
 
 export {
     updateCandidate,
@@ -201,5 +221,7 @@ export {
     fetchSkillsForCandidate,
     fetchTagForCandidateSkill,
     fetchNotesForCandidate,
-    addCandidateNote
+    addCandidateNote,
+    importCSV,
+    exportCSV
 };
