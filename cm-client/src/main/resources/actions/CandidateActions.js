@@ -3,7 +3,7 @@ import {
     deleteCandidate,
     updateCandidate,
     addCandidate as insertCandidate,
-    addCandidateNote as insertCandidateNote
+    addCandidateNote as insertCandidateNote,
 } from '../utils/CandidateAPI';
 
 
@@ -16,7 +16,6 @@ export const
     SELECT_CANDIDATE = 'SELECT_CANDIDATE',
 
     ADD_CANDIDATE_NOTE = 'ADD_CANDIDATE_NOTE';
-
 
 /**
  * Actions are plain JavaScript objects. Actions must have a type property that indicates the type of action being performed.
@@ -52,7 +51,6 @@ export function removeCandidate(candidateId) {
         payload: deleteCandidate(candidateId)
     }
 }
-
 
 export function editCandidate(candidate) {
     return {

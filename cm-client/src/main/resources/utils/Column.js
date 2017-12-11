@@ -6,6 +6,11 @@ class Column {
     }
 }
 
+/**
+ * Placeholder for each of the filters
+ * @param sPlaceHolder field name where filter input will be placed
+ * @returns {{type: string, placeholder: *, delay: number}}
+ */
 function createFilter(sPlaceHolder) {
     return {
         type: 'RegexFilter',

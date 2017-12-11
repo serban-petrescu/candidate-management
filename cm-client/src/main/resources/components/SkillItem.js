@@ -21,7 +21,7 @@ export default class SkillItem extends React.Component {
         fetchTagForCandidateSkill(this.props.tagLink).then(data => {
             this.setState({
                 description: data.description,
-                tagType: data.tagType,
+                tagType: data.tagType
             });
         });
     }

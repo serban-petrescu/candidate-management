@@ -1,14 +1,14 @@
-import React from 'react';
-import {SearchField, ButtonGroup} from 'react-bootstrap-table';
-import '../less/candidateTable.less';
+import React from "react";
+import {SearchField, ButtonGroup} from "react-bootstrap-table";
+import "../less/candidateTable.less";
 import "../less/roboto.less";
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
 import {
     updateNotValidatedCandidate as update,
     validateCandidates as validate,
     loadNotValidatedCandidates as load
-} from '../actions/CandidateValidationActions';
-import {bindActionCreators} from 'redux';
+} from "../actions/CandidateValidationActions";
+import {bindActionCreators} from "redux";
 import MainCandidatesTable from "../components/MainCandidatesTable";
 import {Columns} from "../utils/Column";
 

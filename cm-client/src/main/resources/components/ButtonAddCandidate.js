@@ -33,7 +33,8 @@ export default class ButtonAddCandidate extends React.Component {
                 <Button
                     className={'candidateCustomButton'}
                     disabled={isLoading || !isFormValid}
-                    onClick={!isLoading ? this.handleClick : null}>
+                    onClick={!isLoading ? this.handleClick : null}
+                    title={isLoading || !isFormValid ? 'Please enter valid values for all fields' : 'Add candidate'}>
                     { isLoading ? 'Loading...' : 'Add Candidate'}
                 </Button>
             </div>

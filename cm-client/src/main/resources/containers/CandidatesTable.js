@@ -47,6 +47,9 @@ class CandidatesTable extends MainCandidatesTable {
             ...props.options,
             insertBtn: this.addCandidateButton,
             exportCSVBtn: this.CustomExportCSVButton,
+            deleteBtn: this.importButton,
+            searchField: this.CustomSearchField,
+            expandBy: 'column'
         };
 
 
@@ -73,7 +76,14 @@ class CandidatesTable extends MainCandidatesTable {
 
     addCandidateButton = () => {
         return (
-            <a href="addCandidate" className="btn-lg candidateCustomButton" role="button">Add Candidate</a>
+            <a href="addCandidate" className="btn-lg candidateCustomButton" role="button" style={ {marginRight: 25}}>Add
+                Candidate</a>
+        );
+    };
+
+    importButton = () => {
+        return (
+            <a href="import" className="btn-lg candidateCustomButton" role="button">Import CSV</a>
         );
     };
 
@@ -108,8 +118,6 @@ class CandidatesTable extends MainCandidatesTable {
             </Tabs>
         )
     };
-
-
 }
 
 function mapStateToProps(state) {

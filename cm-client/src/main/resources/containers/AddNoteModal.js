@@ -47,17 +47,17 @@ class AddNoteModal extends React.Component {
 
     handleChangeNoteDate = (e) => {
         this.setState({
-            date: e.target.value,
+            date: e.target.value
         })
     };
     handleChangeNoteStatus = (e) => {
         this.setState({
-            status: e.target.value,
+            status: e.target.value
         })
     };
     handleChangeNoteNote = (e) => {
         this.setState({
-            note: e.target.value,
+            note: e.target.value
         })
     };
 

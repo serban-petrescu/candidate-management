@@ -1,8 +1,13 @@
 import React from 'react';
+
 import msgLogo from '../assets/images/msgLogo.png';
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import '../less/candidateTopNavbar.less';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import "roboto-fontface/css/roboto/roboto-fontface.css"
+import '../less/candidateTopNavbar.less';
+import {NotificationContainer} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 /**
  * Component containing the msg logo and the top navigation bar
@@ -13,6 +18,8 @@ export default class TopNavbar extends React.Component {
 
         return (
             <div>
+
+                <NotificationContainer/>
                 <Navbar fluid>
                     <Navbar.Header>
                         <Navbar.Brand>

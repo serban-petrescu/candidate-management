@@ -6,6 +6,7 @@ import '../less/addCandidate.less';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import ButtonAddCandidate from './ButtonAddCandidate'
+import {NotificationManager} from 'react-notifications';
 
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
@@ -23,6 +24,10 @@ class AddCandidate extends React.Component {
 
     constructor(props) {
         super(props);
+        this.setInitialValues();
+    }
+
+    setInitialValues = () => {
         this.state = {
             emailAddress: '',
             emailAddressValidationMsg: '',
@@ -36,10 +41,9 @@ class AddCandidate extends React.Component {
             phoneNumber: '',
             phoneNumberValidationMsg: '',
             phoneNumberValidationStatus: null,
-            confirmationMessage: '',
-            confirmationStatus: null
+            remainOnPage: false
         };
-    }
+    };
 
     handleChangeEmail = (e) => {
 
@@ -133,6 +137,12 @@ class AddCandidate extends React.Component {
         })
     };
 
+    handleCheckbox = () => {
+        this.setState({
+            remainOnPage: !this.state.remainOnPage
+        })
+    };
+
     checkRegexAndGetMessage = (value, regex) => {
 
         let validationMessage = '';
@@ -165,29 +175,42 @@ class AddCandidate extends React.Component {
 
     setConfirmationStatus = (confirmationStatus) => {
 
-        let message = '';
-        if (confirmationStatus === 'pending') {
-            message = '...';
-        }
-        else {
-            message = 'Candidate ' + this.state.firstName + ' ' +  this.state.lastName + ' ' ;
-            message = confirmationStatus === 'success' ? message + ' succesfully added!' : message + "couldn't be added!";
+        if (confirmationStatus !== "pending") {
+            const redirect = !this.state.remainOnPage;
+            this.showNotification(confirmationStatus);
+            this.setInitialValues();
+            if (redirect) {
+                window.location.href = '#/';
+            }
         }
 
         this.setState({
-            confirmationMessage: message,
             confirmationStatus: confirmationStatus
-        })
+        });
     };
 
     formValid = () => {
         return (this.state.emailAddressValidationStatus === 'success' && this.state.firstNameValidationStatus === 'success' && this.state.lastNameValidationStatus === 'success' && this.state.phoneNumberValidationStatus === 'success')
     };
 
+    showNotification = (type) => {
+        switch (type) {
+            case 'success':
+                NotificationManager.success("Candidate " + this.state.firstName + " " + this.state.lastName + " successfully added!",
+                    "Success", 4000);
+                break;
+            case 'failed':
+                NotificationManager.error("Candidate " + this.state.firstName + " " + this.state.lastName + "couldn't be added!",
+                    "Error", 4000);
+                break;
+            default:
+                break;
+        }
+    };
+
     render() {
         return (
         <div>
-        <TopNavbar/>
             <Grid>
                 {/* Personal info section */}
                 <form>
@@ -230,7 +253,8 @@ class AddCandidate extends React.Component {
                                 placeholder="Enter phone number"
                                 onChange={this.handleChangePhoneNumber}>
                     </FieldGroup>
-
+                    <input id="checkbox_stay_on_page" type="checkbox" checked={this.state.remainOnPage} onClick={this.handleCheckbox}/>
+                    <label for="checkbox_stay_on_page" className="checkbox-label">Remain on the current page to add another candidate</label>
                 </form>
                 {/* Buttons section */}
                 <Row>
@@ -240,13 +264,6 @@ class AddCandidate extends React.Component {
                     </Col>
                     <Col xs={14} md={9}>
                         <Button id="btn-home" className="float-right candidateCustomButton" href="/">Home</Button>
-                    </Col>
-                </Row>
-
-                {/* Confirmation message section */}
-                <Row>
-                    <Col xs={18} md={12}>
-                        <h2 className={(this.state.confirmationStatus ? 'success-message' : 'error-message') + ' text-center'}>{this.state.confirmationMessage}</h2>
                     </Col>
                 </Row>
             </Grid>

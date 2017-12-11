@@ -43,12 +43,9 @@ export default class NotesList extends React.Component {
             <BootstrapTable tableBodyClass='candidateNotesTableBodyClass' tableHeaderClass='candidateNotesTableHeaderClass' bordered={false} hover={true} striped={true}
                             data={this.state.candidate.candidateNotesList}  options={this.options} insertRow >
 
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
-                                   dataField='date' isKey={true}>Date</TableHeaderColumn>
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
-                                   dataField='status'>Status</TableHeaderColumn>
-                <TableHeaderColumn tdStyle={ {'textAlign': 'center', 'fontWeight': 'lighter'} } thStyle={ {'textAlign': 'center',} }
-                                   dataField='note' >Note</TableHeaderColumn>
+                <TableHeaderColumn dataField='date' isKey={true}>Date</TableHeaderColumn>
+                <TableHeaderColumn dataField='status'>Status</TableHeaderColumn>
+                <TableHeaderColumn dataField='note' >Note</TableHeaderColumn>
 
             </BootstrapTable>
         );

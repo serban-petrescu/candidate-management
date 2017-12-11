@@ -1,8 +1,11 @@
 import React from 'react';
 import AddCandidate from './AddCandidate';
+
+import {HashRouter as Router, Route} from 'react-router-dom';
+import TopNavbar from './TopNavbar';
 import Validation from './Validation';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import Home from './Home'
+import Home from './Home';
+import Import from './Import';
 
 /**
  * Each route will be identified in a <Route> component. The <Route> component will take two properties:
@@ -14,9 +17,11 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
+                    <TopNavbar/>
                     <Route exact={true} path="/" component={Home}/>
                     <Route path="/addCandidate" component={AddCandidate}/>
                     <Route path="/validation" component={Validation}/>
+                    <Route path="/import" component={Import}/>
                 </div>
             </Router>
         );

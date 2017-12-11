@@ -28,7 +28,8 @@ class MainCandidatesTable extends Component {
             pagination: true,
             search: true,
             options: {
-                paginationPosition: 'bottom',
+                defaultSortName: 'lastName',
+                defaultSortOrder: 'asc',
                 searchField: this.CustomSearchField,
                 expandBy: 'column'
             },

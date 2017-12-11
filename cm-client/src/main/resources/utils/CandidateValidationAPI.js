@@ -1,6 +1,5 @@
-import getBaseURL from './BasePath';
-import axios from 'axios';
-
+import getBaseURL from "./BasePath";
+import axios from "axios";
 const CANDIDATES_VALIDATION_URL = `${getBaseURL()}/api/validation`;
 
 

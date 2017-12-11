@@ -84,66 +84,6 @@ function deleteCandidate(sCandidateId) {
 }
 
 
-/**
- * Get a list of all the skills a oCandidate has. Iterate over each response using
- * the map function and for every object return a newly create object containing the
- * relevant information.
- * @param sURL to which the GET request should be made
- * @returns {Promise} containing a list of objects each having a tagLink, rating and a certifier
- */
-function fetchSkillsForCandidate(sURL) {
-    return axios.get(sURL).then(function (response) {
-        return response.data._embedded.candidateSkillses.map(function (key) {
-            return {
-                tagLink: key._links.tag.href,
-                rating: key.rating,
-                certifier: key.certifier
-            }
-        });
-    }).catch((error) => {
-        console.log(error);
-    });
-}
-
-/**
- Get a list of all the educations information a oCandidate has. Iterate over each response using
- * the map function and for every object return a newly create object containing the
- * relevant information. Append this created object to a list.
- * @param sURL to which the GET request should be made
- * @returns {Promise} containing a list of objects each having a educationType, provider: and a description
- */
-function fetchEducationForCandidate(sURL) {
-    return axios.get(sURL).then(function (response) {
-        return {
-            educationType: response.data.educationType,
-            provider: response.data.provider,
-            description: response.data.description
-        }
-
-    }).catch((error) => {
-        console.log(error);
-    });
-}
-
-/**
- *Get a list of all the tags a oCandidate has. Iterate over each response item using
- * the map function and for every object, return a newly create object containing the
- * relevant information. Append this created object to a list.
- * @param sURL to which the GET request should be made
- * @returns {Promise} containing a list of objects each having an id, description: and a tagType
- */
-function fetchTagForCandidateSkill(sURL) {
-    return axios.get(sURL).then(function (response) {
-
-        return {
-            id: response.data.id,
-            description: response.data.description,
-            tagType: response.data.tagType
-        }
-    }).catch((error) => {
-        console.log(error);
-    });
-}
 
 /**
  * Get a list of all the notes a oCandidate has. Iterate over each response using
@@ -202,6 +142,66 @@ function addCandidateNote(oNote, oCandidate) {
     return axiosResponse;
 }
 
+/**
+ * Get a list of all the skills a candidate has. Iterate over each response using
+ * the map function and for every object return a newly create object containing the
+ * relevant information.
+ * @param url to which the GET request should be made
+ * @returns {Promise} containing a list of objects each having a tagLink, rating and a certifier
+ */
+function fetchSkillsForCandidate(url) {
+    return axios.get(url).then(function (response) {
+        return response.data._embedded.candidateSkillses.map(function (key) {
+            return {
+                tagLink: key._links.tag.href,
+                rating: key.rating,
+                certifier: key.certifier
+            }
+        });
+    }).catch((error) => {
+        console.log(error);
+    });
+}
+
+/**
+ Get a list of all the educations information a candidate has. Iterate over each response using
+ * the map function and for every object return a newly create object containing the
+ * relevant information. Append this created object to a list.
+ * @param url to which the GET request should be made
+ * @returns {Promise} containing a list of objects each having a educationType, provider: and a description
+ */
+function fetchEducationForCandidate(url) {
+    return axios.get(url).then(function (response) {
+        return {
+            educationType: response.data.educationType,
+            provider: response.data.provider,
+            description: response.data.description
+        }
+
+    }).catch((error) => {
+        console.log(error);
+    });
+}
+
+/**
+ *Get a list of all the tags a oCandidate has. Iterate over each response item using
+ * the map function and for every object, return a newly create object containing the
+ * relevant information. Append this created object to a list.
+ * @param sURL to which the GET request should be made
+ * @returns {Promise} containing a list of objects each having an id, description: and a tagType
+ */
+function fetchTagForCandidateSkill(sURL) {
+    return axios.get(sURL).then(function (response) {
+
+        return {
+            id: response.data.id,
+            description: response.data.description,
+            tagType: response.data.tagType
+        }
+    }).catch((error) => {
+        console.log(error);
+    });
+}
 export {
     addCandidate,
 
