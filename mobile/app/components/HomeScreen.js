@@ -1,97 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, Image, View, Button, TextInput, ToastAndroid, AsyncStorage, ScrollView} from 'react-native';
-import {addCandidateAndroid} from "../actions/index";
+import {StyleSheet, Text, Image, View,AsyncStorage, ScrollView} from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {Fumi,} from 'react-native-textinput-effects';
+import Button from 'react-native-button';
 const CANDIDATE_STORAGE = 'candidates';
-import {
-    Kaede,
-    Hoshi,
-    Jiro,
-    Isao,
-    Madoka,
-    Akira,
-    Hideo,
-    Kohana,
-    Makiko,
-    Sae,
-    Fumi,
-} from 'react-native-textinput-effects';
-export default class HomeScreen extends React.Component {
-    render() {
-        return (
-<ScrollView
-    style={styles.container}
-    contentContainerStyle={styles.content}
->
-
-    <View style={[styles.card2, { backgroundColor: '#841439' }]}>
-        <Text style={styles.title}>Welcome</Text>
-        <Image source={require('../assets/images/msgLogo.png')} style={styles.logo}/>
-        <Fumi
-            style={styles.input}
-            label={'Name'}
-            iconClass={FontAwesomeIcon}
-            iconName={'user'}
-            iconColor={'#77116a'}
-        />
-        <Fumi
-            style={styles.input}
-            label={'Phone'}
-            iconClass={FontAwesomeIcon}
-            iconName={'phone'}
-            iconColor={'#77116a'}
-        />
-        <Fumi
-            style={styles.input}
-            label={'eMail'}
-            iconClass={FontAwesomeIcon}
-            iconName={'envelope'}
-            iconColor={'#77116a'}
-        />
-
-        <Fumi
-            style={styles.input}
-            label={'University'}
-            iconClass={FontAwesomeIcon}
-            iconName={'university'}
-            iconColor={'#77116a'}
-        />
-
-        <Fumi
-            style={styles.input}
-            label={'Specialization'}
-            iconClass={FontAwesomeIcon}
-            iconName={'graduation-cap'}
-            iconColor={'#77116a'}
-        />
-        <Fumi
-            style={styles.input}
-            label={'Study Year'}
-            iconClass={FontAwesomeIcon}
-            iconName={'book'}
-            iconColor={'#77116a'}
-        />
-    </View>
-</ScrollView>
-);
-}
-}
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 24,
-        backgroundColor: 'white',
+        backgroundColor: '#841439',
     },
     content: {
         // not cool but good enough to make all inputs visible when keyboard is active
         paddingBottom: 300,
     },
-    card1: {
-        paddingVertical: 16,
-    },
     card2: {
         padding: 16,
+    },
+
+    inputFirst: {
+        marginTop: 14,
     },
     input: {
         marginTop: 4,
@@ -108,96 +36,329 @@ const styles = StyleSheet.create({
         width: 300,
         height: 100
     },
- });
-//
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//     },
-//     logo: {
-//         width: 300,
-//         height: 100
-//     },
-//     textMsg: {
-//         fontSize: 18,
-//         color: 'white',
-//         textAlign: 'center',
-//         margin: 5,
-//         backgroundColor: '#841439'
-//     },
-//     textInputMsg: {
-//         textAlign: 'center',
-//         color: '#333333',
-//         marginBottom: 5,
-//         height: 40
-//     },
-//
-// });
-//
-// export default class HomeScreen extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             name: '',
-//             email: '',
-//             phone: ''
-//         };
-//     }
-//
-//     /*Set the candidate information*/
-//     submitCandidate = () => {
-//
-//         let candidate = {
-//             name: this.state.name,
-//             email: this.state.email,
-//             phone: this.state.phone
-//         };
-//         // let toastMessage = `Thanks for submitting your application ${this.state.lastName} ${this.state.firstName}`;
-//         // ToastAndroid.show(toastMessage, ToastAndroid.SHORT);
-//         // addCandidateAndroid(candidate);
-//
-//         try {
-//             var candidates = AsyncStorage.getItem(CANDIDATE_STORAGE);
-//             candidates = JSON.parse(candidates);
-//             candidates.push(candidate);
-//             AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(candidates));
-//
-//         } catch (error) {
-//             // Error retrieving data
-//         }
-//         this.props.navigation.navigate('DrawerOpen',{name: 'Brent',email:'yahoo.com',phone:'0909'});
-//     };
-//
-//
-//     static navigationOptions = {
-//         drawerLabel: 'Drawer One',
-//     }
-//     render() {
-//         const { navigate } = this.props.navigation;
-//         return (
-//             <View>
-//                 <Image source={require('../assets/images/msgLogo.png')} style={styles.logo}/>
-//                 <Text style={styles.textMsg}>Name</Text>
-//                 <TextInput style={styles.textInputMsg} onChangeText={(name) => this.setState({name})}
-//                            placeholder='Popescu' value={this.state.name}/>
-//                 <Text style={styles.textMsg}>Email</Text>
-//                 <TextInput style={styles.textInputMsg} onChangeText={(email) => this.setState({email})}
-//                            placeholder='test@gmail.com' value={this.state.email}/>
-//                 <Text style={styles.textMsg}>Phone</Text>
-//                 <TextInput style={styles.textInputMsg} onChangeText={(phone) => this.setState({phone})}
-//                            placeholder='0712345678' value={this.state.phone}/>
-//                 <Button color='#111111' title="Submit" onPress={this.submitCandidate}/>
-//                 <Fumi
-//                     label={'University'}
-//                     iconClass={FontAwesomeIcon}
-//                     iconName={'university'}
-//                     iconColor={'#f95a25'}
-//                     iconSize={200}
-//                 />
-//             </View>
-//         );
-//     }
-//
-// }
+    loginButtonSection: {
+
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+});
+
+const colors={
+    default:'#77116a',
+    correct:'#14900f',
+    incorrect:'#c8121c'};
+
+const errorLabels={
+    empty:' is mandatory',
+    email: 'Email is not valid',
+    phone: 'Phone is not valid',
+};
+const defaultLabels={
+    name: 'Name',
+    email: 'Email',
+    phone: 'Phone',
+    university:'University',
+    faculty: 'Faculty',
+    studyYear:'Study Year',
+}
+const defaultIcons= {
+    name: 'user',
+    email: 'envelope',
+    phone: 'phone',
+    university: 'university',
+    faculty: 'graduation-cap',
+    studyYear: 'book',
+};
+
+const correctIcon='check';
+const incorrectIcon='remove';
+const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export default class HomeScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            email: '',
+            phone: '',
+            university:'',
+            faculty:'',
+            studyYear:'',
+            icons:{
+                name: 'user',
+                email: 'envelope',
+                phone: 'phone',
+                university: 'university',
+                faculty: 'graduation-cap',
+                studyYear: 'book',},
+            labels:{
+                name: 'Name',
+                email: 'Email',
+                phone: 'Phone',
+                university:'University',
+                faculty: 'Faculty',
+                studyYear:'Study Year',
+            }
+        };
+    }
+
+    /*Set the candidate information*/
+    submitCandidate = () => {
+
+        let candidate = {
+            name: this.state.name,
+            email: this.state.email,
+            phone: this.state.phone
+        };
+        // let toastMessage = `Thanks for submitting your application ${this.state.lastName} ${this.state.firstName}`;
+        // ToastAndroid.show(toastMessage, ToastAndroid.SHORT);
+        // addCandidateAndroid(candidate);
+
+        try {
+            var candidates = AsyncStorage.getItem(CANDIDATE_STORAGE);
+            candidates = JSON.parse(candidates);
+            candidates.push(candidate);
+            AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(candidates));
+
+        } catch (error) {
+            // Error retrieving data
+        }
+        this.props.navigation.navigate('Detail',{name: 'Brent',email:'yahoo.com',phone:'0909'});
+    };
+
+    render() {
+        return (
+        <ScrollView style={styles.container} contentContainerStyle={styles.content} >
+            <View style={[styles.card2, { backgroundColor: '#841439' }]}>
+                <Text style={styles.title}>Welcome</Text>
+                <Image source={require('../assets/images/msgLogo.png')} style={styles.logo}/>
+                <Fumi
+                    style={styles.inputFirst}
+                    label={this.state.labels.name}
+                    iconClass={FontAwesomeIcon}
+                    iconName={this.state.icons.name}
+                    iconColor={colors.default}
+                    color={colors.default}
+                    value={this.state.name}
+                    autoCorrect={false}
+                    onFocus={this.resetIconName.bind(this)}
+                    onBlur={this.checkName.bind(this)}
+                    />
+                <Fumi
+                    style={styles.input}
+                    label={this.state.labels.phone}
+                    iconClass={FontAwesomeIcon}
+                    iconName={this.state.icons.phone}
+                    iconColor={colors.default}
+                    value={this.state.phone}
+                    keyboardType="numeric"
+                    autoCorrect={false}
+                    onFocus={this.resetIconPhone.bind(this)}
+                    onBlur={this.checkPhone.bind(this)}
+                />
+                <Fumi
+                    style={styles.input}
+                    label={this.state.labels.email}
+                    iconClass={FontAwesomeIcon}
+                    iconName={this.state.icons.email}
+                    iconColor={colors.default}
+                    value={this.state.email}
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    onFocus={this.resetIconEmail.bind(this)}
+                    onBlur={this.checkEmail.bind(this)}
+                />
+
+                <Fumi
+                    style={styles.input}
+                    label={this.state.labels.university}
+                    iconClass={FontAwesomeIcon}
+                    iconName={this.state.icons.university}
+                    iconColor={colors.default}
+                    value={this.state.university}
+                    autoCorrect={false}
+                    onFocus={this.resetIconUniversity.bind(this)}
+                    onBlur={this.checkUniversity.bind(this)}
+                />
+
+                <Fumi
+                    style={styles.input}
+                    label={this.state.labels.faculty}
+                    iconClass={FontAwesomeIcon}
+                    iconName={this.state.icons.faculty}
+                    iconColor={colors.default}
+                    value={this.state.faculty}
+                    autoCorrect={false}
+                    onFocus={this.resetIconFaculty.bind(this)}
+                    onBlur={this.checkFaculty.bind(this)}
+                />
+                <Fumi
+                    style={styles.input}
+                    label={this.state.labels.studyYear}
+                    iconClass={FontAwesomeIcon}
+                    iconName={this.state.icons.studyYear}
+                    iconColor={colors.default}
+                    keyboardType="numeric"
+                    onFocus={this.resetIconStudyYear.bind(this)}
+                    value={this.state.studyYear}
+                    autoCorrect={false}
+                    onBlur={this.checkStudyYear.bind(this)}
+                />
+            </View>
+            <View style={styles.loginButtonSection}>
+                <Button
+                    containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:24, backgroundColor: 'black'}}
+                    style={{fontSize: 20, color: 'white'}}
+                    onPress={this.submitCandidate}>Submit</Button>
+            </View>
+        </ScrollView>
+);
+}
+
+    resetIconName(e){
+        this.resetIcons('name');
+    }
+    resetIconPhone(e){
+        this.resetIcons('phone');
+    }
+    resetIconUniversity(e){
+        this.resetIcons('university');
+    }
+    resetIconFaculty(e){
+        this.resetIcons('faculty');
+    }
+    resetIconEmail(e){
+        this.resetIcons('email');
+    }
+    resetIconStudyYear(e){
+        this.resetIcons('studyYear');
+    }
+    resetIcons(e){
+        let currentState = this.state;
+        if(e==='name') {
+            currentState.labels.name=defaultLabels.name;
+            currentState.icons.name=defaultIcons.name;
+        }else if(e==='phone') {
+            currentState.labels.phone=defaultLabels.phone;
+            currentState.icons.phone=defaultIcons.phone;
+        } else if(e==='email') {
+            currentState.labels.email=defaultLabels.email;
+            currentState.icons.email=defaultIcons.email;
+        }else if(e==='university') {
+            currentState.labels.university=defaultLabels.university;
+            currentState.icons.university=defaultIcons.university;
+        }else if(e==='faculty') {
+            currentState.labels.faculty=defaultLabels.faculty;
+            currentState.icons.faculty=defaultIcons.faculty;
+        } else if(e==='studyYear') {
+            currentState.labels.studyYear=defaultLabels.studyYear;
+            currentState.icons.studyYear=defaultIcons.studyYear;
+        }
+        this.setState(currentState);
+    }
+
+    checkName(e) {
+
+        let currentState = this.state;
+        const name = e.nativeEvent.text;
+        if(name.length===0)
+        {   currentState.labels.name = defaultLabels.name + errorLabels.empty;
+            currentState.icons.name = incorrectIcon;
+        }
+        else {
+            currentState.name=name;
+            currentState.labels.name = defaultLabels.name
+            currentState.icons.name = defaultIcons.name;
+        }
+        this.setState(currentState);
+    }
+
+
+    checkUniversity(e) {
+
+        let currentState = this.state;
+        const university = e.nativeEvent.text;
+        if(university.length===0)
+        {   currentState.labels.university = defaultLabels.university + errorLabels.empty;
+            currentState.icons.university = incorrectIcon;
+        }
+        else {
+            currentState.university=university;
+            currentState.labels.university = defaultLabels.university
+            currentState.icons.university = defaultIcons.university;
+        }
+        this.setState(currentState);
+    }
+
+    checkFaculty(e) {
+
+        let currentState = this.state;
+        const faculty = e.nativeEvent.text;
+        if(faculty.length===0)
+        {   currentState.labels.faculty = defaultLabels.faculty + errorLabels.empty;
+            currentState.icons.faculty = incorrectIcon;
+        }
+        else {
+            currentState.faculty=faculty;
+            currentState.labels.faculty = defaultLabels.faculty
+            currentState.icons.faculty = defaultIcons.faculty;
+        }
+        this.setState(currentState);
+    }
+
+    checkStudyYear(e) {
+
+        let currentState = this.state;
+        const studyYear = e.nativeEvent.text;
+        if(studyYear.length===0)
+        {   currentState.labels.studyYear = defaultLabels.studyYear + errorLabels.empty;
+            currentState.icons.studyYear = incorrectIcon;
+        }
+        else {
+            currentState.studyYear=studyYear;
+            currentState.labels.studyYear = defaultLabels.faculty
+            currentState.icons.studyYear = defaultIcons.faculty;
+        }
+        this.setState(currentState);
+    }
+
+
+
+    checkEmail = (e) => {
+        const emailAddress = e.nativeEvent.text;
+        let currentState =this.state;
+        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let regexCheckResult = regex.test(emailAddress);
+
+        if(regexCheckResult){
+            currentState.labels.email = defaultLabels.email;
+            currentState.icons.email = defaultIcons.email;
+
+        } else {
+            currentState.labels.email = errorLabels.email;
+            currentState.icons.email = incorrectIcon;
+        }
+        currentState.email=emailAddress;
+        this.setState(currentState);
+    }
+
+    checkPhone = (e) => {
+        const phone = e.nativeEvent.text;
+        let currentState =this.state;
+        const regex = /^(\+)?[0-9]{10,}$/
+        let regexCheckResult = regex.test(phone);
+
+        if(regexCheckResult){
+            currentState.labels.phone = defaultLabels.phone;
+            currentState.icons.phone = defaultIcons.phone;
+
+        } else {
+            currentState.labels.phone = errorLabels.phone;
+            currentState.icons.phone = incorrectIcon;
+        }
+        currentState.phone=phone;
+        this.setState(currentState);
+    };
+
+
+}

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View,Image,Text} from 'react-native';
+import { StyleSheet, View,Image,Text, TextInput, FlatList} from 'react-native';
 import { Tile, List, ListItem } from 'react-native-elements';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { Fumi } from 'react-native-textinput-effects';
+import Button from 'react-native-button';
 
 const styles = StyleSheet.create({
     container: {
@@ -29,28 +30,31 @@ const styles = StyleSheet.create({
     },
 
 });
+
 class DetailScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+           data:[]
+        };
+    }
+    backToForm = () => {
+        this.props.navigation.goBack();
+    };
     render() {
         return (
             <View>
                 <Image source={require('../assets/images/msgLogo.png')} style={styles.logo}/>
-                <Text style={styles.textMsg}>Name</Text>
-                <TextInput style={styles.textInputMsg} onChangeText={(name) => this.setState({name})}
-                           placeholder='Popescu' value={this.state.name}/>
-                <Text style={styles.textMsg}>Email</Text>
-                <TextInput style={styles.textInputMsg} onChangeText={(email) => this.setState({email})}
-                           placeholder='test@gmail.com' value={this.state.email}/>
-                <Text style={styles.textMsg}>Phone</Text>
-                <TextInput style={styles.textInputMsg} onChangeText={(phone) => this.setState({phone})}
-                           placeholder='0712345678' value={this.state.phone}/>
-                <Button color='#111111' title="Submit" onPress={this.submitCandidate}/>
-                <Fumi
-                    label={'University'}
-                    iconClass={FontAwesomeIcon}
-                    iconName={'university'}
-                    iconColor={'#f95a25'}
-                    iconSize={200}
-                /></View> );
+                <List>
+                <FlatList
+                    data={this.state.data}
+                />
+                </List>
+                <Button
+                    containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:24, backgroundColor: 'black'}}
+                    style={{fontSize: 20, color: 'white'}}
+                    onPress={this.backToForm}>Back</Button>
+               </View> );
     }
 }
 

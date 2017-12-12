@@ -4,7 +4,11 @@ import {DrawerNavigator} from "react-navigation";
 import HomeScreen from '../components/HomeScreen';
 import DetailScreen from "../components/DetailScreen";
 
-export const Root = DrawerNavigator({
+export const Root = StackNavigator(
+    {
     Home:{screen: HomeScreen },
-    Detail:{screen:DetailScreen},
-});
+    Detail:{screen:DetailScreen}    },
+    {
+        headerMode: 'none',
+    },
+);
