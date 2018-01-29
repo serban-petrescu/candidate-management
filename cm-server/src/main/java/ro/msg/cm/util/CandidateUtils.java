@@ -16,6 +16,7 @@ import static java.util.Calendar.YEAR;
 @Component
 public class CandidateUtils {
     private final String startYearDate;
+    private Date givenDate;
 
     @Autowired
     public CandidateUtils(StartYearProperties startYearProperties) {
@@ -43,7 +44,7 @@ public class CandidateUtils {
      * @return int - The year of study reported on today
      */
     private int calculateStudyYear(Candidate candidate) {
-        Date today = new Date();
+        Date today = (this.givenDate == null) ? new Date() : this.givenDate;
         int originalStudyYear = candidate.getOriginalStudyYear();
         int diffYears = getDiffYears(candidate.getDateOfAdding(), today);
 
@@ -56,7 +57,7 @@ public class CandidateUtils {
         }
 
         if (diffYears == 0 && (getMonthOfAddingYear(candidate) < getMonthOfStartingUniversityYear() &&
-            getMonthOfStartingUniversityYear() < calculateCalendarMonth(today))) {
+                getMonthOfStartingUniversityYear() < calculateCalendarMonth(today))) {
             return originalStudyYear + 1;
         }
         return originalStudyYear;
@@ -99,4 +100,7 @@ public class CandidateUtils {
         return cal;
     }
 
+    public void setGivenDate(Date givenDate) {
+        this.givenDate = givenDate;
+    }
 }
