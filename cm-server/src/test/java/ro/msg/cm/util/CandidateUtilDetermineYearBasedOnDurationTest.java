@@ -10,7 +10,7 @@ import ro.msg.cm.model.StartYearProperties;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class UpdateUniversityYearUtilsTest {
+public class CandidateUtilDetermineYearBasedOnDurationTest {
 
     private static CandidateUtils updateUniversityYearUtils;
 
