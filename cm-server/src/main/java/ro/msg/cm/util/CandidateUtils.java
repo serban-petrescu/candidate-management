@@ -6,12 +6,10 @@ import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.StartYearProperties;
 
 import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.Calendar;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.TimeZone;
-
-import static java.util.Calendar.YEAR;
 
 @Component
 public class CandidateUtils {
@@ -31,7 +29,7 @@ public class CandidateUtils {
      */
     public int determineYearBasedOnDuration(Candidate candidate) {
         int currentStudyYear = calculateStudyYear(candidate);
-        if (candidate.getEducation() != null && currentStudyYear > getDurationOfStudy(candidate)) {
+        if (candidate.getEducation() != null && currentStudyYear > candidate.getEducation().getDuration()) {
             currentStudyYear = -1;
         }
         return currentStudyYear;
@@ -44,62 +42,57 @@ public class CandidateUtils {
      * @return int - The year of study reported on today
      */
     private int calculateStudyYear(Candidate candidate) {
-        Date today = (this.givenDate == null) ? new Date() : this.givenDate;
+        LocalDate today = (this.givenDate == null) ? LocalDate.now() : dateToLocalDate(this.givenDate);
+        LocalDate dateOfAdding = dateToLocalDate(candidate.getDateOfAdding());
+        LocalDate firstNewUniversityYear = getNewUniversityDateOfYear(dateOfAdding.getYear());
         int originalStudyYear = candidate.getOriginalStudyYear();
-        int diffYears = getDiffYears(candidate.getDateOfAdding(), today);
-
-        if (diffYears > 0 && (getMonthOfAddingYear(candidate) < getMonthOfStartingUniversityYear())) {
-            return diffYears + originalStudyYear;
-        }
-
-        if (diffYears > 0 && (getMonthOfAddingYear(candidate) >= (getMonthOfStartingUniversityYear()))) {
-            return (diffYears - 1) + originalStudyYear;
-        }
-
-        if (diffYears == 0 && (getMonthOfAddingYear(candidate) < getMonthOfStartingUniversityYear() &&
-                getMonthOfStartingUniversityYear() < calculateCalendarMonth(today))) {
-            return originalStudyYear + 1;
+        Period diffYears = Period.between(dateOfAdding, today);
+        originalStudyYear += diffYears.getYears();
+        LocalDate remainder = addPeriodToDate(dateOfAdding,diffYears);
+        if (dateOfAdding.isBefore(firstNewUniversityYear) && remainder.compareTo(firstNewUniversityYear) >= 0) {
+            originalStudyYear += 1;
         }
         return originalStudyYear;
     }
 
-    private int getDurationOfStudy(Candidate candidate) {
-        return candidate.getEducation().getDuration();
+    /**
+     * Method that adds months and days from a Period <b>adder</b> to a LocalDate <b>base</b>
+     *
+     * @param base LocalDate
+     * @param adder Period
+     * @return LocalDate - The new LocalDate
+     */
+    private LocalDate addPeriodToDate(LocalDate base, Period adder) {
+        return base.plus(adder.getDays(), ChronoUnit.DAYS).plus(adder.getMonths(), ChronoUnit.MONTHS);
     }
 
-    private int getMonthOfStartingUniversityYear() {
-        Date startYearDate = appendCurrentYearToMonthDayFormatDate();
-        return calculateCalendarMonth(startYearDate);
+    /**
+     * Method that transforms a date into a LocalDate
+     *
+     * @param date Date
+     * @return LocalDate - The corresponding LocalDate
+     */
+    private LocalDate dateToLocalDate(Date date) {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
     }
 
-    private int getMonthOfAddingYear(Candidate candidate) {
-        Date addingDate = candidate.getDateOfAdding();
-        return calculateCalendarMonth(addingDate);
+    /**
+     * Method that return a LocalDate that represents the starting of the new university year LocalDate based on the given <p>year</p>
+     *
+     * @param year int
+     * @return LocalDate - new university year LocalDate based on the given <p>year</p>
+     */
+    private LocalDate getNewUniversityDateOfYear(int year) {
+        return LocalDate.of(year, Integer.valueOf(startYearDate.split("-")[0]), Integer.valueOf(startYearDate.split("-")[1]));
     }
 
-    private int calculateCalendarMonth(Date addingDate) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(addingDate);
-        return calendar.get(Calendar.MONTH) + 1;
-    }
-
-    private Date appendCurrentYearToMonthDayFormatDate() {
-        String dateAsString = Integer.toString(Calendar.getInstance().get(YEAR)) + "-" + startYearDate;
-        return Date.from(LocalDate.parse(dateAsString).atStartOfDay().toInstant(ZoneOffset.UTC));
-    }
-
-    private int getDiffYears(Date first, Date last) {
-        Calendar currentDate = getCalendar(first);
-        Calendar dateOfAdding = getCalendar(last);
-        return dateOfAdding.get(YEAR) - currentDate.get(YEAR);
-    }
-
-    private Calendar getCalendar(Date date) {
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        cal.setTime(date);
-        return cal;
-    }
-
+    /**
+     * Setter that sets the field givenDate, if null it will be set to today
+     *
+     * @param givenDate Date
+     */
     public void setGivenDate(Date givenDate) {
         this.givenDate = givenDate;
     }
