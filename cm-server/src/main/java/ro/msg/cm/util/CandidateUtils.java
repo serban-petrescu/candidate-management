@@ -5,16 +5,16 @@ import org.springframework.stereotype.Component;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.StartYearProperties;
 
+import javax.validation.ValidationException;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class CandidateUtils {
     private final String startYearDate;
-    private Date givenDate;
 
     @Autowired
     public CandidateUtils(StartYearProperties startYearProperties) {
@@ -42,13 +42,13 @@ public class CandidateUtils {
      * @return int - The year of study reported on today
      */
     private int calculateStudyYear(Candidate candidate) {
-        LocalDate today = (this.givenDate == null) ? LocalDate.now() : dateToLocalDate(this.givenDate);
-        LocalDate dateOfAdding = dateToLocalDate(candidate.getDateOfAdding());
+        LocalDate today = getToday();
+        LocalDate dateOfAdding = candidate.getDateOfAdding();
         LocalDate firstNewUniversityYear = getNewUniversityDateOfYear(dateOfAdding.getYear());
         int originalStudyYear = candidate.getOriginalStudyYear();
         Period diffYears = Period.between(dateOfAdding, today);
         originalStudyYear += diffYears.getYears();
-        LocalDate remainder = addPeriodToDate(dateOfAdding,diffYears);
+        LocalDate remainder = addPeriodToDate(dateOfAdding, diffYears);
         if (dateOfAdding.isBefore(firstNewUniversityYear) && remainder.compareTo(firstNewUniversityYear) >= 0) {
             originalStudyYear += 1;
         }
@@ -58,24 +58,12 @@ public class CandidateUtils {
     /**
      * Method that adds months and days from a Period <b>adder</b> to a LocalDate <b>base</b>
      *
-     * @param base LocalDate
+     * @param base  LocalDate
      * @param adder Period
      * @return LocalDate - The new LocalDate
      */
     private LocalDate addPeriodToDate(LocalDate base, Period adder) {
         return base.plus(adder.getDays(), ChronoUnit.DAYS).plus(adder.getMonths(), ChronoUnit.MONTHS);
-    }
-
-    /**
-     * Method that transforms a date into a LocalDate
-     *
-     * @param date Date
-     * @return LocalDate - The corresponding LocalDate
-     */
-    private LocalDate dateToLocalDate(Date date) {
-        return date.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
     }
 
     /**
@@ -85,15 +73,22 @@ public class CandidateUtils {
      * @return LocalDate - new university year LocalDate based on the given <p>year</p>
      */
     private LocalDate getNewUniversityDateOfYear(int year) {
-        return LocalDate.of(year, Integer.valueOf(startYearDate.split("-")[0]), Integer.valueOf(startYearDate.split("-")[1]));
+        Pattern pattern = Pattern.compile("(\\d{1,2})[-](\\d{1,2})");
+        Matcher matcher = pattern.matcher(startYearDate);
+        if (matcher.find()) {
+            int month = Integer.parseInt(matcher.group(1));
+            int day = Integer.parseInt(matcher.group(2));
+            return LocalDate.of(year, month, day);
+        }
+        throw new ValidationException("The startYearDate was not of the form MM-dd");
     }
 
     /**
-     * Setter that sets the field givenDate, if null it will be set to today
+     * returns LocalDate for today
      *
-     * @param givenDate Date
+     * @return LocalDate - returns the date for today
      */
-    public void setGivenDate(Date givenDate) {
-        this.givenDate = givenDate;
+    protected LocalDate getToday() {
+        return LocalDate.now();
     }
 }

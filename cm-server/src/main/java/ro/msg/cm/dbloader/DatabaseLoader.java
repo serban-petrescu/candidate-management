@@ -23,11 +23,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
-import ro.msg.cm.model.*;
+import ro.msg.cm.model.Candidate;
+import ro.msg.cm.model.Education;
+import ro.msg.cm.model.MockProperties;
 import ro.msg.cm.repository.*;
 
-import java.io.*;
-import java.sql.Date;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -58,35 +61,11 @@ public class DatabaseLoader implements CommandLineRunner {
         this.mockProperties = mockProperties;
     }
 
-    @Override
-    public void run(String... strings) throws Exception {
-        mock();
-    }
-
-    private void mock() {
-        if(mockProperties.getEnabled()){
-            emptyDatabase();
-            try {
-                importCandidate(new FileInputStream(mockProperties.getLocation()));
-            } catch (FileNotFoundException e) {
-                log.error("Csv file not found");
-            }
-        }
-    }
-    private void emptyDatabase() {
-        this.candidateNotesRepository.deleteAll();
-        this.candidateSkillsRepository.deleteAll();
-        this.candidateRepository.deleteAll();
-        this.educationRepository.deleteAll();
-        this.tagRepository.deleteAll();
-    }
-
-
     private static <T> List processBeans(InputStream csvContent, Class<T> tClass) {
 
         BeanListProcessor<T> rowProcessor = new BeanListProcessor<>(tClass);
         CsvParserSettings parserSettings = new CsvParserSettings();
-        parserSettings.setRowProcessor(rowProcessor);
+        parserSettings.setProcessor(rowProcessor); //setRowProcessor was changed to setProcessor because setRowProcessor is deprecated
         parserSettings.setHeaderExtractionEnabled(true);
         CsvParser parser = new CsvParser(parserSettings);
         //this submits all rows parsed from the input to the BeanListProcessor
@@ -98,20 +77,46 @@ public class DatabaseLoader implements CommandLineRunner {
 
     /**
      * Imports the CSV into the repository
+     *
      * @param csvContent the content of the csv to be imported
-     * @param rep the corresponding repository for storing the new data
-     * @param tClass class for the to-be-imported records*/
+     * @param rep        the corresponding repository for storing the new data
+     * @param tClass     class for the to-be-imported records
+     */
     public static <T> void importCSV(InputStream csvContent, CrudRepository rep, Class<T> tClass) {
-        List beans = processBeans(csvContent,tClass);
+        List beans = processBeans(csvContent, tClass);
         rep.save(beans);
     }
 
+    @Override
+    public void run(String... strings) throws Exception {
+        mock();
+    }
+
+    private void mock() {
+        if (mockProperties.getEnabled()) {
+            emptyDatabase();
+            try {
+                importCandidate(new FileInputStream(mockProperties.getLocation()));
+            } catch (FileNotFoundException e) {
+                log.error("Csv file not found");
+            }
+        }
+    }
+
+    private void emptyDatabase() {
+        this.candidateNotesRepository.deleteAll();
+        this.candidateSkillsRepository.deleteAll();
+        this.candidateRepository.deleteAll();
+        this.educationRepository.deleteAll();
+        this.tagRepository.deleteAll();
+    }
+
     private void importCandidate(InputStream csvContent) {
-        List<Candidate> beans = processBeans(csvContent,Candidate.class);
-        Education education = new Education("Mock Education Type","Mock Provider","Mock Descriptions",4);
+        List<Candidate> beans = processBeans(csvContent, Candidate.class);
+        Education education = new Education("Mock Education Type", "Mock Provider", "Mock Descriptions", 4);
         educationRepository.save(education);
-        Date date = Date.valueOf(LocalDate.now());
-        for(Candidate bean:beans){
+        LocalDate date = LocalDate.now();
+        for (Candidate bean : beans) {
             bean.setEducation(education);
             bean.setDateOfAdding(date);
         }

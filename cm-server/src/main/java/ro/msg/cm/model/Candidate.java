@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -39,7 +39,7 @@ public class Candidate {
 	List<CandidateNotes> candidateNotesList;
 	@Parsed
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date dateOfAdding;
+	private LocalDate dateOfAdding;
 
 	@Transient
 	private int currentStudyYear;
@@ -56,7 +56,7 @@ public class Candidate {
 
 	}
 
-	public Candidate(String firstName, String lastName, String phone, String email, String educationStatus, int originalStudyYear, String event, Date dateOfAdding) {
+	public Candidate(String firstName, String lastName, String phone, String email, String educationStatus, int originalStudyYear, String event, LocalDate dateOfAdding) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;
