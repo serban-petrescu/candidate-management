@@ -193,7 +193,7 @@ public class CandidateUtilDetermineYearBasedOnDurationTest {
     }
 
     @Test
-    public void shouldModifyTheStudyYear_2018_01_29() {
+    public void shouldModifyTheStudyYearY2018M01D29() {
         Candidate candidate = getCandidate(1, 4, "2015-09-23");
         String today = "2018-01-29";
         setToday(today);
@@ -201,7 +201,7 @@ public class CandidateUtilDetermineYearBasedOnDurationTest {
     }
 
     @Test
-    public void shouldModifyTheStudyYearAccordingToStudyDuration_2018_01_29() {
+    public void shouldModifyTheStudyYearAccordingToStudyDurationY2018M01D29() {
         Candidate candidate = getCandidate(3, 2, "2016-10-25");
         String today = "2018-01-29";
         setToday(today);
@@ -209,7 +209,7 @@ public class CandidateUtilDetermineYearBasedOnDurationTest {
     }
 
     @Test
-    public void shouldNotModifyTheStudyYear_2018_01_29() {
+    public void shouldNotModifyTheStudyYearY2018M01D29() {
         Candidate candidate = getCandidate(2, 3, "2017-01-02");
         String today = "2018-01-29";
         setToday(today);
@@ -217,7 +217,7 @@ public class CandidateUtilDetermineYearBasedOnDurationTest {
     }
 
     @Test
-    public void shouldModifyTheStudyYear_2017_08_23() {
+    public void shouldModifyTheStudyYearY2017M08D23() {
         Candidate candidate = getCandidate(1, 4, "2015-09-23");
         String today = "2017-08-23";
         setToday(today);
@@ -225,7 +225,7 @@ public class CandidateUtilDetermineYearBasedOnDurationTest {
     }
 
     @Test
-    public void shouldModifyTheStudyYearAccordingToStudyDuration_2017_08_23() {
+    public void shouldModifyTheStudyYearAccordingToStudyDurationY2017M08D23() {
         Candidate candidate = getCandidate(3, 2, "2016-10-25");
         String today = "2017-08-23";
         setToday(today);
@@ -233,7 +233,7 @@ public class CandidateUtilDetermineYearBasedOnDurationTest {
     }
 
     @Test
-    public void shouldNotModifyTheStudyYear_2017_08_23() {
+    public void shouldNotModifyTheStudyYearY2017M08D23() {
         Candidate candidate = getCandidate(2, 3, "2017-01-02");
         String today = "2017-08-23";
         setToday(today);
@@ -241,7 +241,7 @@ public class CandidateUtilDetermineYearBasedOnDurationTest {
     }
 
     @Test
-    public void shouldModifyTheStudyYear_2017_10_30() {
+    public void shouldModifyTheStudyYearY2017M10D30() {
         Candidate candidate = getCandidate(1, 4, "2015-09-23");
         String today = "2017-10-30";
         setToday(today);
@@ -249,7 +249,7 @@ public class CandidateUtilDetermineYearBasedOnDurationTest {
     }
 
     @Test
-    public void shouldModifyTheStudyYearAccordingToStudyDuration_2017_10_30() {
+    public void shouldModifyTheStudyYearAccordingToStudyDurationY2017M10D30() {
         Candidate candidate = getCandidate(3, 2, "2016-10-25");
         String today = "2017-10-30";
         setToday(today);
@@ -257,7 +257,7 @@ public class CandidateUtilDetermineYearBasedOnDurationTest {
     }
 
     @Test
-    public void shouldNotModifyTheStudyYear_2017_10_30() {
+    public void shouldNotModifyTheStudyYearY2017M10D30() {
         Candidate candidate = getCandidate(2, 3, "2017-01-02");
         String today = "2017-10-30";
         setToday(today);
