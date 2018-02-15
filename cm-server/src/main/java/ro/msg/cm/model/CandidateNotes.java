@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 
 /**
@@ -21,11 +21,11 @@ public class CandidateNotes {
     private @ManyToOne(fetch = FetchType.EAGER) @JoinColumn(name="candidate_id", insertable=true) Candidate candidate;
     private String status;
     private String note;
-    private Date date;
+    private LocalDate date;
 
     public CandidateNotes(){}
 
-    public CandidateNotes(Candidate candidate, String status, String note, Date date){
+    public CandidateNotes(Candidate candidate, String status, String note, LocalDate date) {
         this.candidate=candidate;
         this.status = status;
         this.note=note;
