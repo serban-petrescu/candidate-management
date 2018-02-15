@@ -40,6 +40,7 @@
         <hibernate-version>5.4.1.Final</hibernate-version>
         <lombok-version>1.16.18</lombok-version>
         <supercsv-version>2.4.0</supercsv-version>
+        <jackson.datatype.jsr310.version>2.8.10</jackson.datatype.jsr310.version>
 
         <!-- Plugin dependency versions -->
         <frontend-plugin-version>1.5</frontend-plugin-version>

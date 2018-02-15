@@ -17,7 +17,7 @@ public class CandidateResourceProcessor implements ResourceProcessor<Resource<Ca
     @Override
     public Resource<Candidate> process(Resource<Candidate> resource) {
         Candidate candidate = resource.getContent();
-        if (candidate != null) {
+        if (candidate != null && candidate.getDateOfAdding() != null) {
             candidate.setCurrentStudyYear(utils.determineYearBasedOnDuration(candidate));
         }
         return resource;
