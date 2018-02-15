@@ -1,6 +1,7 @@
 import React from 'react';
 import AddCandidate from './AddCandidate';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {HashRouter as Router, Route} from 'react-router-dom';
+import TopNavbar from './TopNavbar';
 import Home from './Home';
 import Import from './Import';
 /**
@@ -13,6 +14,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
+                    <TopNavbar/>
                     <Route exact={true} path="/" component={Home}/>
                     <Route path="/addCandidate" component={AddCandidate}/>
                     <Route path="/import" component={Import}/>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Modal} from 'react-bootstrap';
+import {Button, Modal, FormGroup, Col} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {removeCandidate} from '../actions/index';
 import {bindActionCreators} from 'redux'
@@ -9,7 +9,7 @@ class ConfirmationDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: false,
+            showModal: false
         };
         this._open = () => this.open();
         this._close = () => this.close();
@@ -41,13 +41,20 @@ class ConfirmationDialog extends React.Component {
 
                 <Modal show={this.state.showModal} onHide={this._close}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Are you sure you want to delete candidate
-                            <strong>{activeCandidate != null ? activeCandidate.lastName + ' ' + activeCandidate.firstName : ''}</strong>?</Modal.Title>
+                        <Modal.Title>Delete candidate</Modal.Title>
                     </Modal.Header>
-                    <Modal.Footer>
-                        <Button onClick={this._removeCandidate}>Yes</Button>
-                        <Button onClick={this._close}>No</Button>
-                    </Modal.Footer>
+                    <Modal.Body>
+                        <FormGroup>
+                            <Col sm={10}>
+                                Are you sure you want to delete candidate
+                                <strong>{activeCandidate != null ? ' ' + activeCandidate.lastName + ' ' + activeCandidate.firstName : ''}</strong>?
+                            </Col>
+                            <Col>
+                                <Button onClick={this._removeCandidate} className="margin-right2">Yes</Button>
+                                <Button onClick={this._close}>No</Button>
+                            </Col>
+                        </FormGroup>
+                    </Modal.Body>
                 </Modal>
             </div>
         )
