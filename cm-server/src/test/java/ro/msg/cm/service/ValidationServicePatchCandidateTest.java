@@ -15,7 +15,11 @@ import ro.msg.cm.model.*;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.types.CandidateCheck;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ValidationServicePatchCandidateTest {
 
@@ -32,6 +36,13 @@ public class ValidationServicePatchCandidateTest {
                 (Answer<Candidate>) answer ->
                         candidateList.stream().
                                 filter(x -> x.getId().equals(answer.getArgumentAt(0, Long.class))).
+                                findFirst().orElseThrow(CandidateNotFoundException::new)
+        );
+        
+        Mockito.when(mockCandidateRepository.findByIdAndCheckCandidate(Mockito.anyLong(), Mockito.any(CandidateCheck.class))).thenAnswer(
+                (Answer<Candidate>) answer ->
+                        candidateList.stream().
+                                filter(x -> x.getId().equals(answer.getArgumentAt(0, Long.class)) && x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class))).
                                 findFirst().orElseThrow(CandidateNotFoundException::new)
         );
 
@@ -56,10 +67,10 @@ public class ValidationServicePatchCandidateTest {
         candidateSkills.add(new CandidateSkills(null, new Tag("description", "tagType"), "5.8", "certified"));
         candidate.setCandidateSkillsList(candidateSkills);
         ArrayList<CandidateNotes> candidateNotes = new ArrayList<>();
-        candidateNotes.add(new CandidateNotes(null, "status", "note", new Date(12345600L)));
+        candidateNotes.add(new CandidateNotes(null, "status", "note", LocalDate.parse("2000-03-01")));
         candidate.setCandidateNotesList(candidateNotes);
-        candidate.setDateOfAdding(new Date(12345600L));
-        candidate.setCheckCandidate(CandidateCheck.VALIDATED);
+        candidate.setDateOfAdding(LocalDate.parse("1996-02-18"));
+        candidate.setCheckCandidate(CandidateCheck.NOT_YET_VALIDATED);
 
         candidateList.add(candidate);
 
@@ -80,10 +91,10 @@ public class ValidationServicePatchCandidateTest {
         candidateSkills.add(new CandidateSkills(null, new Tag("newDesc", "newType"), "newRating", "newCertified"));
         candidate.setCandidateSkillsList(candidateSkills);
         ArrayList<CandidateNotes> candidateNotes = new ArrayList<>();
-        candidateNotes.add(new CandidateNotes(null, "newStatus", "newNote", new Date(1234560015612L)));
+        candidateNotes.add(new CandidateNotes(null, "newStatus", "newNote", LocalDate.parse("2005-04-12")));
         candidate.setCandidateNotesList(candidateNotes);
-        candidate.setDateOfAdding(new Date(1234560015612L));
-        candidate.setCheckCandidate(CandidateCheck.NOT_YET_VALIDATED);
+        candidate.setDateOfAdding(LocalDate.parse("2010-10-17"));
+        candidate.setCheckCandidate(CandidateCheck.VALIDATED);
         return candidate;
     }
 
@@ -246,7 +257,7 @@ public class ValidationServicePatchCandidateTest {
 
     @Test
     public void patchCandidateDateOfAddingTest() {
-        Date expectedDate = getExpected().getDateOfAdding();
+        LocalDate expectedDate = getExpected().getDateOfAdding();
         Map<String, Object> map = new HashMap<>();
         map.put("dateOfAdding", expectedDate);
         Candidate actual = validationService.patchCandidate(map, 1L);

@@ -41,8 +41,8 @@ public class CandidateValidationController {
 
 
 	@GetMapping("/duplicates/{id}")
-    public List<Duplicate> getDuplicates(@PathVariable Long id) {
-        return duplicateFinderService.getDuplicates(id);
+    public List<Duplicate> getDuplicates(@PathVariable Long id, CandidateCheck candidateCheck) {
+        return duplicateFinderService.getDuplicates(id, candidateCheck);
     }
 
     @PostMapping("/add-candidate")

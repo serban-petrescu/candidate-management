@@ -40,7 +40,7 @@ public class ValidationService {
         
         List<Field> fields = Arrays.asList(Candidate.class.getDeclaredFields());
         if (candidate != null) {
-            }
+
             
             for (Iterator<String> iterator = patchCandidate.keySet().iterator(); iterator.hasNext(); ) {
                 String key = iterator.next();
@@ -75,10 +75,6 @@ public class ValidationService {
         } else {
             throw new CandidateIsAlreadyValidatedException();
         }
-        
-        } else {
-            throw new CandidateIsAlreadyValidatedException();
-        }
     }
 
     public void deleteSelectedEntries(List<Long> ids) {
@@ -90,16 +86,6 @@ public class ValidationService {
             }
 		}
 
-    }
-
-	public void deleteSelectedEntries(List<Long> ids) {
-        for (Long id : ids) {
-            if (candidateRepository.exists(id)) {
-                candidateRepository.delete(id);
-            }else {
-                throw new CandidateNotFoundException("Candidate with id: " + id + " was not found");
-            }
-        }
     }
 
     public void validate(Long id) {
