@@ -71,8 +71,12 @@ public class ValidationServicePatchCandidateTest {
         candidate.setCandidateNotesList(candidateNotes);
         candidate.setDateOfAdding(LocalDate.parse("1996-02-18"));
         candidate.setCheckCandidate(CandidateCheck.NOT_YET_VALIDATED);
-
         candidateList.add(candidate);
+        candidate = new Candidate();
+        candidate.setId(5L);
+        candidate.setCheckCandidate(CandidateCheck.VALIDATED);
+        candidateList.add(candidate);
+
 
     }
 
@@ -108,6 +112,11 @@ public class ValidationServicePatchCandidateTest {
     @Test(expected = CandidateNotFoundException.class)
     public void patchCandidateOfNotExistingCandidateTest() {
         validationService.patchCandidate(new HashMap<>(), 2L);
+    }
+
+    @Test(expected = CandidateNotFoundException.class)
+    public void patchCandidateOfValidatedCandidateTest() {
+        validationService.patchCandidate(new HashMap<>(), 5L);
     }
 
     @Test(expected = PatchCandidateInvalidKeyException.class)
