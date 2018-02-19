@@ -101,11 +101,8 @@ public class ValidationService {
 
     public void validate(List<Long> ids) {
         for (long id : ids) {
-
-            if(candidateRepository.findCandidateById(id).isPresent()) {
-                if (duplicateOn(id, DuplicateType.ON_EMAIL)) {
-                    ids.remove(id);
-                }
+            if (candidateRepository.findCandidateById(id).isPresent() && duplicateOn(id, DuplicateType.ON_EMAIL)) {
+                ids.remove(id);
             }
         }
         candidateRepository.setCheckCandidateForIdIn(CandidateCheck.VALIDATED, ids);
