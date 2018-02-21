@@ -5,10 +5,7 @@ import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import ro.msg.cm.exception.CandidateIsAlreadyValidatedException;
-import ro.msg.cm.exception.CandidateNotFoundException;
-import ro.msg.cm.exception.PatchCandidateInvalidKeyException;
-import ro.msg.cm.exception.PatchCandidateInvalidValueException;
+import ro.msg.cm.exception.*;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.pojo.Duplicate;
 import ro.msg.cm.repository.CandidateRepository;
@@ -34,14 +31,10 @@ public class ValidationService {
         this.candidateRepository = candidateRepository;
     }
 
-   
     public Candidate patchCandidate(Map<String, Object> patchCandidate, Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
-        
         List<Field> fields = Arrays.asList(Candidate.class.getDeclaredFields());
         if (candidate != null) {
-
-            
             for (Iterator<String> iterator = patchCandidate.keySet().iterator(); iterator.hasNext(); ) {
                 String key = iterator.next();
                 if (key.equalsIgnoreCase("email") &&
@@ -68,6 +61,7 @@ public class ValidationService {
         }
     }
 
+
     public void deleteSelectedEntry(Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
         if (candidate != null) {
@@ -84,12 +78,10 @@ public class ValidationService {
             }else {
                 throw new CandidateNotFoundException("Candidate with id: " + id + " was not found");
             }
-		}
-
+        }
     }
 
     public void validate(Long id) {
-
         if(candidateRepository.findCandidateById(id).isPresent()) {
             if (!duplicateOn(id, DuplicateType.ON_EMAIL)) {
                 candidateRepository.setCheckCandidateForId(CandidateCheck.VALIDATED, id);
@@ -128,6 +120,7 @@ public class ValidationService {
     public List<Candidate> getNonValidCandidates() {
         return candidateRepository.findAllByCheckCandidate(CandidateCheck.NOT_YET_VALIDATED);
     }
+
     private boolean isPhoneNr(Object object) {
         return object == null || object.toString().matches("^\\d{10,15}$");
     }
@@ -141,7 +134,7 @@ public class ValidationService {
         return candidateRepository.save(candidate);
     }
 
-    public Iterable<Candidate> saveUnvalidatedCandidates(List<Candidate> candidates) {
+    public List<Candidate> saveUnvalidatedCandidates(List<Candidate> candidates) {
         candidates.forEach(x -> x.setCheckCandidate(CandidateCheck.NOT_YET_VALIDATED));
         return candidateRepository.save(candidates);
     }
