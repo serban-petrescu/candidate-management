@@ -1,9 +1,12 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.pojo.Duplicate;
+import ro.msg.cm.processor.LinkMapper;
 import ro.msg.cm.service.DuplicateFinderService;
 import ro.msg.cm.service.ValidationService;
 import ro.msg.cm.types.CandidateCheck;
@@ -17,16 +20,19 @@ public class CandidateValidationController {
 
     private final ValidationService validationService;
     private final DuplicateFinderService duplicateFinderService;
+    private final LinkMapper linkMapper;
 
     @Autowired
-    public CandidateValidationController(ValidationService validationService, DuplicateFinderService duplicateFinderService) {
+    public CandidateValidationController(ValidationService validationService, DuplicateFinderService duplicateFinderService,LinkMapper linkMapper) {
         this.validationService = validationService;
         this.duplicateFinderService = duplicateFinderService;
+        this.linkMapper = linkMapper;
     }
 
     @PatchMapping("/update-candidate/{id}")
-    public Candidate patchCandidate(@RequestBody Map<String, Object> toPatch, @PathVariable Long id) {
-        return validationService.patchCandidate(toPatch, id);
+    public Resource<Candidate> patchCandidate(@RequestBody Map<String, Object> toPatch, @PathVariable Long id) {
+        Candidate candidatePatched = validationService.patchCandidate(toPatch, id);
+        return linkMapper.candidateToResource(candidatePatched);
     }
 
     @DeleteMapping("/delete-candidate/{id}")
@@ -39,20 +45,15 @@ public class CandidateValidationController {
         validationService.deleteSelectedEntries(ids);
     }
 
-
-	@GetMapping("/duplicates/{id}")
-    public List<Duplicate> getDuplicates(@PathVariable Long id, CandidateCheck candidateCheck) {
-        return duplicateFinderService.getDuplicates(id, candidateCheck);
-    }
-
     @PostMapping("/add-candidate")
-    public Candidate saveUnvalidatedCandidate(@RequestBody Candidate candidate) {
-        return validationService.saveUnvalidatedCandidate(candidate);
+    public Resource<Candidate> saveUnvalidatedCandidate(@RequestBody Candidate candidate) {
+        Candidate candidateSaved = validationService.saveUnvalidatedCandidate(candidate);
+        return linkMapper.candidateToResource(candidateSaved);
     }
 
     @PostMapping("/add-candidates")
-    public Iterable<Candidate> saveUnvalidatedCandidates(@RequestBody List<Candidate> candidates) {
-        return validationService.saveUnvalidatedCandidates(candidates);
+    public Resources<Resource<Candidate>> saveUnvalidatedCandidates(@RequestBody List<Candidate> candidates) {
+        return linkMapper.candidateListToResource(validationService.saveUnvalidatedCandidates(candidates));
     }
 
     @PutMapping("/validate/{id}")
@@ -66,23 +67,23 @@ public class CandidateValidationController {
     }
 
     @GetMapping("/duplicates-on-valid/{id}")
-    public List<Duplicate> getValidDuplicates(@PathVariable Long id) {
-        return duplicateFinderService.getDuplicates(id, CandidateCheck.VALIDATED);
+    public Resources<Duplicate> getValidDuplicates(@PathVariable Long id) {
+        return linkMapper.duplicateListToResourceForValidAndNonValid(id, duplicateFinderService.getDuplicates(id, CandidateCheck.VALIDATED), true);
     }
 
     @GetMapping("/duplicates-on-non-valid/{id}")
-    public List<Duplicate> getNonValidDuplicates(@PathVariable Long id) {
-        return duplicateFinderService.getDuplicates(id, CandidateCheck.NOT_YET_VALIDATED);
+    public Resources<Duplicate> getNonValidDuplicates(@PathVariable Long id) {
+        return linkMapper.duplicateListToResourceForValidAndNonValid(id, duplicateFinderService.getDuplicates(id, CandidateCheck.NOT_YET_VALIDATED), false);
     }
 
     @GetMapping("/valid")
-    public List<Candidate> getValidCandidates() {
-        return validationService.getValidCandidates();
+    public Resources<Resource<Candidate>> getValidCandidates() {
+        return linkMapper.candidateListToResourceForValidAndNonValid(validationService.getValidCandidates(), true);
     }
 
     @GetMapping("/non-valid")
-    public List<Candidate> getNonValidCandidates() {
-        return validationService.getNonValidCandidates();
+    public Resources<Resource<Candidate>> getNonValidCandidates() {
+        return linkMapper.candidateListToResourceForValidAndNonValid(validationService.getNonValidCandidates(), true);
     }
 
 }
