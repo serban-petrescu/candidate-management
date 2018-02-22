@@ -31,8 +31,6 @@ public interface CandidateRepository extends CrudRepository<Candidate, Long> {
 
     List<Candidate> findAllByCheckCandidate(CandidateCheck candidateCheck);
 
-    List<Candidate> findAllByIdIn(List<Long> ids);
-
     Set<Candidate> findAllByFirstNameAndLastNameAndCheckCandidate(String firstName, String lastName, CandidateCheck candidateCheck);
 
     Set<Candidate> findAllByEmailAndCheckCandidate(String email, CandidateCheck candidateCheck);
@@ -55,7 +53,9 @@ public interface CandidateRepository extends CrudRepository<Candidate, Long> {
     @Query("update Candidate c set c.checkCandidate = ?1 where c.id = ?2")
     void setCheckCandidateForId(CandidateCheck candidateCheck, Long id);
 
-    Candidate findByIdAndCheckCandidate(Long id, CandidateCheck notYetValidated);
+    Candidate findByIdAndCheckCandidate(Long id, CandidateCheck check);
 
-    Optional<Object> findCandidateById(Long id);
+    Optional<Candidate> findCandidateById(Long id);
+
+    List<Candidate> save(List<Candidate> candidates);
 }
