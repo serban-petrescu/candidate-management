@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import ro.msg.cm.exception.CandidateIsAlreadyValidatedException;
 import ro.msg.cm.exception.CandidateNotFoundException;
@@ -75,6 +76,7 @@ public class ValidationService {
         }
     }
 
+    @Transactional
     public void deleteSelectedEntries(List<Long> ids) {
         for (long id : ids) {
             if (candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED)!=null) {
@@ -95,6 +97,7 @@ public class ValidationService {
         }
     }
 
+    @Transactional
     public void validate(List<Long> ids) {
         for (long id : ids) {
             if (candidateRepository.findCandidateById(id).isPresent() && duplicateOnEmail(id)) {
@@ -129,9 +132,10 @@ public class ValidationService {
         return candidateRepository.save(candidate);
     }
 
+    @Transactional
     public List<Candidate> saveUnvalidatedCandidates(List<Candidate> candidates) {
         candidates.forEach(x -> x.setCheckCandidate(CandidateCheck.NOT_YET_VALIDATED));
-        return candidateRepository.save(candidates);
+        return (List<Candidate>) candidateRepository.save(candidates);
     }
 }
 

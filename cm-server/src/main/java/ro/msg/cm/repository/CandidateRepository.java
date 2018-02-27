@@ -18,10 +18,10 @@ package ro.msg.cm.repository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.types.CandidateCheck;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -57,5 +57,4 @@ public interface CandidateRepository extends CrudRepository<Candidate, Long> {
 
     Optional<Candidate> findCandidateById(Long id);
 
-    List<Candidate> save(List<Candidate> candidates);
 }
