@@ -34,7 +34,7 @@ public class TagController {
     }
 
     @PostMapping("/multiple")
-    public List<Tag> postTagList(@RequestBody List<Tag> tagList) {
+    public Iterable<Tag> postTagList(@RequestBody List<Tag> tagList) {
         return tagRepository.save(tagList);
     }
 

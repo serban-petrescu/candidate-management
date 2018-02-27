@@ -9,6 +9,4 @@ public interface TagRepository extends CrudRepository<Tag, Long> {
 
     List<Tag> findAll();
 
-    List<Tag> save(List<Tag> tagList);
-
 }

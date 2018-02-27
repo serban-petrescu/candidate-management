@@ -9,6 +9,4 @@ public interface CandidateNotesRepository extends CrudRepository<CandidateNotes,
 
     List<CandidateNotes> findAll();
 
-    List<CandidateNotes> save(List<CandidateNotes> candidateNotesList);
-
 }

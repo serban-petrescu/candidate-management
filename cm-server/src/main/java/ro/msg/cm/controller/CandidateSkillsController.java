@@ -34,7 +34,7 @@ public class CandidateSkillsController {
     }
 
     @PostMapping("/multiple")
-    public List<CandidateSkills> postCandidateSkillsList(@RequestBody List<CandidateSkills> candidateSkillsList) {
+    public Iterable<CandidateSkills> postCandidateSkillsList(@RequestBody List<CandidateSkills> candidateSkillsList) {
         return candidateSkillsRepository.save(candidateSkillsList);
     }
 

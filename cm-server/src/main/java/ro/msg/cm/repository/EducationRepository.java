@@ -9,6 +9,4 @@ public interface EducationRepository extends CrudRepository<Education, Long> {
 
     List<Education> findAll();
 
-    List<Education> save(List<Education> educationList);
-
 }
