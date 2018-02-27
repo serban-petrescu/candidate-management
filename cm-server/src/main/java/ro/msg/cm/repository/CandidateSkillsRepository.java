@@ -9,6 +9,4 @@ public interface CandidateSkillsRepository extends CrudRepository<CandidateSkill
 
     List<CandidateSkills> findAll();
 
-    List<CandidateSkills> save(List<CandidateSkills> candidateSkillsList);
-
 }

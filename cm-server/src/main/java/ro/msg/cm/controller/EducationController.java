@@ -34,7 +34,7 @@ public class EducationController {
     }
 
     @PostMapping("/multiple")
-    public List<Education> postEducationList(@RequestBody List<Education> educationList) {
+    public Iterable<Education> postEducationList(@RequestBody List<Education> educationList) {
         return educationRepository.save(educationList);
     }
 
