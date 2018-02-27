@@ -5,9 +5,11 @@ import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import ro.msg.cm.exception.*;
+import ro.msg.cm.exception.CandidateIsAlreadyValidatedException;
+import ro.msg.cm.exception.CandidateNotFoundException;
+import ro.msg.cm.exception.PatchCandidateInvalidKeyException;
+import ro.msg.cm.exception.PatchCandidateInvalidValueException;
 import ro.msg.cm.model.Candidate;
-import ro.msg.cm.pojo.Duplicate;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.types.CandidateCheck;
 import ro.msg.cm.types.DuplicateType;
@@ -25,10 +27,12 @@ import java.util.Map;
 public class ValidationService {
 
     private final CandidateRepository candidateRepository;
+    private final DuplicateFinderService duplicateFinderService;
 
     @Autowired
-    public ValidationService(CandidateRepository candidateRepository) {
+    public ValidationService(CandidateRepository candidateRepository, DuplicateFinderService duplicateFinderService) {
         this.candidateRepository = candidateRepository;
+        this.duplicateFinderService = duplicateFinderService;
     }
 
     public Candidate patchCandidate(Map<String, Object> patchCandidate, Long id) {
@@ -83,7 +87,7 @@ public class ValidationService {
 
     public void validate(Long id) {
         if(candidateRepository.findCandidateById(id).isPresent()) {
-            if (!duplicateOn(id, DuplicateType.ON_EMAIL)) {
+            if (!duplicateOnEmail(id)) {
                 candidateRepository.setCheckCandidateForId(CandidateCheck.VALIDATED, id);
             }
         } else {
@@ -93,24 +97,15 @@ public class ValidationService {
 
     public void validate(List<Long> ids) {
         for (long id : ids) {
-            if (candidateRepository.findCandidateById(id).isPresent() && duplicateOn(id, DuplicateType.ON_EMAIL)) {
+            if (candidateRepository.findCandidateById(id).isPresent() && duplicateOnEmail(id)) {
                 ids.remove(id);
             }
         }
         candidateRepository.setCheckCandidateForIdIn(CandidateCheck.VALIDATED, ids);
     }
 
-    private boolean duplicateOn(Long id, DuplicateType duplicateType) {
-        DuplicateFinderService duplicateFinderService = new DuplicateFinderService(candidateRepository);
-        List<Duplicate> duplicates = duplicateFinderService.getDuplicates(id, CandidateCheck.VALIDATED);
-        boolean condition = false;
-        for (Duplicate duplicate : duplicates) {
-            condition = duplicate.getDuplicateType().equals(duplicateType);
-            if (condition) {
-                break;
-            }
-        }
-        return condition;
+    private boolean duplicateOnEmail(Long id) {
+        return duplicateFinderService.getCountDuplicateOnDuplicateType(id, CandidateCheck.VALIDATED, DuplicateType.ON_EMAIL) > 0;
     }
 
     public List<Candidate> getValidCandidates() {

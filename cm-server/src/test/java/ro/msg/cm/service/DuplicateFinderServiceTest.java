@@ -7,7 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.stubbing.Answer;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.pojo.CountDuplicate;
 import ro.msg.cm.pojo.Duplicate;
@@ -17,7 +16,6 @@ import ro.msg.cm.types.DuplicateType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.when;
@@ -35,52 +33,59 @@ public class DuplicateFinderServiceTest {
     private CandidateCheck notYetValidated = CandidateCheck.NOT_YET_VALIDATED;
 
     private void setUpMockCandidateRepository() {
-        when(mockCandidateRepository.findAllByFirstNameAndLastNameAndCheckCandidate(Mockito.anyString(), Mockito.anyString(), Mockito.any(CandidateCheck.class))).thenAnswer(
-                (Answer<Set<Candidate>>) answer ->
-                        candidateList.stream().
-                                filter(x -> x.getFirstName().equals(answer.getArgumentAt(0, String.class)) && x.getLastName().equals(answer.getArgumentAt(1, String.class)) && x.getCheckCandidate().equals(answer.getArgumentAt(2, CandidateCheck.class))).
+        when(mockCandidateRepository.findAllByFirstNameAndLastNameAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
+                answer -> candidateList.stream().filter(x ->
+                        x.getFirstName().equals(answer.getArgumentAt(0, String.class)) &&
+                                x.getLastName().equals(answer.getArgumentAt(1, String.class)) &&
+                                x.getCheckCandidate().equals(answer.getArgumentAt(2, CandidateCheck.class)) &&
+                                !x.getId().equals(answer.getArgumentAt(3, Long.class))).
                                 collect(Collectors.toSet())
         );
 
-        when(mockCandidateRepository.findAllByEmailAndCheckCandidate(Mockito.anyString(), Mockito.any(CandidateCheck.class))).thenAnswer(
-                (Answer<Set<Candidate>>) answer ->
-                        candidateList.stream().
-                                filter(x -> x.getEmail().equals(answer.getArgumentAt(0, String.class)) && x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class))).
+        when(mockCandidateRepository.findAllByEmailAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
+                answer -> candidateList.stream().filter(x ->
+                        x.getEmail().equals(answer.getArgumentAt(0, String.class)) &&
+                                x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class)) &&
+                                !x.getId().equals(answer.getArgumentAt(2, Long.class))).
                                 collect(Collectors.toSet())
         );
 
-        when(mockCandidateRepository.findAllByPhoneAndCheckCandidate(Mockito.anyString(), Mockito.any(CandidateCheck.class))).thenAnswer(
-                (Answer<Set<Candidate>>) answer ->
-                        candidateList.stream().
-                                filter(x -> x.getPhone().equals(answer.getArgumentAt(0, String.class)) && x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class))).
+        when(mockCandidateRepository.findAllByPhoneAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
+                answer -> candidateList.stream().filter(x ->
+                        x.getPhone().equals(answer.getArgumentAt(0, String.class)) &&
+                                x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class)) &&
+                                !x.getId().equals(answer.getArgumentAt(2, Long.class))).
                                 collect(Collectors.toSet())
         );
 
-        when(mockCandidateRepository.countByFirstNameAndLastNameAndCheckCandidate(Mockito.anyString(), Mockito.anyString(), Mockito.any(CandidateCheck.class))).thenAnswer(
-                (Answer<Long>) answer ->
-                        candidateList.stream().
-                                filter(x -> x.getFirstName().equals(answer.getArgumentAt(0, String.class)) && x.getLastName().equals(answer.getArgumentAt(1, String.class)) && x.getCheckCandidate().equals(answer.getArgumentAt(2, CandidateCheck.class))).
+        when(mockCandidateRepository.countByFirstNameAndLastNameAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
+                answer -> candidateList.stream().filter(x ->
+                        x.getFirstName().equals(answer.getArgumentAt(0, String.class)) &&
+                                x.getLastName().equals(answer.getArgumentAt(1, String.class)) &&
+                                x.getCheckCandidate().equals(answer.getArgumentAt(2, CandidateCheck.class)) &&
+                                !x.getId().equals(answer.getArgumentAt(3, Long.class))).
                                 count()
         );
 
-        when(mockCandidateRepository.countByEmailAndCheckCandidate(Mockito.anyString(), Mockito.any(CandidateCheck.class))).thenAnswer(
-                (Answer<Long>) answer ->
-                        candidateList.stream().
-                                filter(x -> x.getEmail().equals(answer.getArgumentAt(0, String.class)) && x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class))).
+        when(mockCandidateRepository.countByEmailAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
+                answer -> candidateList.stream().filter(x ->
+                        x.getEmail().equals(answer.getArgumentAt(0, String.class)) &&
+                                x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class)) &&
+                                !x.getId().equals(answer.getArgumentAt(2, Long.class))).
                                 count()
         );
 
-        when(mockCandidateRepository.countByPhoneAndCheckCandidate(Mockito.anyString(), Mockito.any(CandidateCheck.class))).thenAnswer(
-                (Answer<Long>) answer ->
-                        candidateList.stream().
-                                filter(x -> x.getPhone().equals(answer.getArgumentAt(0, String.class)) && x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class))).
+        when(mockCandidateRepository.countByPhoneAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
+                answer -> candidateList.stream().filter(x ->
+                        x.getPhone().equals(answer.getArgumentAt(0, String.class)) &&
+                                x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class)) &&
+                                !x.getId().equals(answer.getArgumentAt(2, Long.class))).
                                 count()
         );
 
         when(mockCandidateRepository.findOne(Mockito.anyLong())).thenAnswer(
-                (Answer<Candidate>) answer ->
-                        candidateList.stream().
-                                filter(x -> x.getId().equals(answer.getArgumentAt(0, Long.class))).
+                answer -> candidateList.stream().filter(x ->
+                        x.getId().equals(answer.getArgumentAt(0, Long.class))).
                                 collect(Collectors.toList()).get(0)
         );
     }
