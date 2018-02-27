@@ -18,7 +18,8 @@
     "react-native-toast": "^1.0.1",
     "react-native-vector-icons": "latest",
     "react-native-vector-icons/FontAwesome": "latest",
-    "react-navigation": "^1.0.0-beta.11"
+    "react-navigation": "^1.0.0-beta.11",
+    "realm": "^2.2.9"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",

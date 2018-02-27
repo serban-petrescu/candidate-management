@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View,Image,Text, TextInput, FlatList} from 'react-native';
-import { Tile, List, ListItem } from 'react-native-elements';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { Fumi } from 'react-native-textinput-effects';
+import { StyleSheet, View,Image, FlatList, AsyncStorage} from 'react-native';
+import { List, ListItem } from 'react-native-elements';
 import Button from 'react-native-button';
 
 const styles = StyleSheet.create({
@@ -34,13 +32,27 @@ const styles = StyleSheet.create({
 class DetailScreen extends Component {
     constructor(props) {
         super(props);
+        const { params } = this.props.navigation.state;
+        const candidates = params ? params.candidates : null;
+        // const candidates = [{
+        //     name: '',
+        //     email: '',
+        //     phone: ''
+        // }];
+
         this.state = {
-           data:[]
+          // data:[{name: candidate.name,email:candidate.email,phone:candidate.phone},{name: 'AAAA',email:'yahoo.com',phone:'0909'}]
+            data:params.candidates
         };
     }
     backToForm = () => {
         this.props.navigation.goBack();
     };
+    //Flatlist
+    // data = array of data used to create the list
+    // renderitem function that will take an individual element of the data array and render a component for it.
+    //litemlist roundAvatar
+    // avatar={{ uri: item.picture.thumbnail }}
     render() {
         return (
             <View>
@@ -48,6 +60,13 @@ class DetailScreen extends Component {
                 <List>
                 <FlatList
                     data={this.state.data}
+                    renderItem={({ item }) => (
+                        <ListItem
+                            title={item.name}
+                            subtitle={item.email}
+                        />
+                    )}
+                    keyExtractor={item => item.email}
                 />
                 </List>
                 <Button

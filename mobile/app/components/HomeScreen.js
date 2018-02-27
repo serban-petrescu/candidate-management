@@ -98,7 +98,8 @@ export default class HomeScreen extends React.Component {
                 university:'University',
                 faculty: 'Faculty',
                 studyYear:'Study Year',
-            }
+            },
+            candidates:[]
         };
     }
 
@@ -108,22 +109,21 @@ export default class HomeScreen extends React.Component {
         let candidate = {
             name: this.state.name,
             email: this.state.email,
-            phone: this.state.phone
+            phone: this.state.phone,
+            university:this.state.university,
+            faculty:this.state.faculty,
+            studyYear:this.state.studyYear,
         };
         // let toastMessage = `Thanks for submitting your application ${this.state.lastName} ${this.state.firstName}`;
         // ToastAndroid.show(toastMessage, ToastAndroid.SHORT);
-        // addCandidateAndroid(candidate);
+         //addCandidateAndroid(candidate);
+        this.setState({
+            candidates: [...this.state.candidates, candidate]
+        });
 
-        try {
-            var candidates = AsyncStorage.getItem(CANDIDATE_STORAGE);
-            candidates = JSON.parse(candidates);
-            candidates.push(candidate);
-            AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(candidates));
+        AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(this.state.candidates),
+            () => {this.props.navigation.navigate('Detail',{candidates:this.state.candidates});});
 
-        } catch (error) {
-            // Error retrieving data
-        }
-        this.props.navigation.navigate('Detail',{name: 'Brent',email:'yahoo.com',phone:'0909'});
     };
 
     render() {
@@ -273,7 +273,6 @@ export default class HomeScreen extends React.Component {
         this.setState(currentState);
     }
 
-
     checkUniversity(e) {
 
         let currentState = this.state;
@@ -322,8 +321,6 @@ export default class HomeScreen extends React.Component {
         this.setState(currentState);
     }
 
-
-
     checkEmail = (e) => {
         const emailAddress = e.nativeEvent.text;
         let currentState =this.state;
@@ -360,5 +357,10 @@ export default class HomeScreen extends React.Component {
         this.setState(currentState);
     };
 
-
+    componentDidMount() {
+        AsyncStorage.getItem(CANDIDATE_STORAGE)
+            .then(req => JSON.parse(req))
+            .then(json =>this.setState({candidates:json})
+        ).done();
+    }
 }
