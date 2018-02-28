@@ -235,24 +235,31 @@ export default class HomeScreen extends React.Component {
     }
     resetIcons(e){
         let currentState = this.state;
-        if(e==='name') {
+        switch(e){
+            case 'name':
             currentState.labels.name=defaultLabels.name;
             currentState.icons.name=defaultIcons.name;
-        }else if(e==='phone') {
+            break;
+            case 'phone':
             currentState.labels.phone=defaultLabels.phone;
             currentState.icons.phone=defaultIcons.phone;
-        } else if(e==='email') {
+            break;
+            case 'email':
             currentState.labels.email=defaultLabels.email;
             currentState.icons.email=defaultIcons.email;
-        }else if(e==='university') {
+            break;
+            case 'university':
             currentState.labels.university=defaultLabels.university;
             currentState.icons.university=defaultIcons.university;
-        }else if(e==='faculty') {
+            break;
+            case 'faculty':
             currentState.labels.faculty=defaultLabels.faculty;
             currentState.icons.faculty=defaultIcons.faculty;
-        } else if(e==='studyYear') {
+            break;
+            case 'studyYear':
             currentState.labels.studyYear=defaultLabels.studyYear;
             currentState.icons.studyYear=defaultIcons.studyYear;
+            break;
         }
         this.setState(currentState);
     }
