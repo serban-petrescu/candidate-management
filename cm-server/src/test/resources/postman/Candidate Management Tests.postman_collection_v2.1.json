@@ -2,12 +2,12 @@
 	"info": {
 		"name": "Candidate Management Tests",
 		"_postman_id": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
-		"description": "",
+		"description": "This collection contains all of the rest points' tests of our app.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Testing add a null candidate (NotValidated)",
+			"name": "Testing \"Create a candidate\" (NotValidated)",
 			"event": [
 				{
 					"listen": "test",
@@ -47,26 +47,33 @@
 						"add-candidate"
 					]
 				},
-				"description": ""
+				"description": "null candidate"
 			},
 			"response": []
 		},
 		{
-			"name": "Testing add a candidates (NotValidated)",
+			"name": "Testing \"Create a candidate\" (NotValidated)",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "d0ad1623-37cb-4b49-a5e4-4f9990e01fac",
+						"id": "54d39b6d-f99e-4f1b-ac04-ab30783d6461",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 201\", function () {",
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
+							"pm.test(\"The Candidate is Not Yet Validated\", function () {",
+							"        pm.expect(pm.response.json().checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
+							"});",
 							"",
-							"",
-							"pm.globals.set(\"candidate_id\", pm.response.json().id);"
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidates/' + pm.response.json().id,",
+							"    method: 'DELETE'",
+							"}, function (err, res) {",
+							"    ",
+							"});"
 						]
 					}
 				}
@@ -96,17 +103,17 @@
 						"add-candidate"
 					]
 				},
-				"description": ""
+				"description": "With first name, last name, phone, email and checkCandidate set as \"VALIDATED\""
 			},
 			"response": []
 		},
 		{
-			"name": "get one candidate",
+			"name": "Testing \"Find a Candidate\"",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "76bfdf3a-51d6-48ae-9a72-59484faa2508",
+						"id": "b4029e90-b476-44fc-a9f8-2e0a19f10506",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -116,17 +123,40 @@
 							"pm.test(\"The Candidate is not yet validated\", function () {",
 							"    pm.expect(pm.response.json().checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
 							"});",
-							""
+							"",
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidates/' + pm.globals.get(\"temp_id\"),",
+							"    method: 'DELETE'",
+							"}, function (err, res) {",
+							"});",
+							"",
+							"pm.globals.unset(\"temp_id\");"
 						]
 					}
 				},
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "48ed513c-497f-4981-8d60-91f8e454fcd6",
+						"id": "a8b9b958-2be4-46b6-b519-feff786f5bb6",
 						"type": "text/javascript",
 						"exec": [
-							""
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidate-validation/add-candidate',",
+							"    method: 'POST',",
+							"    header: 'Content-Type:application/json',",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({",
+							"            \"firstName\": \"Paxton\",",
+							"            \"lastName\": \"Tresvina\",",
+							"            \"email\": \"ptresvina0@ucoz.ru\",",
+							"            \"phone\": \"09812054304\",",
+							"            \"checkCandidate\" : \"VALIDATED\"",
+							"            })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.globals.set(\"temp_id\", res.json().id);",
+							"});"
 						]
 					}
 				}
@@ -141,10 +171,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"firstName\": \"lala\"}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
+					"raw": "http://localhost:8080/api/candidates/{{temp_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -153,7 +183,7 @@
 					"path": [
 						"api",
 						"candidates",
-						"{{candidate_id}}"
+						"{{temp_id}}"
 					]
 				},
 				"description": ""
@@ -161,16 +191,60 @@
 			"response": []
 		},
 		{
-			"name": "validate Candidate",
+			"name": "Testing \"Validate Candidate\"",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "aab4c6dc-e2e0-4439-b04b-83c9a66506ac",
+						"id": "bd4ff8ac-f761-4427-875d-8f1e1ec27a4c",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidates/' + pm.globals.get(\"temp_id\"),",
+							"    method: 'GET'",
+							"}, function (err, res) {",
+							"    pm.test(\"The Candidate is Validated\", function () {",
+							"        pm.expect(res.json().checkCandidate).to.eql(\"VALIDATED\");",
+							"    });",
+							"});",
+							"",
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidates/' + pm.globals.get(\"temp_id\"),",
+							"    method: 'DELETE'",
+							"}, function (err, res) {",
+							"});",
+							"",
+							"",
+							"pm.globals.unset(\"temp_id\");"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "590adc81-30a4-4653-a64f-3b1087a88218",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidate-validation/add-candidate',",
+							"    method: 'POST',",
+							"    header: 'Content-Type:application/json',",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({",
+							"            \"firstName\": \"Paxton\",",
+							"            \"lastName\": \"Tresvina\",",
+							"            \"email\": \"one@and.only\",",
+							"            \"phone\": \"09812054304\",",
+							"            \"checkCandidate\" : \"VALIDATED\"",
+							"            })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.globals.set(\"temp_id\", res.json().id);",
 							"});"
 						]
 					}
@@ -189,7 +263,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/candidate-validation/validate/{{candidate_id}}",
+					"raw": "http://localhost:8080/api/candidate-validation/validate/{{temp_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -199,131 +273,85 @@
 						"api",
 						"candidate-validation",
 						"validate",
-						"{{candidate_id}}"
+						"{{temp_id}}"
 					]
 				},
-				"description": "get all"
+				"description": "with no duplicates"
 			},
 			"response": []
 		},
 		{
-			"name": "get if email is duplicate",
+			"name": "Testing \"Validate Candidate\"",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "64210106-49ff-4955-bfc0-2e2dbd3cedd1",
+						"id": "0f83991d-6143-4173-8f61-c555eca69c46",
 						"type": "text/javascript",
 						"exec": [
-							"var duplicate=\"false\";",
-							"if(Object.keys(pm.response.json()).includes(\"_embedded\") && Object.keys(pm.response.json()._embedded).includes(\"duplicates\")){",
-							"    var duplicateArray=pm.response.json()._embedded.duplicates;",
-							"    var i=0;",
-							"    while(i<duplicateArray.length){",
-							"        if(duplicateArray[i].duplicateType===\"ON_EMAIL\"){",
-							"            duplicate=\"true\";",
-							"        }",
-							"        i=i+1;",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidates/' + pm.globals.get(\"temp_id\"),",
+							"    method: 'GET'",
+							"}, function (err, res) {",
+							"    pm.test(\"The Candidate is Not Yet Validated\", function () {",
+							"        pm.expect(res.json().checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
+							"    });",
+							"});",
+							"",
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidates/' + pm.globals.get(\"temp_id\"),",
+							"    method: 'DELETE'",
+							"}, function (err, res) {",
+							"});",
+							"",
+							"",
+							"pm.globals.unset(\"temp_id\");"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d1e6fbcd-6118-4281-8478-56e3e31fdad4",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidates/',",
+							"    method: 'POST',",
+							"    header: 'Content-Type:application/json',",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({",
+							"            \"firstName\": \"Paxton\",",
+							"            \"lastName\": \"Tresvina\",",
+							"            \"email\": \"not@so.unique\",",
+							"            \"phone\": \"09812054304\",",
+							"            \"checkCandidate\" : \"VALIDATED\"",
+							"            })",
 							"    }",
-							"}    ",
-							"",
-							"if(duplicate===\"true\"){",
-							"    pm.globals.set(\"candidate_status\", \"NOT_YET_VALIDATED\");",
-							"}else{",
-							"    pm.globals.set(\"candidate_status\", \"VALIDATED\");",
-							"}",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:8080/api/candidate-validation/duplicates-on-valid/{{candidate_id}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"candidate-validation",
-						"duplicates-on-valid",
-						"{{candidate_id}}"
-					]
-				},
-				"description": "get all duplicate of id"
-			},
-			"response": []
-		},
-		{
-			"name": "test validation",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0f261109-2de9-47c2-9d2e-0eee594cf1ca",
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
+							"}, function (err, res) {",
 							"});",
 							"",
-							"var cand_status = pm.globals.get(\"candidate_status\");",
-							"",
-							"pm.test(\"The Candidate is : \"+ cand_status, function () {",
-							"    pm.expect(pm.response.json().checkCandidate).to.eql(cand_status);",
-							"});",
-							"",
-							"",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"firstName\": \"lala\"}"
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"candidates",
-						"{{candidate_id}}"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "editing a candidates",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d64d7a8b-266b-4d32-8d3f-ece5bf4fc7ff",
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidate-validation/add-candidate',",
+							"    method: 'POST',",
+							"    header: 'Content-Type:application/json',",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({",
+							"            \"firstName\": \"Paxton\",",
+							"            \"lastName\": \"Tresvina\",",
+							"            \"email\": \"not@so.unique\",",
+							"            \"phone\": \"09812054304\",",
+							"            \"checkCandidate\" : \"VALIDATED\"",
+							"            })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.globals.set(\"temp_id\", res.json().id);",
 							"});"
 						]
 					}
@@ -339,10 +367,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"firstName\": \"test\",\n  \"lastName\": \"test\",\n  \"email\": \"test@test.test\"\n}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
+					"raw": "http://localhost:8080/api/candidate-validation/validate/{{temp_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -350,21 +378,22 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"candidates",
-						"{{candidate_id}}"
+						"candidate-validation",
+						"validate",
+						"{{temp_id}}"
 					]
 				},
-				"description": ""
+				"description": "with duplicates"
 			},
 			"response": []
 		},
 		{
-			"name": "test edit ",
+			"name": "Testing \"Edit a candidate\"",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "8981b5b8-8b28-40c2-bf1e-ecfdc88b1067",
+						"id": "68c1a30a-4be4-49db-b016-ad0ef8835024",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -387,16 +416,49 @@
 							"    pm.expect(pm.response.json().phone).to.eql(null);",
 							"});",
 							"",
-							"pm.test(\"Check candidate is default \", function () {",
-							"    pm.expect(pm.response.json().checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
+							"pm.test(\"Check candidate is changed \", function () {",
+							"    pm.expect(pm.response.json().checkCandidate).to.eql(\"VALIDATED\");",
 							"});",
-							""
+							"",
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidates/' + pm.globals.get(\"temp_id\"),",
+							"    method: 'DELETE'",
+							"}, function (err, res) {",
+							"});",
+							"",
+							"pm.globals.unset(\"temp_id\");"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "db82196b-e9fe-4d9a-8d3a-501e9dd1cf0b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidate-validation/add-candidate',",
+							"    method: 'POST',",
+							"    header: 'Content-Type:application/json',",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({",
+							"            \"firstName\": \"Paxton\",",
+							"            \"lastName\": \"Tresvina\",",
+							"            \"email\": \"one@and.only\",",
+							"            \"phone\": \"09812054304\",",
+							"            \"checkCandidate\" : \"NOT_YET_VALIDATED\"",
+							"            })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.globals.set(\"temp_id\", res.json().id);",
+							"});"
 						]
 					}
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -405,10 +467,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"firstName\": \"lala\"}"
+					"raw": "{\n  \"firstName\": \"test\",\n  \"lastName\": \"test\",\n  \"email\": \"test@test.test\",\n  \"checkCandidate\" : \"VALIDATED\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
+					"raw": "http://localhost:8080/api/candidates/{{temp_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -417,7 +479,7 @@
 					"path": [
 						"api",
 						"candidates",
-						"{{candidate_id}}"
+						"{{temp_id}}"
 					]
 				},
 				"description": ""
@@ -425,16 +487,53 @@
 			"response": []
 		},
 		{
-			"name": "delete candidate",
+			"name": "Testing \"Delete a Candidate\"",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "2d26c608-cc5c-4eb4-9125-e9e3a6766b03",
+						"id": "34baa6fe-9a78-41a1-86cb-0059a0c234e3",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 204\", function () {",
 							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidates/' + pm.globals.get(\"temp_id\"),",
+							"    method: 'GET'",
+							"}, function (err, res) {",
+							"    pm.test(\"Status code is 404\", function () {",
+							"        pm.expect(res.code).to.eq(404);",
+							"    });",
+							"});",
+							"",
+							"pm.globals.unset(\"temp_id\");"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "dfb4c259-e21e-4c0d-84d8-dc4480b1bf2d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: 'http://localhost:8080/api/candidate-validation/add-candidate',",
+							"    method: 'POST',",
+							"    header: 'Content-Type:application/json',",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({",
+							"            \"firstName\": \"Paxton\",",
+							"            \"lastName\": \"Tresvina\",",
+							"            \"email\": \"one@and.only\",",
+							"            \"phone\": \"09812054304\",",
+							"            \"checkCandidate\" : \"NOT_YET_VALIDATED\"",
+							"            })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.globals.set(\"temp_id\", res.json().id);",
 							"});"
 						]
 					}
@@ -453,7 +552,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
+					"raw": "http://localhost:8080/api/candidates/{{temp_id}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -462,52 +561,7 @@
 					"path": [
 						"api",
 						"candidates",
-						"{{candidate_id}}"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "test delete",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "bb61284f-56e8-42f4-a846-9c939bcbe8ae",
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Status code is 404\", function () {",
-							"    pm.response.to.have.status(404);",
-							"});"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"firstName\": \"lala\"}"
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"candidates",
-						"{{candidate_id}}"
+						"{{temp_id}}"
 					]
 				},
 				"description": ""
