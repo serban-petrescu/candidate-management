@@ -77,6 +77,12 @@
             <version>${mysql-version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway-version}</version>
+        </dependency>
+
         <!-- Internal dependencies -->
         <dependency>
             <groupId>ro.msg.cm</groupId>

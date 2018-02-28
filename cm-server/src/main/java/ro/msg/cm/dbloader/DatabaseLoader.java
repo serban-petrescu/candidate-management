@@ -33,54 +33,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class DatabaseLoader implements CommandLineRunner {
-
-    private final CandidateRepository candidateRepository;
-
-    private final TagRepository tagRepository;
-
-    private final EducationRepository educationRepository;
-
-    private final CandidateSkillsRepository candidateSkillsRepository;
-
-    private final CandidateNotesRepository candidateNotesRepository;
-
-    private final MockProperties mockProperties;
-
-    @Autowired
-    public DatabaseLoader(CandidateRepository candidateRepository, TagRepository tagRepository, EducationRepository educationRepository,
-                          CandidateSkillsRepository candidateSkillsRepository, CandidateNotesRepository candidateNotesRepository, MockProperties mockProperties) {
-        this.candidateRepository = candidateRepository;
-        this.tagRepository = tagRepository;
-        this.educationRepository = educationRepository;
-        this.candidateSkillsRepository = candidateSkillsRepository;
-        this.candidateNotesRepository = candidateNotesRepository;
-        this.mockProperties = mockProperties;
-    }
-
-    @Override
-    public void run(String... strings) throws Exception {
-        mock();
-    }
-
-    private void mock() {
-        if(mockProperties.getEnabled()){
-            emptyDatabase();
-            try {
-                importCandidate(new FileInputStream(mockProperties.getLocation()));
-            } catch (FileNotFoundException e) {
-                log.error("Csv file not found");
-            }
-        }
-    }
-    private void emptyDatabase() {
-        this.candidateNotesRepository.deleteAll();
-        this.candidateSkillsRepository.deleteAll();
-        this.candidateRepository.deleteAll();
-        this.educationRepository.deleteAll();
-        this.tagRepository.deleteAll();
-    }
-
+public class DatabaseLoader {
 
     private static <T> List processBeans(InputStream csvContent, Class<T> tClass) {
 
@@ -91,8 +44,7 @@ public class DatabaseLoader implements CommandLineRunner {
         CsvParser parser = new CsvParser(parserSettings);
         //this submits all rows parsed from the input to the BeanListProcessor
         parser.parse(csvContent);
-        List<T> beans = rowProcessor.getBeans();
-        return beans;
+        return rowProcessor.getBeans();
 
     }
 
@@ -106,15 +58,4 @@ public class DatabaseLoader implements CommandLineRunner {
         rep.save(beans);
     }
 
-    private void importCandidate(InputStream csvContent) {
-        List<Candidate> beans = processBeans(csvContent,Candidate.class);
-        Education education = new Education("Mock Education Type","Mock Provider","Mock Descriptions",4);
-        educationRepository.save(education);
-        Date date = Date.valueOf(LocalDate.now());
-        for(Candidate bean:beans){
-            bean.setEducation(education);
-            bean.setDateOfAdding(date);
-        }
-        candidateRepository.save(beans);
-    }
 }
