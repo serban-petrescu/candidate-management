@@ -60,7 +60,7 @@ const defaultLabels={
     university:'University',
     faculty: 'Faculty',
     studyYear:'Study Year',
-}
+};
 const defaultIcons= {
     name: 'user',
     email: 'envelope',
@@ -267,7 +267,7 @@ export default class HomeScreen extends React.Component {
         }
         else {
             currentState.name=name;
-            currentState.labels.name = defaultLabels.name
+            currentState.labels.name = defaultLabels.name;
             currentState.icons.name = defaultIcons.name;
         }
         this.setState(currentState);
@@ -283,7 +283,7 @@ export default class HomeScreen extends React.Component {
         }
         else {
             currentState.university=university;
-            currentState.labels.university = defaultLabels.university
+            currentState.labels.university = defaultLabels.university;
             currentState.icons.university = defaultIcons.university;
         }
         this.setState(currentState);
@@ -299,7 +299,7 @@ export default class HomeScreen extends React.Component {
         }
         else {
             currentState.faculty=faculty;
-            currentState.labels.faculty = defaultLabels.faculty
+            currentState.labels.faculty = defaultLabels.faculty;
             currentState.icons.faculty = defaultIcons.faculty;
         }
         this.setState(currentState);
@@ -315,7 +315,7 @@ export default class HomeScreen extends React.Component {
         }
         else {
             currentState.studyYear=studyYear;
-            currentState.labels.studyYear = defaultLabels.faculty
+            currentState.labels.studyYear = defaultLabels.faculty;
             currentState.icons.studyYear = defaultIcons.faculty;
         }
         this.setState(currentState);
@@ -342,7 +342,7 @@ export default class HomeScreen extends React.Component {
     checkPhone = (e) => {
         const phone = e.nativeEvent.text;
         let currentState =this.state;
-        const regex = /^(\+)?[0-9]{10,}$/
+        const regex = /^(\+)?[0-9]{10,}$/;
         let regexCheckResult = regex.test(phone);
 
         if(regexCheckResult){
@@ -360,7 +360,7 @@ export default class HomeScreen extends React.Component {
     componentDidMount() {
         AsyncStorage.getItem(CANDIDATE_STORAGE)
             .then(req => JSON.parse(req))
-            .then(json =>this.setState({candidates:json})
+            .then(json => this.setState({candidates:json})
         ).done();
     }
 }
