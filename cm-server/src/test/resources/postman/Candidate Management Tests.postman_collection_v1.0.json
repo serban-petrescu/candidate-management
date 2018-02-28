@@ -1,0 +1,757 @@
+{
+	"id": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+	"name": "Candidate Management Tests",
+	"description": "",
+	"order": [
+		"5727d2ec-a335-a763-5029-30e9bfc392d9",
+		"66e83474-6607-09cd-89fc-1de78295044d",
+		"d926cf4d-7019-46e9-bc48-ac244bb6cc85",
+		"0c4f0adf-7546-84c5-a28a-12de267bcf51",
+		"cf521fb3-6dea-4b0c-f4ea-cfe08762cbad",
+		"5c51cd1b-68a7-3e85-c839-97c7360f9eb0",
+		"96b8f44a-b863-652d-373a-56cf7bc2dbcc",
+		"2d6dd345-b26c-60b6-3189-6a7fb95166a7",
+		"0d64dab1-9e85-c551-4577-dfad99fd4e4f",
+		"7922be1c-4c96-b2f0-2e4a-85d40404d6a7"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1519658514543,
+	"owner": 0,
+	"public": false,
+	"events": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "dfc59610-5ef2-4f3c-ba7e-bbe9a787458c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f3e782c6-36c1-4937-ad43-7167202bd04d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variables": [],
+	"auth": null,
+	"requests": [
+		{
+			"id": "0c4f0adf-7546-84c5-a28a-12de267bcf51",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidate-validation/validate/{{candidate_id}}",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aab4c6dc-e2e0-4439-b04b-83c9a66506ac",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519803066238,
+			"name": "validate Candidate",
+			"description": "get all",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "0cdf9170-658c-1afe-f4a5-811841e278ff",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{id}",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"events": [],
+			"auth": null,
+			"method": "PUT",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"data": [],
+			"dataMode": "raw",
+			"name": "edit the email of the candidates",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1519802595167,
+			"version": 2,
+			"responses": [],
+			"folder": "d54984dc-ca06-a041-1878-fb6a84bd7ece",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "0d2099f8-929e-11cc-5bb1-124865400e70",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{id}",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"events": [],
+			"auth": null,
+			"method": "PUT",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"data": [],
+			"dataMode": "raw",
+			"name": "edit the email of the candidates",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1519802355220,
+			"version": 2,
+			"responses": [],
+			"folder": "d54984dc-ca06-a041-1878-fb6a84bd7ece",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "0d64dab1-9e85-c551-4577-dfad99fd4e4f",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{{candidate_id}}",
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d26c608-cc5c-4eb4-9125-e9e3a6766b03",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519804800695,
+			"name": "delete candidate",
+			"description": "",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "pm.test(\"Status code is 204\", function () {\n    pm.response.to.have.status(204);\n});",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "2d6dd345-b26c-60b6-3189-6a7fb95166a7",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{{candidate_id}}",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8981b5b8-8b28-40c2-bf1e-ecfdc88b1067",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"First name is changed \", function () {",
+							"    pm.expect(pm.response.json().firstName).to.eql(\"test\");",
+							"});",
+							"",
+							"pm.test(\"Last name is changed \", function () {",
+							"    pm.expect(pm.response.json().lastName).to.eql(\"test\");",
+							"});",
+							"",
+							"pm.test(\"Email is changed \", function () {",
+							"    pm.expect(pm.response.json().email).to.eql(\"test@test.test\");",
+							"});",
+							"",
+							"pm.test(\"Phone is default \", function () {",
+							"    pm.expect(pm.response.json().phone).to.eql(null);",
+							"});",
+							"",
+							"pm.test(\"Check candidate is default \", function () {",
+							"    pm.expect(pm.response.json().checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519804957115,
+			"name": "test edit ",
+			"description": "",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"First name is changed \", function () {\n    pm.expect(pm.response.json().firstName).to.eql(\"test\");\n});\n\npm.test(\"Last name is changed \", function () {\n    pm.expect(pm.response.json().lastName).to.eql(\"test\");\n});\n\npm.test(\"Email is changed \", function () {\n    pm.expect(pm.response.json().email).to.eql(\"test@test.test\");\n});\n\npm.test(\"Phone is default \", function () {\n    pm.expect(pm.response.json().phone).to.eql(null);\n});\n\npm.test(\"Check candidate is default \", function () {\n    pm.expect(pm.response.json().checkCandidate).to.eql(\"NOT_YET_VALIDATED\");\n});\n",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\"firstName\": \"lala\"}"
+		},
+		{
+			"id": "5727d2ec-a335-a763-5029-30e9bfc392d9",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidate-validation/add-candidate",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "716e3b62-4dd9-498e-be8f-254ab8abe56e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Requset unsuccesfull\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519807354550,
+			"name": "Testing add a null candidate (NotValidated)",
+			"description": "",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "pm.test(\"Requset unsuccesfull\", function () {\n    pm.response.to.have.status(400);\n});",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{}"
+		},
+		{
+			"id": "5c51cd1b-68a7-3e85-c839-97c7360f9eb0",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{{candidate_id}}",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0f261109-2de9-47c2-9d2e-0eee594cf1ca",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var cand_status = pm.globals.get(\"candidate_status\");",
+							"",
+							"pm.test(\"The Candidate is : \"+ cand_status, function () {",
+							"    pm.expect(pm.response.json().checkCandidate).to.eql(cand_status);",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519804717466,
+			"name": "test validation",
+			"description": "",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\nvar cand_status = pm.globals.get(\"candidate_status\");\n\npm.test(\"The Candidate is : \"+ cand_status, function () {\n    pm.expect(pm.response.json().checkCandidate).to.eql(cand_status);\n});\n\n\n",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\"firstName\": \"lala\"}"
+		},
+		{
+			"id": "66e83474-6607-09cd-89fc-1de78295044d",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidate-validation/add-candidate",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0ad1623-37cb-4b49-a5e4-4f9990e01fac",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"",
+							"pm.globals.set(\"candidate_id\", pm.response.json().id);"
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519808690497,
+			"name": "Testing add a candidates (NotValidated)",
+			"description": "",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\n\n\npm.globals.set(\"candidate_id\", pm.response.json().id);",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n  \"firstName\": \"Paxton\",\n  \"lastName\": \"Tresvina\",\n  \"email\": \"ptresvina0@ucoz.ru\",\n  \"phone\": \"09812054304\",\n  \"checkCandidate\" : \"VALIDATED\"\n}"
+		},
+		{
+			"id": "7922be1c-4c96-b2f0-2e4a-85d40404d6a7",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{{candidate_id}}",
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb61284f-56e8-42f4-a846-9c939bcbe8ae",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519804837872,
+			"name": "test delete",
+			"description": "",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "pm.test(\"Status code is 404\", function () {\n    pm.response.to.have.status(404);\n});",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\"firstName\": \"lala\"}"
+		},
+		{
+			"id": "795cb674-a4a9-eb3a-6ca6-a7e8a6772ea1",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{id}",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"events": [],
+			"auth": null,
+			"method": "PUT",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"data": [],
+			"dataMode": "raw",
+			"name": "edit the email of the candidates",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1519802506042,
+			"version": 2,
+			"responses": [],
+			"folder": "d54984dc-ca06-a041-1878-fb6a84bd7ece",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "96b8f44a-b863-652d-373a-56cf7bc2dbcc",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{{candidate_id}}",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d64d7a8b-266b-4d32-8d3f-ece5bf4fc7ff",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519806848183,
+			"name": "editing a candidates",
+			"description": "",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n  \"firstName\": \"test\",\n  \"lastName\": \"test\",\n  \"email\": \"test@test.test\"\n}"
+		},
+		{
+			"id": "9c048c9d-008f-2d2e-b4d4-fd7a2feb869a",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{id}",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"events": [],
+			"auth": null,
+			"method": "PUT",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"data": [],
+			"dataMode": "raw",
+			"name": "edit the email of the candidates",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1519802465513,
+			"version": 2,
+			"responses": [],
+			"isFromCollection": true,
+			"folder": "d54984dc-ca06-a041-1878-fb6a84bd7ece",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "cf521fb3-6dea-4b0c-f4ea-cfe08762cbad",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/candidate-validation/duplicates-on-valid/{{candidate_id}}",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64210106-49ff-4955-bfc0-2e2dbd3cedd1",
+						"type": "text/javascript",
+						"exec": [
+							"var duplicate=\"false\";",
+							"if(Object.keys(pm.response.json()).includes(\"_embedded\") && Object.keys(pm.response.json()._embedded).includes(\"duplicates\")){",
+							"    var duplicateArray=pm.response.json()._embedded.duplicates;",
+							"    var i=0;",
+							"    while(i<duplicateArray.length){",
+							"        if(duplicateArray[i].duplicateType===\"ON_EMAIL\"){",
+							"            duplicate=\"true\";",
+							"        }",
+							"        i=i+1;",
+							"    }",
+							"}    ",
+							"",
+							"if(duplicate===\"true\"){",
+							"    pm.globals.set(\"candidate_status\", \"NOT_YET_VALIDATED\");",
+							"}else{",
+							"    pm.globals.set(\"candidate_status\", \"VALIDATED\");",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"auth": null,
+			"time": 1519807228247,
+			"name": "get if email is duplicate",
+			"description": "get all duplicate of id",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "var duplicate=\"false\";\nif(Object.keys(pm.response.json()).includes(\"_embedded\") && Object.keys(pm.response.json()._embedded).includes(\"duplicates\")){\n    var duplicateArray=pm.response.json()._embedded.duplicates;\n    var i=0;\n    while(i<duplicateArray.length){\n        if(duplicateArray[i].duplicateType===\"ON_EMAIL\"){\n            duplicate=\"true\";\n        }\n        i=i+1;\n    }\n}    \n\nif(duplicate===\"true\"){\n    pm.globals.set(\"candidate_status\", \"NOT_YET_VALIDATED\");\n}else{\n    pm.globals.set(\"candidate_status\", \"VALIDATED\");\n}\n",
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "d926cf4d-7019-46e9-bc48-ac244bb6cc85",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{{candidate_id}}",
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "76bfdf3a-51d6-48ae-9a72-59484faa2508",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"The Candidate is not yet validated\", function () {",
+							"    pm.expect(pm.response.json().checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "48ed513c-497f-4981-8d60-91f8e454fcd6",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519808616562,
+			"name": "get one candidate",
+			"description": "",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"The Candidate is not yet validated\", function () {\n    pm.expect(pm.response.json().checkCandidate).to.eql(\"NOT_YET_VALIDATED\");\n});\n",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\"firstName\": \"lala\"}"
+		},
+		{
+			"id": "e6cc11a3-5a88-8b5a-3f52-8fdc9aac56c2",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{id}",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"events": [],
+			"auth": null,
+			"method": "PUT",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"data": [],
+			"dataMode": "raw",
+			"name": "edit the email of the candidates",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1519802534890,
+			"version": 2,
+			"responses": [],
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "fc7f4aaa-4ae9-024f-eee9-74a97bf906d7",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/candidate/{{candidate_id}}",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aab4c6dc-e2e0-4439-b04b-83c9a66506ac",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"auth": null,
+			"method": "PUT",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"data": [],
+			"dataMode": "params",
+			"name": "edit email",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1519802657576,
+			"version": 2,
+			"responses": [],
+			"folder": "d54984dc-ca06-a041-1878-fb6a84bd7ece",
+			"preRequestScript": null,
+			"tests": "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});",
+			"currentHelper": null,
+			"helperAttributes": null
+		}
+	]
+}

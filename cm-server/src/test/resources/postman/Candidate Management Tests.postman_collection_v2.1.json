@@ -1,0 +1,540 @@
+{
+	"info": {
+		"name": "Candidate Management Tests",
+		"_postman_id": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Testing add a null candidate (NotValidated)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "716e3b62-4dd9-498e-be8f-254ab8abe56e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Requset unsuccesfull\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/candidate-validation/add-candidate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"candidate-validation",
+						"add-candidate"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Testing add a candidates (NotValidated)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0ad1623-37cb-4b49-a5e4-4f9990e01fac",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"",
+							"pm.globals.set(\"candidate_id\", pm.response.json().id);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"firstName\": \"Paxton\",\n  \"lastName\": \"Tresvina\",\n  \"email\": \"ptresvina0@ucoz.ru\",\n  \"phone\": \"09812054304\",\n  \"checkCandidate\" : \"VALIDATED\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/candidate-validation/add-candidate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"candidate-validation",
+						"add-candidate"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get one candidate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "76bfdf3a-51d6-48ae-9a72-59484faa2508",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"The Candidate is not yet validated\", function () {",
+							"    pm.expect(pm.response.json().checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "48ed513c-497f-4981-8d60-91f8e454fcd6",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\": \"lala\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"candidates",
+						"{{candidate_id}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "validate Candidate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aab4c6dc-e2e0-4439-b04b-83c9a66506ac",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/candidate-validation/validate/{{candidate_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"candidate-validation",
+						"validate",
+						"{{candidate_id}}"
+					]
+				},
+				"description": "get all"
+			},
+			"response": []
+		},
+		{
+			"name": "get if email is duplicate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64210106-49ff-4955-bfc0-2e2dbd3cedd1",
+						"type": "text/javascript",
+						"exec": [
+							"var duplicate=\"false\";",
+							"if(Object.keys(pm.response.json()).includes(\"_embedded\") && Object.keys(pm.response.json()._embedded).includes(\"duplicates\")){",
+							"    var duplicateArray=pm.response.json()._embedded.duplicates;",
+							"    var i=0;",
+							"    while(i<duplicateArray.length){",
+							"        if(duplicateArray[i].duplicateType===\"ON_EMAIL\"){",
+							"            duplicate=\"true\";",
+							"        }",
+							"        i=i+1;",
+							"    }",
+							"}    ",
+							"",
+							"if(duplicate===\"true\"){",
+							"    pm.globals.set(\"candidate_status\", \"NOT_YET_VALIDATED\");",
+							"}else{",
+							"    pm.globals.set(\"candidate_status\", \"VALIDATED\");",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/api/candidate-validation/duplicates-on-valid/{{candidate_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"candidate-validation",
+						"duplicates-on-valid",
+						"{{candidate_id}}"
+					]
+				},
+				"description": "get all duplicate of id"
+			},
+			"response": []
+		},
+		{
+			"name": "test validation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0f261109-2de9-47c2-9d2e-0eee594cf1ca",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var cand_status = pm.globals.get(\"candidate_status\");",
+							"",
+							"pm.test(\"The Candidate is : \"+ cand_status, function () {",
+							"    pm.expect(pm.response.json().checkCandidate).to.eql(cand_status);",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\": \"lala\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"candidates",
+						"{{candidate_id}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "editing a candidates",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d64d7a8b-266b-4d32-8d3f-ece5bf4fc7ff",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"firstName\": \"test\",\n  \"lastName\": \"test\",\n  \"email\": \"test@test.test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"candidates",
+						"{{candidate_id}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test edit ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8981b5b8-8b28-40c2-bf1e-ecfdc88b1067",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"First name is changed \", function () {",
+							"    pm.expect(pm.response.json().firstName).to.eql(\"test\");",
+							"});",
+							"",
+							"pm.test(\"Last name is changed \", function () {",
+							"    pm.expect(pm.response.json().lastName).to.eql(\"test\");",
+							"});",
+							"",
+							"pm.test(\"Email is changed \", function () {",
+							"    pm.expect(pm.response.json().email).to.eql(\"test@test.test\");",
+							"});",
+							"",
+							"pm.test(\"Phone is default \", function () {",
+							"    pm.expect(pm.response.json().phone).to.eql(null);",
+							"});",
+							"",
+							"pm.test(\"Check candidate is default \", function () {",
+							"    pm.expect(pm.response.json().checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\": \"lala\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"candidates",
+						"{{candidate_id}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete candidate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d26c608-cc5c-4eb4-9125-e9e3a6766b03",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"candidates",
+						"{{candidate_id}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb61284f-56e8-42f4-a846-9c939bcbe8ae",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\": \"lala\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/candidates/{{candidate_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"candidates",
+						"{{candidate_id}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "dfc59610-5ef2-4f3c-ba7e-bbe9a787458c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f3e782c6-36c1-4937-ad43-7167202bd04d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
