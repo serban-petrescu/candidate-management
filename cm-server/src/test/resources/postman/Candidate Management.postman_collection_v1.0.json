@@ -1,0 +1,1742 @@
+{
+	"id": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+	"name": "Candidate Management",
+	"description": "This collection contains all of the rest points of our app.",
+	"order": [],
+	"folders": [
+		{
+			"name": "Candidate (Not Yet Validated)",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"order": [
+				"ed450114-b5d5-d5d6-3e4f-441c9abb3ca3",
+				"e5937a83-d94a-57cd-54c3-20038e102ed5",
+				"14d6f8a2-974d-da82-f675-a7fbc42258f7",
+				"53830dfb-1718-3dd9-fd48-362f0697b018",
+				"48118ad0-e26d-d130-6417-b64a33d3c5e8",
+				"760047d2-a155-14c5-2d77-d3205d24bf0d",
+				"0423bfb5-e3f6-e1ff-13d4-99c7947b3646",
+				"3c7731c8-f1dc-619b-1185-06752671d212",
+				"6d7075fa-26ad-e28f-13f7-be3d81f4d4f7"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0b007f1e-f136-4199-8d25-8ecc03914628",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d255ec8b-2217-4f3f-aeda-8372dd809de2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"id": "d2157a18-aab2-b56c-84e2-74dc1bf91e86"
+		},
+		{
+			"name": "Candidate (Validated)",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"order": [
+				"baf65684-cbec-d5ca-7d51-c283c0406dde",
+				"f0059dc4-acc2-ef7d-23d5-eaa4d6547b7c",
+				"32a371d5-b5ec-d8c4-120e-9201696f8996",
+				"d52c88cc-4382-95d3-4ad3-f8d7ba9161fd",
+				"8c058a54-9115-8161-711f-a0f2e11b171d",
+				"5860be04-8b1e-b978-9ab5-b86fdd4d3fce"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"auth": null,
+			"id": "ff959d57-f573-b0ed-f6de-51aefa6b37b8"
+		},
+		{
+			"name": "CandidateNotes",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"order": [
+				"6b7c2d3c-1839-c36f-2da4-9073e2e8266a",
+				"cfd2c9ef-830f-4e11-90e6-a3da5b36f5ae",
+				"23c370b8-0912-d52d-ffed-e647df9d4256",
+				"3fa93fc5-9a7b-401a-e967-84a274a1d766",
+				"9ddbf283-ead8-a293-3040-eb4c4d2c1d94"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"auth": null,
+			"id": "384e0568-bc11-202c-ab28-19030c88cd0d"
+		},
+		{
+			"name": "CandidateSkills",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"order": [
+				"99c6cb41-42bd-5dde-eb61-bd5f9f948506",
+				"6e5fb78a-ca1e-4272-f999-4afb5b34abbb",
+				"a1e8762c-a90f-65e8-9cec-6964ef21a437",
+				"8b531291-1dbb-941e-c7e1-ac6d5fe62c8c",
+				"c722d4cc-dfe5-557f-afb0-cbbe7e0772bc"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"auth": null,
+			"id": "b1b693f8-cde9-837a-7572-e70d2739637a"
+		},
+		{
+			"name": "Download",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"order": [
+				"02c32783-b32f-be33-3fe7-40cfff42c7e1",
+				"22620b40-e935-34bc-5154-065ffdf242fb",
+				"4187de66-00fa-51d3-4ae3-2eec7f735fbb"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"auth": null,
+			"id": "5133fcc8-7059-b9d8-1646-63a6d0028c4f"
+		},
+		{
+			"name": "Education",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"order": [
+				"287d6800-c26d-f40a-d9a3-7ca56bdf4560",
+				"8f6acb25-06bd-423d-ffea-ba154a09b32b",
+				"71f400cb-6c8d-bcd9-a9e7-44307d587394",
+				"26ea7332-9c79-d896-f354-22d1a4bac14e",
+				"c6e2fd05-25c7-4c5d-8647-06fc0fb3f585"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"auth": null,
+			"id": "1cd11d6e-686e-81f4-8551-b9e6e6539e20"
+		},
+		{
+			"name": "Import",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"order": [
+				"091483f6-fbde-e933-449f-b3aeabcfc864",
+				"33ef70a0-d7d7-8d70-af1a-3f0de9d344d2",
+				"f85439f2-a074-080a-3725-c19bf2eea73e"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fae65d76-8345-4cd5-a924-a085c45e325b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a865346-db59-4459-b2e0-8f6bbf2e741b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"id": "7914c33f-c667-d77c-867e-cede12718961"
+		},
+		{
+			"name": "Tag",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"order": [
+				"28e5bac5-a0cf-7a87-d9bb-56b1a952caf3",
+				"c5fbf2d9-285f-1c20-b34f-8cd4da753dfc",
+				"26eb493e-66b8-948b-cc7e-f3d459c44cfe",
+				"65ab0a80-89be-725f-1ab0-76afd2f51aef",
+				"5de3af4b-ea78-cdcd-8b20-20938556e86a"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"auth": null,
+			"id": "dbc66fe3-6aeb-e554-0512-788b6ca679cd"
+		},
+		{
+			"name": "Validation",
+			"description": "",
+			"collectionId": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+			"order": [
+				"b4bc06c5-5252-2ef2-df76-08583f5aca84",
+				"4147c275-8885-d962-308a-9ab8cc0731e0",
+				"229ea75d-9af4-b0d0-6179-54860aafd37a",
+				"5993443d-1139-726f-f6e2-b1d11488694a",
+				"882383ef-9c51-c54f-bbf9-1520e98290a2"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"auth": null,
+			"id": "d54984dc-ca06-a041-1878-fb6a84bd7ece"
+		},
+		{
+			"name": "Verify",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"order": [
+				"9ad7cd60-820f-f81d-0a2a-c7c055976ad8"
+			],
+			"owner": 0,
+			"folders_order": [],
+			"auth": null,
+			"id": "063160a9-5239-2153-af7e-14a0f5761c90"
+		}
+	],
+	"folders_order": [
+		"ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+		"d2157a18-aab2-b56c-84e2-74dc1bf91e86",
+		"b1b693f8-cde9-837a-7572-e70d2739637a",
+		"384e0568-bc11-202c-ab28-19030c88cd0d",
+		"1cd11d6e-686e-81f4-8551-b9e6e6539e20",
+		"dbc66fe3-6aeb-e554-0512-788b6ca679cd",
+		"7914c33f-c667-d77c-867e-cede12718961",
+		"d54984dc-ca06-a041-1878-fb6a84bd7ece",
+		"5133fcc8-7059-b9d8-1646-63a6d0028c4f",
+		"063160a9-5239-2153-af7e-14a0f5761c90"
+	],
+	"timestamp": 0,
+	"owner": 0,
+	"public": false,
+	"events": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "216a8a08-0f19-4c78-815e-945f6c69263e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "035352d2-a77e-4dee-972d-0bd6af8b5ef4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variables": [],
+	"auth": null,
+	"requests": [
+		{
+			"id": "02c32783-b32f-be33-3fe7-40cfff42c7e1",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/download/list",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"events": [],
+			"auth": null,
+			"method": "POST",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"data": null,
+			"dataMode": "params",
+			"name": "Download Candiates as a CSV",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1519812611598,
+			"version": 2,
+			"responses": [],
+			"folder": "5133fcc8-7059-b9d8-1646-63a6d0028c4f",
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "0423bfb5-e3f6-e1ff-13d4-99c7947b3646",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{id}",
+			"folder": "d2157a18-aab2-b56c-84e2-74dc1bf91e86",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519810640113,
+			"name": "Edit a Candidate",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
+		},
+		{
+			"id": "091483f6-fbde-e933-449f-b3aeabcfc864",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/import/candidate",
+			"folder": "7914c33f-c667-d77c-867e-cede12718961",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0a739c70-7c8d-45e0-8637-8d353a1c7ca5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812893002,
+			"name": "Import Candidates from CSV",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "firstName,lastName,phone,email,education,educationStatus,originalStudyYear,event,candidateSkillsList,candidateNotesList,checkCandidate,currentStudyYear\r\nfirstName,lastName,0000000000,email@email.email,,educationStatus,0,event,[],[],VALIDATED,0\r\nfirstName,lastName,0000000000,email@email.email,,educationStatus,0,event,[],[],VALIDATED,0"
+		},
+		{
+			"id": "14d6f8a2-974d-da82-f675-a7fbc42258f7",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/candidate-validation/non-valid",
+			"folder": "d2157a18-aab2-b56c-84e2-74dc1bf91e86",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"auth": null,
+			"time": 1519119817801,
+			"name": "Find all Non Valid Candidates",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"isFromCollection": true,
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "22620b40-e935-34bc-5154-065ffdf242fb",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/download/education",
+			"folder": "5133fcc8-7059-b9d8-1646-63a6d0028c4f",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"auth": null,
+			"time": 1519812642528,
+			"name": "Download Educations as a CSV",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "229ea75d-9af4-b0d0-6179-54860aafd37a",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/candidate-validation/multiple-validate/{ids}",
+			"folder": "d54984dc-ca06-a041-1878-fb6a84bd7ece",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "params",
+			"auth": null,
+			"time": 1519744959547,
+			"name": "Validate Candidates",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "23c370b8-0912-d52d-ffed-e647df9d4256",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidateNoteses/",
+			"folder": "384e0568-bc11-202c-ab28-19030c88cd0d",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519813264059,
+			"name": "Create a CandidateNotes",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}"
+		},
+		{
+			"id": "26ea7332-9c79-d896-f354-22d1a4bac14e",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/educations/{id}",
+			"folder": "1cd11d6e-686e-81f4-8551-b9e6e6539e20",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812315223,
+			"name": "Edit an Education",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\n\t\"educationType\": \"educationType\",\n    \"provider\": \"provider\",\n    \"description\": \"description\",\n    \"duration\": 0\n\t\n}"
+		},
+		{
+			"id": "26eb493e-66b8-948b-cc7e-f3d459c44cfe",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/tags/",
+			"folder": "dbc66fe3-6aeb-e554-0512-788b6ca679cd",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519811789416,
+			"name": "Create a Tag",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n}"
+		},
+		{
+			"id": "287d6800-c26d-f40a-d9a3-7ca56bdf4560",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/educations/{id}",
+			"folder": "1cd11d6e-686e-81f4-8551-b9e6e6539e20",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519811815704,
+			"name": "Find an Education",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\"firstName\": \"lala\"}"
+		},
+		{
+			"id": "28e5bac5-a0cf-7a87-d9bb-56b1a952caf3",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/tags/{id}",
+			"folder": "dbc66fe3-6aeb-e554-0512-788b6ca679cd",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519811729948,
+			"name": "Find a Tag",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\"firstName\": \"lala\"}"
+		},
+		{
+			"id": "32a371d5-b5ec-d8c4-120e-9201696f8996",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/candidate-validation/valid",
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"auth": null,
+			"time": 1518594969001,
+			"name": "Find all Valid Candidates",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"isFromCollection": true,
+			"collectionRequestId": "32a371d5-b5ec-d8c4-120e-9201696f8996",
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "33ef70a0-d7d7-8d70-af1a-3f0de9d344d2",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/import/tag",
+			"folder": "7914c33f-c667-d77c-867e-cede12718961",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0a739c70-7c8d-45e0-8637-8d353a1c7ca5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812199141,
+			"name": "Import Tags from CSV",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "description,tagType\ndescription,tagType\ndescription,tagType"
+		},
+		{
+			"id": "3c7731c8-f1dc-619b-1185-06752671d212",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates{id}",
+			"folder": "d2157a18-aab2-b56c-84e2-74dc1bf91e86",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519810172590,
+			"name": "Delete a Candidates",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "3fa93fc5-9a7b-401a-e967-84a274a1d766",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidateNoteses/{id}",
+			"folder": "384e0568-bc11-202c-ab28-19030c88cd0d",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519813268659,
+			"name": "Edit a CandidateNotes",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}"
+		},
+		{
+			"id": "4147c275-8885-d962-308a-9ab8cc0731e0",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/candidate-validation/validate/{id}",
+			"folder": "d54984dc-ca06-a041-1878-fb6a84bd7ece",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"auth": null,
+			"time": 1519656182600,
+			"name": "Validate Candidate",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "4187de66-00fa-51d3-4ae3-2eec7f735fbb",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/download/tag",
+			"folder": "5133fcc8-7059-b9d8-1646-63a6d0028c4f",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"auth": null,
+			"time": 1519812667180,
+			"name": "Download Tags as a CSV",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "48118ad0-e26d-d130-6417-b64a33d3c5e8",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidate-validation/add-candidate",
+			"folder": "d2157a18-aab2-b56c-84e2-74dc1bf91e86",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519811133795,
+			"name": "Create Not Yet Validated Candidate",
+			"description": "will replace Create a Canidate",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
+		},
+		{
+			"id": "53830dfb-1718-3dd9-fd48-362f0697b018",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/",
+			"folder": "d2157a18-aab2-b56c-84e2-74dc1bf91e86",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "77799ff9-e198-4c34-a482-8b97312ae550",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519811151679,
+			"name": "Create a Candidate",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
+		},
+		{
+			"id": "5860be04-8b1e-b978-9ab5-b86fdd4d3fce",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates{id}",
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519810172590,
+			"name": "Delete a Candidates",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "5993443d-1139-726f-f6e2-b1d11488694a",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/candidate-validation/duplicates-on-valid/{id}",
+			"folder": "d54984dc-ca06-a041-1878-fb6a84bd7ece",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"auth": null,
+			"time": 1519210985366,
+			"name": "Find all Duplicates for id from valid",
+			"description": "get all duplicate of id",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "5de3af4b-ea78-cdcd-8b20-20938556e86a",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/tags/{id}",
+			"folder": "dbc66fe3-6aeb-e554-0512-788b6ca679cd",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519811800585,
+			"name": "Delete a Tag",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "5f892dfb-c7fa-84e7-3d28-7a942a670104",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{id}",
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2e2808dd-dd49-438d-bdf9-818b7b371739",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519658248102,
+			"name": "delete one candidates",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "65ab0a80-89be-725f-1ab0-76afd2f51aef",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/tags/{id}",
+			"folder": "dbc66fe3-6aeb-e554-0512-788b6ca679cd",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812326064,
+			"name": "Edit a Tag",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n}"
+		},
+		{
+			"id": "6b7c2d3c-1839-c36f-2da4-9073e2e8266a",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidateNoteses/{id}",
+			"folder": "384e0568-bc11-202c-ab28-19030c88cd0d",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812022621,
+			"name": "Find a CandidateNotes",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "6d7075fa-26ad-e28f-13f7-be3d81f4d4f7",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidate-validation/update-candidate/{id}",
+			"folder": "d2157a18-aab2-b56c-84e2-74dc1bf91e86",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PATCH",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519810695810,
+			"name": "Patch a Candidates",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n}"
+		},
+		{
+			"id": "6e5fb78a-ca1e-4272-f999-4afb5b34abbb",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidateSkillses/",
+			"folder": "b1b693f8-cde9-837a-7572-e70d2739637a",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812065849,
+			"name": "Find all CandidateSkills",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "71f400cb-6c8d-bcd9-a9e7-44307d587394",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/educations/",
+			"folder": "1cd11d6e-686e-81f4-8551-b9e6e6539e20",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812304758,
+			"name": "Create an Education",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\n\t\"educationType\": \"educationType\",\n    \"provider\": \"provider\",\n    \"description\": \"description\",\n    \"duration\": 0\n\t\n}\n"
+		},
+		{
+			"id": "760047d2-a155-14c5-2d77-d3205d24bf0d",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidate-validation/add-candidates",
+			"folder": "d2157a18-aab2-b56c-84e2-74dc1bf91e86",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519810620990,
+			"name": "Create multiple Not Yet Validated Candidates",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "[\n\t{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n},\n{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n},\n{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}\n]"
+		},
+		{
+			"id": "882383ef-9c51-c54f-bbf9-1520e98290a2",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/candidate-validation/duplicates-on-non-valid/{id}",
+			"folder": "d54984dc-ca06-a041-1878-fb6a84bd7ece",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"auth": null,
+			"time": 1519658487857,
+			"name": "Find all Duplicates for id  from non valid",
+			"description": "get all duplicate of id",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "8b531291-1dbb-941e-c7e1-ac6d5fe62c8c",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidateSkillses/{id}",
+			"folder": "b1b693f8-cde9-837a-7572-e70d2739637a",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812075994,
+			"name": "Edit a CandidateSkills",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "8c058a54-9115-8161-711f-a0f2e11b171d",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{id}",
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519810647702,
+			"name": "Edit a Candidate",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
+		},
+		{
+			"id": "8f6acb25-06bd-423d-ffea-ba154a09b32b",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/educations/",
+			"folder": "1cd11d6e-686e-81f4-8551-b9e6e6539e20",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519811813329,
+			"name": "Find all Educations",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\"firstName\": \"lala\"}"
+		},
+		{
+			"id": "99c6cb41-42bd-5dde-eb61-bd5f9f948506",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidateSkillses/{id}",
+			"folder": "b1b693f8-cde9-837a-7572-e70d2739637a",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812088595,
+			"name": "Find a CandidateSkills",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "9ad7cd60-820f-f81d-0a2a-c7c055976ad8",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/verify/googleverify",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"events": [],
+			"auth": null,
+			"method": "POST",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"data": null,
+			"dataMode": "params",
+			"name": "VerifyRecaptcha",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1519813103617,
+			"version": 2,
+			"responses": [],
+			"folder": "063160a9-5239-2153-af7e-14a0f5761c90",
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "9ddbf283-ead8-a293-3040-eb4c4d2c1d94",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidateNoteses/{id}",
+			"folder": "384e0568-bc11-202c-ab28-19030c88cd0d",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812055036,
+			"name": "Delete a CandidateNotes",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "a1e8762c-a90f-65e8-9cec-6964ef21a437",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidateSkillses/",
+			"folder": "b1b693f8-cde9-837a-7572-e70d2739637a",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519813910766,
+			"name": "Create a CandidateSkills",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "baf65684-cbec-d5ca-7d51-c283c0406dde",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{id}",
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "704ee2d9-d6ea-4f77-ad97-0e307b49a897",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519809544749,
+			"name": "Find a Candidate",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "c5fbf2d9-285f-1c20-b34f-8cd4da753dfc",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/tags/",
+			"folder": "dbc66fe3-6aeb-e554-0512-788b6ca679cd",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519811783192,
+			"name": "Find all Tags",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\"firstName\": \"lala\"}"
+		},
+		{
+			"id": "c6e2fd05-25c7-4c5d-8647-06fc0fb3f585",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/educations/{id}",
+			"folder": "1cd11d6e-686e-81f4-8551-b9e6e6539e20",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519811825793,
+			"name": "Delete an Education",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "c722d4cc-dfe5-557f-afb0-cbbe7e0772bc",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidateSkillses/{id}",
+			"folder": "b1b693f8-cde9-837a-7572-e70d2739637a",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812079480,
+			"name": "Delete a CandidateSkills",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "cfd2c9ef-830f-4e11-90e6-a3da5b36f5ae",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidateNoteses/",
+			"folder": "384e0568-bc11-202c-ab28-19030c88cd0d",
+			"queryParams": [],
+			"events": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812056445,
+			"name": "Find all CandidateNotes",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\"firstName\": \"lala\"}"
+		},
+		{
+			"id": "d52c88cc-4382-95d3-4ad3-f8d7ba9161fd",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/",
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "77799ff9-e198-4c34-a482-8b97312ae550",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519810021559,
+			"name": "Create a Candidate",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
+		},
+		{
+			"id": "e5937a83-d94a-57cd-54c3-20038e102ed5",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/",
+			"folder": "d2157a18-aab2-b56c-84e2-74dc1bf91e86",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "278eea8e-3bf9-43e7-b91a-070181245c24",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519809556703,
+			"name": "Find all Candidates",
+			"description": "Most likely will become unavailable",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"isFromCollection": true,
+			"collectionRequestId": "f0059dc4-acc2-ef7d-23d5-eaa4d6547b7c",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "ed450114-b5d5-d5d6-3e4f-441c9abb3ca3",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/{id}",
+			"folder": "d2157a18-aab2-b56c-84e2-74dc1bf91e86",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "704ee2d9-d6ea-4f77-ad97-0e307b49a897",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519810489783,
+			"name": "Find  a Candidate",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "f0059dc4-acc2-ef7d-23d5-eaa4d6547b7c",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/api/candidates/",
+			"folder": "ff959d57-f573-b0ed-f6de-51aefa6b37b8",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "278eea8e-3bf9-43e7-b91a-070181245c24",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519810266143,
+			"name": "Find all Candidates",
+			"description": "Most likely will become unavailable",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": ""
+		},
+		{
+			"id": "f85439f2-a074-080a-3725-c19bf2eea73e",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/api/import/education",
+			"folder": "7914c33f-c667-d77c-867e-cede12718961",
+			"queryParams": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0a739c70-7c8d-45e0-8637-8d353a1c7ca5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"auth": null,
+			"time": 1519812329083,
+			"name": "Import Education from CSV",
+			"description": "",
+			"collectionId": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+			"responses": [],
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"rawModeData": "educationType,provider,description,duration\neducationType,provider,description,0\neducationType,provider,description,0\neducationType,provider,description,0"
+		}
+	]
+}
