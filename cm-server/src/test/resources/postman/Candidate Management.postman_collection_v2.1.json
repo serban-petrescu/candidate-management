@@ -1,0 +1,1578 @@
+{
+	"info": {
+		"name": "Candidate Management",
+		"_postman_id": "a059ae9f-a956-e3a8-d45b-5737eff6a834",
+		"description": "This collection contains all of the rest points of our app.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Candidate (Validated)",
+			"description": "",
+			"item": [
+				{
+					"name": "Find a Candidate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "704ee2d9-d6ea-4f77-ad97-0e307b49a897",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find all Candidates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "278eea8e-3bf9-43e7-b91a-070181245c24",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates",
+								""
+							]
+						},
+						"description": "Most likely will become unavailable"
+					},
+					"response": []
+				},
+				{
+					"name": "Find all Valid Candidates",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/candidate-validation/valid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidate-validation",
+								"valid"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Candidate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77799ff9-e198-4c34-a482-8b97312ae550",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a Candidate",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Candidates",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Candidate (Not Yet Validated)",
+			"description": "",
+			"item": [
+				{
+					"name": "Find  a Candidate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "704ee2d9-d6ea-4f77-ad97-0e307b49a897",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find all Candidates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "278eea8e-3bf9-43e7-b91a-070181245c24",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates",
+								""
+							]
+						},
+						"description": "Most likely will become unavailable"
+					},
+					"response": []
+				},
+				{
+					"name": "Find all Non Valid Candidates",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/candidate-validation/non-valid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidate-validation",
+								"non-valid"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Candidate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77799ff9-e198-4c34-a482-8b97312ae550",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Not Yet Validated Candidate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidate-validation/add-candidate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidate-validation",
+								"add-candidate"
+							]
+						},
+						"description": "will replace Create a Canidate"
+					},
+					"response": []
+				},
+				{
+					"name": "Create multiple Not Yet Validated Candidates",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n},\n{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n},\n{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}\n]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidate-validation/add-candidates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidate-validation",
+								"add-candidates"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a Candidate",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Candidates",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Patch a Candidates",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidate-validation/update-candidate/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidate-validation",
+								"update-candidate",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0b007f1e-f136-4199-8d25-8ecc03914628",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d255ec8b-2217-4f3f-aeda-8372dd809de2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "CandidateSkills",
+			"description": "",
+			"item": [
+				{
+					"name": "Find a CandidateSkills",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkillses/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkillses",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find all CandidateSkills",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkillses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkillses",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create a CandidateSkills",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkillses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkillses",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a CandidateSkills",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkillses/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkillses",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a CandidateSkills",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkillses/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkillses",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CandidateNotes",
+			"description": "",
+			"item": [
+				{
+					"name": "Find a CandidateNotes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNoteses/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNoteses",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find all CandidateNotes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNoteses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNoteses",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create a CandidateNotes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNoteses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNoteses",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a CandidateNotes",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNoteses/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNoteses",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a CandidateNotes",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNoteses/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNoteses",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Education",
+			"description": "",
+			"item": [
+				{
+					"name": "Find an Education",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find all Educations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create an Education",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"educationType\": \"educationType\",\n    \"provider\": \"provider\",\n    \"description\": \"description\",\n    \"duration\": 0\n\t\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Edit an Education",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"educationType\": \"educationType\",\n    \"provider\": \"provider\",\n    \"description\": \"description\",\n    \"duration\": 0\n\t\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an Education",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tag",
+			"description": "",
+			"item": [
+				{
+					"name": "Find a Tag",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find all Tags",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Tag",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a Tag",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Tag",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Import",
+			"description": "",
+			"item": [
+				{
+					"name": "Import Candidates from CSV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0a739c70-7c8d-45e0-8637-8d353a1c7ca5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "firstName,lastName,phone,email,education,educationStatus,originalStudyYear,event,candidateSkillsList,candidateNotesList,checkCandidate,currentStudyYear\r\nfirstName,lastName,0000000000,email@email.email,,educationStatus,0,event,[],[],VALIDATED,0\r\nfirstName,lastName,0000000000,email@email.email,,educationStatus,0,event,[],[],VALIDATED,0"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/import/candidate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"import",
+								"candidate"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Import Tags from CSV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0a739c70-7c8d-45e0-8637-8d353a1c7ca5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "description,tagType\ndescription,tagType\ndescription,tagType"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/import/tag",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"import",
+								"tag"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Import Education from CSV",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0a739c70-7c8d-45e0-8637-8d353a1c7ca5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "educationType,provider,description,duration\neducationType,provider,description,0\neducationType,provider,description,0\neducationType,provider,description,0"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/import/education",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"import",
+								"education"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fae65d76-8345-4cd5-a924-a085c45e325b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a865346-db59-4459-b2e0-8f6bbf2e741b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Validation",
+			"description": "",
+			"item": [
+				{
+					"name": "Validate Candidate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/candidate-validation/validate/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidate-validation",
+								"validate",
+								"{id}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Candidates",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/candidate-validation/multiple-validate/{ids}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidate-validation",
+								"multiple-validate",
+								"{ids}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find all Duplicates for id from valid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/candidate-validation/duplicates-on-valid/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidate-validation",
+								"duplicates-on-valid",
+								"{id}"
+							]
+						},
+						"description": "get all duplicate of id"
+					},
+					"response": []
+				},
+				{
+					"name": "Find all Duplicates for id  from non valid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/candidate-validation/duplicates-on-non-valid/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidate-validation",
+								"duplicates-on-non-valid",
+								"{id}"
+							]
+						},
+						"description": "get all duplicate of id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Download",
+			"description": "",
+			"item": [
+				{
+					"name": "Download Candiates as a CSV",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/download/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"download",
+								"list"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Download Educations as a CSV",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/download/education",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"download",
+								"education"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Download Tags as a CSV",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/download/tag",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"download",
+								"tag"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Verify",
+			"description": "",
+			"item": [
+				{
+					"name": "VerifyRecaptcha",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/verify/googleverify",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"verify",
+								"googleverify"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "216a8a08-0f19-4c78-815e-945f6c69263e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "035352d2-a77e-4dee-972d-0bd6af8b5ef4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
