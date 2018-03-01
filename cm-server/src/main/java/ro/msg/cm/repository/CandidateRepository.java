@@ -46,7 +46,7 @@ public interface CandidateRepository extends CrudRepository<Candidate, Long> {
     @Transactional
     @Modifying
     @Query("update Candidate c set c.checkCandidate = ?1 where c.id in ?2")
-    void setCheckCandidateForIdIn(CandidateCheck candidateCheck, List<Long> ids);
+    void setCheckCandidateForIdIn(CandidateCheck candidateCheck, Set<Long> ids);
 
     @Transactional
     @Modifying
@@ -57,4 +57,5 @@ public interface CandidateRepository extends CrudRepository<Candidate, Long> {
 
     Optional<Candidate> findCandidateById(Long id);
 
+    Set<Candidate> findAllByIdIn(Set<Long> id);
 }

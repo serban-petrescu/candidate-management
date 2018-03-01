@@ -18,10 +18,8 @@ import ro.msg.cm.types.DuplicateType;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -99,16 +97,30 @@ public class ValidationService {
 
     @Transactional
     public void validate(List<Long> ids) {
-        for (long id : ids) {
-            if (candidateRepository.findCandidateById(id).isPresent() && duplicateOnEmail(id)) {
-                ids.remove(id);
+        Set<Long> longSet = new HashSet<>(ids);
+        Set<Candidate> candidates = candidateRepository.findAllByIdIn(longSet);
+        longSet = findSingleEmailCandidates(candidates);
+        candidateRepository.setCheckCandidateForIdIn(CandidateCheck.VALIDATED, filterDuplicateOnEmail(longSet));
+    }
+
+    private Set<Long> findSingleEmailCandidates(Set<Candidate> candidates) {
+        Set<String> emails = candidates.stream().map(Candidate::getEmail).collect(Collectors.toSet());
+        Set<Long> longSet = new HashSet<>();
+        for (Candidate candidate : candidates) {
+            if (emails.remove(candidate.getEmail())) {
+                longSet.add(candidate.getId());
             }
         }
-        candidateRepository.setCheckCandidateForIdIn(CandidateCheck.VALIDATED, ids);
+        return longSet;
     }
 
     private boolean duplicateOnEmail(Long id) {
         return duplicateFinderService.getCountDuplicateOnDuplicateType(id, CandidateCheck.VALIDATED, DuplicateType.ON_EMAIL) > 0;
+    }
+
+    //TODO need to make a query to validate
+    private Set<Long> filterDuplicateOnEmail(Set<Long> ids) {
+        return ids;
     }
 
     public List<Candidate> getValidCandidates() {
