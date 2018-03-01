@@ -58,4 +58,9 @@ public interface CandidateRepository extends CrudRepository<Candidate, Long> {
     Optional<Candidate> findCandidateById(Long id);
 
     Set<Candidate> findAllByIdIn(Set<Long> id);
+
+    @Query("SELECT c1 FROM Candidate c1 where c1.id in ?1 AND c1.email not in (Select c2.email FROM Candidate c2 where c2.checkCandidate = 'VALIDATED')")
+    Set<Candidate> filterValidCandidates(Set<Long> ids);
+
+
 }

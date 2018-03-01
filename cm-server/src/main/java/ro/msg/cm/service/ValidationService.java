@@ -77,16 +77,16 @@ public class ValidationService {
     @Transactional
     public void deleteSelectedEntries(List<Long> ids) {
         for (long id : ids) {
-            if (candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED)!=null) {
+            if (candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED) != null) {
                 candidateRepository.delete(id);
-            }else {
+            } else {
                 throw new CandidateNotFoundException("Candidate with id: " + id + " was not found");
             }
         }
     }
 
     public void validate(Long id) {
-        if(candidateRepository.findCandidateById(id).isPresent()) {
+        if (candidateRepository.findCandidateById(id).isPresent()) {
             if (!duplicateOnEmail(id)) {
                 candidateRepository.setCheckCandidateForId(CandidateCheck.VALIDATED, id);
             }
@@ -100,7 +100,10 @@ public class ValidationService {
         Set<Long> longSet = new HashSet<>(ids);
         Set<Candidate> candidates = candidateRepository.findAllByIdIn(longSet);
         longSet = findSingleEmailCandidates(candidates);
-        candidateRepository.setCheckCandidateForIdIn(CandidateCheck.VALIDATED, filterDuplicateOnEmail(longSet));
+        longSet = filterDuplicateOnEmail(longSet);
+        if (!longSet.isEmpty()) {
+            candidateRepository.setCheckCandidateForIdIn(CandidateCheck.VALIDATED, longSet);
+        }
     }
 
     private Set<Long> findSingleEmailCandidates(Set<Candidate> candidates) {
@@ -118,9 +121,8 @@ public class ValidationService {
         return duplicateFinderService.getCountDuplicateOnDuplicateType(id, CandidateCheck.VALIDATED, DuplicateType.ON_EMAIL) > 0;
     }
 
-    //TODO need to make a query to validate
     private Set<Long> filterDuplicateOnEmail(Set<Long> ids) {
-        return ids;
+        return (ids.isEmpty()) ? ids : candidateRepository.filterValidCandidates(ids).stream().map(Candidate::getId).collect(Collectors.toSet());
     }
 
     public List<Candidate> getValidCandidates() {
