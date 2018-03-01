@@ -69,6 +69,7 @@ public class DuplicateFinderService {
                     return new Duplicate(original.getId(), candidateRepository.findAllByEmailAndCheckCandidateAndIdIsNot(original.getEmail(), candidateCheck, original.getId()).stream().map(Candidate::getId).collect(Collectors.toSet()), DuplicateType.ON_EMAIL);
                 case ON_PHONE:
                     return new Duplicate(original.getId(), candidateRepository.findAllByPhoneAndCheckCandidateAndIdIsNot(original.getPhone(), candidateCheck, original.getId()).stream().map(Candidate::getId).collect(Collectors.toSet()), DuplicateType.ON_PHONE);
+                default: break;
             }
         }
         return null;
@@ -110,6 +111,7 @@ public class DuplicateFinderService {
                     return candidateRepository.countByEmailAndCheckCandidateAndIdIsNot(original.getEmail(), candidateCheck, original.getId());
                 case ON_PHONE:
                     return candidateRepository.countByPhoneAndCheckCandidateAndIdIsNot(original.getPhone(), candidateCheck, original.getId());
+                default: break;
             }
         }
         return -1;
