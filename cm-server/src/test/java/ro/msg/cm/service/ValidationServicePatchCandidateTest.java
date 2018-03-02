@@ -10,7 +10,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.stubbing.Answer;
 import ro.msg.cm.dto.CandidateDto;
 import ro.msg.cm.exception.CandidateNotFoundException;
-import ro.msg.cm.exception.PatchCandidateInvalidKeyException;
 import ro.msg.cm.exception.PatchCandidateInvalidValueException;
 import ro.msg.cm.model.*;
 import ro.msg.cm.repository.CandidateRepository;
@@ -18,9 +17,7 @@ import ro.msg.cm.types.CandidateCheck;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ValidationServicePatchCandidateTest {
 
