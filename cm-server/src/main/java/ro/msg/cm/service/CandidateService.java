@@ -2,68 +2,51 @@ package ro.msg.cm.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import ro.msg.cm.dto.CandidateDto;
 import ro.msg.cm.exception.CandidateIsAlreadyValidatedException;
 import ro.msg.cm.exception.CandidateNotFoundException;
-import ro.msg.cm.exception.PatchCandidateInvalidKeyException;
 import ro.msg.cm.exception.PatchCandidateInvalidValueException;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.types.CandidateCheck;
 import ro.msg.cm.types.DuplicateType;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class ValidationService {
+public class CandidateService {
 
     private final CandidateRepository candidateRepository;
     private final DuplicateFinderService duplicateFinderService;
 
     @Autowired
-    public ValidationService(CandidateRepository candidateRepository, DuplicateFinderService duplicateFinderService) {
+    public CandidateService(CandidateRepository candidateRepository, DuplicateFinderService duplicateFinderService) {
         this.candidateRepository = candidateRepository;
         this.duplicateFinderService = duplicateFinderService;
     }
 
-    public Candidate patchCandidate(Map<String, Object> patchCandidate, Long id) {
+    public Candidate patchCandidate(CandidateDto patchCandidate, Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
-        List<Field> fields = Arrays.asList(Candidate.class.getDeclaredFields());
         if (candidate != null) {
-            for (Iterator<String> iterator = patchCandidate.keySet().iterator(); iterator.hasNext(); ) {
-                String key = iterator.next();
-                if (key.equalsIgnoreCase("email") &&
-                        !isEmail(patchCandidate.get(key))) {
+                if (!isEmail(patchCandidate.getEmail())) {
                     throw new PatchCandidateInvalidValueException();
                 }
-                if (key.equalsIgnoreCase("phone") &&
-                        !isPhoneNr(patchCandidate.get(key))) {
+                if (!isPhoneNr(patchCandidate.getPhone())) {
                     throw new PatchCandidateInvalidValueException();
                 }
-            }
-            patchCandidate.forEach((String k, Object v) -> {
-                try {
-                    Field field = fields.stream().filter(x -> x.getName().equalsIgnoreCase(StringUtils.trimAllWhitespace(k))).findFirst().orElseThrow(PatchCandidateInvalidKeyException::new);
-                    Method method = Candidate.class.getDeclaredMethod("set" + StringUtils.capitalize(field.getName()), field.getType());
-                    method.invoke(candidate, v);
-                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                    throw new PatchCandidateInvalidKeyException();
-                }
-            });
+                ModelMapper patchModelMapper = new ModelMapper();
+                candidate = patchModelMapper.map(patchCandidate.getChangedAttributes(), Candidate.class);
             return candidateRepository.save(candidate);
         } else {
             throw new CandidateNotFoundException();
         }
     }
-
 
     public void deleteSelectedEntry(Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
