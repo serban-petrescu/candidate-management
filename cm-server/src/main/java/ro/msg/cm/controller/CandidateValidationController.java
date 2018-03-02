@@ -4,33 +4,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.web.bind.annotation.*;
+import ro.msg.cm.dto.CandidateDto;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.pojo.Duplicate;
 import ro.msg.cm.processor.LinkMapper;
+import ro.msg.cm.service.CandidateService;
 import ro.msg.cm.service.DuplicateFinderService;
-import ro.msg.cm.service.ValidationService;
 import ro.msg.cm.types.CandidateCheck;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/candidate-validation")
 public class CandidateValidationController {
 
-    private final ValidationService validationService;
+    private final CandidateService validationService;
     private final DuplicateFinderService duplicateFinderService;
     private final LinkMapper linkMapper;
 
     @Autowired
-    public CandidateValidationController(ValidationService validationService, DuplicateFinderService duplicateFinderService,LinkMapper linkMapper) {
+    public CandidateValidationController(CandidateService validationService, DuplicateFinderService duplicateFinderService,LinkMapper linkMapper) {
         this.validationService = validationService;
         this.duplicateFinderService = duplicateFinderService;
         this.linkMapper = linkMapper;
     }
 
     @PatchMapping("/update-candidate/{id}")
-    public Resource<Candidate> patchCandidate(@RequestBody Map<String, Object> toPatch, @PathVariable Long id) {
+    public Resource<Candidate> patchCandidate(@RequestBody CandidateDto toPatch, @PathVariable Long id) {
         Candidate candidatePatched = validationService.patchCandidate(toPatch, id);
         return linkMapper.candidateToResource(candidatePatched);
     }

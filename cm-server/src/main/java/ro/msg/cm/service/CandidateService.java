@@ -2,7 +2,6 @@ package ro.msg.cm.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +9,7 @@ import ro.msg.cm.dto.CandidateDto;
 import ro.msg.cm.exception.CandidateIsAlreadyValidatedException;
 import ro.msg.cm.exception.CandidateNotFoundException;
 import ro.msg.cm.exception.PatchCandidateInvalidValueException;
+import ro.msg.cm.mapper.CandidateMapper;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.types.CandidateCheck;
@@ -34,14 +34,13 @@ public class CandidateService {
     public Candidate patchCandidate(CandidateDto patchCandidate, Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
         if (candidate != null) {
-                if (!isEmail(patchCandidate.getEmail())) {
-                    throw new PatchCandidateInvalidValueException();
-                }
-                if (!isPhoneNr(patchCandidate.getPhone())) {
-                    throw new PatchCandidateInvalidValueException();
-                }
-                ModelMapper patchModelMapper = new ModelMapper();
-                candidate = patchModelMapper.map(patchCandidate.getChangedAttributes(), Candidate.class);
+            if (!isEmail(patchCandidate.getEmail())) {
+                throw new PatchCandidateInvalidValueException();
+            }
+            if (!isPhoneNr(patchCandidate.getPhone())) {
+                throw new PatchCandidateInvalidValueException();
+            }
+            candidate = CandidateMapper.map(patchCandidate.getChangedAttributes(), candidate);
             return candidateRepository.save(candidate);
         } else {
             throw new CandidateNotFoundException();
