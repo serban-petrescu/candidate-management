@@ -1,3 +1,12 @@
+-- this is the first sql file to be execute from flyway; it starts with V2 (not V1) because of the baseline-on-migrate property
+-- which ignores the V1 file if the database schema is not empty
+
+DROP TABLE IF EXISTS CANDIDATE_NOTES;
+DROP TABLE IF EXISTS CANDIDATE_SKILLS;
+DROP TABLE IF EXISTS TAG;
+DROP TABLE IF EXISTS CANDIDATE;
+DROP TABLE IF EXISTS EDUCATION;
+
 CREATE TABLE EDUCATION (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   description varchar(255) DEFAULT NULL,
