@@ -11,7 +11,7 @@ import org.mockito.stubbing.Answer;
 import ro.msg.cm.dto.CandidateDto;
 import ro.msg.cm.exception.CandidateNotFoundException;
 import ro.msg.cm.exception.PatchCandidateInvalidValueException;
-import ro.msg.cm.model.*;
+import ro.msg.cm.model.Candidate;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.types.CandidateCheck;
 
@@ -71,7 +71,7 @@ public class ValidationServicePatchCandidateTest {
 
     private Candidate getExpected() {
         Candidate candidate = new Candidate();
-        //candidate.setId(2L);
+        candidate.setId(1L);
         candidate.setFirstName("FirstName");
         candidate.setLastName("LastName");
         candidate.setPhone("9876543210");
@@ -225,7 +225,6 @@ public class ValidationServicePatchCandidateTest {
     @Test
     public void patchCandidateAllTest() {
         Candidate expected = getExpected();
-        expected.setId(1L);
         CandidateDto candidateDto = new CandidateDto();
         candidateDto.setFirstName(expected.getFirstName());
         candidateDto.setLastName(expected.getLastName());

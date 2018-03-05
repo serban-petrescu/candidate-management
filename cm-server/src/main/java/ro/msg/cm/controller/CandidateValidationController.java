@@ -3,6 +3,7 @@ package ro.msg.cm.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.dto.CandidateDto;
 import ro.msg.cm.model.Candidate;
@@ -46,12 +47,14 @@ public class CandidateValidationController {
     }
 
     @PostMapping("/add-candidate")
+    @ResponseStatus(HttpStatus.CREATED)
     public Resource<Candidate> saveUnvalidatedCandidate(@RequestBody Candidate candidate) {
         Candidate candidateSaved = validationService.saveUnvalidatedCandidate(candidate);
         return linkMapper.candidateToResource(candidateSaved);
     }
 
     @PostMapping("/add-candidates")
+    @ResponseStatus(HttpStatus.CREATED)
     public Resources<Resource<Candidate>> saveUnvalidatedCandidates(@RequestBody List<Candidate> candidates) {
         return linkMapper.candidateListToResource(validationService.saveUnvalidatedCandidates(candidates));
     }
