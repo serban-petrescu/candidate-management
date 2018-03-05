@@ -5,10 +5,9 @@ matrix:
     script:
       - mvn clean install -X
     language: node_js
+    install:
+      - npm install newman
     before_script:
-      - node --version
-      - npm --version
-      - newman --version
       - cd cm-server/src/text/resources
     script:
       - newman run postman/candidate-management.postman_collection.json -e postman/tests.postman_collection.json
