@@ -3,9 +3,11 @@ matrix:
     language: java
     jdk: oraclejdk8
     language: node_js
-    before_script:
-      - npm install -g newman
+    node_js: "v8"
+    before_install:
       - mvn clean install -X
+    install:
+      - npm install -g newman
     script:
       - newman run cm-server/src/test/resources/postman/tests.postman_collection.json
 cache:
