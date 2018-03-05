@@ -8,8 +8,10 @@ matrix:
     node_js: "v7"
     install:
       - npm install -g newman
+    before_script:
+      - mvn clean install -X
     script:
-      - newman run cm-server/src/test/resources/postman/candidate-management.postman_collection.json -e cm-server/src/test/resources/postman/tests.postman_collection.json
+      - newman run cm-server/src/test/resources/postman/tests.postman_collection.json
 cache:
   directories:
   - "$HOME/.m2"
