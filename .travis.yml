@@ -7,10 +7,8 @@ matrix:
     language: node_js
     install:
       - npm install newman
-    before_script:
-      - cd cm-server/src/test/resources
     script:
-      - newman run postman/candidate-management.postman_collection.json -e postman/tests.postman_collection.json
+      - newman run cm-server/src/test/resources/postman/candidate-management.postman_collection.json -e cm-server/src/test/resources/postman/tests.postman_collection.json
 cache:
   directories:
   - "$HOME/.m2"
