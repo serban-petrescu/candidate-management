@@ -8,7 +8,7 @@ matrix:
     install:
       - npm install newman
     before_script:
-      - cd cm-server/src/text/resources
+      - cd cm-server/src/test/resources
     script:
       - newman run postman/candidate-management.postman_collection.json -e postman/tests.postman_collection.json
 cache:
