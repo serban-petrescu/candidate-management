@@ -5,8 +5,9 @@ matrix:
     script:
       - mvn clean install -X
     language: node_js
+    node_js: "v8.3.0"
     install:
-      - npm install newman
+      - npm install -g newman
     script:
       - newman run cm-server/src/test/resources/postman/candidate-management.postman_collection.json -e cm-server/src/test/resources/postman/tests.postman_collection.json
 cache:
