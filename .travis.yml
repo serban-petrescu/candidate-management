@@ -1,7 +1,20 @@
-language: java
-jdk: oraclejdk8
-script:
-  - mvn clean install -X
+matrix:
+  include:
+    language: java
+      jdk: oraclejdk8
+    language: node_js
+      node_js:
+        - "8.2.1"
+    install:
+    - npm install newman
+    before_script:
+    - node --version
+    - npm --version
+    - node_modules/.bin/newman --version
+    - cd cm-server/src/text/resources
+    script:
+    - mvn clean install -X
+    - node_modules/.bin/newman run postman/candidate-management.postman_collection.json -e postman/tests.postman_collection.json
 cache:
   directories:
   - "$HOME/.m2"
