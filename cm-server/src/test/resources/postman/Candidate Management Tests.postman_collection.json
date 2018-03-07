@@ -1,14 +1,14 @@
 {
 	"info": {
 		"name": "Candidate Management Tests",
-		"_postman_id": "d78902a8-8ab5-dad9-4b9f-a8d4a514ae6c",
+		"_postman_id": "7bf2d821-57f7-42d0-a46e-d96f9ef78883",
 		"description": "This collection contains all of the rest points' tests of our app.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Candidate (Validated)",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "Find a Candidate - With checkCandidate set as \"VALIDATED\"",
@@ -179,7 +179,7 @@
 								"{{temp_id}}"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
@@ -329,7 +329,7 @@
 								"valid"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
@@ -437,7 +437,7 @@
 					"response": []
 				},
 				{
-					"name": "Create a candidate - normal copy",
+					"name": "Create a candidate - normal",
 					"event": [
 						{
 							"listen": "test",
@@ -594,7 +594,7 @@
 								"{{temp_id}}"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
@@ -697,7 +697,7 @@
 								"{{temp_id}}"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
@@ -779,7 +779,7 @@
 								"{{temp_id}}"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				}
@@ -787,7 +787,7 @@
 		},
 		{
 			"name": "Candidate (Not Yet Validated)",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "Find a Candidate - With checkCandidate set as \"VALIDATED\"",
@@ -958,7 +958,7 @@
 								"{{temp_id}}"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
@@ -1108,7 +1108,7 @@
 								"non-valid"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
@@ -1376,7 +1376,7 @@
 								"{{temp_id}}"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
@@ -1485,7 +1485,7 @@
 								"{{temp_id}}"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
@@ -1567,7 +1567,7 @@
 								"{{temp_id}}"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				}
@@ -1597,30 +1597,900 @@
 		},
 		{
 			"name": "CandidateSkills",
-			"description": "",
+			"description": null,
 			"item": []
 		},
 		{
 			"name": "CandidateNotes",
-			"description": "",
+			"description": null,
 			"item": []
 		},
 		{
 			"name": "Education",
-			"description": "",
-			"item": []
+			"description": null,
+			"item": [
+				{
+					"name": "Find an Education - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6c35ee0d-0533-4202-98ae-d096fa5c044b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/educations',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"educationType\": \"educationType\",",
+									"            \"provider\": \"provider\",",
+									"            \"description\": \"description\",",
+									"            \"duration\": 0",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7517293-adb9-4ba4-bfee-a369715d489c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"removeEducations(pm.globals.get(\"temp_id\"));",
+									"pm.globals.unset(\"temp_id\");",
+									"",
+									"function removeEducations(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/educations/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								"{{temp_id}}"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Find all Educations - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7f31d5fd-3d76-4cd9-80f6-053a0d91075c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/educations',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"educationType\": \"educationType\",",
+									"            \"provider\": \"provider\",",
+									"            \"description\": \"description\",",
+									"            \"duration\": 0",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/educations',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"educationType\": \"educationType\",",
+									"            \"provider\": \"provider\",",
+									"            \"description\": \"description\",",
+									"            \"duration\": 0",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id2\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "f4375a0f-83df-41c5-b72a-728a3c136c60",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var id1 = pm.globals.get(\"temp_id\");",
+									"var id2 = pm.globals.get(\"temp_id2\");",
+									"pm.globals.unset(\"temp_id\");",
+									"pm.globals.unset(\"temp_id2\");",
+									"",
+									"pm.test(\"It found the two inserted educations\",function(){",
+									"    var existId1,existId2;",
+									"    var educations = pm.response.json()._embedded.educations;",
+									"    for(i=educations.length-1;i>=0;i--){",
+									"        if(educations[i].id === id1){",
+									"            existId1 = true;",
+									"            ",
+									"        }",
+									"        if(educations[i].id === id2){",
+									"            existId2 = true;",
+									"            ",
+									"        }",
+									"        if(existId1 && existId2){",
+									"            break;",
+									"        }",
+									"    }",
+									"    removeEducations(id1);",
+									"    removeEducations(id2);",
+									"    pm.expect(existId1).to.eql(true);",
+									"    pm.expect(existId2).to.eql(true);",
+									"});",
+									"",
+									"",
+									"function removeEducations(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/educations/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								""
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Create an Education - normal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "42384fc4-68ea-4ccc-b61e-996279442d90",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"removeEducations(pm.response.json().id);",
+									"",
+									"function removeEducations(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/educations/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"educationType\": \"educationType\",\n    \"provider\": \"provider\",\n    \"description\": \"description\",\n    \"duration\": 0\n\t\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								""
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Edit an Education - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "86c90b0a-e59b-45ae-a701-e4ede2dcdb48",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/educations',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"educationType\": \"educationType\",",
+									"            \"provider\": \"provider\",",
+									"            \"description\": \"description\",",
+									"            \"duration\": 0",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b118b4b-cc93-4c4c-a925-c7f58a4d97df",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var id=pm.globals.get(\"temp_id\");",
+									"pm.globals.unset(\"temp_id\");",
+									"removeEducation(id);",
+									"",
+									"pm.test(\"EducationType is changed\",function(){",
+									"    pm.expect(pm.response.json().educationType).to.eql(\"newEducationType\");",
+									"});",
+									"",
+									"pm.test(\"Provider is changed\",function(){",
+									"    pm.expect(pm.response.json().provider).to.eql(\"newProvider\");",
+									"});",
+									"",
+									"pm.test(\"Description is changed\",function(){",
+									"    pm.expect(pm.response.json().description).to.eql(\"newDescription\");",
+									"});",
+									"",
+									"pm.test(\"Duration is changed\",function(){",
+									"    pm.expect(pm.response.json().duration).to.eql(1);",
+									"});",
+									"",
+									"function removeEducation(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/educations/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"educationType\": \"newEducationType\",\n    \"provider\": \"newProvider\",\n    \"description\": \"newDescription\",\n    \"duration\": 1\n\t\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								"{{temp_id}}"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an Education - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23737491-c21c-4fe7-8d60-4cc363d0949c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/educations',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"educationType\": \"educationType\",",
+									"            \"provider\": \"provider\",",
+									"            \"description\": \"description\",",
+									"            \"duration\": 0",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e8e2713f-126d-44b3-9143-748bb4baa220",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/educations/' + pm.globals.get(\"temp_id\"),",
+									"    method: 'GET'",
+									"}, function (err, res) {",
+									"    pm.test(\"Trying to find it returns the status 404\", function () {",
+									"        pm.expect(res.code).to.eql(404);",
+									"    });",
+									"});",
+									"",
+									"pm.globals.unset(\"temp_id\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								"{{temp_id}}"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Tag",
-			"description": "",
-			"item": []
+			"description": null,
+			"item": [
+				{
+					"name": "Find a Tag - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cc5822bd-e9e1-4e64-9068-1783fdb3ca72",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/tags',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"description\": \"description\",",
+									"            \"tagType\": \"tagType\"",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d48cd80c-5f8b-4181-aabd-347b5fb3383a",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"removeTag(pm.globals.get(\"temp_id\"));",
+									"pm.globals.unset(\"temp_id\");",
+									"",
+									"function removeTag(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/tags/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								"{{temp_id}}"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Find all Tags - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "353fdd2f-4fc4-4031-b9aa-c965aa0c36af",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/tags',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"description\": \"description\",",
+									"            \"tagType\": \"tagType\"",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/tags',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"description\": \"description\",",
+									"            \"tagType\": \"tagType\"",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id2\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e72520fb-3903-4400-9485-ce387a1c3711",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var id1 = pm.globals.get(\"temp_id\");",
+									"var id2 = pm.globals.get(\"temp_id2\");",
+									"pm.globals.unset(\"temp_id\");",
+									"pm.globals.unset(\"temp_id2\");",
+									"",
+									"pm.test(\"It found the two inserted tags\",function(){",
+									"    var existId1,existId2;",
+									"    var tags = pm.response.json()._embedded.tags;",
+									"    for(i=tags.length-1;i>=0;i--){",
+									"        if(tags[i].id === id1){",
+									"            existId1 = true;",
+									"            ",
+									"        }",
+									"        if(tags[i].id === id2){",
+									"            existId2 = true;",
+									"            ",
+									"        }",
+									"        if(existId1 && existId2){",
+									"            break;",
+									"        }",
+									"    }",
+									"    removeTag(id1);",
+									"    removeTag(id2);",
+									"    pm.expect(existId1).to.eql(true);",
+									"    pm.expect(existId2).to.eql(true);",
+									"});",
+									"",
+									"",
+									"function removeTag(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/tags/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								""
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Tag - normal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16f39e3a-f43d-412d-8e1d-ff97475c0363",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"removeTag(pm.response.json().id);",
+									"",
+									"function removeTag(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/tags/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								""
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a Tag - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a8cbb78a-037b-4b74-b30f-4658912d900c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/tags',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"description\": \"description\",",
+									"            \"tagType\": \"tagType\"",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff03c5fa-9775-4c1f-a790-4dd1c77261db",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var id=pm.globals.get(\"temp_id\");",
+									"pm.globals.unset(\"temp_id\");",
+									"removeTag(id);",
+									"",
+									"pm.test(\"Description is changed\",function(){",
+									"    pm.expect(pm.response.json().description).to.eql(\"newDescription\");",
+									"});",
+									"",
+									"pm.test(\"TagType is changed\",function(){",
+									"    pm.expect(pm.response.json().tagType).to.eql(\"newTagType\");",
+									"});",
+									"",
+									"function removeTag(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/tags/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"description\": \"newDescription\",\n    \"tagType\": \"newTagType\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								"{{temp_id}}"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Tag - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cda803a2-7f2b-4cfb-941f-4f3da3fe32fe",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/tags',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"description\": \"description\",",
+									"            \"tagType\": \"tagType\"",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d9d556f5-0c0a-48db-b973-dff408f1082b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/tags/' + pm.globals.get(\"temp_id\"),",
+									"    method: 'GET'",
+									"}, function (err, res) {",
+									"    pm.test(\"Trying to find it returns the status 404\", function () {",
+									"        pm.expect(res.code).to.eql(404);",
+									"    });",
+									"});",
+									"",
+									"pm.globals.unset(\"temp_id\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								"{{temp_id}}"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Import",
-			"description": "",
+			"description": null,
 			"item": [
 				{
-					"name": "Import Candidates from CSV",
+					"name": "Import Candidates from CSV - normal",
 					"event": [
 						{
 							"listen": "test",
@@ -1695,7 +2565,151 @@
 								"candidate"
 							]
 						},
-						"description": ""
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Import Tags from CSV - normal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "afbffc08-d8c5-4be9-bfe5-002f61e0908c",
+								"type": "text/javascript",
+								"exec": [
+									"var tag1,tag2;",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/tags/',",
+									"    method: 'GET'",
+									"}, function (err, res) {",
+									"    var tags=res.json()._embedded.tags;",
+									"    for(i=0;i<tags.length;i++){",
+									"        if(tags[i].description===\"unique1\"){",
+									"            tag1=tags[i];",
+									"            removeTag(tags[i].id);",
+									"        }",
+									"        if(tags[i].description===\"unique3\"){",
+									"            tag2=tags[i];",
+									"            removeTag(tags[i].id);",
+									"        }",
+									"    }",
+									"    pm.test(\"Tag 1 exists\", function () {",
+									"            pm.expect(tag1.tagType).to.eql(\"unique2\");",
+									"        });",
+									"    pm.test(\"Tag 2 exists\", function () {",
+									"            pm.expect(tag2.tagType).to.eql(\"unique4\");",
+									"        }); ",
+									"});",
+									"",
+									"function removeTag(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/tags/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "description,tagType,\nunique1,unique2,\nunique3,unique4,"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/import/tag",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"import",
+								"tag"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Import Education from CSV - normal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "67b975c5-5129-4a1d-bb0a-202ddd12033e",
+								"type": "text/javascript",
+								"exec": [
+									"var education1,education2;",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/educations/',",
+									"    method: 'GET'",
+									"}, function (err, res) {",
+									"    var educations=res.json()._embedded.educations;",
+									"    for(i=0;i<educations.length;i++){",
+									"        if(educations[i].educationType===\"educationType1\"){",
+									"            education1=educations[i];",
+									"    removeEducation(educations[i].id);",
+									"        }",
+									"        if(educations[i].educationType===\"educationType2\"){",
+									"            education2=educations[i];",
+									"            removeEducation(educations[i].id);",
+									"        }",
+									"    }",
+									"    pm.test(\"Education 1 exists\", function () {",
+									"            pm.expect(education1.provider).to.eql(\"provider1\");",
+									"            pm.expect(education1.description).to.eql(\"description1\");",
+									"            pm.expect(education1.duration).to.eql(1);",
+									"        });",
+									"    pm.test(\"Education 2 exists\", function () {",
+									"            pm.expect(education2.provider).to.eql(\"provider2\");",
+									"            pm.expect(education2.description).to.eql(\"description2\");",
+									"            pm.expect(education2.duration).to.eql(2);",
+									"        }); ",
+									"});",
+									"",
+									"function removeEducation(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/educations/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "educationType,provider,description,duration,\neducationType1,provider1,description1,1,\neducationType2,provider2,description2,2,"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/import/education",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"import",
+								"education"
+							]
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -1703,7 +2717,7 @@
 		},
 		{
 			"name": "Validation",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "Validate Candidate - Validable",
@@ -2743,10 +3757,10 @@
 		},
 		{
 			"name": "Download",
-			"description": "",
+			"description": null,
 			"item": [
 				{
-					"name": "Download Candiates as a CSV",
+					"name": "Download Candiates as a CSV - normal",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -2840,13 +3854,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "61968e49-6efc-4a78-b942-ee727f61edd7",
+								"id": "0d51e2bc-82c4-4c9d-9392-27e8ee3445b8",
 								"type": "text/javascript",
 								"exec": [
 									"var header = \"firstName,lastName,phone,email,education,educationStatus,originalStudyYear,event,candidateSkillsList,candidateNotesList,dateOfAdding,checkCandidate,currentStudyYear\";",
 									"",
 									"pm.test(\"Has the two Valid Candidates\", function () {",
-									"    console.info(pm.response.text());",
 									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"temp_csv3v\"));",
 									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"temp_csv4v\"));",
 									"});",
@@ -2885,7 +3898,10 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/api/download/list",
 							"protocol": "http",
@@ -2899,125 +3915,17 @@
 								"list"
 							]
 						},
-						"description": ""
+						"description": null
 					},
 					"response": []
 				},
 				{
-					"name": "Download Educations as a CSV",
+					"name": "Download Tags as a CSV - normal",
 					"event": [
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "135e5a2e-3211-46df-9041-c1205e93829e",
-								"type": "text/javascript",
-								"exec": [
-									"getCsv = function(res){",
-									"    return res.json().educationType+\",\"+res.json().provider+\",\"+res.json().description+\",\"+res.json().duration;",
-									"}",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/educations',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"educationType\": \"type1\",",
-									"            \"provider\": \"provider1\",",
-									"            \"description\": \"desc1\",",
-									"            \"duration\": 1",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    console.info(getCsv(res));",
-									"    pm.globals.set(\"temp_csv1\", getCsv(res));",
-									"    pm.globals.set(\"temp_id1\", res.json().id);",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/educations',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"educationType\": \"type2\",",
-									"            \"provider\": \"provider2\",",
-									"            \"description\": \"desc2\",",
-									"            \"duration\": 3",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_csv2\", getCsv(res));",
-									"    pm.globals.set(\"temp_id2\", res.json().id);",
-									"});",
-									"",
-									""
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "91024db2-9cca-4a6b-ad74-4d0935accfb6",
-								"type": "text/javascript",
-								"exec": [
-									"var header = \"educationType,provider,description,duration\";",
-									"",
-									"pm.test(\"Has the two Educations\", function () {",
-									"    console.info(pm.response.text());",
-									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"temp_csv1\"));",
-									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"temp_csv2\"));",
-									"});",
-									"",
-									"removeEducation(pm.globals.get(\"temp_id1\"));",
-									"removeEducation(pm.globals.get(\"temp_id2\"));",
-									"pm.globals.unset(\"temp_csv1\");",
-									"pm.globals.unset(\"temp_id1\");",
-									"pm.globals.unset(\"temp_csv2\");",
-									"pm.globals.unset(\"temp_id2\");",
-									"",
-									"function removeEducation(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/educations/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://localhost:8080/api/download/education",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"download",
-								"education"
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Download Tags as a CSV",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "05050de2-b5ae-41a6-9246-5a608b44c04f",
+								"id": "3d03c8b2-20ae-4654-a04a-076bff1cf6ec",
 								"type": "text/javascript",
 								"exec": [
 									"getCsv = function(res){",
@@ -3035,7 +3943,6 @@
 									"            })",
 									"    }",
 									"}, function (err, res) {",
-									"    console.info(getCsv(res));",
 									"    pm.globals.set(\"temp_csv1\", getCsv(res));",
 									"    pm.globals.set(\"temp_id1\", res.json().id);",
 									"});",
@@ -3063,13 +3970,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3d2dc18c-c442-4533-bf24-0e92dfd05bb4",
+								"id": "dcda246a-a531-44fa-bf00-795f482aaabe",
 								"type": "text/javascript",
 								"exec": [
 									"var header = \"description,tagType\";",
 									"",
 									"pm.test(\"Has the two Educations\", function () {",
-									"    console.info(pm.response.text());",
 									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"temp_csv1\"));",
 									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"temp_csv2\"));",
 									"});",
@@ -3107,7 +4013,10 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/api/download/tag",
 							"protocol": "http",
@@ -3121,7 +4030,116 @@
 								"tag"
 							]
 						},
-						"description": ""
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Download Educations as a CSV - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f883484f-6182-431f-9cae-ff1049676174",
+								"type": "text/javascript",
+								"exec": [
+									"getCsv = function(res){",
+									"    return res.json().educationType+\",\"+res.json().provider+\",\"+res.json().description+\",\"+res.json().duration;",
+									"}",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/educations',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"educationType\": \"type1\",",
+									"            \"provider\": \"provider1\",",
+									"            \"description\": \"desc1\",",
+									"            \"duration\": 1",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_csv1\", getCsv(res));",
+									"    pm.globals.set(\"temp_id1\", res.json().id);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/educations',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            \"educationType\": \"type2\",",
+									"            \"provider\": \"provider2\",",
+									"            \"description\": \"desc2\",",
+									"            \"duration\": 3",
+									"            })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_csv2\", getCsv(res));",
+									"    pm.globals.set(\"temp_id2\", res.json().id);",
+									"});",
+									"",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "affdf55a-9462-4624-b262-86b61039a05b",
+								"type": "text/javascript",
+								"exec": [
+									"var header = \"educationType,provider,description,duration\";",
+									"",
+									"pm.test(\"Has the two Educations\", function () {",
+									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"temp_csv1\"));",
+									"    pm.expect(pm.response.text()).to.include(pm.globals.get(\"temp_csv2\"));",
+									"});",
+									"",
+									"removeEducation(pm.globals.get(\"temp_id1\"));",
+									"removeEducation(pm.globals.get(\"temp_id2\"));",
+									"pm.globals.unset(\"temp_csv1\");",
+									"pm.globals.unset(\"temp_id1\");",
+									"pm.globals.unset(\"temp_csv2\");",
+									"pm.globals.unset(\"temp_id2\");",
+									"",
+									"function removeEducation(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/educations/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/download/education",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"download",
+								"education"
+							]
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -3129,7 +4147,7 @@
 		},
 		{
 			"name": "Verify",
-			"description": "",
+			"description": null,
 			"item": []
 		}
 	],
