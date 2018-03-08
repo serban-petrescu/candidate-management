@@ -216,51 +216,39 @@ export default class HomeScreen extends React.Component {
 }
 
     resetIconName(e){
-        this.resetIcons('name');
+        let currentState = this.state;
+        currentState.labels.name=defaultLabels.name;
+        currentState.icons.name=defaultIcons.name;
+        this.setState(currentState);
     }
     resetIconPhone(e){
-        this.resetIcons('phone');
+        let currentState = this.state;
+        currentState.labels.phone=defaultLabels.phone;
+        currentState.icons.phone=defaultIcons.phone;
+        this.setState(currentState);
     }
     resetIconUniversity(e){
-        this.resetIcons('university');
+        let currentState = this.state;
+        currentState.labels.university=defaultLabels.university;
+        currentState.icons.university=defaultIcons.university;
+        this.setState(currentState);
     }
     resetIconFaculty(e){
-        this.resetIcons('faculty');
+        let currentState = this.state;
+        currentState.labels.faculty=defaultLabels.faculty;
+        currentState.icons.faculty=defaultIcons.faculty;
+        this.setState(currentState);
     }
     resetIconEmail(e){
-        this.resetIcons('email');
+        let currentState = this.state;
+        currentState.labels.email=defaultLabels.email;
+        currentState.icons.email=defaultIcons.email;
+        this.setState(currentState);
     }
     resetIconStudyYear(e){
-        this.resetIcons('studyYear');
-    }
-    resetIcons(e){
         let currentState = this.state;
-        switch(e){
-            case 'name':
-            currentState.labels.name=defaultLabels.name;
-            currentState.icons.name=defaultIcons.name;
-            break;
-            case 'phone':
-            currentState.labels.phone=defaultLabels.phone;
-            currentState.icons.phone=defaultIcons.phone;
-            break;
-            case 'email':
-            currentState.labels.email=defaultLabels.email;
-            currentState.icons.email=defaultIcons.email;
-            break;
-            case 'university':
-            currentState.labels.university=defaultLabels.university;
-            currentState.icons.university=defaultIcons.university;
-            break;
-            case 'faculty':
-            currentState.labels.faculty=defaultLabels.faculty;
-            currentState.icons.faculty=defaultIcons.faculty;
-            break;
-            case 'studyYear':
-            currentState.labels.studyYear=defaultLabels.studyYear;
-            currentState.icons.studyYear=defaultIcons.studyYear;
-            break;
-        }
+        currentState.labels.studyYear=defaultLabels.studyYear;
+        currentState.icons.studyYear=defaultIcons.studyYear;
         this.setState(currentState);
     }
 
@@ -364,10 +352,24 @@ export default class HomeScreen extends React.Component {
         this.setState(currentState);
     };
 
+    resetFields(){
+        this.setState({
+            name:'',
+            email: '',
+            phone: '',
+            university:'',
+            faculty:'',
+            studyYear:'',
+        });
+    }
     componentDidMount() {
+
         AsyncStorage.getItem(CANDIDATE_STORAGE)
             .then(req => JSON.parse(req))
             .then(json => this.setState({candidates:json})
         ).done();
+        this.resetFields();
+        alert('compon');
     }
+
 }

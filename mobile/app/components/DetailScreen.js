@@ -33,17 +33,7 @@ class DetailScreen extends Component {
     constructor(props) {
         super(props);
         const { params } = this.props.navigation.state;
-        const candidates = params ? params.candidates : null;
-        // const candidates = [{
-        //     name: '',
-        //     email: '',
-        //     phone: ''
-        // }];
-
-        this.state = {
-          // data:[{name: candidate.name,email:candidate.email,phone:candidate.phone},{name: 'AAAA',email:'yahoo.com',phone:'0909'}]
-            data:params.candidates
-        };
+        this.state = {data:params.candidates};
     }
     backToForm = () => {
         this.props.navigation.goBack();
