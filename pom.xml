@@ -46,6 +46,7 @@
         <frontend-plugin-version>1.5</frontend-plugin-version>
         <jar-plugin-version>3.0.2</jar-plugin-version>
         <dependency-plugin-version>3.0.1</dependency-plugin-version>
+        <exec-maven-version>1.4.0</exec-maven-version>
     </properties>
 
     <!-- Project dependencies -->
@@ -118,13 +119,6 @@
         <!-- Plugins configuration -->
         <pluginManagement>
             <plugins>
-                <!-- Spring Boot plugin configuration -->
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-version}</version>
-                </plugin>
-
                 <!-- Frontend plugin configuration -->
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
@@ -144,12 +138,22 @@
                             </configuration>
                         </execution>
 
-                        <!-- Install dependencies with Yarn -->
+                        <!-- Install dependencies with yarn -->
                         <execution>
                             <id>yarn install</id>
                             <goals>
                                 <goal>yarn</goal>
                             </goals>
+                        </execution>
+
+                        <execution>
+                            <id>yarn add</id>
+                            <goals>
+                                <goal>yarn</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>add newman</arguments>
+                            </configuration>
                         </execution>
 
                         <!-- Run build with Yarn -->
@@ -163,6 +167,7 @@
                                 <arguments>run build</arguments>
                             </configuration>
                         </execution>
+
                     </executions>
                 </plugin>
 
