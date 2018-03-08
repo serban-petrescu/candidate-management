@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.univocity.parsers.annotations.Parsed;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ro.msg.cm.types.CandidateCheck;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -40,6 +41,8 @@ public class Candidate {
 	@Parsed
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfAdding;
+	@Enumerated(EnumType.STRING)
+	private CandidateCheck checkCandidate;
 
 	@Transient
 	private int currentStudyYear;
