@@ -1,14 +1,13 @@
 {
 	"info": {
 		"name": "Candidate Management Tests",
-		"_postman_id": "7bf2d821-57f7-42d0-a46e-d96f9ef78883",
+		"_postman_id": "2fb15e8d-bd47-6fff-3517-ac7b49c6707e",
 		"description": "This collection contains all of the rest points' tests of our app.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Candidate (Validated)",
-			"description": null,
 			"item": [
 				{
 					"name": "Find a Candidate - With checkCandidate set as \"VALIDATED\"",
@@ -178,8 +177,7 @@
 								"candidates",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -328,13 +326,12 @@
 								"candidate-validation",
 								"valid"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create a candidate - with a null candidate copy",
+					"name": "Create a candidate - with a null candidate",
 					"event": [
 						{
 							"listen": "test",
@@ -593,8 +590,7 @@
 								"candidates",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -696,8 +692,7 @@
 								"candidates",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -778,8 +773,7 @@
 								"candidates",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				}
@@ -787,7 +781,6 @@
 		},
 		{
 			"name": "Candidate (Not Yet Validated)",
-			"description": null,
 			"item": [
 				{
 					"name": "Find a Candidate - With checkCandidate set as \"VALIDATED\"",
@@ -957,8 +950,7 @@
 								"candidates",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -1107,8 +1099,7 @@
 								"candidate-validation",
 								"non-valid"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -1375,8 +1366,7 @@
 								"candidates",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -1484,8 +1474,7 @@
 								"candidates",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -1566,8 +1555,7 @@
 								"candidates",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				}
@@ -1576,38 +1564,902 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "40ec9af8-e34c-49c8-8218-16b924922625",
-						"type": "text/javascript",
 						"exec": [
 							""
-						]
+						],
+						"id": "40ec9af8-e34c-49c8-8218-16b924922625",
+						"type": "text/javascript"
 					}
 				},
 				{
 					"listen": "test",
 					"script": {
-						"id": "2edc3781-f9a9-48e9-81b3-d3062c2bb953",
-						"type": "text/javascript",
 						"exec": [
 							""
-						]
+						],
+						"id": "2edc3781-f9a9-48e9-81b3-d3062c2bb953",
+						"type": "text/javascript"
 					}
 				}
 			]
 		},
 		{
 			"name": "CandidateSkills",
-			"description": null,
-			"item": []
+			"item": [
+				{
+					"name": "Find a CandidateSkills - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9bfc98be-029e-4128-ba59-66e78a6301c5",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateSkillses',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"\t        \"status\":\"status\", ",
+									"\t        \"note\":\"note\",",
+									"            \"date\": \"1947-12-23\"",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e7fee7c7-94dd-4bb3-8e8e-52c4d4c4e23e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"removeCandidateSkills(pm.globals.get(\"temp_id\"));",
+									"pm.globals.unset(\"temp_id\");",
+									"",
+									"function removeCandidateSkills(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/candidateSkillses/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkillses/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkillses",
+								"{{temp_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find all CandidateSkills - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d70c9eaf-9427-4b82-b7e3-1f8b62707c1c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateSkillses',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"\t        \"status\":\"status\", ",
+									"\t        \"note\":\"note\",",
+									"            \"date\": \"1947-12-23\"",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id1\", res.json().id);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateSkillses',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"\t        \"status\":\"status\", ",
+									"\t        \"note\":\"note\",",
+									"            \"date\": \"1947-12-23\"",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id2\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "46716161-89ec-4b3e-9d74-552f15edfee1",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var id1 = pm.globals.get(\"temp_id1\");",
+									"var id2 = pm.globals.get(\"temp_id2\");",
+									"pm.globals.unset(\"temp_id1\");",
+									"pm.globals.unset(\"temp_id2\");",
+									"",
+									"pm.test(\"It found the two inserted candidateSkillses\",function(){",
+									"    var existId1,existId2;",
+									"    var candidateSkills = pm.response.json()._embedded.candidateSkillses;",
+									"    for(i=candidateSkills.length-1;i>=0;i--){",
+									"        if(candidateSkills[i].id === id1){",
+									"            existId1 = true;",
+									"            ",
+									"        }",
+									"        if(candidateSkills[i].id === id2){",
+									"            existId2 = true;",
+									"            ",
+									"        }",
+									"        if(existId1 && existId2){",
+									"            break;",
+									"        }",
+									"    }",
+									"    removeCandidateSkills(id1);",
+									"    removeCandidateSkills(id2);",
+									"    pm.expect(existId1).to.eql(true);",
+									"    pm.expect(existId2).to.eql(true);",
+									"});",
+									"",
+									"",
+									"function removeCandidateSkills(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/candidateSkillses/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkillses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkillses",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create a CandidateSkills - normal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f9f87a3b-f66e-4749-9b49-f656db67eac9",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"removeCandidateSkills(pm.response.json().id);",
+									"",
+									"function removeCandidateSkills(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/candidateSkillses/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkillses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkillses",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a CandidateSkills - normal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "166f78ae-cfec-44df-aad9-ef8a797b16f9",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var id=pm.globals.get(\"temp_id\");",
+									"pm.globals.unset(\"temp_id\");",
+									"removeCandidateSkills(id);",
+									"",
+									"pm.test(\"EducationType is changed\",function(){",
+									"    pm.expect(pm.response.json().status).to.eql(\"newStatus\");",
+									"});",
+									"",
+									"pm.test(\"Provider is changed\",function(){",
+									"    pm.expect(pm.response.json().note).to.eql(\"NewNote\");",
+									"});",
+									"",
+									"pm.test(\"Description is changed\",function(){",
+									"    pm.expect(pm.response.json().date).to.eql(\"1996-12-23\");",
+									"});",
+									"",
+									"function removeCandidateSkills(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/candidateSkillses/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "25662266-1524-4e8b-8121-129847ba4361",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateSkillses',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"\t        \"status\":\"status\", ",
+									"\t        \"note\":\"note\",",
+									"            \"date\": \"1947-12-23\"",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\":\"newStatus\", \n\t\"note\":\"NewNote\",\n    \"date\": \"1996-12-23\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkillses/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkillses",
+								"{{temp_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a CandidateSkills - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7a777331-d7c8-4b4d-a7fe-5e08fd2381ec",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateNoteses',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"\t        \"status\":\"status\", ",
+									"\t        \"note\":\"note\",",
+									"            \"date\": \"1947-12-23\"",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d6247c2c-0c66-4382-b24f-d98c9405dec3",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateSkillses/' + pm.globals.get(\"temp_id\"),",
+									"    method: 'GET'",
+									"}, function (err, res) {",
+									"    pm.test(\"Trying to find it returns the status 404\", function () {",
+									"        pm.expect(res.code).to.eql(404);",
+									"    });",
+									"});",
+									"",
+									"pm.globals.unset(\"temp_id\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkillses/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkillses",
+								"{{temp_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "CandidateNotes",
-			"description": null,
-			"item": []
+			"description": "",
+			"item": [
+				{
+					"name": "Find a CandidateNotes - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2fa08d8d-70ec-40b4-a195-aa686f0be13e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateNoteses',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"\t        \"status\":\"status\", ",
+									"\t        \"note\":\"note\",",
+									"            \"date\": \"1947-12-23\"",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "7620cbf4-ee44-41cf-8407-153ea04e37b1",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"removeCandidateNotes(pm.globals.get(\"temp_id\"));",
+									"pm.globals.unset(\"temp_id\");",
+									"",
+									"function removeCandidateNotes(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/candidateNoteses/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNoteses/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNoteses",
+								"{{temp_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find all CandidateNotes - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2f6d1b18-2ecf-4940-a10d-a90e28e1db3e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateNoteses',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"\t        \"status\":\"status\", ",
+									"\t        \"note\":\"note\",",
+									"            \"date\": \"1947-12-23\"",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id1\", res.json().id);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateNoteses',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"\t        \"status\":\"status\", ",
+									"\t        \"note\":\"note\",",
+									"            \"date\": \"1947-12-23\"",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id2\", res.json().id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "49867ea9-0724-47ce-b930-9dcedf5fb3c3",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var id1 = pm.globals.get(\"temp_id1\");",
+									"var id2 = pm.globals.get(\"temp_id2\");",
+									"pm.globals.unset(\"temp_id1\");",
+									"pm.globals.unset(\"temp_id2\");",
+									"",
+									"pm.test(\"It found the two inserted candidateNotes\",function(){",
+									"    var existId1,existId2;",
+									"    var candidateNotes = pm.response.json()._embedded.candidateNoteses;",
+									"    for(i=candidateNotes.length-1;i>=0;i--){",
+									"        if(candidateNotes[i].id === id1){",
+									"            existId1 = true;",
+									"            ",
+									"        }",
+									"        if(candidateNotes[i].id === id2){",
+									"            existId2 = true;",
+									"            ",
+									"        }",
+									"        if(existId1 && existId2){",
+									"            break;",
+									"        }",
+									"    }",
+									"    removeCandidateNotes(id1);",
+									"    removeCandidateNotes(id2);",
+									"    pm.expect(existId1).to.eql(true);",
+									"    pm.expect(existId2).to.eql(true);",
+									"});",
+									"",
+									"",
+									"function removeCandidateNotes(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/candidateNoteses/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"lala\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNoteses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNoteses",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create a CandidateNotes - normal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8734a4d3-c6e4-4cd0-bdb7-8b59122b6330",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"removeCandidateNotes(pm.response.json().id);",
+									"",
+									"function removeCandidateNotes(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/candidateNoteses/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNoteses/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNoteses",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a CandidateNotes - normal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1805cdf3-48d1-4a5b-b965-bacd972d731c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var id=pm.globals.get(\"temp_id\");",
+									"pm.globals.unset(\"temp_id\");",
+									"removeCandidateNotes(id);",
+									"",
+									"pm.test(\"EducationType is changed\",function(){",
+									"    pm.expect(pm.response.json().status).to.eql(\"newStatus\");",
+									"});",
+									"",
+									"pm.test(\"Provider is changed\",function(){",
+									"    pm.expect(pm.response.json().note).to.eql(\"NewNote\");",
+									"});",
+									"",
+									"pm.test(\"Description is changed\",function(){",
+									"    pm.expect(pm.response.json().date).to.eql(\"1996-12-23\");",
+									"});",
+									"",
+									"function removeCandidateNotes(id){",
+									"    pm.sendRequest({",
+									"        url: 'http://localhost:8080/api/candidateNoteses/'+id,",
+									"        method: 'DELETE'",
+									"        }, function (err, res) {",
+									"    ",
+									"    });",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f7302470-8451-4284-aafb-3dabdf2fccf3",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateNoteses',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"\t        \"status\":\"status\", ",
+									"\t        \"note\":\"note\",",
+									"            \"date\": \"1947-12-23\"",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\":\"newStatus\", \n\t\"note\":\"NewNote\",\n    \"date\": \"1996-12-23\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNoteses/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNoteses",
+								"{{temp_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a CandidateNotes - normal",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateNoteses',",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"\t        \"status\":\"status\", ",
+									"\t        \"note\":\"note\",",
+									"            \"date\": \"1947-12-23\"",
+									"        })",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.globals.set(\"temp_id\", res.json().id);",
+									"});"
+								],
+								"id": "7a777331-d7c8-4b4d-a7fe-5e08fd2381ec",
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://localhost:8080/api/candidateNoteses/' + pm.globals.get(\"temp_id\"),",
+									"    method: 'GET'",
+									"}, function (err, res) {",
+									"    pm.test(\"Trying to find it returns the status 404\", function () {",
+									"        pm.expect(res.code).to.eql(404);",
+									"    });",
+									"});",
+									"",
+									"pm.globals.unset(\"temp_id\");"
+								],
+								"id": "1cbc214e-a6c1-4764-8454-684bf02af6a2",
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNoteses/{{temp_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNoteses",
+								"{{temp_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Education",
-			"description": null,
 			"item": [
 				{
 					"name": "Find an Education - normal",
@@ -1686,8 +2538,7 @@
 								"educations",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -1811,8 +2662,7 @@
 								"educations",
 								""
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -1867,8 +2717,7 @@
 								"educations",
 								""
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -1966,8 +2815,7 @@
 								"educations",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -2047,8 +2895,7 @@
 								"educations",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				}
@@ -2056,7 +2903,6 @@
 		},
 		{
 			"name": "Tag",
-			"description": null,
 			"item": [
 				{
 					"name": "Find a Tag - normal",
@@ -2133,8 +2979,7 @@
 								"tags",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -2254,8 +3099,7 @@
 								"tags",
 								""
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -2310,8 +3154,7 @@
 								"tags",
 								""
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -2399,8 +3242,7 @@
 								"tags",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -2478,8 +3320,7 @@
 								"tags",
 								"{{temp_id}}"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				}
@@ -2487,7 +3328,6 @@
 		},
 		{
 			"name": "Import",
-			"description": null,
 			"item": [
 				{
 					"name": "Import Candidates from CSV - normal",
@@ -2564,8 +3404,7 @@
 								"import",
 								"candidate"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -2634,8 +3473,7 @@
 								"import",
 								"tag"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -2708,8 +3546,7 @@
 								"import",
 								"education"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				}
@@ -2717,7 +3554,6 @@
 		},
 		{
 			"name": "Validation",
-			"description": null,
 			"item": [
 				{
 					"name": "Validate Candidate - Validable",
@@ -3757,7 +4593,6 @@
 		},
 		{
 			"name": "Download",
-			"description": null,
 			"item": [
 				{
 					"name": "Download Candiates as a CSV - normal",
@@ -3914,8 +4749,7 @@
 								"download",
 								"list"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -4029,8 +4863,7 @@
 								"download",
 								"tag"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				},
@@ -4138,8 +4971,7 @@
 								"download",
 								"education"
 							]
-						},
-						"description": null
+						}
 					},
 					"response": []
 				}
@@ -4147,7 +4979,6 @@
 		},
 		{
 			"name": "Verify",
-			"description": null,
 			"item": []
 		}
 	],
@@ -4155,21 +4986,21 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "dfc59610-5ef2-4f3c-ba7e-bbe9a787458c",
-				"type": "text/javascript",
 				"exec": [
 					""
-				]
+				],
+				"id": "dfc59610-5ef2-4f3c-ba7e-bbe9a787458c",
+				"type": "text/javascript"
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "f3e782c6-36c1-4937-ad43-7167202bd04d",
-				"type": "text/javascript",
 				"exec": [
 					""
-				]
+				],
+				"id": "f3e782c6-36c1-4937-ad43-7167202bd04d",
+				"type": "text/javascript"
 			}
 		}
 	]
