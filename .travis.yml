@@ -3,7 +3,8 @@ jdk: oraclejdk8
 services:
   - mysql
 before_install:
-  - mysql -u root --password="" < cm-server/src/main/scripts/travis.sql
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS candidate_management;'
+  - mysql -e 'GRANT ALL PRIVILEGES ON candidate_management.* To 'dev_user'@'localhost' IDENTIFIED BY 'letmein';'
 script:
   - mvn clean install
 cache:
