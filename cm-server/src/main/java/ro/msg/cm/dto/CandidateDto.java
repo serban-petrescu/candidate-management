@@ -1,7 +1,10 @@
 package ro.msg.cm.dto;
 
 import lombok.Data;
+import ro.msg.cm.exception.PatchCandidateInvalidValueException;
 import ro.msg.cm.types.CandidateCheck;
+import ro.msg.cm.validator.EmailValidate;
+import ro.msg.cm.validator.EmailValidateImpl;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -42,6 +45,12 @@ public class CandidateDto {
     }
 
     public void setEmail(String email) {
+        EmailValidate emailValidate = new EmailValidateImpl();
+
+        if (!emailValidate.isValid(email)) {
+            throw new PatchCandidateInvalidValueException();
+        }
+
         this.email = email;
         changedAttributes.put("email", email);
     }
