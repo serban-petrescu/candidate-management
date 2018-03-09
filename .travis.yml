@@ -3,7 +3,7 @@ jdk: oraclejdk8
 services:
   - mysql
 before_install:
-  - mysql -u root --password="" < test/travis.sql
+  - mysql -u root --password="" < cm-server/src/main/scripts/travis.sql
 script:
   - mvn clean install
 cache:
