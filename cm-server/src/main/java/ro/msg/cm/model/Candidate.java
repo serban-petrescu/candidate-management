@@ -88,7 +88,7 @@ public class Candidate {
     public void setEmail(String email) {
         EmailValidate emailValidate = new EmailValidateImpl();
 
-        if (!emailValidate.isValid(email)) {
+        if (email != null && !emailValidate.isValid(email)) {
             throw new PatchCandidateInvalidValueException();
         }
 

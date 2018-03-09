@@ -5,6 +5,10 @@ import org.springframework.util.StringUtils;
 public class EmailValidateImpl implements EmailValidate {
 
     public boolean isValid(String email) {
+        if (StringUtils.isEmpty(email)) {
+            return false;
+        }
+
         if (StringUtils.containsWhitespace(email)) {
             return false;
         }
