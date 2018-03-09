@@ -70,9 +70,7 @@ const defaultIcons= {
     studyYear: 'book',
 };
 
-const correctIcon='check';
 const incorrectIcon='remove';
-const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default class HomeScreen extends React.Component {
     constructor(props) {
@@ -120,7 +118,7 @@ export default class HomeScreen extends React.Component {
         this.setState({
             candidates: [...this.state.candidates, candidate]
         });
-
+        this.resetFields();
         AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(this.state.candidates),
             () => {this.props.navigation.navigate('Detail',{candidates:this.state.candidates});});
 
@@ -215,105 +213,69 @@ export default class HomeScreen extends React.Component {
 );
 }
 
-    resetIconName(e){
+    resetIcon(label){
         let currentState = this.state;
-        currentState.labels.name=defaultLabels.name;
-        currentState.icons.name=defaultIcons.name;
+        currentState.labels[label]=defaultLabels[label];
+        currentState.icons[label]=defaultIcons[label];
         this.setState(currentState);
+    }
+    resetIconName(e){
+        this.resetIcon('name');
     }
     resetIconPhone(e){
-        let currentState = this.state;
-        currentState.labels.phone=defaultLabels.phone;
-        currentState.icons.phone=defaultIcons.phone;
-        this.setState(currentState);
+        this.resetIcon('phone');
     }
     resetIconUniversity(e){
-        let currentState = this.state;
-        currentState.labels.university=defaultLabels.university;
-        currentState.icons.university=defaultIcons.university;
-        this.setState(currentState);
+        this.resetIcon('university');
     }
     resetIconFaculty(e){
-        let currentState = this.state;
-        currentState.labels.faculty=defaultLabels.faculty;
-        currentState.icons.faculty=defaultIcons.faculty;
-        this.setState(currentState);
+        this.resetIcon('faculty');
     }
     resetIconEmail(e){
-        let currentState = this.state;
-        currentState.labels.email=defaultLabels.email;
-        currentState.icons.email=defaultIcons.email;
-        this.setState(currentState);
+        this.resetIcon('email');
     }
     resetIconStudyYear(e){
+        this.resetIcon('studyYear');
+    }
+
+    isFilled(input,label){
         let currentState = this.state;
-        currentState.labels.studyYear=defaultLabels.studyYear;
-        currentState.icons.studyYear=defaultIcons.studyYear;
+        if(input.length===0)
+        {   currentState.labels[label] = defaultLabels[label] + errorLabels.empty;
+            currentState.icons[label] = incorrectIcon;
+        }
+        else {
+            currentState[label]=input;
+            currentState.labels[label] = defaultLabels[label];
+            currentState.icons[label] = defaultIcons[label];
+        }
         this.setState(currentState);
+
     }
 
     checkName(e) {
-
-        let currentState = this.state;
-        const name = e.nativeEvent.text;
-        if(name.length===0)
-        {   currentState.labels.name = defaultLabels.name + errorLabels.empty;
-            currentState.icons.name = incorrectIcon;
-        }
-        else {
-            currentState.name=name;
-            currentState.labels.name = defaultLabels.name;
-            currentState.icons.name = defaultIcons.name;
-        }
-        this.setState(currentState);
+        const input = e.nativeEvent.text;
+        const label='name';
+        this.isFilled(input,label);
     }
 
     checkUniversity(e) {
-
-        let currentState = this.state;
-        const university = e.nativeEvent.text;
-        if(university.length===0)
-        {   currentState.labels.university = defaultLabels.university + errorLabels.empty;
-            currentState.icons.university = incorrectIcon;
-        }
-        else {
-            currentState.university=university;
-            currentState.labels.university = defaultLabels.university;
-            currentState.icons.university = defaultIcons.university;
-        }
-        this.setState(currentState);
+        const input = e.nativeEvent.text;
+        const label='university';
+        this.isFilled(input,label);
     }
 
     checkFaculty(e) {
-
-        let currentState = this.state;
-        const faculty = e.nativeEvent.text;
-        if(faculty.length===0)
-        {   currentState.labels.faculty = defaultLabels.faculty + errorLabels.empty;
-            currentState.icons.faculty = incorrectIcon;
-        }
-        else {
-            currentState.faculty=faculty;
-            currentState.labels.faculty = defaultLabels.faculty;
-            currentState.icons.faculty = defaultIcons.faculty;
-        }
-        this.setState(currentState);
+        const input = e.nativeEvent.text;
+        const label='faculty';
+        this.isFilled(input,label);
     }
 
     checkStudyYear(e) {
+        const input = e.nativeEvent.text;
+        const label='studyYear';
+        this.isFilled(input,label);
 
-        let currentState = this.state;
-        const studyYear = e.nativeEvent.text;
-        if(studyYear.length===0)
-        {   currentState.labels.studyYear = defaultLabels.studyYear + errorLabels.empty;
-            currentState.icons.studyYear = incorrectIcon;
-        }
-        else {
-            currentState.studyYear=studyYear;
-            currentState.labels.studyYear = defaultLabels.faculty;
-            currentState.icons.studyYear = defaultIcons.faculty;
-        }
-        this.setState(currentState);
     }
 
     checkEmail = (e) => {
@@ -332,7 +294,7 @@ export default class HomeScreen extends React.Component {
         }
         currentState.email=emailAddress;
         this.setState(currentState);
-    }
+    };
 
     checkPhone = (e) => {
         const phone = e.nativeEvent.text;
@@ -368,8 +330,8 @@ export default class HomeScreen extends React.Component {
             .then(req => JSON.parse(req))
             .then(json => this.setState({candidates:json})
         ).done();
-        this.resetFields();
-        alert('compon');
+        //this.resetFields();
+        //alert('compon');
     }
 
 }
