@@ -319,7 +319,10 @@ export default class HomeScreen extends React.Component {
         const emailAddress = e.nativeEvent.text;
         let currentState =this.state;
         // language=JSRegexp
-        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        //const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        // language=JSRegexp
+        const regex = /^[a-zA-Z0-9_+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$/;
+
         let regexCheckResult = regex.test(emailAddress);
 
         if(regexCheckResult){
@@ -369,7 +372,6 @@ export default class HomeScreen extends React.Component {
             .then(json => this.setState({candidates:json})
         ).done();
         this.resetFields();
-        alert('compon');
     }
 
 }
