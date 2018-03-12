@@ -3,12 +3,15 @@ package ro.msg.cm.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.CandidateSkills;
 import ro.msg.cm.model.CandidateSkillsJson;
+import ro.msg.cm.model.Tag;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.repository.CandidateSkillsRepository;
 import ro.msg.cm.repository.TagRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,5 +78,26 @@ public class CandidateSkillsController {
         candidateSkills.setCertifier(candidateSkillsJson.getCertifier());
         candidateSkills.setRating(candidateSkillsJson.getRating());
         return candidateSkills;
+    }
+
+    @GetMapping("/{id}/tag")
+    public Tag getCandidateSkillsTag(@PathVariable long id) {
+        CandidateSkills candidateSkills = candidateSkillsRepository.findOne(id);
+        if (candidateSkills != null) {
+            return candidateSkills.getTag();
+        } else {
+            throw new EntityNotFoundException();
+        }
+
+    }
+
+    @GetMapping("/{id}/candidate")
+    public Candidate getCandidateSkillsCandidate(@PathVariable long id) {
+        CandidateSkills candidateSkills = candidateSkillsRepository.findOne(id);
+        if (candidateSkills != null) {
+            return candidateSkills.getCandidate();
+        } else {
+            throw new EntityNotFoundException();
+        }
     }
 }
