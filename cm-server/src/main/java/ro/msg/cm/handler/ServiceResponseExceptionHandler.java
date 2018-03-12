@@ -55,7 +55,7 @@ public class ServiceResponseExceptionHandler extends ResponseEntityExceptionHand
         Map<String, String> output = new HashMap<>();
         output.put("message", "Sent candidate email or phone is not valid");
 
-        return handleExceptionInternal(ex, new Gson().toJson(output), HEADERS, HttpStatus.NOT_ACCEPTABLE, request);
+        return handleExceptionInternal(ex, new Gson().toJson(output), HEADERS, HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = ConstraintViolationException.class)
@@ -63,7 +63,7 @@ public class ServiceResponseExceptionHandler extends ResponseEntityExceptionHand
         Map<String, String> output = new HashMap<>();
         output.put("message", "Sent candidate email or phone is not valid");
 
-        return handleExceptionInternal(ex, new Gson().toJson(output), HEADERS, HttpStatus.NOT_ACCEPTABLE, request);
+        return handleExceptionInternal(ex, new Gson().toJson(output), HEADERS, HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = CannotCreateTransactionException.class)
