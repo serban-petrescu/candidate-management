@@ -20,34 +20,34 @@ public class CandidateController {
         this.candidateRepository = candidateRepository;
     }
 
-    @GetMapping("/get-all-validated-candidates")
+    @GetMapping("/multiple-validated")
     public Iterable<Candidate> getAllValidatedCandidates(){
         return candidateRepository.findAllByCheckCandidate(CandidateCheck.VALIDATED);
     }
 
-    @GetMapping("/get-all-candidates")
+    @GetMapping("/multiple")
     public Iterable<Candidate> getAllCandidates(){
         return candidateRepository.findAll();
     }
 
-    @GetMapping("/get-one-candidate/{id}")
+    @GetMapping("/{id}")
     public Candidate getOneCandidate(long id){
         return candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED);
     }
 
-    @PostMapping("/save-candidate")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Candidate saveCandidate(@RequestBody Candidate candidate){
         return candidateRepository.save(candidate);
     }
 
-    @PostMapping("/save-candidates")
+    @PostMapping("/multiple")
     @ResponseStatus(HttpStatus.CREATED)
     public Iterable<Candidate> saveCandidates(@RequestBody List<Candidate> candidates){
         return candidateRepository.save(candidates);
     }
 
-    @DeleteMapping("/delete-candidate/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCandidateWithId(@PathVariable Long id){
         candidateRepository.delete(id);
