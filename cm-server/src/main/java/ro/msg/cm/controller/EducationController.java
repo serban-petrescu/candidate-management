@@ -1,6 +1,7 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.model.Education;
 import ro.msg.cm.repository.EducationRepository;
@@ -29,11 +30,13 @@ public class EducationController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Education postEducation(@RequestBody Education education) {
         return educationRepository.save(education);
     }
 
     @PostMapping("/multiple")
+    @ResponseStatus(HttpStatus.CREATED)
     public Iterable<Education> postEducationList(@RequestBody List<Education> educationList) {
         return educationRepository.save(educationList);
     }
@@ -45,6 +48,7 @@ public class EducationController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEducation(@PathVariable long id) {
         educationRepository.delete(id);
     }
