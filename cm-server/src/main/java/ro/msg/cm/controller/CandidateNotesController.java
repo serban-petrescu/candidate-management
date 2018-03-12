@@ -1,6 +1,7 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.model.CandidateNotes;
 import ro.msg.cm.repository.CandidateNotesRepository;
@@ -29,11 +30,13 @@ public class CandidateNotesController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CandidateNotes postCandidateNotes(@RequestBody CandidateNotes candidateNotes) {
         return candidateNotesRepository.save(candidateNotes);
     }
 
     @PostMapping("/multiple")
+    @ResponseStatus(HttpStatus.CREATED)
     public Iterable<CandidateNotes> postCandidateNotesList(@RequestBody List<CandidateNotes> candidateNotesList) {
         return candidateNotesRepository.save(candidateNotesList);
     }
@@ -45,6 +48,7 @@ public class CandidateNotesController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCandidateNotes(@PathVariable long id) {
         candidateNotesRepository.delete(id);
     }

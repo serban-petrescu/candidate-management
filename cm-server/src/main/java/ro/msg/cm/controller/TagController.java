@@ -1,6 +1,7 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.model.Tag;
 import ro.msg.cm.repository.TagRepository;
@@ -29,11 +30,13 @@ public class TagController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Tag postTag(@RequestBody Tag tag) {
         return tagRepository.save(tag);
     }
 
     @PostMapping("/multiple")
+    @ResponseStatus(HttpStatus.CREATED)
     public Iterable<Tag> postTagList(@RequestBody List<Tag> tagList) {
         return tagRepository.save(tagList);
     }
@@ -45,6 +48,7 @@ public class TagController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTag(@PathVariable long id) {
         tagRepository.delete(id);
     }

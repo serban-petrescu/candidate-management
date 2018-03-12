@@ -1,6 +1,7 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.repository.CandidateRepository;
@@ -35,16 +36,19 @@ public class CandidateController {
     }
 
     @PostMapping("/save-candidate")
+    @ResponseStatus(HttpStatus.CREATED)
     public Candidate saveCandidate(@RequestBody Candidate candidate){
         return candidateRepository.save(candidate);
     }
 
     @PostMapping("/save-candidates")
+    @ResponseStatus(HttpStatus.CREATED)
     public Iterable<Candidate> saveCandidates(@RequestBody List<Candidate> candidates){
         return candidateRepository.save(candidates);
     }
 
     @DeleteMapping("/delete-candidate/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCandidateWithId(@PathVariable Long id){
         candidateRepository.delete(id);
     }
