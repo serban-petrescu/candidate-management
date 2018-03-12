@@ -1,6 +1,7 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.model.CandidateSkills;
 import ro.msg.cm.model.CandidateSkillsJson;
@@ -38,11 +39,13 @@ public class CandidateSkillsController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CandidateSkillsJson postCandidateSkills(@RequestBody CandidateSkillsJson candidateSkillsJson) {
         return new CandidateSkillsJson(candidateSkillsRepository.save(getCandidateSkillsFromCandidateSkillsJson(candidateSkillsJson)));
     }
 
     @PostMapping("/multiple")
+    @ResponseStatus(HttpStatus.CREATED)
     public Iterable<CandidateSkillsJson> postCandidateSkillsList(@RequestBody List<CandidateSkillsJson> candidateSkillsJsonList) {
         Iterable<CandidateSkills> saved = candidateSkillsRepository.save(candidateSkillsJsonList.stream().map(this::getCandidateSkillsFromCandidateSkillsJson).collect(Collectors.toList()));
         List<CandidateSkillsJson> newCandidateSkillsJsonList = new ArrayList<>();
@@ -59,6 +62,7 @@ public class CandidateSkillsController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCandidateSkills(@PathVariable long id) {
         candidateSkillsRepository.delete(id);
     }
