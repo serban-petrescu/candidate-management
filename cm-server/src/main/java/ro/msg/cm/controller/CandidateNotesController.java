@@ -3,9 +3,11 @@ package ro.msg.cm.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.CandidateNotes;
 import ro.msg.cm.repository.CandidateNotesRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -51,5 +53,16 @@ public class CandidateNotesController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCandidateNotes(@PathVariable long id) {
         candidateNotesRepository.delete(id);
+    }
+
+
+    @GetMapping("/{id}/candidate")
+    public Candidate getCandidateNotesCandidate(@PathVariable long id) {
+        CandidateNotes candidateNotes = candidateNotesRepository.findOne(id);
+        if (candidateNotes != null) {
+            return candidateNotes.getCandidate();
+        } else {
+            throw new EntityNotFoundException();
+        }
     }
 }
