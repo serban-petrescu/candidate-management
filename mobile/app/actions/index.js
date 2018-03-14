@@ -1,4 +1,4 @@
-import {addCandidate as insertCandidate} from '../utils/api';
+import {addCandidate as insertCandidate} from '../../utils/api';
 
 export const ADD_CANDIDATE = 'ADD_CANDIDATE';
 export const ROOT_URL = "http://localhost";
