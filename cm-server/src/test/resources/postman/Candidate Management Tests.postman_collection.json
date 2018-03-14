@@ -2548,7 +2548,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d2edfec8-9385-4cef-969b-9ceda1b7ef34",
+								"id": "60f187e9-02d8-4550-96d0-e4b2e33217d0",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 204\", function () {",
@@ -2556,7 +2556,7 @@
 									"});",
 									"",
 									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/candidateSkillses/' + pm.globals.get(\"temp_id\"),",
+									"    url: 'http://localhost:8080/api/candidateSkills/' + pm.globals.get(\"temp_id\"),",
 									"    method: 'GET'",
 									"}, function (err, res) {",
 									"    pm.test(\"Trying to find it returns the status 404\", function () {",
