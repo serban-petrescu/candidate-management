@@ -1,50 +1,55 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.model.Education;
+import ro.msg.cm.processor.LinkMapper;
 import ro.msg.cm.repository.EducationRepository;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/education")
+@RequestMapping("/api/educations")
 public class EducationController {
 
     private final EducationRepository educationRepository;
+    private final LinkMapper linkMapper;
 
     @Autowired
-    public EducationController(EducationRepository educationRepository) {
+    public EducationController(EducationRepository educationRepository, LinkMapper linkMapper) {
         this.educationRepository = educationRepository;
+        this.linkMapper = linkMapper;
     }
 
     @GetMapping("/{id}")
-    public Education getEducation(@PathVariable long id) {
-        return educationRepository.findOne(id);
+    public Resource<Education> getEducation(@PathVariable long id) {
+        return linkMapper.educationToResource(educationRepository.findOne(id));
     }
 
     @GetMapping
-    public List<Education> getEducationList() {
-        return educationRepository.findAll();
+    public Resources<Resource<Education>> getEducationList() {
+        return linkMapper.educationListToResource(educationRepository.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Education postEducation(@RequestBody Education education) {
-        return educationRepository.save(education);
+    public Resource<Education> postEducation(@RequestBody Education education) {
+        return linkMapper.educationToResource(educationRepository.save(education));
     }
 
     @PostMapping("/multiple")
     @ResponseStatus(HttpStatus.CREATED)
-    public Iterable<Education> postEducationList(@RequestBody List<Education> educationList) {
-        return educationRepository.save(educationList);
+    public Resources<Resource<Education>> postEducationList(@RequestBody List<Education> educationList) {
+        return linkMapper.educationListToResource((List<Education>) educationRepository.save(educationList));
     }
 
     @PutMapping("/{id}")
-    public Education putEducation(@PathVariable long id, @RequestBody Education education) {
+    public Resource<Education> putEducation(@PathVariable long id, @RequestBody Education education) {
         education.setId(id);
-        return educationRepository.save(education);
+        return linkMapper.educationToResource(educationRepository.save(education));
     }
 
     @DeleteMapping("/{id}")

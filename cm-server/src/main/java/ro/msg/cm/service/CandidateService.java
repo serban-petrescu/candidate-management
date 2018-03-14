@@ -15,7 +15,9 @@ import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.types.CandidateCheck;
 import ro.msg.cm.types.DuplicateType;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j

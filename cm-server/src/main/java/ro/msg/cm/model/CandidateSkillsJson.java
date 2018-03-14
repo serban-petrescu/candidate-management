@@ -27,10 +27,16 @@ public class CandidateSkillsJson {
     }
 
     public CandidateSkillsJson(CandidateSkills candidateSkills) {
-        this.id = candidateSkills.getId();
-        this.candidateId = candidateSkills.getCandidate().getId();
-        this.tagId = candidateSkills.getTag().getId();
-        this.rating = candidateSkills.getRating();
-        this.certifier = candidateSkills.getCertifier();
+        if (candidateSkills != null) {
+            this.id = candidateSkills.getId();
+            this.rating = candidateSkills.getRating();
+            this.certifier = candidateSkills.getCertifier();
+            if (candidateSkills.getCandidate() != null) {
+                this.candidateId = candidateSkills.getCandidate().getId();
+            }
+            if (candidateSkills.getTag() != null) {
+                this.tagId = candidateSkills.getTag().getId();
+            }
+        }
     }
 }

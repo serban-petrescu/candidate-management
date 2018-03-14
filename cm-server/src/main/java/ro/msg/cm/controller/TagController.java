@@ -1,50 +1,55 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.model.Tag;
+import ro.msg.cm.processor.LinkMapper;
 import ro.msg.cm.repository.TagRepository;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tag")
+@RequestMapping("/api/tags")
 public class TagController {
 
     private final TagRepository tagRepository;
+    private final LinkMapper linkMapper;
 
     @Autowired
-    public TagController(TagRepository tagRepository) {
+    public TagController(TagRepository tagRepository, LinkMapper linkMapper) {
         this.tagRepository = tagRepository;
+        this.linkMapper = linkMapper;
     }
 
     @GetMapping("/{id}")
-    public Tag getTag(@PathVariable long id) {
-        return tagRepository.findOne(id);
+    public Resource<Tag> getTag(@PathVariable long id) {
+        return linkMapper.tagToResource(tagRepository.findOne(id));
     }
 
     @GetMapping
-    public List<Tag> getTagList() {
-        return tagRepository.findAll();
+    public Resources<Resource<Tag>> getTagList() {
+        return linkMapper.tagListToResource(tagRepository.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Tag postTag(@RequestBody Tag tag) {
-        return tagRepository.save(tag);
+    public Resource<Tag> postTag(@RequestBody Tag tag) {
+        return linkMapper.tagToResource(tagRepository.save(tag));
     }
 
     @PostMapping("/multiple")
     @ResponseStatus(HttpStatus.CREATED)
-    public Iterable<Tag> postTagList(@RequestBody List<Tag> tagList) {
-        return tagRepository.save(tagList);
+    public Resources<Resource<Tag>> postTagList(@RequestBody List<Tag> tagList) {
+        return linkMapper.tagListToResource((List<Tag>) tagRepository.save(tagList));
     }
 
     @PutMapping("/{id}")
-    public Tag putTag(@PathVariable long id, @RequestBody Tag tag) {
+    public Resource<Tag> putTag(@PathVariable long id, @RequestBody Tag tag) {
         tag.setId(id);
-        return tagRepository.save(tag);
+        return linkMapper.tagToResource(tagRepository.save(tag));
     }
 
     @DeleteMapping("/{id}")

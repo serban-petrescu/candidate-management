@@ -7,5 +7,5 @@ package ro.msg.cm.types;
  * ON_PHONE represents that the candidates have the same phone number
  */
 public enum DuplicateType {
-    ON_NAME,ON_EMAIL,ON_PHONE
+    ON_NAME, ON_EMAIL, ON_PHONE
 }

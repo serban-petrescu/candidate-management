@@ -25,7 +25,7 @@ public class DuplicateFinderService {
     /**
      * Method that returns the list of duplicates of every duplicate type on the given Candidate searching through all the candidate that are of the given status
      *
-     * @param id is the id of the original Candidate you compare to
+     * @param id             is the id of the original Candidate you compare to
      * @param candidateCheck is the status of the candidates you search the duplicates in
      * @return the list of duplicates on all of the duplicate types
      */
@@ -69,7 +69,8 @@ public class DuplicateFinderService {
                     return new Duplicate(original.getId(), candidateRepository.findAllByEmailAndCheckCandidateAndIdIsNot(original.getEmail(), candidateCheck, original.getId()).stream().map(Candidate::getId).collect(Collectors.toSet()), DuplicateType.ON_EMAIL);
                 case ON_PHONE:
                     return new Duplicate(original.getId(), candidateRepository.findAllByPhoneAndCheckCandidateAndIdIsNot(original.getPhone(), candidateCheck, original.getId()).stream().map(Candidate::getId).collect(Collectors.toSet()), DuplicateType.ON_PHONE);
-                default: break;
+                default:
+                    break;
             }
         }
         return null;
@@ -111,7 +112,8 @@ public class DuplicateFinderService {
                     return candidateRepository.countByEmailAndCheckCandidateAndIdIsNot(original.getEmail(), candidateCheck, original.getId());
                 case ON_PHONE:
                     return candidateRepository.countByPhoneAndCheckCandidateAndIdIsNot(original.getPhone(), candidateCheck, original.getId());
-                default: break;
+                default:
+                    break;
             }
         }
         return -1;

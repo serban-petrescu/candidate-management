@@ -93,7 +93,7 @@ public class ValidationServicePatchCandidateTest {
 
     @Test(expected = CandidateNotFoundException.class)
     public void patchCandidateOfNotExistingCandidateTest() {
-        validationService.patchCandidate(new CandidateDto(),2L);
+        validationService.patchCandidate(new CandidateDto(), 2L);
     }
 
     @Test(expected = CandidateNotFoundException.class)

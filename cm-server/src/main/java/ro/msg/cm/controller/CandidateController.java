@@ -34,7 +34,6 @@ public class CandidateController {
         return linkMapper.candidateToResource(candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED));
     }
 
-    
     @GetMapping
     public Resources<Resource<Candidate>> getAllValidatedCandidates() {
         return linkMapper.candidateListToResourceForValidAndNonValid(candidateRepository.findAllByCheckCandidate(CandidateCheck.VALIDATED), true);
@@ -53,7 +52,6 @@ public class CandidateController {
         candidates.forEach(x -> x.setCheckCandidate(CandidateCheck.VALIDATED));
         return linkMapper.candidateListToResource((List<Candidate>) candidateRepository.save(candidates));
     }
-
 
     @PutMapping("/{id}")
     public Resource<Candidate> putCandidate(@PathVariable long id, @RequestBody Candidate candidate) {
