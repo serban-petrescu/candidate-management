@@ -1,6 +1,5 @@
 package ro.msg.cm.processor;
 
-import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -16,11 +15,9 @@ import java.util.stream.Collectors;
 @Component
 public class LinkMapper {
 
-    private EntityLinks entityLinks;
     private CandidateResourceProcessor candidateResourceProcessor;
 
-    public LinkMapper(EntityLinks entityLinks, CandidateResourceProcessor candidateResourceProcessor) {
-        this.entityLinks = entityLinks;
+    public LinkMapper(CandidateResourceProcessor candidateResourceProcessor) {
         this.candidateResourceProcessor = candidateResourceProcessor;
     }
 
@@ -49,7 +46,6 @@ public class LinkMapper {
         }
         resources.add(valid);
         resources.add(nonValid);
-        resources.add(entityLinks.linkFor(Candidate.class).withRel("all"));
         return resources;
     }
 
