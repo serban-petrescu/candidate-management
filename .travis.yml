@@ -5,6 +5,7 @@ services:
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS candidate_management;'
   - mysql -e "GRANT ALL PRIVILEGES ON candidate_management.* To 'dev_user'@'localhost' IDENTIFIED BY 'letmein';"
+  - mysql -u root --password="letmein" < resources/db/migration/V2_createTables.sql
 script:
   - mvn clean install
 cache:
