@@ -36,7 +36,7 @@ public class CandidateController {
 
     @GetMapping
     public Resources<Resource<Candidate>> getAllValidatedCandidates() {
-        return linkMapper.candidateListToResource(candidateRepository.findAllByCheckCandidate(CandidateCheck.VALIDATED));
+        return linkMapper.candidateListToResourceForValidAndNonValid(candidateRepository.findAllByCheckCandidate(CandidateCheck.VALIDATED), true);
     }
 
     @PostMapping
@@ -55,9 +55,13 @@ public class CandidateController {
 
     @PutMapping("/{id}")
     public Resource<Candidate> putCandidate(@PathVariable long id, @RequestBody Candidate candidate) {
-        candidate.setCheckCandidate(CandidateCheck.VALIDATED);
-        candidate.setId(id);
-        return linkMapper.candidateToResource(candidateRepository.save(candidate));
+        if (candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED) != null) {
+            candidate.setCheckCandidate(CandidateCheck.VALIDATED);
+            candidate.setId(id);
+            return linkMapper.candidateToResource(candidateRepository.save(candidate));
+        } else {
+            throw new EntityNotFoundException();
+        }
     }
 
     @DeleteMapping("/{id}")

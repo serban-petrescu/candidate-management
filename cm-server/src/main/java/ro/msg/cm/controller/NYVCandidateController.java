@@ -39,7 +39,7 @@ public class NYVCandidateController {
 
     @GetMapping
     public Resources<Resource<Candidate>> getAllNotYetValidatedCandidates() {
-        return linkMapper.candidateListToResource(candidateRepository.findAllByCheckCandidate(CandidateCheck.NOT_YET_VALIDATED));
+        return linkMapper.candidateListToResourceForValidAndNonValid(candidateRepository.findAllByCheckCandidate(CandidateCheck.NOT_YET_VALIDATED), false);
     }
 
     @PostMapping
@@ -58,9 +58,13 @@ public class NYVCandidateController {
 
     @PutMapping("/{id}")
     public Resource<Candidate> putCandidate(@PathVariable long id, @RequestBody Candidate candidate) {
-        candidate.setCheckCandidate(CandidateCheck.NOT_YET_VALIDATED);
-        candidate.setId(id);
-        return linkMapper.candidateToResource(candidateRepository.save(candidate));
+        if (candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED) != null) {
+            candidate.setCheckCandidate(CandidateCheck.NOT_YET_VALIDATED);
+            candidate.setId(id);
+            return linkMapper.candidateToResource(candidateRepository.save(candidate));
+        } else {
+            throw new EntityNotFoundException();
+        }
     }
 
     @DeleteMapping("/{id}")
