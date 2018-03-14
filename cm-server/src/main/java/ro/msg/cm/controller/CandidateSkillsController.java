@@ -1,12 +1,10 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ro.msg.cm.model.Candidate;
-import ro.msg.cm.model.CandidateSkills;
-import ro.msg.cm.model.CandidateSkillsJson;
-import ro.msg.cm.model.Tag;
+import ro.msg.cm.model.*;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.repository.CandidateSkillsRepository;
 import ro.msg.cm.repository.TagRepository;
@@ -100,4 +98,30 @@ public class CandidateSkillsController {
             throw new EntityNotFoundException();
         }
     }
+
+    @GetMapping("/searchByTagDescription")
+    public List<Candidate> searchByTagDescription(@Param("description") String tagDescription){
+        List<Candidate> candidates = new ArrayList<>();
+        List<CandidateSkills> candidateSkills = candidateSkillsRepository.findFirst10ByTagDescriptionContaining(tagDescription);
+        for(CandidateSkills candidateSkill : candidateSkills){
+            candidates.add(candidateSkill.getCandidate());
+        }
+        return candidates;
+    }
+
+    @GetMapping("/searchByEducationDescription")
+    public List<Candidate> searchByEducationDescription(@Param("description") String description){
+        return candidateRepository.findFirst10ByEducationDescriptionContaining(description);
+    }
+
+    @GetMapping("/searchByEducationType")
+    public List<Candidate> searchByEducationType(@Param("educationType") String educationType){
+        return candidateRepository.findFirst10ByEducationEducationTypeContaining(educationType);
+    }
+
+    @GetMapping("/searchByEducationProvider")
+    public List<Candidate> searchByEducationProvider(@Param("provider") String provider){
+        return candidateRepository.findFirst10ByEducationProviderContaining(provider);
+    }
+
 }

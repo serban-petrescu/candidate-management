@@ -52,4 +52,10 @@ public class CandidateController {
     public void deleteCandidateWithId(@PathVariable Long id){
         candidateRepository.delete(id);
     }
+
+    @GetMapping("/dateOfAdding")
+    public List<Candidate> findAfterDateOfAdding(){
+        return candidateRepository.findFirst10ByOrderByDateOfAddingDesc();
+    }
+
 }

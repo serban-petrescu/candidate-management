@@ -16,8 +16,11 @@
 package ro.msg.cm.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.types.CandidateCheck;
+
+import java.util.List;
 
 public interface CandidateRepository extends CrudRepository<Candidate, Long> {
 
@@ -25,4 +28,11 @@ public interface CandidateRepository extends CrudRepository<Candidate, Long> {
 
     Candidate findByIdAndCheckCandidate(Long id, CandidateCheck candidateCheck);
 
+    List<Candidate> findFirst10ByEducationProviderContaining(@Param("provider") String provider);
+
+    List<Candidate> findFirst10ByOrderByDateOfAddingDesc();
+
+    List<Candidate> findFirst10ByEducationDescriptionContaining(@Param("description") String description);
+
+    List<Candidate> findFirst10ByEducationEducationTypeContaining(@Param("educationType") String educationType);
 }
