@@ -92,30 +92,7 @@
 								""
 							]
 						},
-						"description": "Most likely will become unavailable"
-					},
-					"response": []
-				},
-				{
-					"name": "Find all Valid Candidates",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/valid",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidate-validation",
-								"valid"
-							]
-						},
-						"description": ""
+						"description": "Validated"
 					},
 					"response": []
 				},
@@ -156,6 +133,49 @@
 								"api",
 								"candidates",
 								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create multiple Candidates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77799ff9-e198-4c34-a482-8b97312ae550",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n},{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}\n\t\n\t]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidates/multiple",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidates",
+								"multiple"
 							]
 						},
 						"description": ""
@@ -256,7 +276,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidates/{id}",
+							"raw": "http://localhost:8080/api/not-yet-validated-candidates/{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -264,7 +284,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidates",
+								"not-yet-validated-candidates",
 								"{id}"
 							]
 						},
@@ -299,7 +319,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidates/",
+							"raw": "http://localhost:8080/api/not-yet-validated-candidates/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -307,34 +327,11 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidates",
+								"not-yet-validated-candidates",
 								""
 							]
 						},
-						"description": "Most likely will become unavailable"
-					},
-					"response": []
-				},
-				{
-					"name": "Find all Non Valid Candidates",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/non-valid",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidate-validation",
-								"non-valid"
-							]
-						},
-						"description": ""
+						"description": "Not Yet Validated"
 					},
 					"response": []
 				},
@@ -365,7 +362,7 @@
 							"raw": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidates/",
+							"raw": "http://localhost:8080/api/not-yet-validated-candidates/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -373,7 +370,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidates",
+								"not-yet-validated-candidates",
 								""
 							]
 						},
@@ -396,7 +393,7 @@
 							"raw": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/add-candidate",
+							"raw": "http://localhost:8080/api/not-yet-validated-candidates",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -404,8 +401,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidate-validation",
-								"add-candidate"
+								"not-yet-validated-candidates"
 							]
 						},
 						"description": "will replace Create a Canidate"
@@ -427,7 +423,7 @@
 							"raw": "[\n\t{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n},\n{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n},\n{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}\n]"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/add-candidates",
+							"raw": "http://localhost:8080/api/not-yet-validated-candidates/multiple",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -435,8 +431,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidate-validation",
-								"add-candidates"
+								"not-yet-validated-candidates",
+								"multiple"
 							]
 						},
 						"description": ""
@@ -458,7 +454,7 @@
 							"raw": "{\n\t\"firstName\":\"firstName\",\n\t\"lastName\":\"lastName\",\n\t\"email\":\"email@email.email\",\n\t\"phone\":\"0000000000\",\n    \"educationStatus\": \"educationStatus\",\n    \"originalStudyYear\": 0,\n    \"event\": \"event\",\n    \"dateOfAdding\": \"1947-12-23\",\n    \"checkCandidate\": \"NOT_YET_VALIDATED\",\n    \"currentStudyYear\": 0\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidates/{id}",
+							"raw": "http://localhost:8080/api/not-yet-validated-candidates/{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -466,7 +462,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidates",
+								"not-yet-validated-candidates",
 								"{id}"
 							]
 						},
@@ -489,7 +485,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidates{id}",
+							"raw": "http://localhost:8080/api/not-yet-validated-candidates{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -497,7 +493,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidates{id}"
+								"not-yet-validated-candidates{id}"
 							]
 						},
 						"description": ""
@@ -519,7 +515,7 @@
 							"raw": "{\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/update-candidate/{id}",
+							"raw": "http://localhost:8080/api/not-yet-validated-candidates/{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -527,8 +523,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidate-validation",
-								"update-candidate",
+								"not-yet-validated-candidates",
 								"{id}"
 							]
 						},
@@ -579,7 +574,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidateSkillses/{id}",
+							"raw": "http://localhost:8080/api/candidateSkills/{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -587,7 +582,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidateSkillses",
+								"candidateSkills",
 								"{id}"
 							]
 						},
@@ -610,7 +605,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidateSkillses/",
+							"raw": "http://localhost:8080/api/candidateSkills/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -618,7 +613,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidateSkillses",
+								"candidateSkills",
 								""
 							]
 						},
@@ -628,6 +623,28 @@
 				},
 				{
 					"name": "Create a CandidateSkills",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "aaf96a00-1b35-48c1-bf24-13fcaf7e5185",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5558b077-a3e9-462c-ab1f-102ac360b2f5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -638,10 +655,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n   \"tagId\":{tag_id},\n   \"candidateId\":{cand_id},\n    \"rating\":\"rating\",\n    \"certifier\":\"certifier\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidateSkillses/",
+							"raw": "http://localhost:8080/api/candidateSkills/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -649,8 +666,61 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidateSkillses",
+								"candidateSkills",
 								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create multiple CandidateSkills",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "aaf96a00-1b35-48c1-bf24-13fcaf7e5185",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5558b077-a3e9-462c-ab1f-102ac360b2f5",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n   \"tagId\":{tag_id},\n   \"candidateId\":{cand_id},\n    \"rating\":\"rating\",\n    \"certifier\":\"certifier\"\n},{\n   \"tagId\":{tag_id},\n   \"candidateId\":{cand_id},\n    \"rating\":\"rating\",\n    \"certifier\":\"certifier\"\n}\n\t]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateSkills/multiple",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateSkills",
+								"multiple"
 							]
 						},
 						"description": ""
@@ -669,10 +739,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n   \"tagId\":{tag_id},\n   \"candidateId\":{cand_id},\n    \"rating\":\"rating\",\n    \"certifier\":\"certifier\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidateSkillses/{id}",
+							"raw": "http://localhost:8080/api/candidateSkills/{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -680,7 +750,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidateSkillses",
+								"candidateSkills",
 								"{id}"
 							]
 						},
@@ -703,7 +773,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidateSkillses/{id}",
+							"raw": "http://localhost:8080/api/candidateSkills/{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -711,7 +781,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidateSkillses",
+								"candidateSkills",
 								"{id}"
 							]
 						},
@@ -740,7 +810,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidateNoteses/{id}",
+							"raw": "http://localhost:8080/api/candidateNotes/{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -748,7 +818,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidateNoteses",
+								"candidateNotes",
 								"{id}"
 							]
 						},
@@ -771,7 +841,7 @@
 							"raw": "{\"firstName\": \"lala\"}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidateNoteses/",
+							"raw": "http://localhost:8080/api/candidateNotes/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -779,7 +849,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidateNoteses",
+								"candidateNotes",
 								""
 							]
 						},
@@ -802,7 +872,7 @@
 							"raw": "{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidateNoteses/",
+							"raw": "http://localhost:8080/api/candidateNotes/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -810,8 +880,39 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidateNoteses",
+								"candidateNotes",
 								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create multiple CandidateNotes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n},{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n},{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}\n\t]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/candidateNotes/multiple",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"candidateNotes",
+								"multiple"
 							]
 						},
 						"description": ""
@@ -833,7 +934,7 @@
 							"raw": "{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidateNoteses/{id}",
+							"raw": "http://localhost:8080/api/candidateNotes/{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -841,7 +942,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidateNoteses",
+								"candidateNotes",
 								"{id}"
 							]
 						},
@@ -864,7 +965,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidateNoteses/{id}",
+							"raw": "http://localhost:8080/api/candidateNotes/{id}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -872,7 +973,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidateNoteses",
+								"candidateNotes",
 								"{id}"
 							]
 						},
@@ -973,6 +1074,37 @@
 								"api",
 								"educations",
 								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create multiple Educations",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\n\t\"educationType\": \"educationType\",\n    \"provider\": \"provider\",\n    \"description\": \"description\",\n    \"duration\": 0\n\t\n},\n{\n\t\n\t\"educationType\": \"educationType\",\n    \"provider\": \"provider\",\n    \"description\": \"description\",\n    \"duration\": 0\n\t\n}\n\n\t]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/educations/multiple",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"educations",
+								"multiple"
 							]
 						},
 						"description": ""
@@ -1134,6 +1266,37 @@
 								"api",
 								"tags",
 								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create multiple Tags",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n},{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n}\n\t\n\t]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/tags/multiple",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"tags",
+								"multiple"
 							]
 						},
 						"description": ""
