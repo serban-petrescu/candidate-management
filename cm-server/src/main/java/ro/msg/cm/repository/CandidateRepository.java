@@ -15,14 +15,52 @@
  */
 package ro.msg.cm.repository;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.types.CandidateCheck;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+
 public interface CandidateRepository extends CrudRepository<Candidate, Long> {
 
-    Iterable<Candidate> findAllByCheckCandidate(CandidateCheck candidateCheck);
+    List<Candidate> findAllByCheckCandidate(CandidateCheck candidateCheck);
 
-    Candidate findByIdAndCheckCandidate(Long id, CandidateCheck candidateCheck);
+    Set<Candidate> findAllByFirstNameAndLastNameAndCheckCandidateAndIdIsNot(String firstName, String lastName, CandidateCheck candidateCheck, long id);
+
+    Set<Candidate> findAllByEmailAndCheckCandidateAndIdIsNot(String email, CandidateCheck candidateCheck, long id);
+
+    Set<Candidate> findAllByPhoneAndCheckCandidateAndIdIsNot(String phone, CandidateCheck candidateCheck, long id);
+
+    Long countByFirstNameAndLastNameAndCheckCandidateAndIdIsNot(String firstName, String lastName, CandidateCheck candidateCheck, long id);
+
+    Long countByEmailAndCheckCandidateAndIdIsNot(String email, CandidateCheck candidateCheck, long id);
+
+    Long countByPhoneAndCheckCandidateAndIdIsNot(String phone, CandidateCheck candidateCheck, long id);
+
+    @Transactional
+    @Modifying
+    @Query("update Candidate c set c.checkCandidate = ?1 where c.id in ?2")
+    void setCheckCandidateForIdIn(CandidateCheck candidateCheck, Set<Long> ids);
+
+    @Transactional
+    @Modifying
+    @Query("update Candidate c set c.checkCandidate = ?1 where c.id = ?2")
+    void setCheckCandidateForId(CandidateCheck candidateCheck, Long id);
+
+    Candidate findByIdAndCheckCandidate(Long id, CandidateCheck check);
+
+    Optional<Candidate> findCandidateById(Long id);
+
+    Set<Candidate> findAllByIdIn(Set<Long> id);
+
+    @Query("SELECT c1 FROM Candidate c1 where c1.id in ?1 AND c1.email not in (Select c2.email FROM Candidate c2 where c2.checkCandidate = 'VALIDATED')")
+    Set<Candidate> filterValidCandidates(Set<Long> ids);
+
 
 }

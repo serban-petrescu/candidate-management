@@ -1,10 +1,13 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.CandidateNotes;
+import ro.msg.cm.processor.LinkMapper;
 import ro.msg.cm.repository.CandidateNotesRepository;
 
 import javax.persistence.EntityNotFoundException;
@@ -15,38 +18,41 @@ import java.util.List;
 public class CandidateNotesController {
 
     private final CandidateNotesRepository candidateNotesRepository;
+    private final LinkMapper linkMapper;
 
     @Autowired
-    public CandidateNotesController(CandidateNotesRepository candidateNotesRepository) {
+    public CandidateNotesController(CandidateNotesRepository candidateNotesRepository, LinkMapper linkMapper) {
         this.candidateNotesRepository = candidateNotesRepository;
+        this.linkMapper = linkMapper;
     }
 
     @GetMapping("/{id}")
-    public CandidateNotes getCandidateNotes(@PathVariable long id) {
-        return candidateNotesRepository.findOne(id);
+    public Resource<CandidateNotes> getCandidateNotes(@PathVariable long id) {
+        CandidateNotes candidateNotes = candidateNotesRepository.findOne(id);
+        return linkMapper.candidateNotesToResource(candidateNotes);
     }
 
     @GetMapping
-    public List<CandidateNotes> getCandidateNotesList() {
-        return candidateNotesRepository.findAll();
+    public Resources<Resource<CandidateNotes>> getCandidateNotesList() {
+        return linkMapper.candidateNotesListToResource(candidateNotesRepository.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CandidateNotes postCandidateNotes(@RequestBody CandidateNotes candidateNotes) {
-        return candidateNotesRepository.save(candidateNotes);
+    public Resource<CandidateNotes> postCandidateNotes(@RequestBody CandidateNotes candidateNotes) {
+        return linkMapper.candidateNotesToResource(candidateNotesRepository.save(candidateNotes));
     }
 
     @PostMapping("/multiple")
     @ResponseStatus(HttpStatus.CREATED)
-    public Iterable<CandidateNotes> postCandidateNotesList(@RequestBody List<CandidateNotes> candidateNotesList) {
-        return candidateNotesRepository.save(candidateNotesList);
+    public Resources<Resource<CandidateNotes>> postCandidateNotesList(@RequestBody List<CandidateNotes> candidateNotesList) {
+        return linkMapper.candidateNotesListToResource((List<CandidateNotes>) candidateNotesRepository.save(candidateNotesList));
     }
 
     @PutMapping("/{id}")
-    public CandidateNotes putCandidateNotes(@PathVariable long id, @RequestBody CandidateNotes candidateNotes) {
+    public Resource<CandidateNotes> putCandidateNotes(@PathVariable long id, @RequestBody CandidateNotes candidateNotes) {
         candidateNotes.setId(id);
-        return candidateNotesRepository.save(candidateNotes);
+        return linkMapper.candidateNotesToResource(candidateNotesRepository.save(candidateNotes));
     }
 
     @DeleteMapping("/{id}")
@@ -57,10 +63,10 @@ public class CandidateNotesController {
 
 
     @GetMapping("/{id}/candidate")
-    public Candidate getCandidateNotesCandidate(@PathVariable long id) {
+    public Resource<Candidate> getCandidateNotesCandidate(@PathVariable long id) {
         CandidateNotes candidateNotes = candidateNotesRepository.findOne(id);
         if (candidateNotes != null) {
-            return candidateNotes.getCandidate();
+            return linkMapper.candidateToResource(candidateNotes.getCandidate());
         } else {
             throw new EntityNotFoundException();
         }

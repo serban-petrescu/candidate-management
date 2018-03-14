@@ -1,18 +1,20 @@
 package ro.msg.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.CandidateSkills;
 import ro.msg.cm.model.CandidateSkillsJson;
 import ro.msg.cm.model.Tag;
+import ro.msg.cm.processor.LinkMapper;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.repository.CandidateSkillsRepository;
 import ro.msg.cm.repository.TagRepository;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,45 +25,42 @@ public class CandidateSkillsController {
     private final CandidateSkillsRepository candidateSkillsRepository;
     private final CandidateRepository candidateRepository;
     private final TagRepository tagRepository;
+    private final LinkMapper linkMapper;
 
     @Autowired
-    public CandidateSkillsController(CandidateSkillsRepository candidateSkillsRepository, CandidateRepository candidateRepository, TagRepository tagRepository) {
+    public CandidateSkillsController(CandidateSkillsRepository candidateSkillsRepository, CandidateRepository candidateRepository, TagRepository tagRepository, LinkMapper linkMapper) {
         this.candidateSkillsRepository = candidateSkillsRepository;
         this.candidateRepository = candidateRepository;
         this.tagRepository = tagRepository;
+        this.linkMapper = linkMapper;
     }
 
     @GetMapping("/{id}")
-    public CandidateSkillsJson getCandidateSkills(@PathVariable long id) {
-        return new CandidateSkillsJson(candidateSkillsRepository.findOne(id));
+    public Resource<CandidateSkills> getCandidateSkills(@PathVariable long id) {
+        return linkMapper.candidateSkillsToResource(candidateSkillsRepository.findOne(id));
     }
 
     @GetMapping
-    public List<CandidateSkillsJson> getCandidateSkillsList() {
-        return candidateSkillsRepository.findAll().stream().map(CandidateSkillsJson::new).collect(Collectors.toList());
+    public Resources<Resource<CandidateSkills>> getCandidateSkillsList() {
+        return linkMapper.candidateSkillsListToResource(candidateSkillsRepository.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CandidateSkillsJson postCandidateSkills(@RequestBody CandidateSkillsJson candidateSkillsJson) {
-        return new CandidateSkillsJson(candidateSkillsRepository.save(getCandidateSkillsFromCandidateSkillsJson(candidateSkillsJson)));
+    public Resource<CandidateSkills> postCandidateSkills(@RequestBody CandidateSkillsJson candidateSkillsJson) {
+        return linkMapper.candidateSkillsToResource(candidateSkillsRepository.save(getCandidateSkillsFromCandidateSkillsJson(candidateSkillsJson)));
     }
 
     @PostMapping("/multiple")
     @ResponseStatus(HttpStatus.CREATED)
-    public Iterable<CandidateSkillsJson> postCandidateSkillsList(@RequestBody List<CandidateSkillsJson> candidateSkillsJsonList) {
-        Iterable<CandidateSkills> saved = candidateSkillsRepository.save(candidateSkillsJsonList.stream().map(this::getCandidateSkillsFromCandidateSkillsJson).collect(Collectors.toList()));
-        List<CandidateSkillsJson> newCandidateSkillsJsonList = new ArrayList<>();
-        for (CandidateSkills candidateSkills : saved) {
-            newCandidateSkillsJsonList.add(new CandidateSkillsJson(candidateSkills));
-        }
-        return newCandidateSkillsJsonList;
+    public Resources<Resource<CandidateSkills>> postCandidateSkillsList(@RequestBody List<CandidateSkillsJson> candidateSkillsJsonList) {
+        return linkMapper.candidateSkillsListToResource((List<CandidateSkills>) candidateSkillsRepository.save(candidateSkillsJsonList.stream().map(this::getCandidateSkillsFromCandidateSkillsJson).collect(Collectors.toList())));
     }
 
     @PutMapping("/{id}")
-    public CandidateSkillsJson putCandidateSkills(@PathVariable long id, @RequestBody CandidateSkillsJson candidateSkillsJson) {
+    public Resource<CandidateSkills> putCandidateSkills(@PathVariable long id, @RequestBody CandidateSkillsJson candidateSkillsJson) {
         candidateSkillsJson.setId(id);
-        return new CandidateSkillsJson(candidateSkillsRepository.save(getCandidateSkillsFromCandidateSkillsJson(candidateSkillsJson)));
+        return linkMapper.candidateSkillsToResource(candidateSkillsRepository.save(getCandidateSkillsFromCandidateSkillsJson(candidateSkillsJson)));
     }
 
     @DeleteMapping("/{id}")
@@ -81,21 +80,20 @@ public class CandidateSkillsController {
     }
 
     @GetMapping("/{id}/tag")
-    public Tag getCandidateSkillsTag(@PathVariable long id) {
+    public Resource<Tag> getCandidateSkillsTag(@PathVariable long id) {
         CandidateSkills candidateSkills = candidateSkillsRepository.findOne(id);
         if (candidateSkills != null) {
-            return candidateSkills.getTag();
+            return linkMapper.tagToResource(candidateSkills.getTag());
         } else {
             throw new EntityNotFoundException();
         }
-
     }
 
     @GetMapping("/{id}/candidate")
-    public Candidate getCandidateSkillsCandidate(@PathVariable long id) {
+    public Resource<Candidate> getCandidateSkillsCandidate(@PathVariable long id) {
         CandidateSkills candidateSkills = candidateSkillsRepository.findOne(id);
         if (candidateSkills != null) {
-            return candidateSkills.getCandidate();
+            return linkMapper.candidateToResource(candidateSkills.getCandidate());
         } else {
             throw new EntityNotFoundException();
         }
