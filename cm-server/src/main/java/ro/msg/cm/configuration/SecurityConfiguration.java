@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import ro.msg.cm.model.User;
 import ro.msg.cm.repository.UserRepository;
 import ro.msg.cm.service.CustomUserDetailsService;
@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 		http
 		    .authorizeRequests()
-				.antMatchers("/api/").permitAll()
+				.antMatchers("/api/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
@@ -44,12 +44,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.and()
 			.httpBasic()
 				.and()
-			.csrf().disable();
+				.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/api/");
+		web.ignoring().antMatchers("/api");
 	}
 
 }

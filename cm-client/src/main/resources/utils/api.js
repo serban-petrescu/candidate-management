@@ -22,7 +22,9 @@ function fetchCandidates(url) {
  * @returns {Promise}
  */
 function deleteCandidate(url, candidateId) {
-    return axios.delete(url)
+    return axios.delete(url, {
+             withCredentials: true
+         })
         .then((response) => {
             return {
                 response,
@@ -42,7 +44,9 @@ function deleteCandidate(url, candidateId) {
  * @returns {Promise}
  */
 function updateCandidate(url, candidate) {
-    return axios.put(url, candidate)
+    return axios.put(url, candidate, {
+           withCredentials: true
+       })
         .then((response) => {
             return {
                 response,
@@ -62,7 +66,9 @@ function updateCandidate(url, candidate) {
  * @returns {Promise}
  */
 function addCandidate(url, candidate) {
-    return axios.post(url, candidate)
+    return axios.post(url, candidate, {
+            withCredentials: true
+        })
         .then((response) => {
             return {
                 response,
@@ -169,7 +175,9 @@ function fetchNotesForCandidate(url) {
 function addCandidateNote(notesUrl, candidatesUrl, note,candidate) {
 
     // first, create note
-    let axiosResponse = axios.post(notesUrl, note)
+    let axiosResponse = axios.post(notesUrl, note, {
+            withCredentials: true
+        })
         .then((response) => {
             // this put request need text/uri-list as content type
             axios.defaults.headers.put['Content-Type'] = 'text/uri-list';
@@ -193,7 +201,7 @@ function addCandidateNote(notesUrl, candidatesUrl, note,candidate) {
 }
 
 function importCSV(files, importUrl) {
-    const config = { headers: { 'Content-Type': 'text/csv' } };
+    const config = { headers: { 'Content-Type': 'text/csv' }, withCredentials: true };
     console.log("Should have a file");
     console.log(files);
     //let educationLink = "http://localhost:8080/api/import/education";
@@ -205,7 +213,9 @@ function importCSV(files, importUrl) {
 
 function exportCSV(exportUrl,filename){
     let csv = filename+'.csv';
-    return axios.post(exportUrl)
+    return axios.post(exportUrl, null, {
+            withCredentials: true
+        })
         .then((response) => {
             fileDownload(response.data, csv);
         })
