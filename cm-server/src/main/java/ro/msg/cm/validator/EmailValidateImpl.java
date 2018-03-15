@@ -27,16 +27,12 @@ public class EmailValidateImpl implements EmailValidate {
             return false;
         }
 
-        String betweenAtAndDot = afterAtSymbol.substring(0, afterAtSymbol.lastIndexOf("."));
+        String betweenAtAndDot = afterAtSymbol.substring(0, afterAtSymbol.lastIndexOf('.'));
         if (betweenAtAndDot.length() < 2) {
             return false;
         }
 
-        String afterDot = afterAtSymbol.substring(afterAtSymbol.lastIndexOf(".") + 1, afterAtSymbol.length());
-        if (afterDot.length() < 2) {
-            return false;
-        }
-
-        return true;
+        String afterDot = afterAtSymbol.substring(afterAtSymbol.lastIndexOf('.') + 1, afterAtSymbol.length());
+        return afterDot.length() >= 2;
     }
 }
