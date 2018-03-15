@@ -1,15 +1,11 @@
 package ro.msg.cm.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Entity
@@ -17,8 +13,8 @@ import java.util.Set;
 @ToString(exclude = "password")
 @Getter
 @Setter
+@NoArgsConstructor
 public class User {
-
 	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
 	@Id
@@ -47,9 +43,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = PASSWORD_ENCODER.encode(password);
-	}
-
-	public User() {
 	}
 
 	public User(User user) {
