@@ -19,47 +19,15 @@ import com.univocity.parsers.common.processor.BeanListProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
-import ro.msg.cm.model.Candidate;
-import ro.msg.cm.model.Education;
-import ro.msg.cm.model.MockProperties;
-import ro.msg.cm.repository.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.time.LocalDate;
+import java.io.*;
 import java.util.List;
 
 @Slf4j
 @Component
-public class DatabaseLoader implements CommandLineRunner {
-
-    private final CandidateRepository candidateRepository;
-
-    private final TagRepository tagRepository;
-
-    private final EducationRepository educationRepository;
-
-    private final CandidateSkillsRepository candidateSkillsRepository;
-
-    private final CandidateNotesRepository candidateNotesRepository;
-
-    private final MockProperties mockProperties;
-
-    @Autowired
-    public DatabaseLoader(CandidateRepository candidateRepository, TagRepository tagRepository, EducationRepository educationRepository,
-                          CandidateSkillsRepository candidateSkillsRepository, CandidateNotesRepository candidateNotesRepository, MockProperties mockProperties) {
-        this.candidateRepository = candidateRepository;
-        this.tagRepository = tagRepository;
-        this.educationRepository = educationRepository;
-        this.candidateSkillsRepository = candidateSkillsRepository;
-        this.candidateNotesRepository = candidateNotesRepository;
-        this.mockProperties = mockProperties;
-    }
+public class DatabaseLoader {
 
     private static <T> List processBeans(InputStream csvContent, Class<T> tClass) {
 
@@ -70,8 +38,7 @@ public class DatabaseLoader implements CommandLineRunner {
         CsvParser parser = new CsvParser(parserSettings);
         //this submits all rows parsed from the input to the BeanListProcessor
         parser.parse(csvContent);
-        List<T> beans = rowProcessor.getBeans();
-        return beans;
+        return rowProcessor.getBeans();
 
     }
 
@@ -87,39 +54,4 @@ public class DatabaseLoader implements CommandLineRunner {
         rep.save(beans);
     }
 
-    @Override
-    public void run(String... strings) throws Exception {
-        mock();
-    }
-
-    private void mock() {
-        if (mockProperties.getEnabled()) {
-            emptyDatabase();
-            try {
-                importCandidate(new FileInputStream(mockProperties.getLocation()));
-            } catch (FileNotFoundException e) {
-                log.error("Csv file not found");
-            }
-        }
-    }
-
-    private void emptyDatabase() {
-        this.candidateNotesRepository.deleteAll();
-        this.candidateSkillsRepository.deleteAll();
-        this.candidateRepository.deleteAll();
-        this.educationRepository.deleteAll();
-        this.tagRepository.deleteAll();
-    }
-
-    private void importCandidate(InputStream csvContent) {
-        List<Candidate> beans = processBeans(csvContent, Candidate.class);
-        Education education = new Education("Mock Education Type", "Mock Provider", "Mock Descriptions", 4);
-        educationRepository.save(education);
-        LocalDate date = LocalDate.now();
-        for (Candidate bean : beans) {
-            bean.setEducation(education);
-            bean.setDateOfAdding(date);
-        }
-        candidateRepository.save(beans);
-    }
 }
