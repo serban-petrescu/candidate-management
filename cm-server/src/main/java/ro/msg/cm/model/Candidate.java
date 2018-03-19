@@ -21,67 +21,67 @@ import java.util.List;
 @OneNotNull({"phone", "email"})
 public class Candidate {
 
-	private @Id @GeneratedValue Long id;
-	@Parsed
-	@NotNull
-	private String firstName;
-	@Parsed
-	@NotNull
-	private String lastName;
-	@Parsed
-	@Size(min = 10, max = 15)
-	@Pattern(regexp = "[0\\+][0-9]{9,14}")
-	private String phone;
-	@Parsed
-	@Email
-	private String email;
-	private @ManyToOne
+    private @Id
+    @GeneratedValue
+    Long id;
+    @Parsed
+    @NotNull
+    private String firstName;
+    @Parsed
+    @NotNull
+    private String lastName;
+    @Parsed
+    @Size(min = 10, max = 15)
+    @Pattern(regexp = "[0\\+][0-9]{9,14}")
+    private String phone;
+    @Parsed
+    @Email
+    private String email;
+    private @ManyToOne
     @JoinColumn(name = "education_id")
     Education education;
-	@Parsed
+    @Parsed
     private String educationStatus;
-	@Parsed
+    @Parsed
     private int originalStudyYear;
     @Parsed
-	private String event;
+    private String event;
     private @OneToMany(mappedBy = "candidate")
     @OrderBy("tag ASC")
     List<CandidateSkills> candidateSkillsList;
-	private @OneToMany(mappedBy = "candidate")
-	List<CandidateNotes> candidateNotesList;
-	@Parsed
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dateOfAdding;
-	@Enumerated(EnumType.STRING)
-	private CandidateCheck checkCandidate = CandidateCheck.NOT_YET_VALIDATED;
+    private @OneToMany(mappedBy = "candidate")
+    List<CandidateNotes> candidateNotesList;
+    @Parsed
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateOfAdding;
+    @Enumerated(EnumType.STRING)
+    private CandidateCheck checkCandidate = CandidateCheck.NOT_YET_VALIDATED;
 
-	@Transient
-	private int currentStudyYear;
+    @Transient
+    private int currentStudyYear;
 
-	public Candidate(String firstName, String lastName) {
-		this(firstName,lastName,null,null);
-		}
+    public Candidate(String firstName, String lastName) {
+        this(firstName, lastName, null, null);
+    }
 
-	public Candidate(String firstName, String lastName, String phone, String email){
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phone=phone;
-		this.email =email;
+    public Candidate(String firstName, String lastName, String phone, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
 
-	}
+    }
 
-
-
-	public Candidate(String firstName, String lastName, String phone, String email, String educationStatus, int originalStudyYear, String event, LocalDate dateOfAdding) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phone = phone;
-		this.email = email;
-		this.educationStatus = educationStatus;
-		this.originalStudyYear = originalStudyYear;
-		this.event = event;
-		this.dateOfAdding = dateOfAdding;
-	}
+    public Candidate(String firstName, String lastName, String phone, String email, String educationStatus, int originalStudyYear, String event, LocalDate dateOfAdding) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.educationStatus = educationStatus;
+        this.originalStudyYear = originalStudyYear;
+        this.event = event;
+        this.dateOfAdding = dateOfAdding;
+    }
 
 
 }

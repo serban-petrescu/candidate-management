@@ -12,10 +12,11 @@ import ro.msg.cm.model.Tag;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.repository.EducationRepository;
 import ro.msg.cm.repository.TagRepository;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.Enumeration;
 
 @Slf4j
 @RestController
@@ -36,7 +37,7 @@ public class ImportController {
 
     @PostMapping("/education")
     public void importEducation(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DatabaseLoader.importCSV(request.getInputStream(), educationRepository,Education.class);
+        DatabaseLoader.importCSV(request.getInputStream(), educationRepository, Education.class);
         logRequestDetail(request);
     }
 
@@ -55,7 +56,7 @@ public class ImportController {
     /**
      * Logs the details like header names, parameters names and content of the request
      * only on debug level
-     * */
+     */
     private void logRequestDetail(HttpServletRequest request) throws IOException {
         log.debug(request.getMethod());
         Enumeration params = request.getParameterNames();

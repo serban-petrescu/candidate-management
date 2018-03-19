@@ -5,7 +5,6 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ro.msg.cm.dto.CandidateDto;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.pojo.Duplicate;
 import ro.msg.cm.processor.LinkMapper;
@@ -24,26 +23,10 @@ public class CandidateValidationController {
     private final LinkMapper linkMapper;
 
     @Autowired
-    public CandidateValidationController(CandidateService validationService, DuplicateFinderService duplicateFinderService,LinkMapper linkMapper) {
+    public CandidateValidationController(CandidateService validationService, DuplicateFinderService duplicateFinderService, LinkMapper linkMapper) {
         this.validationService = validationService;
         this.duplicateFinderService = duplicateFinderService;
         this.linkMapper = linkMapper;
-    }
-
-    @PatchMapping("/update-candidate/{id}")
-    public Resource<Candidate> patchCandidate(@RequestBody CandidateDto toPatch, @PathVariable Long id) {
-        Candidate candidatePatched = validationService.patchCandidate(toPatch, id);
-        return linkMapper.candidateToResource(candidatePatched);
-    }
-
-    @DeleteMapping("/delete-candidate/{id}")
-    public void deleteCandidate(@PathVariable Long id){
-        validationService.deleteSelectedEntry(id);
-    }
-
-    @DeleteMapping("/delete-candidates/{ids}")
-    public void deleteCandidate(@PathVariable List<Long> ids){
-        validationService.deleteSelectedEntries(ids);
     }
 
     @PostMapping("/add-candidate")
@@ -77,16 +60,6 @@ public class CandidateValidationController {
     @GetMapping("/duplicates-on-non-valid/{id}")
     public Resources<Duplicate> getNonValidDuplicates(@PathVariable Long id) {
         return linkMapper.duplicateListToResourceForValidAndNonValid(id, duplicateFinderService.getDuplicates(id, CandidateCheck.NOT_YET_VALIDATED), false);
-    }
-
-    @GetMapping("/valid")
-    public Resources<Resource<Candidate>> getValidCandidates() {
-        return linkMapper.candidateListToResourceForValidAndNonValid(validationService.getValidCandidates(), true);
-    }
-
-    @GetMapping("/non-valid")
-    public Resources<Resource<Candidate>> getNonValidCandidates() {
-        return linkMapper.candidateListToResourceForValidAndNonValid(validationService.getNonValidCandidates(), true);
     }
 
 }

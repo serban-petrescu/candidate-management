@@ -34,14 +34,14 @@ public class DownloadController {
 
     @Autowired
     public DownloadController(CandidateRepository candidateRepository, EducationRepository educationRepository, TagRepository tagRepository) {
-       this.candidateRepository = candidateRepository;
-       this.educationRepository = educationRepository;
-       this.tagRepository =tagRepository;
+        this.candidateRepository = candidateRepository;
+        this.educationRepository = educationRepository;
+        this.tagRepository = tagRepository;
     }
 
     @PostMapping("/list")
     public void downloadCandidateCsv(HttpServletResponse response) throws IOException {
-        String[] headers= {"firstName", "lastName", "phone", "email", "educationStatus", "originalStudyYear", "event"};
+        String[] headers = {"firstName", "lastName", "phone", "email", "educationStatus", "originalStudyYear", "event"};
         writeResponse(response, candidateRepository, Candidate.class);
         //Local : createCSV(new FileWriter(csvFileName),candidateRepository,Candidate.class);
     }
@@ -60,14 +60,14 @@ public class DownloadController {
 
 
     private void writeResponse(HttpServletResponse response, CrudRepository repository, Class obj) throws IOException {
-        String csvFileName = obj.getSimpleName()+".csv";
+        String csvFileName = obj.getSimpleName() + ".csv";
         String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
 
         response.setContentType("text/csv");
         response.setHeader(headerKey, headerValue);
 
-        createCSV(response.getWriter(),repository,obj);
+        createCSV(response.getWriter(), repository, obj);
     }
 
     private void createCSV(Writer writer, CrudRepository repo, Class obj) throws IOException {
@@ -88,15 +88,16 @@ public class DownloadController {
         csvWriter.close();
     }
 
-    private String[] determineHeader(Class obj){
+    private String[] determineHeader(Class obj) {
         Field[] fields = obj.getDeclaredFields();
         List<String> header = new ArrayList<>();
 
-        for(Field field:fields)
-            if(!field.getName().equals("id"))
+        for (Field field : fields)
+            if (!field.getName().equals("id")) {
                 header.add(field.getName());
+            }
         System.out.println(Collections.singletonList(header));
-        String[] headers=new String[header.size()];
+        String[] headers = new String[header.size()];
         return header.toArray(headers);
     }
 }

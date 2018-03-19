@@ -39,7 +39,7 @@ public class DuplicateFinderServiceTest {
                                 x.getLastName().equals(answer.getArgumentAt(1, String.class)) &&
                                 x.getCheckCandidate().equals(answer.getArgumentAt(2, CandidateCheck.class)) &&
                                 !x.getId().equals(answer.getArgumentAt(3, Long.class))).
-                                collect(Collectors.toSet())
+                        collect(Collectors.toSet())
         );
 
         when(mockCandidateRepository.findAllByEmailAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
@@ -47,7 +47,7 @@ public class DuplicateFinderServiceTest {
                         x.getEmail().equals(answer.getArgumentAt(0, String.class)) &&
                                 x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class)) &&
                                 !x.getId().equals(answer.getArgumentAt(2, Long.class))).
-                                collect(Collectors.toSet())
+                        collect(Collectors.toSet())
         );
 
         when(mockCandidateRepository.findAllByPhoneAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
@@ -55,7 +55,7 @@ public class DuplicateFinderServiceTest {
                         x.getPhone().equals(answer.getArgumentAt(0, String.class)) &&
                                 x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class)) &&
                                 !x.getId().equals(answer.getArgumentAt(2, Long.class))).
-                                collect(Collectors.toSet())
+                        collect(Collectors.toSet())
         );
 
         when(mockCandidateRepository.countByFirstNameAndLastNameAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
@@ -64,7 +64,7 @@ public class DuplicateFinderServiceTest {
                                 x.getLastName().equals(answer.getArgumentAt(1, String.class)) &&
                                 x.getCheckCandidate().equals(answer.getArgumentAt(2, CandidateCheck.class)) &&
                                 !x.getId().equals(answer.getArgumentAt(3, Long.class))).
-                                count()
+                        count()
         );
 
         when(mockCandidateRepository.countByEmailAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
@@ -72,7 +72,7 @@ public class DuplicateFinderServiceTest {
                         x.getEmail().equals(answer.getArgumentAt(0, String.class)) &&
                                 x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class)) &&
                                 !x.getId().equals(answer.getArgumentAt(2, Long.class))).
-                                count()
+                        count()
         );
 
         when(mockCandidateRepository.countByPhoneAndCheckCandidateAndIdIsNot(Mockito.anyString(), Mockito.any(CandidateCheck.class), Mockito.anyLong())).thenAnswer(
@@ -80,13 +80,13 @@ public class DuplicateFinderServiceTest {
                         x.getPhone().equals(answer.getArgumentAt(0, String.class)) &&
                                 x.getCheckCandidate().equals(answer.getArgumentAt(1, CandidateCheck.class)) &&
                                 !x.getId().equals(answer.getArgumentAt(2, Long.class))).
-                                count()
+                        count()
         );
 
         when(mockCandidateRepository.findOne(Mockito.anyLong())).thenAnswer(
                 answer -> candidateList.stream().filter(x ->
                         x.getId().equals(answer.getArgumentAt(0, Long.class))).
-                                collect(Collectors.toList()).get(0)
+                        collect(Collectors.toList()).get(0)
         );
     }
 

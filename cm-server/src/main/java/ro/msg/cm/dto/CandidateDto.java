@@ -10,7 +10,7 @@ import java.util.Map;
 @Data
 public class CandidateDto {
 
-    private Map<String,Object> changedAttributes = new HashMap<>();
+    private Map<String, Object> changedAttributes = new HashMap<>();
     private String firstName;
     private String lastName;
     private String phone;
