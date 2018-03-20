@@ -13,6 +13,22 @@ public class EmailValidation implements ConstraintValidator<ValidEmail, String> 
     }
 
     public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
+        if(!hasRequiredCharactersAndNoWhitespace(email)) {
+            return false;
+        }
+
+        if(hasIllegalCharacters(email)) {
+            return false;
+        }
+
+        if(hasSequenceOfSpecialsCharacters(email)) {
+            return false;
+        }
+
+        return hasValidStructure(email);
+    }
+
+    private boolean hasRequiredCharactersAndNoWhitespace(String email) {
         if (StringUtils.isEmpty(email)) {
             return false;
         }
@@ -25,14 +41,28 @@ public class EmailValidation implements ConstraintValidator<ValidEmail, String> 
             return false;
         }
 
-        if(hasIllegalCharacters(email)) {
-            return false;
-        }
+        return email.contains("@");
+    }
 
-        if (!email.contains("@")) {
-            return false;
+    private boolean hasIllegalCharacters(String email) {
+        for(char illegalChar : "(),:;<>[\\]\"".toCharArray()) {
+            if(email.contains(illegalChar + "")) {
+                return true;
+            }
         }
+        return false;
+    }
 
+    private boolean hasSequenceOfSpecialsCharacters(String email) {
+        for(char specialChar : "!#$%&'*+-/=?^_`{|}~.".toCharArray()) {
+            if(email.contains(specialChar + "" + specialChar)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasValidStructure(String email) {
         String beforeAtSymbol = email.split("@")[0];
         if (beforeAtSymbol.length() < 2) {
             return false;
@@ -50,14 +80,5 @@ public class EmailValidation implements ConstraintValidator<ValidEmail, String> 
 
         String afterDot = afterAtSymbol.substring(afterAtSymbol.lastIndexOf('.') + 1, afterAtSymbol.length());
         return afterDot.length() >= 2;
-    }
-
-    private boolean hasIllegalCharacters(String email) {
-        for(char illegalChar : "(),:;<>[\\]".toCharArray()) {
-            if(email.contains(illegalChar + "")) {
-                return true;
-            }
-        }
-        return false;
     }
 }
