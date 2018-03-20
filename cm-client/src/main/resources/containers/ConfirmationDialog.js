@@ -2,7 +2,8 @@ import React from 'react';
 import {Button, Modal, FormGroup, Col} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {removeCandidate} from '../actions/index';
-import {bindActionCreators} from 'redux'
+import {bindActionCreators} from 'redux';
+import {showNotification} from '../utils/ApiNotification.js';
 
 class ConfirmationDialog extends React.Component {
 
@@ -26,7 +27,10 @@ class ConfirmationDialog extends React.Component {
 
     removeCandidate = () => {
         this.setState({showModal: false});
-        this.props.removeCandidate(this.props.activeCandidate.id);
+        let result = this.props.removeCandidate(this.props.activeCandidate.id);
+        let HTTP_STATUS_NO_CONTENT = 204;
+
+        showNotification(result, HTTP_STATUS_NO_CONTENT, "delete");
     };
 
     render() {
