@@ -2,15 +2,10 @@ package ro.msg.cm.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.univocity.parsers.annotations.Parsed;
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Email;
-import ro.msg.cm.exception.PatchCandidateInvalidValueException;
 import ro.msg.cm.types.CandidateCheck;
-import ro.msg.cm.validator.EmailValidate;
-import ro.msg.cm.validator.EmailValidateImpl;
+import ro.msg.cm.validator.ValidEmail;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -37,8 +32,7 @@ public class Candidate {
 	@Pattern(regexp = "[0\\+][0-9]{9,14}")
 	private String phone;
 	@Parsed
-	@Email
-    @Setter(AccessLevel.NONE)
+	@ValidEmail
 	private String email;
     @ManyToOne
     @JoinColumn(name = "education_id")
@@ -71,27 +65,17 @@ public class Candidate {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
-        setEmail(email);
+        this.email = email;
     }
 
     public Candidate(String firstName, String lastName, String phone, String email, String educationStatus, int originalStudyYear, String event, LocalDate dateOfAdding) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
-        setEmail(email);
+        this.email = email;
         this.educationStatus = educationStatus;
         this.originalStudyYear = originalStudyYear;
         this.event = event;
         this.dateOfAdding = dateOfAdding;
-    }
-
-    public void setEmail(String email) {
-        EmailValidate emailValidate = new EmailValidateImpl();
-
-        if (email != null && !emailValidate.isValid(email)) {
-            throw new PatchCandidateInvalidValueException();
-        }
-
-        this.email = email;
     }
 }
