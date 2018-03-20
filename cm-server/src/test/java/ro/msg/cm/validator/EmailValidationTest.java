@@ -18,98 +18,110 @@ public class EmailValidationTest {
     }
 
     @Test
-    public void checkValidEmail1() {
+    public void checkValidEmailBasic() {
         candidate.setEmail("prettyandsimple@example.com");
         Assert.assertEquals(false, hasErrors(candidate));
     }
 
     @Test
-    public void checkValidEmail2() {
+    public void checkValidEmailWithDotInName() {
         candidate.setEmail("very.common@example.com");
         Assert.assertEquals(false, hasErrors(candidate));
     }
 
     @Test
-    public void checkValidEmail3() {
+    public void checkValidEmailWithMultipleDotsInName() {
         candidate.setEmail("disposable.style.email.with+symbol@example.com");
         Assert.assertEquals(false, hasErrors(candidate));
     }
 
     @Test
-    public void checkValidEmail4() {
+    public void checkValidEmailWithDotAndDashesInName() {
         candidate.setEmail("other.email-with-dash@example.com");
         Assert.assertEquals(false, hasErrors(candidate));
     }
 
     @Test
-    public void checkValidEmail5() {
+    public void checkValidEmailWithShortName() {
         candidate.setEmail("xx@example.com");
         Assert.assertEquals(false, hasErrors(candidate));
     }
 
     @Test
-    public void checkValidEmail6() {
+    public void checkValidEmailWithDashesInDomainAndName() {
         candidate.setEmail("example-indeed@strange-example.com");
         Assert.assertEquals(false, hasErrors(candidate));
     }
 
     @Test
-    public void checkValidEmail7() {
+    public void checkValidEmailWithSpecialSymbolsInName() {
         candidate.setEmail("#!$%&'*+-/=?^_`{}|~@example.org");
         Assert.assertEquals(false, hasErrors(candidate));
     }
 
     @Test
-    public void checkInvalidEmail1() {
+    public void checkInvalidEmailWithNoAtSymbol() {
         candidate.setEmail("Abc.example.com");
         Assert.assertEquals(true, hasErrors(candidate));
     }
 
     @Test
-    public void checkInvalidEmail2() {
+    public void checkInvalidEmailWithMultipleAtSymbols() {
         candidate.setEmail("A@b@c@example.com");
         Assert.assertEquals(true, hasErrors(candidate));
     }
 
     @Test
-    public void checkInvalidEmail3() {
+    public void checkInvalidEmailWithIllegalSymbols() {
         candidate.setEmail("a\"b(c)d,e:f;gi[j\\k]l@example.com");
         Assert.assertEquals(true, hasErrors(candidate));
     }
 
     @Test
-    public void checkInvalidEmail4() {
+    public void checkInvalidEmailWithQuotesInName() {
         candidate.setEmail("just\"not\"right@example.com");
         Assert.assertEquals(true, hasErrors(candidate));
     }
 
     @Test
-    public void checkInvalidEmail5() {
+    public void checkInvalidEmailWithSpaceInName() {
         candidate.setEmail("this is\"not\\allowed@example.com");
         Assert.assertEquals(true, hasErrors(candidate));
     }
 
     @Test
-    public void checkInvalidEmail6() {
+    public void checkInvalidEmailWithDotSequenceInName() {
         candidate.setEmail("john..doe@example.com");
         Assert.assertEquals(true, hasErrors(candidate));
     }
 
     @Test
-    public void checkInvalidEmail7() {
+    public void checkInvalidEmailWithDotSequenceInDomain() {
         candidate.setEmail("john.doe@example..com");
         Assert.assertEquals(true, hasErrors(candidate));
     }
 
     @Test
-    public void checkInvalidEmail8() {
+    public void checkInvalidEmailStartingWithSpaces() {
         candidate.setEmail("    john.doe@example.com");
         Assert.assertEquals(true, hasErrors(candidate));
     }
 
     @Test
-    public void checkInvalidEmail9() {
+    public void checkInvalidEmailEndingWithSpaces() {
         candidate.setEmail("john.doe@example.com    ");
+        Assert.assertEquals(true, hasErrors(candidate));
+    }
+
+    @Test
+    public void checkInvalidEmailStartingWithDot() {
+        candidate.setEmail(".john.doe@example.com");
+        Assert.assertEquals(true, hasErrors(candidate));
+    }
+
+    @Test
+    public void checkInvalidEmailEndingWithDot() {
+        candidate.setEmail("john.doe@example.com.");
         Assert.assertEquals(true, hasErrors(candidate));
     }
 
