@@ -3,6 +3,7 @@ import {StyleSheet, Text, Image, View,AsyncStorage, ScrollView} from 'react-nati
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {Fumi,} from 'react-native-textinput-effects';
 import Button from 'react-native-button';
+import {addCandidate} from "../actions/index";
 const CANDIDATE_STORAGE = 'candidates';
 const styles = StyleSheet.create({
     container: {
@@ -54,12 +55,13 @@ const errorLabels={
     phone: 'Phone is not valid',
 };
 const defaultLabels={
-    name: 'Name',
+    firstName: 'First Name',
+    lastName:'Last Name',
     email: 'Email',
     phone: 'Phone',
     university:'University',
     faculty: 'Faculty',
-    studyYear:'Study Year',
+    originalStudyYear:'Study Year',
 };
 const defaultIcons= {
     name: 'user',
@@ -67,7 +69,7 @@ const defaultIcons= {
     phone: 'phone',
     university: 'university',
     faculty: 'graduation-cap',
-    studyYear: 'book',
+    originalStudyYear: 'book',
 };
 
 const incorrectIcon='remove';
@@ -76,7 +78,8 @@ export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
+            firstName: '',
+            lastName:'',
             email: '',
             phone: '',
             university:'',
@@ -88,14 +91,15 @@ export default class HomeScreen extends React.Component {
                 phone: 'phone',
                 university: 'university',
                 faculty: 'graduation-cap',
-                studyYear: 'book',},
+                originalStudyYear: 'book',},
             labels:{
-                name: 'Name',
+                firstName: 'First Name',
+                lastName:'Last Name',
                 email: 'Email',
                 phone: 'Phone',
                 university:'University',
                 faculty: 'Faculty',
-                studyYear:'Study Year',
+                originalStudyYear:'Study Year',
             },
             candidates:[]
         };
@@ -105,22 +109,24 @@ export default class HomeScreen extends React.Component {
     submitCandidate = () => {
 
         let candidate = {
-            name: this.state.name,
+            firstName: this.state.firstName,
+            lastName:this.state.lastName,
             email: this.state.email,
             phone: this.state.phone,
             university:this.state.university,
             faculty:this.state.faculty,
-            studyYear:this.state.studyYear,
+            originalStudyYear:this.state.originalStudyYear,
         };
         // let toastMessage = `Thanks for submitting your application ${this.state.lastName} ${this.state.firstName}`;
         // ToastAndroid.show(toastMessage, ToastAndroid.SHORT);
-         //addCandidateAndroid(candidate);
+
         this.setState({
             candidates: [...this.state.candidates, candidate]
         });
         this.resetFields();
         AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(this.state.candidates),
             () => {this.props.navigation.navigate('Detail',{candidates:this.state.candidates});});
+        addCandidate(candidate);
 
     };
 
@@ -132,16 +138,28 @@ export default class HomeScreen extends React.Component {
                 <Image source={require('../assets/images/msgLogo.png')} style={styles.logo}/>
                 <Fumi
                     style={styles.inputFirst}
-                    label={this.state.labels.name}
+                    label={this.state.labels.firstName}
                     iconClass={FontAwesomeIcon}
                     iconName={this.state.icons.name}
                     iconColor={colors.default}
                     color={colors.default}
-                    value={this.state.name}
+                    value={this.state.firstName}
                     autoCorrect={false}
-                    onFocus={this.resetIconName.bind(this)}
-                    onBlur={this.checkName.bind(this)}
+                    onFocus={this.resetIconFirstName.bind(this)}
+                    onBlur={this.checkFirstName.bind(this)}
                     />
+                <Fumi
+                    style={styles.input}
+                    label={this.state.labels.lastName}
+                    iconClass={FontAwesomeIcon}
+                    iconName={this.state.icons.name}
+                    iconColor={colors.default}
+                    color={colors.default}
+                    value={this.state.lastName}
+                    autoCorrect={false}
+                    onFocus={this.resetIconLastName.bind(this)}
+                    onBlur={this.checkLastName.bind(this)}
+                />
                 <Fumi
                     style={styles.input}
                     label={this.state.labels.phone}
@@ -192,13 +210,13 @@ export default class HomeScreen extends React.Component {
                 />
                 <Fumi
                     style={styles.input}
-                    label={this.state.labels.studyYear}
+                    label={this.state.labels.originalStudyYear}
                     iconClass={FontAwesomeIcon}
-                    iconName={this.state.icons.studyYear}
+                    iconName={this.state.icons.originalStudyYear}
                     iconColor={colors.default}
                     keyboardType="numeric"
                     onFocus={this.resetIconStudyYear.bind(this)}
-                    value={this.state.studyYear}
+                    value={this.state.originalStudyYear}
                     autoCorrect={false}
                     onBlur={this.checkStudyYear.bind(this)}
                 />
@@ -213,9 +231,15 @@ export default class HomeScreen extends React.Component {
 );
 }
 
-    resetIconName(e){
+    resetIconFirstName(e){
         let currentState = this.state;
-        currentState.labels.name=defaultLabels.name;
+        currentState.labels.firstName=defaultLabels.firstName;
+        currentState.icons.name=defaultIcons.name;
+        this.setState(currentState);
+    }
+    resetIconLastName(e){
+        let currentState = this.state;
+        currentState.labels.lastName=defaultLabels.lastName;
         currentState.icons.name=defaultIcons.name;
         this.setState(currentState);
     }
@@ -246,22 +270,38 @@ export default class HomeScreen extends React.Component {
     }
     resetIconStudyYear(e){
         let currentState = this.state;
-        currentState.labels.studyYear=defaultLabels.studyYear;
-        currentState.icons.studyYear=defaultIcons.studyYear;
+        currentState.labels.originalStudyYear=defaultLabels.originalStudyYear;
+        currentState.icons.originalStudyYear=defaultIcons.originalStudyYear;
         this.setState(currentState);
     }
 
-    checkName(e) {
+    checkFirstName(e) {
 
         let currentState = this.state;
-        const name = e.nativeEvent.text;
-        if(name.length===0)
-        {   currentState.labels.name = defaultLabels.name + errorLabels.empty;
+        const firstName = e.nativeEvent.text;
+        if(firstName.length===0)
+        {   currentState.labels.firstName = defaultLabels.firstName + errorLabels.empty;
             currentState.icons.name = incorrectIcon;
         }
         else {
-            currentState.name=name;
-            currentState.labels.name = defaultLabels.name;
+            currentState.firstName=firstName;
+            currentState.labels.firstName = defaultLabels.firstName;
+            currentState.icons.name = defaultIcons.name;
+        }
+        this.setState(currentState);
+    }
+
+    checkLastName(e) {
+
+        let currentState = this.state;
+        const lastName = e.nativeEvent.text;
+        if(lastName.length===0)
+        {   currentState.labels.firstName = defaultLabels.firstName + errorLabels.empty;
+            currentState.icons.name = incorrectIcon;
+        }
+        else {
+            currentState.lastName=lastName;
+            currentState.labels.lastName = defaultLabels.lastName;
             currentState.icons.name = defaultIcons.name;
         }
         this.setState(currentState);
@@ -304,13 +344,13 @@ export default class HomeScreen extends React.Component {
         let currentState = this.state;
         const studyYear = e.nativeEvent.text;
         if(studyYear.length===0)
-        {   currentState.labels.studyYear = defaultLabels.studyYear + errorLabels.empty;
-            currentState.icons.studyYear = incorrectIcon;
+        {   currentState.labels.originalStudyYear = defaultLabels.originalStudyYear + errorLabels.empty;
+            currentState.icons.originalStudyYear = incorrectIcon;
         }
         else {
-            currentState.studyYear=studyYear;
-            currentState.labels.studyYear = defaultLabels.faculty;
-            currentState.icons.studyYear = defaultIcons.faculty;
+            currentState.originalStudyYear=studyYear;
+            currentState.labels.originalStudyYear = defaultLabels.faculty;
+            currentState.icons.originalStudyYear = defaultIcons.faculty;
         }
         this.setState(currentState);
     }
@@ -357,12 +397,13 @@ export default class HomeScreen extends React.Component {
 
     resetFields(){
         this.setState({
-            name:'',
+            firstName:'',
+            lastName:'',
             email: '',
             phone: '',
             university:'',
             faculty:'',
-            studyYear:'',
+            originalStudyYear:'',
         });
     }
     componentDidMount() {

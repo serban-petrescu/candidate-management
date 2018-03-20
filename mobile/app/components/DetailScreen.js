@@ -52,7 +52,7 @@ class DetailScreen extends Component {
                     data={this.state.data}
                     renderItem={({ item }) => (
                         <ListItem
-                            title={item.name}
+                            title={item.lastName+''+item.firstName}
                             subtitle={item.email}
                         />
                     )}
