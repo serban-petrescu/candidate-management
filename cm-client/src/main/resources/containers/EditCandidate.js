@@ -3,6 +3,7 @@ import {Button, Modal, Form, FormGroup, Col, FormControl, ControlLabel} from 're
 import {bindActionCreators} from "redux";
 import {editCandidate} from "../actions/index";
 import {connect} from "react-redux";
+import {showNotification} from '../utils/ApiNotification.js';
 /**
  * Component used when the used clicks on the edit button.
  * An internal state containing a candidate will be used.
@@ -57,7 +58,10 @@ class EditCandidate extends React.Component {
         );
     };
     updateCandidatePersonalInfo = () => {
-        this.props.editCandidate(this.state.candidate);
+        let result = this.props.editCandidate(this.state.candidate);
+        let HTTP_STATUS_OK = 200;
+
+        showNotification(result, HTTP_STATUS_OK, "update");
         this.setState({showModal: false});
     };
 

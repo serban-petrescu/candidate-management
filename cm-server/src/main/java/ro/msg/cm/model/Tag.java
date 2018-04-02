@@ -1,7 +1,7 @@
 package ro.msg.cm.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.univocity.parsers.annotations.*;
+import com.univocity.parsers.annotations.Parsed;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

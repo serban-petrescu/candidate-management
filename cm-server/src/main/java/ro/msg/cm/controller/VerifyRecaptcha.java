@@ -27,7 +27,7 @@ import java.net.Proxy;
 @RequestMapping("/api/verify")
 public class VerifyRecaptcha {
     private static final String GOOGLE_API_URL =
-        "https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={code}";
+            "https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={code}";
     private RecaptchaProperties properties;
 
     @Autowired
@@ -40,7 +40,7 @@ public class VerifyRecaptcha {
     public GoogleResponse getGRecaptchaResponse(@RequestBody GoogleValidationCode googleRecaptcha) {
         RestTemplate restTemplate = new RestTemplate(buildRequestFactory());
         return restTemplate.getForObject(GOOGLE_API_URL, GoogleResponse.class, properties.getGoogleSecret(),
-            googleRecaptcha.getValidationCode());
+                googleRecaptcha.getValidationCode());
     }
 
     private ClientHttpRequestFactory buildRequestFactory() {
