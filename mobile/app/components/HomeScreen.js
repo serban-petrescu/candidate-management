@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, Image, View, AsyncStorage, ScrollView, Picker, TextInput} from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome,{Icons} from 'react-native-fontawesome';
 import {Fumi,} from 'react-native-textinput-effects';
 import ModalPicker from 'react-native-modal-picker';
 import Button from 'react-native-button';
-import email from 'react-native-email';
 
 const CANDIDATE_STORAGE = 'candidates';
 const styles = StyleSheet.create({
@@ -66,13 +66,14 @@ const defaultLabels = {
     faculty: 'Faculty',
     studyYear: 'Study Year',
 };
-const defaultIcons = {
+const c = {
     name: 'user',
     email: 'envelope',
     phone: 'phone',
     university: 'university',
     faculty: 'graduation-cap',
     studyYear: 'book',
+    admin:'ellipsis-v-alt',
 };
 
 const incorrectIcon = 'remove';
@@ -138,17 +139,6 @@ export default class HomeScreen extends React.Component {
         };
     }
 
-    handleEmail = () => {
-        const to = [this.state.email, 'marin.oana.andreea@gmail.com'] // string or array of email addresses
-        email(to, {
-            // Optional additional arguments
-            cc: ['marin_oana2004@yahoo.com'], // string or array of email addresses
-            bcc: 'oa_an@yahoo.com', // string or array of email addresses
-            subject: 'Show how to use',
-            body: 'Some body right here'
-        }).catch(console.error)
-    };
-
     /*Set the candidate information*/
     submitCandidate = () => {
         console.log(this.state.studyYear);
@@ -173,13 +163,13 @@ export default class HomeScreen extends React.Component {
 
         this.resetFields();
         AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(this.state.candidates),
-            () => {
-                this.props.navigation.navigate('Detail', {candidates: this.state.candidates, onReturn: this.onReturn});
-            });
+            () => {});
 
     };
 
-
+    hrMode = () => {
+        this.props.navigation.navigate('Detail', {candidates: this.state.candidates, onReturn: this.onReturn});
+    }
     render() {
         let index = 0;
         const d3ata = [
@@ -199,8 +189,15 @@ export default class HomeScreen extends React.Component {
 
         return (
             <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+
                 <View style={[styles.card2, {backgroundColor: '#841439'}]}>
                     <Text style={styles.title}>Welcome</Text>
+                    <Button
+                            style={{fontSize: 20, color: 'white'}}
+                            onPress={this.hrMode}
+                            align='left'    >
+                        <FontAwesome>{Icons.cog}</FontAwesome>
+                    </Button>
                     <Image source={require('../assets/images/msgLogo.png')} style={styles.logo}/>
                     <Fumi
                         style={styles.inputFirst}
@@ -315,7 +312,8 @@ export default class HomeScreen extends React.Component {
                             backgroundColor: 'black'
                         }}
                         style={{fontSize: 20, color: 'white'}}
-                        onPress={this.handleEmail}>Submit</Button>
+                        onPress={this.submitCandidate}>Submit</Button>
+
 
                 </View>
             </ScrollView>
@@ -323,20 +321,14 @@ export default class HomeScreen extends React.Component {
     }
 
     availableFaculties(position) {
-
-        console.log("availablefacu:" + position );
-        let d2ata = [];
+        let data = [];
         if (position >= 0) {
             let size = universities[position].faculties.length;
-            console.log(size);
             for (let index=0; index < size; index++)
-                d2ata = [...d2ata, {key: index, label: universities[position].faculties[index]}];
-            console.log(d2ata);
+                data = [...data, {key: index, label: universities[position].faculties[index]}];
         }
-        this.setState({availableFaculties:d2ata});
-        console.log("after available state");
-        console.log(this.state.availableFaculties);
-        return d2ata;
+        this.setState({availableFaculties:data});
+        return data;
     }
 
     resetIconFirstName(e) {

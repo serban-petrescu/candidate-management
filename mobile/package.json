@@ -12,6 +12,8 @@
     "react-native": "0.46.1",
     "react-native-button": "^2.1.0",
     "react-native-elements": "^0.17.0",
+    "react-native-email": "latest",
+    "react-native-fontawesome": "^5.7.0",
     "react-native-form-validator": "^0.2.0",
     "react-native-mail": "^3.0.6",
     "react-native-modal-picker": "0.0.16",
@@ -21,8 +23,7 @@
     "react-native-vector-icons": "latest",
     "react-native-vector-icons/FontAwesome": "latest",
     "react-navigation": "^1.0.0-beta.11",
-    "realm": "^2.2.9",
-    "react-native-email": "latest"
+    "realm": "^2.2.9"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
