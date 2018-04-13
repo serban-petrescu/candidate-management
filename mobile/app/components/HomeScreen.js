@@ -5,6 +5,8 @@ import FontAwesome,{Icons} from 'react-native-fontawesome';
 import {Fumi,} from 'react-native-textinput-effects';
 import ModalPicker from 'react-native-modal-picker';
 import Button from 'react-native-button';
+import CodePin from 'react-native-pin-code';
+import PopupDialog from 'react-native-popup-dialog';
 
 const CANDIDATE_STORAGE = 'candidates';
 const styles = StyleSheet.create({
@@ -66,7 +68,7 @@ const defaultLabels = {
     faculty: 'Faculty',
     studyYear: 'Study Year',
 };
-const c = {
+const defaultIcons = {
     name: 'user',
     email: 'envelope',
     phone: 'phone',
@@ -191,10 +193,22 @@ export default class HomeScreen extends React.Component {
             <ScrollView style={styles.container} contentContainerStyle={styles.content}>
 
                 <View style={[styles.card2, {backgroundColor: '#841439'}]}>
+                    <PopupDialog
+                        ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+                    >
+                        <View>
+                            <CodePin code="2018" success={this.hrMode}
+                                     text="Enter HR Mode" error = "houston we have a problem" autoFocusFirst={false}
+                                     keyboardType="numeric"/>
+                        </View>
+                    </PopupDialog>
+
                     <Text style={styles.title}>Welcome</Text>
                     <Button
                             style={{fontSize: 20, color: 'white'}}
-                            onPress={this.hrMode}
+                            onPress={() => {
+                                this.popupDialog.show();
+                            }}//{this.hrMode}
                             align='left'    >
                         <FontAwesome>{Icons.cog}</FontAwesome>
                     </Button>
@@ -457,6 +471,7 @@ export default class HomeScreen extends React.Component {
     onReturn = data => {
         this.setState(data);
         this.resetFields();
+        this.popupDialog.dismiss(()=>{});
     };
 
     resetFields() {
