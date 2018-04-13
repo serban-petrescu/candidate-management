@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, Image, View, AsyncStorage, ScrollView, Picker, TextInput} from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import FontAwesome,{Icons} from 'react-native-fontawesome';
+import FontAwesome, {Icons} from 'react-native-fontawesome';
 import {Fumi,} from 'react-native-textinput-effects';
 import ModalPicker from 'react-native-modal-picker';
 import Button from 'react-native-button';
@@ -67,6 +67,7 @@ const defaultLabels = {
     university: 'University',
     faculty: 'Faculty',
     studyYear: 'Study Year',
+
 };
 const defaultIcons = {
     name: 'user',
@@ -75,33 +76,33 @@ const defaultIcons = {
     university: 'university',
     faculty: 'graduation-cap',
     studyYear: 'book',
-    admin:'ellipsis-v-alt',
+    admin: 'ellipsis-v-alt',
 };
 
 const incorrectIcon = 'remove';
 
 const universities = [{
     university: 'UTCN',
-    faculties: ['Computer Science', 'Automation', 'Telecommunication', 'Mecathronics', 'Others']
+    faculties: [{id:1001,description:'Computer Science'}, {id:1002,description:'Automation'}, {id:1003,description:'Telecommunication'},{id:1004,description: 'Mecathronics'}, {id:1005,description:'Others'}]
 },
     {
         university: 'UBB',
-        faculties: ['Mathematics', 'Computer Science', 'Mathematics-Informatics', 'Information Economics', 'Cibernetics', 'Others']
+        faculties: [{id:1011,description:'Mathematics'},{id:1012,description: 'Computer Science'}, {id:1013,description:'Mathematics-Informatics'}, {id:1014,description:'Information Economics'}, {id:1015, description:'Cybernetics'}, {id:1016,description:'Others'}]
     },
     {
         university: 'Sapientia',
-        faculties: ['Computer Science', 'Computer Engineering', 'Automation', 'Telecommunication', 'Mecathronics', 'Others']
+        faculties: [{id:1021,description:'Computer Science'}, {id:1022,description:'Computer Engineering'}, {id:1023,description:'Automation'}, {id:1024,description:'Telecommunication'}, {id:1025,description:'Mecathronics'}, {id:1026,description:'Others'}]
     },
-    {university: 'Petru Maior', faculties: ['Computer Science', 'Automation', 'Others']},
-    {university: 'UVT', faculties: ['Mathematics', 'Computer Science', 'Mathematics-Informatics', 'Others']},
+    {university: 'Petru Maior', faculties: [{id:1031,description:'Computer Science'},{id:1032, description:'Automation'}, {id:1033, description:'Others'}]},
+    {university: 'UVT', faculties: [{id:1041,description:'Mathematics'}, {id:1042,description:'Computer Science'}, {id:1043,description:'Mathematics-Informatics'}, {id:1044,description:'Others'}]},
     {
         university: 'UPT',
-        faculties: ['Computer Science', 'Automation', 'Information Technologies', 'Informatics', 'Others']
+        faculties: [{id:1051,description:'Computer Science'}, {id:1052,description:'Automation'}, {id:1053,description:'Information Technologies'}, {id:1054,description:'Informatics'}, {id:1055,description:'Others'}]
     },
-    {university: 'Others', faculties: ['others']},
+    {university: 'Others', faculties: [{id:1071,description:'others'}]},
     {
         university: 'Scoala Informala de IT',
-        faculties: ['Front End Web', 'Database', 'Testing', 'ABAP', 'Business Analyst', 'others']
+        faculties: [{id:1061, description:'Front End Web'}, {id:1062,description:'Database'}, {id:1063, description:'Testing'}, {id:1064,description:'ABAP'},{id:1065,description: 'Business Analyst'},{id:1066, description: 'others'}]
     }
 
 
@@ -117,6 +118,8 @@ export default class HomeScreen extends React.Component {
             phone: '',
             university: '',
             faculty: '',
+            education:{id:1011},
+            educationStatus:'',
             studyYear: '',
             icons: {
                 name: 'user',
@@ -134,10 +137,12 @@ export default class HomeScreen extends React.Component {
                 university: 'University',
                 faculty: 'Faculty',
                 studyYear: 'Study Year',
+                studentStatus:'Student?',
             },
             candidates: [],
             availableFaculties: [{key: 0, section: true, label: 'Choose University First'}],
             universitiesPosition: -1
+
         };
     }
 
@@ -153,8 +158,9 @@ export default class HomeScreen extends React.Component {
             faculty: this.state.faculty,
             originalStudyYear: parseInt(this.state.studyYear), /**TODO**/
             event: 'Simulator Testing', /**TODO**/
-            educationStatus: 'student', /**TODO**/
-            dateOfAdding: '2018-03-01'/**TODO**/
+            educationStatus: this.state.educationStatus,
+            dateOfAdding: '2018-03-01',/**TODO**/
+            education:{id:this.state.education.id}
         };
         // let toastMessage = `Thanks for submitting your application ${this.state.lastName} ${this.state.firstName}`;
         // ToastAndroid.show(toastMessage, ToastAndroid.SHORT);
@@ -165,13 +171,15 @@ export default class HomeScreen extends React.Component {
 
         this.resetFields();
         AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(this.state.candidates),
-            () => {});
+            () => {
+            });
 
     };
 
     hrMode = () => {
         this.props.navigation.navigate('Detail', {candidates: this.state.candidates, onReturn: this.onReturn});
     }
+
     render() {
         let index = 0;
         const d3ata = [
@@ -187,31 +195,39 @@ export default class HomeScreen extends React.Component {
             //{ key: index++, section:true, label: 'Different path'},
             {key: index, label: universities[7].university},
         ];
-         let availableFaculties = this.state.availableFaculties;
+        let availableFaculties = this.state.availableFaculties;
+
+        const educationStatuses=[
+            {key: 0, label: "student"},
+            {key: 1, label: "graduate"}];
 
         return (
             <ScrollView style={styles.container} contentContainerStyle={styles.content}>
 
                 <View style={[styles.card2, {backgroundColor: '#841439'}]}>
                     <PopupDialog
-                        ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+                        ref={(popupDialog) => {
+                            this.popupDialog = popupDialog;
+                        }}
                     >
                         <View>
                             <CodePin code="2018" success={this.hrMode}
-                                     text="Enter HR Mode" error = "houston we have a problem" autoFocusFirst={false}
+                                     text="Enter HR Mode" error="Talk to our HR specialists" autoFocusFirst={false}
                                      keyboardType="numeric"/>
                         </View>
                     </PopupDialog>
-
-                    <Text style={styles.title}>Welcome</Text>
-                    <Button
-                            style={{fontSize: 20, color: 'white'}}
+                    <View>
+                        <Text style={styles.title}>Welcome</Text>
+                        <Button
+                            style={{
+                                fontSize: 20, color: 'white', alignSelf:'flex-end'
+                            }}
                             onPress={() => {
                                 this.popupDialog.show();
-                            }}//{this.hrMode}
-                            align='left'    >
-                        <FontAwesome>{Icons.cog}</FontAwesome>
-                    </Button>
+                            }}
+                        >
+                            <FontAwesome>{Icons.cog}</FontAwesome>
+                        </Button></View>
                     <Image source={require('../assets/images/msgLogo.png')} style={styles.logo}/>
                     <Fumi
                         style={styles.inputFirst}
@@ -262,9 +278,28 @@ export default class HomeScreen extends React.Component {
                         onBlur={this.checkEmail.bind(this)}
                     />
                     <ModalPicker
+                        data={educationStatuses}
+                        initValue="Are you a student"
+                        onChange={(option) => {
+                            this.setState({educationStatus: option.label})
+                            }}>
+
+                        <Fumi
+                            editable={false}
+                            style={styles.input}
+                            label={this.state.labels.studentStatus}
+                            iconClass={FontAwesomeIcon}
+                            iconName={this.state.icons.faculty}
+                            iconColor={colors.default}
+                            value={this.state.educationStatus}
+                            autoCorrect={false}
+                        />
+                    </ModalPicker>
+
+                    <ModalPicker
                         data={d3ata}
                         initValue="Select study"
-                        onChange={(option) =>{
+                        onChange={(option) => {
                             this.setState({
                                 university: option.label,
                                 universitiesPosition: option.key
@@ -288,6 +323,7 @@ export default class HomeScreen extends React.Component {
                         initValue="Select specialization"
                         onChange={(option) => {
                             this.setState({faculty: option.label})
+                            this.determineEducationID(option.key);
                             console.log(this.state.availableFaculties);
                         }}>
 
@@ -338,10 +374,10 @@ export default class HomeScreen extends React.Component {
         let data = [];
         if (position >= 0) {
             let size = universities[position].faculties.length;
-            for (let index=0; index < size; index++)
-                data = [...data, {key: index, label: universities[position].faculties[index]}];
+            for (let index = 0; index < size; index++)
+                data = [...data, {key: index, label: universities[position].faculties[index].description}];
         }
-        this.setState({availableFaculties:data});
+        this.setState({availableFaculties: data, universityKey:position});
         return data;
     }
 
@@ -471,7 +507,8 @@ export default class HomeScreen extends React.Component {
     onReturn = data => {
         this.setState(data);
         this.resetFields();
-        this.popupDialog.dismiss(()=>{});
+        this.popupDialog.dismiss(() => {
+        });
     };
 
     resetFields() {
@@ -495,4 +532,7 @@ export default class HomeScreen extends React.Component {
         this.resetFields();
     }
 
+    determineEducationID (key) {
+        this.setState({education:{id:universities[this.state.universitiesPosition].faculties[key].id}});
+    }
 }
