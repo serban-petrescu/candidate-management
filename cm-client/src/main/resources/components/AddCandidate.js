@@ -1,12 +1,11 @@
 import React from 'react';
 import {FormGroup, FormControl, ControlLabel, HelpBlock, Button, Grid, Row, Col} from 'react-bootstrap';
-import {addCandidate} from '../actions/CandidateActions';
+import {addCandidate} from '../actions/index';
 import TopNavbar from './TopNavbar';
 import '../less/addCandidate.less';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import ButtonAddCandidate from './ButtonAddCandidate'
-import {NotificationManager} from 'react-notifications';
 
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
@@ -41,6 +40,8 @@ class AddCandidate extends React.Component {
             phoneNumber: '',
             phoneNumberValidationMsg: '',
             phoneNumberValidationStatus: null,
+            confirmationMessage: '',
+            confirmationStatus: null
             remainOnPage: false
         };
     };
@@ -170,47 +171,25 @@ class AddCandidate extends React.Component {
             email: this.state.emailAddress,
             phone: this.state.phoneNumber
         };
-        return this.props.addCandidate(candidate);
-    };
+        let HTTP_STATUS_CREATED = 201;
+        let result = this.props.addCandidate(candidate);
+        showNotification(result, HTTP_STATUS_CREATED, "create");
 
-    setConfirmationStatus = (confirmationStatus) => {
-
-        if (confirmationStatus !== "pending") {
-            const redirect = !this.state.remainOnPage;
-            this.showNotification(confirmationStatus);
-            this.setInitialValues();
-            if (redirect) {
-                window.location.href = '#/';
-            }
+        if (!this.state.remainOnPage) {
+            window.location.href = '#/';
         }
 
-        this.setState({
-            confirmationStatus: confirmationStatus
-        });
+        return result;
     };
 
     formValid = () => {
         return (this.state.emailAddressValidationStatus === 'success' && this.state.firstNameValidationStatus === 'success' && this.state.lastNameValidationStatus === 'success' && this.state.phoneNumberValidationStatus === 'success')
     };
 
-    showNotification = (type) => {
-        switch (type) {
-            case 'success':
-                NotificationManager.success("Candidate " + this.state.firstName + " " + this.state.lastName + " successfully added!",
-                    "Success", 4000);
-                break;
-            case 'failed':
-                NotificationManager.error("Candidate " + this.state.firstName + " " + this.state.lastName + "couldn't be added!",
-                    "Error", 4000);
-                break;
-            default:
-                break;
-        }
-    };
-
     render() {
         return (
         <div>
+        <TopNavbar/>
             <Grid>
                 {/* Personal info section */}
                 <form>

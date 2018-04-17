@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 
 /**
@@ -17,18 +17,23 @@ import java.util.Date;
 @Entity
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CandidateNotes {
-    private @Id @GeneratedValue Long id;
-    private @ManyToOne(fetch = FetchType.EAGER) @JoinColumn(name="candidate_id", insertable=true) Candidate candidate;
+    private @Id
+    @GeneratedValue
+    Long id;
+    private @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "candidate_id", insertable = true)
+    Candidate candidate;
     private String status;
     private String note;
-    private Date date;
+    private LocalDate date;
 
-    public CandidateNotes(){}
+    public CandidateNotes() {
+    }
 
-    public CandidateNotes(Candidate candidate, String status, String note, Date date){
-        this.candidate=candidate;
+    public CandidateNotes(Candidate candidate, String status, String note, LocalDate date) {
+        this.candidate = candidate;
         this.status = status;
-        this.note=note;
-        this.date=date;
+        this.note = note;
+        this.date = date;
     }
 }

@@ -77,6 +77,12 @@
             <version>${mysql-version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway-version}</version>
+        </dependency>
+
         <!-- Internal dependencies -->
         <dependency>
             <groupId>ro.msg.cm</groupId>
@@ -89,6 +95,19 @@
             <version>4.5.3</version>
         </dependency>
 
+        <!-- Serializing LocalDate to JSON in Spring Boot -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.datatype.jsr310.version}</version>
+        </dependency>
+
+        <!-- map to Candidate -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+        </dependency>
 
     </dependencies>
 

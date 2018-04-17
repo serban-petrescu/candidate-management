@@ -6,7 +6,6 @@ import TopNavbar from './TopNavbar';
 import Validation from './Validation';
 import Home from './Home';
 import Import from './Import';
-
 /**
  * Each route will be identified in a <Route> component. The <Route> component will take two properties:
  * path and component. When a path matches the path given to the <Route> component, it will return
@@ -22,11 +21,11 @@ class App extends React.Component {
                     <Route path="/addCandidate" component={AddCandidate}/>
                     <Route path="/validation" component={Validation}/>
                     <Route path="/import" component={Import}/>
+
                 </div>
             </Router>
         );
     }
 }
-
 // <Route path="/addCandidateNote" component={AddNote}/>
 export default App;
