@@ -1,13 +1,17 @@
 import React from 'react';
 import AddCandidate from './AddCandidate';
-import {HashRouter as Router, Route} from 'react-router-dom';
+import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import TopNavbar from './TopNavbar';
 import Home from './Home';
 import Import from './Import';
+import Login from './Login';
+
 /**
  * Each route will be identified in a <Route> component. The <Route> component will take two properties:
  * path and component. When a path matches the path given to the <Route> component, it will return
  * the component specified.
+ *
+ * When a random input in inserted in the URL, it will redirect to Login page
  */
 class App extends React.Component {
     render() {
@@ -15,14 +19,17 @@ class App extends React.Component {
             <Router>
                 <div>
                     <TopNavbar/>
-                    <Route exact={true} path="/" component={Home}/>
-                    <Route path="/addCandidate" component={AddCandidate}/>
-                    <Route path="/import" component={Import}/>
+                    <Switch>
+                        <Route exact path="/" component={Login}/>
+                        <Route path="/home" component={Home}/>
+                        <Route path="/addCandidate" component={AddCandidate}/>
+                        <Route path="/import" component={Import}/>
+                        <Redirect from='*' to='/' />
+                    </Switch>
 
                 </div>
             </Router>
         );
     }
 }
-// <Route path="/addCandidateNote" component={AddNote}/>
 export default App;

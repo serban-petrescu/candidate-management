@@ -211,6 +211,24 @@ function exportCSV(exportUrl,filename){
         })
         .catch((error) => {console.log(error);});
 }
+/**
+ * Search a user with username and password
+ * Return a Promise containing the response and the added note.
+ * The promise will be red by middleware module and sent to reducer as an Object.
+ * @param url - url to which the GET request should be made
+ * @param username - the username to be found
+ * @param password - the given encrypted password
+ * @returns {Promise}
+ */
+function searchUser(url, username, password) {
+    let completeUrl = url + '?username=' + username + '&password=' + password;
+    return axios.get(completeUrl)
+        .then((response) => {return {
+            response
+        };
+        })
+        .catch((error) => {return error;});
+}
 
 export {
     updateCandidate,
@@ -223,5 +241,6 @@ export {
     fetchNotesForCandidate,
     addCandidateNote,
     importCSV,
-    exportCSV
+    exportCSV,
+    searchUser
 };

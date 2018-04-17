@@ -27,7 +27,7 @@ public class CandidateNotesController {
     }
 
     @GetMapping("/{id}")
-    public Resource<CandidateNotes> getCandidateNotes(@PathVariable long id) {
+    public Resource<CandidateNotes> getCandidateNotes(@PathVariable Long id) {
         CandidateNotes candidateNotes = candidateNotesRepository.findOne(id);
         return linkMapper.candidateNotesToResource(candidateNotes);
     }
@@ -50,20 +50,20 @@ public class CandidateNotesController {
     }
 
     @PutMapping("/{id}")
-    public Resource<CandidateNotes> putCandidateNotes(@PathVariable long id, @RequestBody CandidateNotes candidateNotes) {
+    public Resource<CandidateNotes> putCandidateNotes(@PathVariable Long id, @RequestBody CandidateNotes candidateNotes) {
         candidateNotes.setId(id);
         return linkMapper.candidateNotesToResource(candidateNotesRepository.save(candidateNotes));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCandidateNotes(@PathVariable long id) {
+    public void deleteCandidateNotes(@PathVariable Long id) {
         candidateNotesRepository.delete(id);
     }
 
 
     @GetMapping("/{id}/candidate")
-    public Resource<Candidate> getCandidateNotesCandidate(@PathVariable long id) {
+    public Resource<Candidate> getCandidateNotesCandidate(@PathVariable Long id) {
         CandidateNotes candidateNotes = candidateNotesRepository.findOne(id);
         if (candidateNotes != null) {
             return linkMapper.candidateToResource(candidateNotes.getCandidate());

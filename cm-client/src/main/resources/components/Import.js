@@ -43,21 +43,30 @@ export default class Import extends React.Component {
 
     render() {
 
-        return (
-            <div>
-                <label for="Education">Education</label><br/>
-                <input type="file" onChange={this.onChange.bind(this)} name="newcsv" id="newcsv" ref="newcsv"/><br/>
-                <input className="btn-defaultCustom btn btn-default" type="submit" value="Upload" onClick={this.uploadEducationCSV.bind(this)}/>
-                <label>-</label>
-                <input className="btn-defaultCustom btn btn-default" type="submit" value="Download" onClick={Import.exportEducationCSV} /><br/>
-                <br/>
-                <label for="Skills">Skills</label>
-                <input type="file" onChange={this.onChange.bind(this)} name="newcsv2" id="newcsv2" ref="newcsv2"/><br/>
-                <input className="btn-defaultCustom btn btn-default" type="submit" value="Upload" onClick={this.uploadTagCSV.bind(this)}/>
-                <label>-</label>
-                <input className="btn-defaultCustom btn btn-default" type="submit" value="Download" onClick={Import.exportTagCSV} />
-            </div>);
-
+        if (sessionStorage.getItem('userLogged') === "false") {
+            window.location = '#/';
+            return null;
+        } else {
+            return (
+                <div>
+                    <label for="Education">Education</label><br/>
+                    <input type="file" onChange={this.onChange.bind(this)} name="newcsv" id="newcsv" ref="newcsv"/><br/>
+                    <input className="btn-defaultCustom btn btn-default" type="submit" value="Upload"
+                           onClick={this.uploadEducationCSV.bind(this)}/>
+                    <label>-</label>
+                    <input className="btn-defaultCustom btn btn-default" type="submit" value="Download"
+                           onClick={Import.exportEducationCSV}/><br/>
+                    <br/>
+                    <label for="Skills">Skills</label>
+                    <input type="file" onChange={this.onChange.bind(this)} name="newcsv2" id="newcsv2"
+                           ref="newcsv2"/><br/>
+                    <input className="btn-defaultCustom btn btn-default" type="submit" value="Upload"
+                           onClick={this.uploadTagCSV.bind(this)}/>
+                    <label>-</label>
+                    <input className="btn-defaultCustom btn btn-default" type="submit" value="Download"
+                           onClick={Import.exportTagCSV}/>
+                </div>);
+        }
 
     }
 }

@@ -4,6 +4,7 @@ import "roboto-fontface/css/roboto/roboto-fontface.css"
 import '../less/candidateTopNavbar.less';
 import {NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import ButtonLogout from './ButtonLogout';
 
 /**
  * Component containing the msg logo and the top navigation bar
@@ -22,12 +23,13 @@ export default class TopNavbar extends React.Component {
                                 <img href="${ROOT_URL}:3000" alt="Brand" src={msgLogo} width={100} height={35}/>
                             </a>
 
+                            <ButtonLogout/>
                         </div>
                     </div>
 
                 </nav>
                 <div className="page-header candidate-top-navbar">
-                                    <h1>Candidate Management</h1>
+                                   <h1> Candidate Management </h1>
                 </div>
             </div>
         );
