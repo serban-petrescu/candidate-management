@@ -1,0 +1,16 @@
+available-application-users:
+  users:
+    -
+      username: "dinam"
+      password: "init"
+      firstName: "Madalina"
+      lastName: "Dina"
+      email: "Madalina.Dina@msg.group"
+      active: 1
+    -
+      username: "deacs"
+      password: "init"
+      firstName: "Stefania"
+      lastName: "Deac"
+      email: "Stefania.Deac@msg.group"
+      active: 1
