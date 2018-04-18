@@ -14,17 +14,17 @@ public class UserLoader implements CommandLineRunner {
 
     private final UserRepository userRepository;
 
-    @Autowired
-    private AvailableUserConfiguration availableUserConfiguration;
+    private final AvailableUserConfiguration availableUserConfiguration;
 
     @Autowired
-    public UserLoader(UserRepository userRepository){
+    public UserLoader(UserRepository userRepository, AvailableUserConfiguration availableUserConfiguration){
         this.userRepository = userRepository;
+        this.availableUserConfiguration = availableUserConfiguration;
     }
 
     @Override
     public void run(String... strings) throws Exception {
-        List<AvailableUserConfiguration.UserConfiguration> userList = availableUserConfiguration.getUserConfigurationList();
+        List<AvailableUserConfiguration.UserConfiguration> userList = availableUserConfiguration.getUsers();
         System.out.println("Hello Cris");
         //availableUserConfiguration.getUserListConfiguration().forEach(newUser -> userRepository.save(new User(newUser)));
     }

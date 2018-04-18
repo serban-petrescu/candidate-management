@@ -1,6 +1,5 @@
 package ro.msg.cm.configuration;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -12,22 +11,22 @@ import java.util.List;
 @Component
 public class AvailableUserConfiguration {
 
-  private List<UserConfiguration> userConfigurationList = new ArrayList<>();
+  private List<UserConfiguration> users = new ArrayList<>();
 
-  public AvailableUserConfiguration(List<UserConfiguration> userConfigurationList) {
-      this.userConfigurationList = userConfigurationList;
+  public AvailableUserConfiguration(List<UserConfiguration> users) {
+      this.users = users;
   }
 
   public AvailableUserConfiguration() {
 
   }
 
-  public List<UserConfiguration> getUserConfigurationList() {
-    return userConfigurationList;
+  public List<UserConfiguration> getUsers() {
+    return users;
   }
 
-  public void setUserConfigurationList(List<UserConfiguration> userConfigurationList) {
-    this.userConfigurationList = userConfigurationList;
+  public void setUsers(List<UserConfiguration> users) {
+    this.users = users;
   }
 
   @Component
