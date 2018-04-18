@@ -6,11 +6,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import ro.msg.cm.model.User;
 import ro.msg.cm.repository.UserRepository;
 import ro.msg.cm.service.CustomUserDetailsService;
 
@@ -27,8 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		auth.userDetailsService(userDetailsService)
-				.passwordEncoder(User.PASSWORD_ENCODER);
+		auth.userDetailsService(userDetailsService);
 	}
 
 	@Override
@@ -36,20 +32,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 		http
 		    .authorizeRequests()
-				.antMatchers("/api/").permitAll()
+				//.antMatchers( "**/no-validation/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
-				.permitAll()
 				.and()
 			.httpBasic()
 				.and()
 			.csrf().disable();
-	}
-
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/api/");
 	}
 
 }
