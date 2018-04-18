@@ -5,9 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 
 import org.springframework.stereotype.Component;
 import ro.msg.cm.configuration.AvailableUserConfiguration;
+import ro.msg.cm.model.Users;
 import ro.msg.cm.repository.UserRepository;
-
-import java.util.List;
 
 @Component
 public class UserLoader implements CommandLineRunner {
@@ -24,8 +23,7 @@ public class UserLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        List<AvailableUserConfiguration.UserConfiguration> userList = availableUserConfiguration.getUsers();
-        System.out.println("Hello Cris");
-        //availableUserConfiguration.getUserListConfiguration().forEach(newUser -> userRepository.save(new User(newUser)));
+
+        availableUserConfiguration.getUsers().forEach(newUser -> userRepository.save(new Users(newUser)));
     }
 }

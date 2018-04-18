@@ -4,12 +4,14 @@ DELETE FROM CANDIDATE_SKILLS;
 DELETE FROM TAG;
 DELETE FROM CANDIDATE;
 DELETE FROM EDUCATION;
+DELETE FROM USERS;
 
 ALTER TABLE CANDIDATE_NOTES AUTO_INCREMENT = 1;
 ALTER TABLE CANDIDATE_SKILLS AUTO_INCREMENT = 1;
 ALTER TABLE TAG AUTO_INCREMENT = 1;
 ALTER TABLE CANDIDATE AUTO_INCREMENT = 1;
 ALTER TABLE EDUCATION AUTO_INCREMENT = 1;
+ALTER TABLE USERS AUTO_INCREMENT = 1;
 
 -- EDUCATION(description, duration, education_type, provider) table:
 INSERT INTO EDUCATION(description, duration, education_type, provider) VALUES ('Informatics',3,'High-School','Marie Curie');
@@ -162,3 +164,4 @@ INSERT INTO CANDIDATE(first_name, last_name, email, event, phone, original_study
 INSERT INTO TAG(description, tag_type) VALUES('german', 'Foreign');
 
 INSERT INTO CANDIDATE_SKILLS(certifier, rating, candidate_id, tag_id) VALUES('certif', '3', 4, 1);
+
