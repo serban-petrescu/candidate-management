@@ -6,15 +6,12 @@ import {
     addCandidateNote as insertCandidateNote,
 } from '../utils/CandidateAPI';
 
-
 export const
     LOAD_CANDIDATES = 'LOAD_CANDIDATES',
     ADD_CANDIDATE = 'ADD_CANDIDATE',
     EDIT_CANDIDATE = 'EDIT_CANDIDATE',
     REMOVE_CANDIDATE = 'DELETE_CANDIDATE',
-
     SELECT_CANDIDATE = 'SELECT_CANDIDATE',
-
     ADD_CANDIDATE_NOTE = 'ADD_CANDIDATE_NOTE';
 
 /**

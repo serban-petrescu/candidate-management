@@ -1,8 +1,9 @@
 import{
-    importCSV,
-    exportCSV
-} from '../utils/CandidateImportAPI';
-
+    importEducationFile,
+    exportEducationFile,
+    importTagFile,
+    exportTagFile
+    } from '../utils/CandidateImportAPI';
 
 export const
     IMPORT_EDUCATION = 'IMPORT_EDUCATION',
@@ -17,6 +18,10 @@ export function importEducation(file) {
     }
 }
 
+export function exportEducation() {
+    return exportEducationFile('Education');
+}
+
 export function importTag(file) {
     return {
         type: IMPORT_TAG,
@@ -26,9 +31,4 @@ export function importTag(file) {
 
 export function exportTag() {
     return exportTagFile('Tag');
-}
-
-export function exportEducation() {
-    return exportEducationFileCSV('Education');
-
 }

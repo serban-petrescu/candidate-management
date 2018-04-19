@@ -4,13 +4,10 @@ import {
     updateCandidate as updateNotValidated
 } from '../utils/CandidateValidationAPI';
 
-
 export const
     LOAD_NOT_VALIDATED_CANDIDATES = 'LOAD_NOT_VALIDATED_CANDIDATES',
     VALIDATE_CANDIDATES = 'VALIDATE_CANDIDATES',
     EDIT_NOT_VALIDATED_CANDIDATE = 'EDIT_NOT_VALIDATED_CANDIDATE';
-
-
 
 export function updateNotValidatedCandidate(candidate) {
     return {
@@ -19,7 +16,6 @@ export function updateNotValidatedCandidate(candidate) {
     }
 }
 
-
 export function validateCandidates(aCandidates) {
     return {
         type: VALIDATE_CANDIDATES,
@@ -27,11 +23,9 @@ export function validateCandidates(aCandidates) {
     }
 }
 
-
 export function loadNotValidatedCandidates() {
     return {
         type: LOAD_NOT_VALIDATED_CANDIDATES,
         payload: fetchNotValidated()
     }
 }
-
