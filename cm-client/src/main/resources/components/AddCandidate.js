@@ -1,11 +1,11 @@
 import React from 'react';
 import {FormGroup, FormControl, ControlLabel, HelpBlock, Button, Grid, Row, Col} from 'react-bootstrap';
-import {addCandidate} from '../actions/index';
-import TopNavbar from './TopNavbar';
+import {addCandidate} from '../actions/CandidateActions';
 import '../less/addCandidate.less';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import ButtonAddCandidate from './ButtonAddCandidate'
+import ButtonAddCandidate from './ButtonAddCandidate';
+import {showNotification} from '../utils/ApiNotification.js';
 
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
@@ -41,7 +41,7 @@ class AddCandidate extends React.Component {
             phoneNumberValidationMsg: '',
             phoneNumberValidationStatus: null,
             confirmationMessage: '',
-            confirmationStatus: null
+            confirmationStatus: null,
             remainOnPage: false
         };
     };
@@ -126,7 +126,7 @@ class AddCandidate extends React.Component {
         }
 
         else {
-            const regexCheckResult = this.checkRegexAndGetMessage(phoneNumber, /^(\+)?[0-9]{10,}$/);
+            const regexCheckResult = this.checkRegexAndGetMessage(phoneNumber, /^[0\+][0-9]{9,14}$/);
             validationMessage = regexCheckResult.validationMessage;
             validationStatus = regexCheckResult.validationStatus;
         }
@@ -174,7 +174,6 @@ class AddCandidate extends React.Component {
         let HTTP_STATUS_CREATED = 201;
         let result = this.props.addCandidate(candidate);
         showNotification(result, HTTP_STATUS_CREATED, "create");
-
         if (!this.state.remainOnPage) {
             window.location.href = '#/';
         }
@@ -189,7 +188,6 @@ class AddCandidate extends React.Component {
     render() {
         return (
         <div>
-        <TopNavbar/>
             <Grid>
                 {/* Personal info section */}
                 <form>
