@@ -1,5 +1,5 @@
 import React from 'react';
-import {importEducation, importTag, exportTag, exportEducation} from "../actions/index";
+import {importEducation, importTag, exportTag, exportEducation} from "../actions/CandidateImportActions";
 import '../less/addCandidate.less';
 
 /**
@@ -12,11 +12,13 @@ export default class Import extends React.Component {
             file: null
         };
     }
+
     uploadEducationCSV(event) {
         importEducation(this.state.file);
         this.setState({});
         event.preventDefault();
     }
+
     uploadTagCSV(event) {
         importTag(this.state.file);
         this.setState({});
@@ -34,15 +36,11 @@ export default class Import extends React.Component {
         exportTag();
     }
 
-
     static exportEducationCSV(){
         exportEducation();
     }
 
-
-
     render() {
-
         return (
             <div>
                 <label for="Education">Education</label><br/>
@@ -57,7 +55,5 @@ export default class Import extends React.Component {
                 <label>-</label>
                 <input className="btn-defaultCustom btn btn-default" type="submit" value="Download" onClick={Import.exportTagCSV} />
             </div>);
-
-
     }
 }
