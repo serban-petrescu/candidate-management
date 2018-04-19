@@ -36,7 +36,7 @@ public class CandidateSkillsController {
     }
 
     @GetMapping("/{id}")
-    public Resource<CandidateSkills> getCandidateSkills(@PathVariable long id) {
+    public Resource<CandidateSkills> getCandidateSkills(@PathVariable Long id) {
         return linkMapper.candidateSkillsToResource(candidateSkillsRepository.findOne(id));
     }
 
@@ -58,14 +58,14 @@ public class CandidateSkillsController {
     }
 
     @PutMapping("/{id}")
-    public Resource<CandidateSkills> putCandidateSkills(@PathVariable long id, @RequestBody CandidateSkillsJson candidateSkillsJson) {
+    public Resource<CandidateSkills> putCandidateSkills(@PathVariable Long id, @RequestBody CandidateSkillsJson candidateSkillsJson) {
         candidateSkillsJson.setId(id);
         return linkMapper.candidateSkillsToResource(candidateSkillsRepository.save(getCandidateSkillsFromCandidateSkillsJson(candidateSkillsJson)));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCandidateSkills(@PathVariable long id) {
+    public void deleteCandidateSkills(@PathVariable Long id) {
         candidateSkillsRepository.delete(id);
     }
 
@@ -80,7 +80,7 @@ public class CandidateSkillsController {
     }
 
     @GetMapping("/{id}/tag")
-    public Resource<Tag> getCandidateSkillsTag(@PathVariable long id) {
+    public Resource<Tag> getCandidateSkillsTag(@PathVariable Long id) {
         CandidateSkills candidateSkills = candidateSkillsRepository.findOne(id);
         if (candidateSkills != null) {
             return linkMapper.tagToResource(candidateSkills.getTag());
@@ -90,7 +90,7 @@ public class CandidateSkillsController {
     }
 
     @GetMapping("/{id}/candidate")
-    public Resource<Candidate> getCandidateSkillsCandidate(@PathVariable long id) {
+    public Resource<Candidate> getCandidateSkillsCandidate(@PathVariable Long id) {
         CandidateSkills candidateSkills = candidateSkillsRepository.findOne(id);
         if (candidateSkills != null) {
             return linkMapper.candidateToResource(candidateSkills.getCandidate());

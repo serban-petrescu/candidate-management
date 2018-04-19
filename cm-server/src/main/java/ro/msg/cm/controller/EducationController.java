@@ -25,7 +25,7 @@ public class EducationController {
     }
 
     @GetMapping("/{id}")
-    public Resource<Education> getEducation(@PathVariable long id) {
+    public Resource<Education> getEducation(@PathVariable Long id) {
         return linkMapper.educationToResource(educationRepository.findOne(id));
     }
 
@@ -47,14 +47,14 @@ public class EducationController {
     }
 
     @PutMapping("/{id}")
-    public Resource<Education> putEducation(@PathVariable long id, @RequestBody Education education) {
+    public Resource<Education> putEducation(@PathVariable Long id, @RequestBody Education education) {
         education.setId(id);
         return linkMapper.educationToResource(educationRepository.save(education));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteEducation(@PathVariable long id) {
+    public void deleteEducation(@PathVariable Long id) {
         educationRepository.delete(id);
     }
 

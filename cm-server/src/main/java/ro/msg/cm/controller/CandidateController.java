@@ -30,7 +30,7 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}")
-    public Resource<Candidate> getOneCandidate(@PathVariable long id) {
+    public Resource<Candidate> getOneCandidate(@PathVariable Long id) {
         return linkMapper.candidateToResource(candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED));
     }
 
@@ -54,7 +54,7 @@ public class CandidateController {
     }
 
     @PutMapping("/{id}")
-    public Resource<Candidate> putCandidate(@PathVariable long id, @RequestBody Candidate candidate) {
+    public Resource<Candidate> putCandidate(@PathVariable Long id, @RequestBody Candidate candidate) {
         if (candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED) != null) {
             candidate.setCheckCandidate(CandidateCheck.VALIDATED);
             candidate.setId(id);
@@ -75,7 +75,7 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}/education")
-    public Resource<Education> getEducation(long id) {
+    public Resource<Education> getEducation(Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED);
         if (candidate != null) {
             return linkMapper.educationToResource(candidate.getEducation());
@@ -85,7 +85,7 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}/candidateNotesList")
-    public Resources<Resource<CandidateNotes>> getCandidateNotesList(@PathVariable long id) {
+    public Resources<Resource<CandidateNotes>> getCandidateNotesList(@PathVariable Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED);
         if (candidate != null) {
             return linkMapper.candidateNotesListToResource(candidate.getCandidateNotesList());
@@ -95,7 +95,7 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}/candidateSkillsList")
-    public Resources<Resource<CandidateSkills>> getCandidateSkillsList(@PathVariable long id) {
+    public Resources<Resource<CandidateSkills>> getCandidateSkillsList(@PathVariable Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED);
         if (candidate != null) {
             return linkMapper.candidateSkillsListToResource(candidate.getCandidateSkillsList());
