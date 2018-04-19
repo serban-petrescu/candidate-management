@@ -1,15 +1,16 @@
 import React from 'react';
-import {Button, Modal} from 'react-bootstrap';
+import {Button, Modal, FormGroup, Col} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {removeCandidate} from '../actions/index';
-import {bindActionCreators} from 'redux'
+import {removeCandidate} from '../actions/CandidateActions';
+import {bindActionCreators} from 'redux';
+import {showNotification} from '../utils/ApiNotification';
 
 class ConfirmationDialog extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            showModal: false,
+            showModal: false
         };
         this._open = () => this.open();
         this._close = () => this.close();
@@ -64,7 +65,6 @@ class ConfirmationDialog extends React.Component {
     }
 }
 
-
 function mapStateToProps(state) {
     return {
         activeCandidate: state.activeCandidate
@@ -77,12 +77,12 @@ function mapStateToProps(state) {
  * @param dispatch
  * @returns {{removeCandidate: removeCandidate}|B|N}
  */
-
 function mapDispatchToProps(dispatch) {
     // whenever deleteCandidate is called, the result should be passed
     // to all our reducers
     return bindActionCreators({removeCandidate: removeCandidate}, dispatch);
 }
+
 /**
  * Connect components to the redux store of the application
  */
