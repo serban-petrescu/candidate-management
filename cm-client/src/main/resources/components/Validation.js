@@ -9,7 +9,6 @@ import TopNavbar from './TopNavbar';
 const Validation = () => {
     return (
         <div>
-            <TopNavbar/>
             <CandidatesValidationTable/>
         </div>
     );
