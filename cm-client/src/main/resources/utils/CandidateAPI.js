@@ -111,7 +111,6 @@ function fetchNotesForCandidate(sURL) {
  * Add a oCandidate note to the list of available oCandidate notes.
  * Return a Promise containing the response and the added note.
  * The promise will be red by middleware module and sent to reducer as an Object.
- * @param sNotesURL to which the POST request should be made
  * @param oNote - object of type note containing the new oCandidate
  * @param oCandidate - object of type oCandidate whose note it is
  * @returns {Promise}

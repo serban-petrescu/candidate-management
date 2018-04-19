@@ -1,7 +1,7 @@
 import getBaseURL from "./BasePath";
 import axios from "axios";
-const CANDIDATES_VALIDATION_URL = `${getBaseURL()}/api/validation`;
 
+const CANDIDATES_VALIDATION_URL = `${getBaseURL()}/api/validation`;
 
 function getCandidateURLById(sId) {
     return `${CANDIDATES_VALIDATION_URL}/${sId}`;
