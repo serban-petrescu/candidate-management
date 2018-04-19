@@ -40,8 +40,6 @@ class AddCandidate extends React.Component {
             phoneNumber: '',
             phoneNumberValidationMsg: '',
             phoneNumberValidationStatus: null,
-            confirmationMessage: '',
-            confirmationStatus: null,
             remainOnPage: false
         };
     };
@@ -236,8 +234,7 @@ class AddCandidate extends React.Component {
                 {/* Buttons section */}
                 <Row>
                     <Col xs={4} md={3}>
-                        <ButtonAddCandidate formValid={this.formValid()} submitCandidate={this.submitCandidate}
-                                            setConfirmationStatus={this.setConfirmationStatus}/>
+                        <ButtonAddCandidate formValid={this.formValid()} submitCandidate={this.submitCandidate} />
                     </Col>
                     <Col xs={14} md={9}>
                         <Button id="btn-home" className="float-right candidateCustomButton" href="/">Home</Button>
