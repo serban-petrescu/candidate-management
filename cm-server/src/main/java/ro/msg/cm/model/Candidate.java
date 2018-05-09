@@ -46,10 +46,10 @@ public class Candidate {
     private int originalStudyYear;
     @Parsed
     private String event;
-    private @OneToMany(mappedBy = "candidate")
+    private @OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE)
     @OrderBy("tag ASC")
     List<CandidateSkills> candidateSkillsList;
-    private @OneToMany(mappedBy = "candidate")
+    private @OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE)
     List<CandidateNotes> candidateNotesList;
     @Parsed
     @JsonFormat(pattern = "yyyy-MM-dd")
