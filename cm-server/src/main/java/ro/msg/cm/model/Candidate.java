@@ -31,8 +31,7 @@ public class Candidate {
     @NotNull
     private String lastName;
     @Parsed
-    @Size(min = 10, max = 15)
-    @Pattern(regexp = "[0\\+][0-9]{9,14}")
+    @Pattern(regexp = "^(0|(0040|004\\s0)|(\\+40|\\+4\\s0))([0-9]{3}\\s?|[0-9]{2}\\s[0-9])(([0-9]{3}\\s?){2}|([0-9]{2}\\s?){3})$")
     private String phone;
     @Parsed
     @Email
