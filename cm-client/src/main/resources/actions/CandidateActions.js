@@ -36,14 +36,14 @@ export function selectCandidate(candidate) {
     return {
         type: SELECT_CANDIDATE,
         payload: candidate
-    }
+    };
 }
 
 export function loadCandidates() {
     return {
         type: LOAD_CANDIDATES,
         payload: fetchCandidates()
-    }
+    };
 }
 
 export function removeCandidate(candidateId) {
@@ -52,47 +52,47 @@ export function removeCandidate(candidateId) {
     return {
         type: REMOVE_CANDIDATE,
         payload: deleteCandidate(candidateId)
-    }
+    };
 }
 
 export function editCandidate(candidate) {
     return {
         type: EDIT_CANDIDATE,
         payload: updateCandidate(candidate)
-    }
+    };
 }
 
 export function addCandidate(candidate) {
     return {
         type: ADD_CANDIDATE,
         payload: insertCandidate(candidate)
-    }
+    };
 }
 
 export function addCandidateNote(note) {
     return {
         type: ADD_CANDIDATE_NOTE,
         payload: insertCandidateNote(note)
-    }
+    };
 }
 
 export function fetchCandidateSkills(url){
     return {
         type: FETCH_CANDIDATE_SKILLS,
         payload: fetchSkillsForCandidate(url)
-    }
+    };
 }
 
 export function fetchCandidateNote(url){
     return {
         type: FETCH_CANDIDATE_NOTE,
         payload: fetchNotesForCandidate(url)
-    }
+    };
 }
 
 export function fetchCandidateEducation(url){
     return {
         type: FETCH_CANDIDATE_EDUCATION,
         payload: fetchEducationForCandidate(url)
-    }
+    };
 }

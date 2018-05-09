@@ -14,11 +14,11 @@ export default class TopNavbar extends React.Component {
         if (window.location.href === '#/') {
             this.state = {
                 activeKey: 1
-            }
+            };
         } else {
             this.state = {
                 activeKey: 2
-            }
+            };
         }
 
     }
@@ -28,7 +28,7 @@ export default class TopNavbar extends React.Component {
         if(selectedKey === 1) {
             window.location.href = '#/';
         } else {
-            window.location.href = '#/validation'
+            window.location.href = '#/validation';
         }
     };
 

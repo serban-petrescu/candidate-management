@@ -15,7 +15,7 @@ export function importEducation(file) {
     return {
         type: IMPORT_EDUCATION,
         payload: importEducationFile(file)
-    }
+    };
 }
 
 export function exportEducation() {
@@ -26,7 +26,7 @@ export function importTag(file) {
     return {
         type: IMPORT_TAG,
         payload: importTagFile(file)
-    }
+    };
 }
 
 export function exportTag() {

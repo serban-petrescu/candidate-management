@@ -16,7 +16,7 @@ import ConfirmationDialog from './ConfirmationDialog';
 import {showNotification} from '../utils/ApiNotification';
 import EducationList from "../components/EducationList";
 import NotesList from "../components/NotesList";
-import SkillsList from '../components/SkillsList'
+import SkillsList from '../components/SkillsList';
 
 class CandidatesValidationTable extends MainCandidatesTable {
 
@@ -36,7 +36,7 @@ class CandidatesValidationTable extends MainCandidatesTable {
             dataFormat: this.actionsFormatter.bind(this),
             expandable: false
         }));
-    };
+    }
 
     handleCheckbox(id) {
         const newSelected = Object.assign([], this.state.selected);
@@ -77,7 +77,7 @@ class CandidatesValidationTable extends MainCandidatesTable {
                 selected: []
             });
             this.loadData();
-        })
+        });
     };
 
     rejectSelectedCandidates = () =>
@@ -98,7 +98,7 @@ class CandidatesValidationTable extends MainCandidatesTable {
             <div>
                 <input id="checkbox_select_candidate" type="checkbox" checked={this.state.selected[row.id] === true} onChange={() => this.handleCheckbox(row.id)}/>
             </div>
-        )
+        );
     };
 
     /**
@@ -124,7 +124,7 @@ class CandidatesValidationTable extends MainCandidatesTable {
     CustomSearchField = () => {
         return (
             <SearchField className="form-control" placeholder='Search ...'/>
-        )
+        );
     };
 
     createCustomButtonGroup = props => {
@@ -156,7 +156,7 @@ class CandidatesValidationTable extends MainCandidatesTable {
                                                        candidate={row}/></Tab>
             </Tabs>
         )
-    }
+    };
 
     loadData = () => {
         this.props.loadCandidates();
@@ -174,9 +174,9 @@ function mapStateToProps(state) {
 // on the ConfirmationDialog component
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        selectCandidate: selectCandidate,
-        validateCandidates: validateCandidates,
-        deleteCandidates: deleteCandidates,
+        selectCandidate,
+        validateCandidates,
+        deleteCandidates,
         loadCandidates: loadNotValidatedCandidates
     }, dispatch);
 }

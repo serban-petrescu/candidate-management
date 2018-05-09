@@ -28,7 +28,7 @@ class CandidatesTable extends MainCandidatesTable {
             dataFormat: this.actionsFormatter,
             expandable: false
         }));
-    };
+    }
 
     getTableOptions() {
         let props = super.getTableOptions();

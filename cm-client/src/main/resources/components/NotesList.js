@@ -59,7 +59,7 @@ class NotesList extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchNotesForCandidate: fetchNotesForCandidate}, dispatch);
+    return bindActionCreators({fetchNotesForCandidate}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps) (NotesList);

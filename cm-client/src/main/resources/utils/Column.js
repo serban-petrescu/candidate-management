@@ -18,7 +18,7 @@ function createFilter(sPlaceHolder) {
             placeholder: sPlaceHolder,
             delay: 1000
         }
-    }
+    };
 }
 
 export class Columns {
@@ -57,7 +57,7 @@ export class DefaultColumnsConfig {
 
     addColumn(oColumn, position) {
         //default: add column at the end
-        if(position == null) {
+        if (position == null) {
             this.aColumns.push(oColumn);
         } else {
             this.aColumns.splice(position, 0, oColumn);

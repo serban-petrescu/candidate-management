@@ -74,7 +74,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({validateAction: validateAction}, dispatch);
+    return bindActionCreators({validateAction}, dispatch);
 }
 
 /**

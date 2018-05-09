@@ -21,10 +21,10 @@ export default class SkillsList extends React.Component {
 
     componentDidMount() {
         let result = fetchCandidateSkills(this.props.skillsUrl).payload;
-        result.then((value)=> {
+        result.then((value) => {
             this.setState({
                 tagLinks: value
-            })
+            });
         })
 
     }

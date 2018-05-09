@@ -69,7 +69,7 @@ class AddNoteModal extends React.Component {
             note: this.state.note
         };
         let result = this.props.addCandidateNote(candidateNote);
-        result.then (() =>{
+        result.then (() => {
             this.props.onAdd();
         });
         this.setState({showModal: false});

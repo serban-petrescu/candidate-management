@@ -100,10 +100,10 @@ function fetchNotesForCandidate(sURL) {
                     status: key.status,
                     note: key.note,
                     date: key.date
-                }
+                };
             });
         } else {
-            return []
+            return [];
         }
     }).catch((error) => {
         console.log(error);
@@ -146,10 +146,10 @@ function fetchSkillsForCandidate(url) {
                             tagLink: key._links.tag.href,
                             rating: key.rating,
                             certifier: key.certifier
-                        }
+                        };
                     });
         } else {
-            return []
+            return [];
         }
 
     }).catch((error) => {
@@ -170,7 +170,7 @@ function fetchEducationForCandidate(url) {
             educationType: response.data.educationType,
             provider: response.data.provider,
             description: response.data.description
-        }
+        };
 
     }).catch((error) => {
         console.log(error);
@@ -186,12 +186,11 @@ function fetchEducationForCandidate(url) {
  */
 function fetchTagForCandidateSkill(sURL) {
     return axios.get(sURL).then(function (response) {
-
         return {
             id: response.data.id,
             description: response.data.description,
             tagType: response.data.tagType
-        }
+        };
     }).catch((error) => {
         console.log(error);
     });

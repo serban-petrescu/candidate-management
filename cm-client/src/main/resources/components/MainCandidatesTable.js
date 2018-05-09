@@ -59,7 +59,7 @@ class MainCandidatesTable extends Component {
                     this.renderSingleHeader(column, i)
                 );
             }))
-        )
+        );
     }
 
     renderSingleHeader(column, key) {

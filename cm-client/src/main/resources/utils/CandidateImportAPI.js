@@ -2,10 +2,10 @@ import getBaseURL from './BasePath';
 import axios from 'axios';
 import fileDownload from 'react-file-download';
 
-export const IMPORT_EDUCATION_URL = `${getImportURL()}/education`,
-    IMPORT_TAG_URL = `${getImportURL()}/tag`,
-    EXPORT_EDUCATION_URL = `${getExportURL()}/education`,
-    EXPORT_TAG_URL = `${getExportURL()}/tag`;
+let IMPORT_EDUCATION_URL = `${getImportURL()}/education`;
+let IMPORT_TAG_URL = `${getImportURL()}/tag`;
+let EXPORT_EDUCATION_URL = `${getExportURL()}/education`;
+let EXPORT_TAG_URL = `${getExportURL()}/tag`;
 
 function getImportURL() {
     return `${getBaseURL()}/api/import/`;
@@ -41,19 +41,19 @@ function exportCSV(sExportUrl, sFilename) {
 }
 
 function importTagFile(sFileName) {
-    return importCSV(IMPORT_TAG_URL, sFileName)
+    return importCSV(IMPORT_TAG_URL, sFileName);
 }
 
 function exportTagFile(sFileName) {
-    exportCSV(EXPORT_TAG_URL, sFileName)
+    exportCSV(EXPORT_TAG_URL, sFileName);
 }
 
 function importEducationFile(sFileName) {
-    return importCSV(IMPORT_EDUCATION_URL, sFileName)
+    return importCSV(IMPORT_EDUCATION_URL, sFileName);
 }
 
 function exportEducationFile(sFileName) {
-    exportCSV(EXPORT_EDUCATION_URL, sFileName)
+    exportCSV(EXPORT_EDUCATION_URL, sFileName);
 }
 
 export {
