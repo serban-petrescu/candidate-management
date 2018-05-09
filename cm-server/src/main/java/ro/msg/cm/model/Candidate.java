@@ -11,7 +11,6 @@ import ro.msg.cm.validator.OneNotNull;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
