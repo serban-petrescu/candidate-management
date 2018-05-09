@@ -49,6 +49,16 @@ public class CandidateService {
         }
     }
 
+    public Candidate updateCandidate(CandidateDto candidateDto, Long id) {
+        Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
+        if (candidate != null) {
+            candidate = CandidateMapper.map(candidateDto.toMap(), candidate);
+            return candidateRepository.save(candidate);
+        } else {
+            throw new CandidateNotFoundException();
+        }
+    }
+
     public void deleteSelectedEntry(Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
         if (candidate != null) {
@@ -118,7 +128,7 @@ public class CandidateService {
     }
 
     private boolean isPhoneNr(Object object) {
-        return object == null || object.toString().matches("^\\d{10,15}$");
+        return object == null || object.toString().matches("/^[0\\+][0-9]{9,14}$/");
     }
 
     private boolean isEmail(Object object) {

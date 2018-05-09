@@ -39,7 +39,7 @@ public class NYVCandidateController {
 
     @GetMapping
     public Resources<Resource<Candidate>> getAllNotYetValidatedCandidates() {
-        return linkMapper.candidateListToResourceForValidAndNonValid(candidateRepository.findAllByCheckCandidate(CandidateCheck.NOT_YET_VALIDATED), false);
+        return linkMapper.candidateListToResource(candidateRepository.findAllByCheckCandidate(CandidateCheck.NOT_YET_VALIDATED));
     }
 
     @PostMapping
