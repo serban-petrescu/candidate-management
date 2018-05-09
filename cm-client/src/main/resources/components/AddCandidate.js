@@ -124,7 +124,7 @@ class AddCandidate extends React.Component {
         }
 
         else {
-            const regexCheckResult = this.checkRegexAndGetMessage(phoneNumber, /^[0\+][0-9]{9,14}$/);
+            const regexCheckResult = this.checkRegexAndGetMessage(phoneNumber, /^(0|(0040|004\s0)|(\+40|\+4\s0))([0-9]{3}\s?|[0-9]{2}\s[0-9])(([0-9]{3}\s?){2}|([0-9]{2}\s?){3})$/);
             validationMessage = regexCheckResult.validationMessage;
             validationStatus = regexCheckResult.validationStatus;
         }
