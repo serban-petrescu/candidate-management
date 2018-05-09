@@ -4,6 +4,9 @@ import {
     updateCandidate,
     addCandidate as insertCandidate,
     addCandidateNote as insertCandidateNote,
+    fetchSkillsForCandidate,
+    fetchNotesForCandidate,
+    fetchEducationForCandidate
 } from '../utils/CandidateAPI';
 
 export const
@@ -12,7 +15,10 @@ export const
     EDIT_CANDIDATE = 'EDIT_CANDIDATE',
     REMOVE_CANDIDATE = 'DELETE_CANDIDATE',
     SELECT_CANDIDATE = 'SELECT_CANDIDATE',
-    ADD_CANDIDATE_NOTE = 'ADD_CANDIDATE_NOTE';
+    ADD_CANDIDATE_NOTE = 'ADD_CANDIDATE_NOTE',
+    FETCH_CANDIDATE_SKILLS = 'FETCH_CANDIDATE_SKILLS',
+    FETCH_CANDIDATE_NOTE = 'FETCH_CANDIDATE_NOTE',
+    FETCH_CANDIDATE_EDUCATION = 'FETCH_CANDIDATE_EDUCATION';
 
 /**
  * Actions are plain JavaScript objects. Actions must have a type property that indicates the type of action being performed.
@@ -63,9 +69,30 @@ export function addCandidate(candidate) {
     }
 }
 
-export function addCandidateNote(note, candidate) {
+export function addCandidateNote(note) {
     return {
         type: ADD_CANDIDATE_NOTE,
-        payload: insertCandidateNote(note, candidate)
+        payload: insertCandidateNote(note)
+    }
+}
+
+export function fetchCandidateSkills(url){
+    return {
+        type: FETCH_CANDIDATE_SKILLS,
+        payload: fetchSkillsForCandidate(url)
+    }
+}
+
+export function fetchCandidateNote(url){
+    return {
+        type: FETCH_CANDIDATE_NOTE,
+        payload: fetchNotesForCandidate(url)
+    }
+}
+
+export function fetchCandidateEducation(url){
+    return {
+        type: FETCH_CANDIDATE_EDUCATION,
+        payload: fetchEducationForCandidate(url)
     }
 }

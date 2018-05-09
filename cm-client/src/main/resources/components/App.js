@@ -1,6 +1,5 @@
 import React from 'react';
 import AddCandidate from './AddCandidate';
-
 import {HashRouter as Router, Route} from 'react-router-dom';
 import TopNavbar from './TopNavbar';
 import Validation from './Validation';

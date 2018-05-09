@@ -229,7 +229,7 @@ class AddCandidate extends React.Component {
                                 onChange={this.handleChangePhoneNumber}>
                     </FieldGroup>
                     <input id="checkbox_stay_on_page" type="checkbox" checked={this.state.remainOnPage} onClick={this.handleCheckbox}/>
-                    <label for="checkbox_stay_on_page" className="checkbox-label">Remain on the current page to add another candidate</label>
+                    <label className="checkbox-label">Remain on the current page to add another candidate</label>
                 </form>
                 {/* Buttons section */}
                 <Row>

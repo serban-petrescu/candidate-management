@@ -59,8 +59,10 @@ class EditCandidate extends React.Component {
     };
     updateCandidatePersonalInfo = () => {
         let result = this.props.editCandidate(this.state.candidate);
+        result.then (() => {
+            this.props.onEdit();
+        });
         let HTTP_STATUS_OK = 200;
-
         showNotification(result, HTTP_STATUS_OK, "update");
         this.setState({showModal: false});
     };
@@ -125,6 +127,7 @@ class EditCandidate extends React.Component {
         )
     }
 }
+
 /**
  * Hook components up to redux actions without having a dependency on redux using
  * bindActionsCreators function.

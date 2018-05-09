@@ -27,7 +27,6 @@ export default class Import extends React.Component {
 
     onChange(e){
         let myFile = e.target.files[0];
-        console.log(e.target.files[0]);
         this.setState({file: myFile});
 
     }

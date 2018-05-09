@@ -1,33 +1,40 @@
 import React from 'react';
-import msgLogo from '../assets/images/msgLogo.png'
-import "roboto-fontface/css/roboto/roboto-fontface.css"
-import '../less/candidateTopNavbar.less'
+import msgLogo from '../assets/images/msgLogo.png';
+import "roboto-fontface/css/roboto/roboto-fontface.css";
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import {NotificationContainer} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
 /**
  * Component containing the msg logo and the top navigation bar
  */
 export default class TopNavbar extends React.Component {
+    constructor(props) {
+        super(props);
+        if (window.location.href === '#/') {
+            this.state = {
+                activeKey: 1
+            }
+        } else {
+            this.state = {
+                activeKey: 2
+            }
+        }
+
+    }
+
+    handleSelect = (selectedKey) => {
+        this.setState({activeKey:selectedKey});
+        if(selectedKey === 1) {
+            window.location.href = '#/';
+        } else {
+            window.location.href = '#/validation'
+        }
+    };
 
     render() {
-
         return (
             <div>
-                <nav  className="navbar navbar-default navbar-fixed-top">
-                    <div className="container-fluid">
-                        <div className="navbar-header">
-                            <a className="navbar-brand" href="#">
-                                <img href="${ROOT_URL}:3000" alt="Brand" src={msgLogo} width={100} height={35}/>
-                            </a>
-
-                        </div>
-                    </div>
-
-                </nav>
-                <div className="page-header candidate-top-navbar">
-                                    <h1>Candidate Management</h1>
-                </div>
-                
-                //varianta lui Loli:
-                /*
                 <NotificationContainer/>
                 <Navbar fluid>
                     <Navbar.Header>
@@ -38,15 +45,16 @@ export default class TopNavbar extends React.Component {
                     </Navbar.Header>
 
                     <Navbar.Collapse>
-                        <Nav>
-                            <NavItem href="/">Home</NavItem>
-                            <NavItem href="/validation">Validation</NavItem>
+                        <Nav activeKey={this.state.activeKey} onSelect={this.handleSelect} className="navBar">
+                            <NavItem eventKey={1}>Home</NavItem>
+                            <NavItem eventKey={2}>Validation</NavItem>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
+
                 <div className="page-header candidate-top-navbar">
                     <h1>Candidate Management</h1>
-                </div>*/
+                </div>
             </div>
         );
 

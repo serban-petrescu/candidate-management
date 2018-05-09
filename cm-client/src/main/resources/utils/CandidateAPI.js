@@ -2,7 +2,7 @@ import getBaseURL from './BasePath';
 import axios from 'axios';
 
 const CANDIDATES_URL = `${getBaseURL()}/api/candidates`,
-      CANDIDATES_NOTES_URL = `${getBaseURL()}/api/candidateNoteses`;
+      CANDIDATES_NOTES_URL = `${getBaseURL()}/api/candidateNotes`;
 
 
 function getCandidateURLById(sId) {
@@ -21,18 +21,18 @@ function fetchCandidates() {
 
 
 /**
- * Add a oCandidate to the list of available candidates.
- * Return a Promise containing the response and the added oCandidate.
+ * Add a candidate to the list of available candidates.
+ * Return a Promise containing the response and the added candidate.
  * The promise will be red by middleware module and sent to reducer as an Object.
- * @param oCandidate - object of type oCandidate containing the new oCandidate
+ * @param candidate - object of type candidate containing the new candidate
  * @returns {Promise}
  */
-function addCandidate(oCandidate) {
-    return axios.post(CANDIDATES_URL, oCandidate)
+function addCandidate(candidate) {
+    return axios.post(CANDIDATES_URL, candidate)
         .then((response) => {
             return {
                 response,
-                oCandidate
+                candidate
             };
         })
         .catch((error) => {
@@ -41,19 +41,19 @@ function addCandidate(oCandidate) {
 }
 
 /**
- * Update the oCandidate with the object passed as a parameter.
- * Return a Promise containing the response and the updated oCandidate.
+ * Update the candidate with the object passed as a parameter.
+ * Return a Promise containing the response and the updated candidate.
  * The promise will be red by middleware module and sent to reducer as an Object.
- * @param oCandidate - object of type oCandidate containing the update information
+ * @param candidate - object of type candidate containing the update information
  * @returns {Promise}
  */
-function updateCandidate(oCandidate) {
+function updateCandidate(candidate) {
 
-    return axios.put(getCandidateURLById(oCandidate.id), oCandidate)
+    return axios.put(getCandidateURLById(candidate.id), candidate)
         .then((response) => {
             return {
                 response,
-                oCandidate
+                candidate
             };
         })
         .catch((error) => {
@@ -62,20 +62,20 @@ function updateCandidate(oCandidate) {
 }
 
 /**
- * Delete the oCandidate based on the oCandidate ID. Return
- * a Promise containing the response and the oCandidate's id.
+ * Delete the candidate based on the candidate ID. Return
+ * a Promise containing the response and the candidate's id.
  * Response will be used by the reducer to verify the response status
  * sCandidateId will be used by the reducer to modify the state of the program.
  * The promise will be red by middleware module and sent to reducer as an Object.
- * @param sCandidateId - id of the oCandidate which will be deleted
+ * @param candidateId - id of the candidate which will be deleted
  * @returns {Promise}
  */
-function deleteCandidate(sCandidateId) {
-    return axios.delete(getCandidateURLById(sCandidateId))
+function deleteCandidate(candidateId) {
+    return axios.delete(getCandidateURLById(candidateId))
         .then((response) => {
             return {
                 response,
-                sCandidateId
+                candidateId
             };
         })
         .catch((error) => {
@@ -86,7 +86,7 @@ function deleteCandidate(sCandidateId) {
 
 
 /**
- * Get a list of all the notes a oCandidate has. Iterate over each response using
+ * Get a list of all the notes a candidate has. Iterate over each response using
  * the map function and for every object return a newly create object containing the
  * relevant information.
  * @param sURL to which the GET request should be made
@@ -94,13 +94,17 @@ function deleteCandidate(sCandidateId) {
  */
 function fetchNotesForCandidate(sURL) {
     return axios.get(sURL).then(function (response) {
-        return response.data._embedded.candidateNoteses.map(function (key) {
-            return {
-                status: key.status,
-                note: key.note,
-                date: key.date
-            }
-        });
+        if(response.data._embedded) {
+            return response.data._embedded.candidateNoteses.map(function (key) {
+                return {
+                    status: key.status,
+                    note: key.note,
+                    date: key.date
+                }
+            });
+        } else {
+            return []
+        }
     }).catch((error) => {
         console.log(error);
     });
@@ -108,37 +112,23 @@ function fetchNotesForCandidate(sURL) {
 
 
 /**
- * Add a oCandidate note to the list of available oCandidate notes.
+ * Add a candidate note to the list of available candidate notes.
  * Return a Promise containing the response and the added note.
  * The promise will be red by middleware module and sent to reducer as an Object.
- * @param oNote - object of type note containing the new oCandidate
- * @param oCandidate - object of type oCandidate whose note it is
+ * @param note - object of type note containing the new candidate
  * @returns {Promise}
  */
-function addCandidateNote(oNote, oCandidate) {
+function addCandidateNote(note) {
 
     // first, create note
-    let axiosResponse = axios.post(CANDIDATES_NOTES_URL, oNote)
+    return axios.post(CANDIDATES_NOTES_URL, note)
         .then((response) => {
-            let sURL = `${CANDIDATES_NOTES_URL}/${response.data.id}/candidate`;
-            // this put request need text/uri-list as content type
-            axios.defaults.headers.put['Content-Type'] = 'text/uri-list';
-            // then, bind the oCandidate entity to the note's oCandidate
-            return axios.put(sURL, getCandidateURLById(oNote.candidate_id))
-                .then((response) => {
-                    return {response, oNote, oCandidate};
-                }).catch((error) => {
-                    return error;
-                });
+            return response;
         })
         .catch((error) => {
             return error;
         });
 
-    // revert content type header of put requests to the default value
-    axios.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
-
-    return axiosResponse;
 }
 
 /**
@@ -150,20 +140,25 @@ function addCandidateNote(oNote, oCandidate) {
  */
 function fetchSkillsForCandidate(url) {
     return axios.get(url).then(function (response) {
-        return response.data._embedded.candidateSkillses.map(function (key) {
-            return {
-                tagLink: key._links.tag.href,
-                rating: key.rating,
-                certifier: key.certifier
-            }
-        });
+        if(response.data._embedded) {
+            return response.data._embedded.candidateSkillses.map(function (key) {
+                        return {
+                            tagLink: key._links.tag.href,
+                            rating: key.rating,
+                            certifier: key.certifier
+                        }
+                    });
+        } else {
+            return []
+        }
+
     }).catch((error) => {
         console.log(error);
     });
 }
 
 /**
- Get a list of all the educations information a candidate has. Iterate over each response using
+ Get the educations information a candidate has. Iterate over each response using
  * the map function and for every object return a newly create object containing the
  * relevant information. Append this created object to a list.
  * @param url to which the GET request should be made
@@ -183,7 +178,7 @@ function fetchEducationForCandidate(url) {
 }
 
 /**
- *Get a list of all the tags a oCandidate has. Iterate over each response item using
+ *Get a list of all the tags a candidate has. Iterate over each response item using
  * the map function and for every object, return a newly create object containing the
  * relevant information. Append this created object to a list.
  * @param sURL to which the GET request should be made

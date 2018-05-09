@@ -10,7 +10,6 @@ class MainCandidatesTable extends Component {
     constructor(props) {
         super(props);
 
-
         this.columnsConfig = new DefaultColumnsConfig();
         this.renderTable.bind(this);
         this.renderHeaders.bind(this);
@@ -30,9 +29,8 @@ class MainCandidatesTable extends Component {
             options: {
                 defaultSortName: 'lastName',
                 defaultSortOrder: 'asc',
-                searchField: this.CustomSearchField,
-                expandBy: 'column'
-            },
+                searchField: this.CustomSearchField
+            }
         };
     }
 
@@ -45,7 +43,7 @@ class MainCandidatesTable extends Component {
     renderTable(data = {}) {
         return (
             <BootstrapTable
-                keyField="candidates"
+                keyField="id"
                 {...this.getTableOptions()}
                 data={data}
             >
@@ -68,7 +66,7 @@ class MainCandidatesTable extends Component {
         return (
             <TableHeaderColumn key={key}
                                tdStyle={{'textAlign': 'center', 'fontWeight': 'lighter'}}
-                               thStyle={{'textAlign': 'center',}}
+                               thStyle={{'textAlign': 'center'}}
                                {...column.oOptions}
                                dataField={column.sDataField}>
                 {column.sLabel}
@@ -76,8 +74,6 @@ class MainCandidatesTable extends Component {
         );
     }
 
-
 }
-
 
 export default MainCandidatesTable;

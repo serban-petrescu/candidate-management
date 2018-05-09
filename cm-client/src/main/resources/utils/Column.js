@@ -13,9 +13,11 @@ class Column {
  */
 function createFilter(sPlaceHolder) {
     return {
-        type: 'RegexFilter',
-        placeholder: sPlaceHolder,
-        delay: 1000
+        filter: {
+            type: 'RegexFilter',
+            placeholder: sPlaceHolder,
+            delay: 1000
+        }
     }
 }
 
@@ -53,8 +55,13 @@ export class DefaultColumnsConfig {
         return this.aColumns;
     }
 
-    addColumn(oColumn) {
-        this.aColumns.push(oColumn);
+    addColumn(oColumn, position) {
+        //default: add column at the end
+        if(position == null) {
+            this.aColumns.push(oColumn);
+        } else {
+            this.aColumns.splice(position, 0, oColumn);
+        }
     }
 
 }

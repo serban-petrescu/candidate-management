@@ -1,11 +1,11 @@
 import React from 'react';
 import {Button, Modal, FormGroup, Col} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {removeCandidate} from '../actions/CandidateActions';
+import {validateCandidate as validateAction} from '../actions/CandidateValidationActions';
 import {bindActionCreators} from 'redux';
 import {showNotification} from '../utils/ApiNotification';
 
-class ConfirmationDialog extends React.Component {
+class ValidationDialog extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,7 +14,7 @@ class ConfirmationDialog extends React.Component {
         };
         this._open = () => this.open();
         this._close = () => this.close();
-        this._removeCandidate = () => this.removeCandidate();
+        this._validateCandidate = () => this.validateCandidate();
     }
 
     close() {
@@ -25,38 +25,38 @@ class ConfirmationDialog extends React.Component {
         this.setState({showModal: true});
     }
 
-    removeCandidate = () => {
+    validateCandidate = () => {
         this.setState({showModal: false});
-        let result = this.props.removeCandidate(this.props.activeCandidate.id);
-        result.then (() => {
-            this.props.onRemove();
+        let result = this.props.validateAction(this.props.activeCandidate.id);
+        result.then(() => {
+            this.props.onValidate();
         });
-        let HTTP_STATUS_NO_CONTENT = 204;
-        showNotification(result, HTTP_STATUS_NO_CONTENT, "delete");
+        let HTTP_STATUS_OK = 200;
+        showNotification(result, HTTP_STATUS_OK, "validate");
     };
 
     render() {
 
-        let activeCandidate = this.props.activeCandidate;
+        let candidate = this.props.activeCandidate;
 
         return (
             <div style={{display: "inline"}}>
                 <button onClick={this._open } type="button" className="btn-defaultCustom btn btn-default">
-                    <span style={{color: "red"}} className="glyphicon glyphicon-remove"/>
+                    <span style={{color: "green"}} className="glyphicon glyphicon-ok"/>
                 </button>
 
                 <Modal show={this.state.showModal} onHide={this._close}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Delete candidate</Modal.Title>
+                        <Modal.Title>Validate candidate</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <FormGroup>
                             <Col sm={10}>
-                                Are you sure you want to delete candidate
-                                <strong>{activeCandidate != null ? ' ' + activeCandidate.firstName + ' ' + activeCandidate.lastName : ''}</strong>?
+                                Are you sure you want to validate candidate
+                                <strong>{candidate != null ? ' ' + candidate.firstName + ' ' +  candidate.lastName: ''}</strong>?
                             </Col>
                             <Col>
-                                <Button onClick={this._removeCandidate} className="margin-right2">Yes</Button>
+                                <Button onClick={this._validateCandidate} className="margin-right2">Yes</Button>
                                 <Button onClick={this._close}>No</Button>
                             </Col>
                         </FormGroup>
@@ -72,20 +72,12 @@ function mapStateToProps(state) {
         activeCandidate: state.activeCandidate
     }
 }
-/**
- *  Hook components up to redux actions without having a dependency on redux using
- * bindActionsCreators function.  Anything returned from this function will end up as props
- * on the ConfirmationDialog component
- * @param dispatch
- * @returns {{removeCandidate: removeCandidate}|B|N}
- */
+
 function mapDispatchToProps(dispatch) {
-    // whenever deleteCandidate is called, the result should be passed
-    // to all our reducers
-    return bindActionCreators({removeCandidate: removeCandidate}, dispatch);
+    return bindActionCreators({validateAction: validateAction}, dispatch);
 }
 
 /**
  * Connect components to the redux store of the application
  */
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmationDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(ValidationDialog);

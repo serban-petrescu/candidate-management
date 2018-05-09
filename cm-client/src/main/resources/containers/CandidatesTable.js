@@ -48,10 +48,8 @@ class CandidatesTable extends MainCandidatesTable {
             insertBtn: this.addCandidateButton,
             exportCSVBtn: this.CustomExportCSVButton,
             deleteBtn: this.importButton,
-            searchField: this.CustomSearchField,
             expandBy: 'column'
         };
-
 
         return props;
     }
@@ -65,25 +63,29 @@ class CandidatesTable extends MainCandidatesTable {
      */
     actionsFormatter = (cell, row) => {
         return (<div style={{display: "inline"}} onClick={() => this.props.selectCandidate(row)}>
-            <EditCandidate candidate={row}/>
-            <ConfirmationDialog/>
+            <EditCandidate candidate={row} onEdit={() => this.loadData()}/>
+            <ConfirmationDialog onRemove={() => this.loadData() }/>
         </div>);
     };
 
     componentDidMount() {
-        this.props.loadCandidates();
-    };
+        this.loadData();
+    }
 
     addCandidateButton = () => {
         return (
-            <a href="addCandidate" className="btn-lg candidateCustomButton" role="button" style={ {marginRight: 25}}>Add
+            <a href="#/addCandidate" className="btn-lg candidateCustomButton" role="button" style={ {marginRight: 25}}>Add
                 Candidate</a>
         );
     };
 
+    loadData = () => {
+        this.props.loadCandidates();
+    };
+
     importButton = () => {
         return (
-            <a href="import" className="btn-lg candidateCustomButton" role="button">Import CSV</a>
+            <a href="#/import" className="btn-lg candidateCustomButton" role="button">Import CSV</a>
         );
     };
 
@@ -117,7 +119,7 @@ class CandidatesTable extends MainCandidatesTable {
                                                            candidate={row}/></Tab>
             </Tabs>
         )
-    };
+    }
 }
 
 function mapStateToProps(state) {

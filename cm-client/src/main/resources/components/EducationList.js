@@ -2,7 +2,7 @@
  * Created by blajv on 22.06.2017.
  */
 import React from 'react';
-import {fetchEducationForCandidate} from "../utils/CandidateAPI";
+import {fetchCandidateEducation} from "../actions/CandidateActions";
 /**
  * Component used to display all the education data of the selected candidate
  * by accessing the Education tab.
@@ -11,12 +11,16 @@ export default class EducationList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            educationData: {}
+            educationType: "",
+            provider: "",
+            description: ""
         };
     }
 
     componentDidMount() {
-        fetchEducationForCandidate(this.props.educationLink).then(response => {
+        let result = fetchCandidateEducation(this.props.educationLink).payload;
+        result.then( (response) => {
+
             this.setState({
                 educationType: response.educationType,
                 provider: response.provider,

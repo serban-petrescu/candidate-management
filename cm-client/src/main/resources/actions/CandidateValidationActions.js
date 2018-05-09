@@ -1,13 +1,25 @@
 import {
     fetchCandidates as fetchNotValidated,
-    validateCandidates as validate,
-    updateCandidate as updateNotValidated
-} from '../utils/CandidateValidationAPI';
+    updateCandidate as updateNotValidated,
+    validateCandidate as validateOne,
+    validateCandidates as validateAll,
+    deleteCandidates as deleteAll
+
+    } from '../utils/CandidateValidationAPI';
 
 export const
     LOAD_NOT_VALIDATED_CANDIDATES = 'LOAD_NOT_VALIDATED_CANDIDATES',
+    VALIDATE_CANDIDATE = 'VALIDATE_CANDIDATE',
     VALIDATE_CANDIDATES = 'VALIDATE_CANDIDATES',
+    DELETE_CANDIDATES = 'DELETE_CANDIDATES',
     EDIT_NOT_VALIDATED_CANDIDATE = 'EDIT_NOT_VALIDATED_CANDIDATE';
+
+export function loadNotValidatedCandidates() {
+    return {
+        type: LOAD_NOT_VALIDATED_CANDIDATES,
+        payload: fetchNotValidated()
+    }
+}
 
 export function updateNotValidatedCandidate(candidate) {
     return {
@@ -16,16 +28,23 @@ export function updateNotValidatedCandidate(candidate) {
     }
 }
 
-export function validateCandidates(aCandidates) {
+export function validateCandidate(candidateId) {
     return {
-        type: VALIDATE_CANDIDATES,
-        payload: validate(aCandidates)
+        type: VALIDATE_CANDIDATE,
+        payload: validateOne(candidateId)
     }
 }
 
-export function loadNotValidatedCandidates() {
+export function validateCandidates(candidates) {
     return {
-        type: LOAD_NOT_VALIDATED_CANDIDATES,
-        payload: fetchNotValidated()
+        type: VALIDATE_CANDIDATES,
+        payload: validateAll(candidates)
+    }
+}
+
+export function deleteCandidates(candidates) {
+    return {
+        type: DELETE_CANDIDATES,
+        payload: deleteAll(candidates)
     }
 }
