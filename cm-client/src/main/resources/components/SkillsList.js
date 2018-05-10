@@ -25,8 +25,7 @@ export default class SkillsList extends React.Component {
             this.setState({
                 tagLinks: value
             });
-        })
-
+        });
     }
 
     render() {

@@ -2,11 +2,6 @@ import getBaseURL from './BasePath';
 import axios from 'axios';
 import fileDownload from 'react-file-download';
 
-let IMPORT_EDUCATION_URL = `${getImportURL()}/education`;
-let IMPORT_TAG_URL = `${getImportURL()}/tag`;
-let EXPORT_EDUCATION_URL = `${getExportURL()}/education`;
-let EXPORT_TAG_URL = `${getExportURL()}/tag`;
-
 function getImportURL() {
     return `${getBaseURL()}/api/import/`;
 }
@@ -14,6 +9,11 @@ function getImportURL() {
 function getExportURL() {
     return `${getBaseURL()}/api/export/`;
 }
+
+const IMPORT_EDUCATION_URL = `${getImportURL()}/education`;
+const IMPORT_TAG_URL = `${getImportURL()}/tag`;
+const EXPORT_EDUCATION_URL = `${getExportURL()}/education`;
+const EXPORT_TAG_URL = `${getExportURL()}/tag`;
 
 function importCSV(aFiles, sImportUrl) {
     const config = {headers: {'Content-Type': 'text/csv'}};

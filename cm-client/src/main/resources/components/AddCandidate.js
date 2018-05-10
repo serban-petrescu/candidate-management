@@ -16,6 +16,22 @@ function FieldGroup({id, label, validationState, help, ...props}) {
         </FormGroup>
     )
 }
+
+let fieldsInitialValues = {
+    emailAddress: '',
+    emailAddressValidationMsg: '',
+    emailAddressValidationStatus: null,
+    firstName: '',
+    firstNameValidationMsg: '',
+    firstNameValidationStatus: null,
+    lastName: '',
+    lastNameValidationMsg: '',
+    lastNameValidationStatus: null,
+    phoneNumber: '',
+    phoneNumberValidationMsg: '',
+    phoneNumberValidationStatus: null
+};
+
 /**
  * Component handling the add operation of a candidate
  */
@@ -23,26 +39,11 @@ class AddCandidate extends React.Component {
 
     constructor(props) {
         super(props);
-        this.setInitialValues();
-    }
-
-    setInitialValues = () => {
         this.state = {
-            emailAddress: '',
-            emailAddressValidationMsg: '',
-            emailAddressValidationStatus: null,
-            firstName: '',
-            firstNameValidationMsg: '',
-            firstNameValidationStatus: null,
-            lastName: '',
-            lastNameValidationMsg: '',
-            lastNameValidationStatus: null,
-            phoneNumber: '',
-            phoneNumberValidationMsg: '',
-            phoneNumberValidationStatus: null,
+            ...fieldsInitialValues,
             remainOnPage: false
-        };
-    };
+        }
+    }
 
     handleChangeEmail = (e) => {
 
@@ -172,15 +173,23 @@ class AddCandidate extends React.Component {
         let HTTP_STATUS_CREATED = 201;
         let result = this.props.addCandidate(candidate);
         showNotification(result, HTTP_STATUS_CREATED, "create");
-        if (!this.state.remainOnPage) {
-            window.location.href = '#/';
-        }
 
         return result;
     };
 
+    afterSubmit = () => {
+        if (this.state.remainOnPage) {
+            this.setState({
+                ...fieldsInitialValues
+            });
+        } else {
+            window.location.href = '#/';
+        }
+    };
+
     formValid = () => {
-        return (this.state.emailAddressValidationStatus === 'success' && this.state.firstNameValidationStatus === 'success' && this.state.lastNameValidationStatus === 'success' && this.state.phoneNumberValidationStatus === 'success')
+        return (this.state.emailAddressValidationStatus === 'success' && this.state.firstNameValidationStatus === 'success'
+        && this.state.lastNameValidationStatus === 'success' && this.state.phoneNumberValidationStatus === 'success')
     };
 
     render() {
@@ -234,7 +243,7 @@ class AddCandidate extends React.Component {
                 {/* Buttons section */}
                 <Row>
                     <Col xs={4} md={3}>
-                        <ButtonAddCandidate formValid={this.formValid()} submitCandidate={this.submitCandidate} />
+                        <ButtonAddCandidate formValid={this.formValid()} submitCandidate={() => this.submitCandidate()} afterSubmit={() => this.afterSubmit()}/>
                     </Col>
                     <Col xs={14} md={9}>
                         <Button id="btn-home" className="float-right candidateCustomButton" href="/">Home</Button>

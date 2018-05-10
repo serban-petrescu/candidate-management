@@ -90,7 +90,7 @@ class CandidatesValidationTable extends MainCandidatesTable {
                 selected: []
             });
             this.loadData();
-        })
+        });
     };
 
     selectFormatter = (cell, row) => {
@@ -138,7 +138,7 @@ class CandidatesValidationTable extends MainCandidatesTable {
                     Remove
                 </a>
             </ButtonGroup>
-        )
+        );
     };
 
     /**

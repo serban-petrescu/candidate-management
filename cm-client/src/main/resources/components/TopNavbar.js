@@ -11,13 +11,13 @@ import 'react-notifications/lib/notifications.css';
 export default class TopNavbar extends React.Component {
     constructor(props) {
         super(props);
-        if (window.location.href === '#/') {
+        if (window.location.href.indexOf('validation') !== -1 ) {
             this.state = {
-                activeKey: 1
+                activeKey: 2
             };
         } else {
             this.state = {
-                activeKey: 2
+                activeKey: 1
             };
         }
 

@@ -17,6 +17,7 @@ export default class ButtonAddCandidate extends React.Component {
         this.props.submitCandidate()
             .then((response) => {
                 this.setState({isLoading: false});
+                this.props.afterSubmit();
             })
     };
 

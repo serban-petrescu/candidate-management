@@ -63,14 +63,14 @@ class ValidationDialog extends React.Component {
                     </Modal.Body>
                 </Modal>
             </div>
-        )
+        );
     }
 }
 
 function mapStateToProps(state) {
     return {
         activeCandidate: state.activeCandidate
-    }
+    };
 }
 
 function mapDispatchToProps(dispatch) {

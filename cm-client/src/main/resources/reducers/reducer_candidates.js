@@ -13,9 +13,8 @@ export default function (state = [], action) {
         case ADD_CANDIDATE:
             return [action.payload.response.data, ...state];
         case EDIT_CANDIDATE:
+        case ADD_CANDIDATE_NOTE:
             return null;
-        case LOAD_CANDIDATES:
-            return action.payload;
         case REMOVE_CANDIDATE:
             const responseStatus = action.payload.response.status;
             if (responseStatus >= 200 && responseStatus < 300) {
@@ -24,10 +23,8 @@ export default function (state = [], action) {
                 });
             }
             break;
-        case ADD_CANDIDATE_NOTE:
-            return null;
+        case LOAD_CANDIDATES:
         case FETCH_CANDIDATE_SKILLS:
-            return action.payload;
         case FETCH_CANDIDATE_EDUCATION:
             return action.payload;
 

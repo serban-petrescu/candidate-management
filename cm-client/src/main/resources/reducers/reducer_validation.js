@@ -10,14 +10,11 @@ import {LOAD_NOT_VALIDATED_CANDIDATES, VALIDATE_CANDIDATE, VALIDATE_CANDIDATES, 
 export default function (state = [], action) {
 
     switch (action.type) {
-        case LOAD_NOT_VALIDATED_CANDIDATES:
-            return action.payload;
         case VALIDATE_CANDIDATE:
-            return null;
         case VALIDATE_CANDIDATES:
-            return null;
         case DELETE_CANDIDATES:
             return null;
+        case LOAD_NOT_VALIDATED_CANDIDATES:
         case EDIT_NOT_VALIDATED_CANDIDATE:
             return action.payload;
     }
