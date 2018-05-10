@@ -189,7 +189,7 @@ class AddCandidate extends React.Component {
 
     formValid = () => {
         return (this.state.emailAddressValidationStatus === 'success' && this.state.firstNameValidationStatus === 'success'
-        && this.state.lastNameValidationStatus === 'success' && this.state.phoneNumberValidationStatus === 'success')
+        && this.state.lastNameValidationStatus === 'success' && this.state.phoneNumberValidationStatus === 'success');
     };
 
     render() {

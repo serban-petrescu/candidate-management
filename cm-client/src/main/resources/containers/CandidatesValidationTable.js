@@ -155,7 +155,7 @@ class CandidatesValidationTable extends MainCandidatesTable {
                 <Tab eventKey={3} title="Notes"><NotesList notesUrl={row._links.candidateNotesList.href}
                                                        candidate={row}/></Tab>
             </Tabs>
-        )
+        );
     };
 
     loadData = () => {
