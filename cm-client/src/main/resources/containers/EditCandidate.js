@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Modal, Form, FormGroup, Col, FormControl, ControlLabel} from 'react-bootstrap';
 import {bindActionCreators} from "redux";
-import {editCandidate} from "../actions/index";
+import {editCandidate} from "../actions/CandidateActions";
 import {connect} from "react-redux";
 import {showNotification} from '../utils/ApiNotification.js';
 /**
@@ -59,8 +59,10 @@ class EditCandidate extends React.Component {
     };
     updateCandidatePersonalInfo = () => {
         let result = this.props.editCandidate(this.state.candidate);
+        result.then (() => {
+            this.props.onEdit();
+        });
         let HTTP_STATUS_OK = 200;
-
         showNotification(result, HTTP_STATUS_OK, "update");
         this.setState({showModal: false});
     };
@@ -125,6 +127,7 @@ class EditCandidate extends React.Component {
         )
     }
 }
+
 /**
  * Hook components up to redux actions without having a dependency on redux using
  * bindActionsCreators function.

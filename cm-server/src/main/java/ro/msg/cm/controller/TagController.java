@@ -25,7 +25,7 @@ public class TagController {
     }
 
     @GetMapping("/{id}")
-    public Resource<Tag> getTag(@PathVariable long id) {
+    public Resource<Tag> getTag(@PathVariable Long id) {
         return linkMapper.tagToResource(tagRepository.findOne(id));
     }
 
@@ -47,14 +47,14 @@ public class TagController {
     }
 
     @PutMapping("/{id}")
-    public Resource<Tag> putTag(@PathVariable long id, @RequestBody Tag tag) {
+    public Resource<Tag> putTag(@PathVariable Long id, @RequestBody Tag tag) {
         tag.setId(id);
         return linkMapper.tagToResource(tagRepository.save(tag));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTag(@PathVariable long id) {
+    public void deleteTag(@PathVariable Long id) {
         tagRepository.delete(id);
     }
 

@@ -1,0 +1,17 @@
+import React from 'react';
+import CandidatesValidationTable from '../containers/CandidatesValidationTable';
+/**
+ * Main component which is built from the body component(Candidate table) and the top
+ * navigation bar,
+ * @returns {XML}
+ */
+const Validation = () => {
+
+    return (
+        <div>
+            <CandidatesValidationTable/>
+        </div>
+    );
+};
+
+export default Validation;

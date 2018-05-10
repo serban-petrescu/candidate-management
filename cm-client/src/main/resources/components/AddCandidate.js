@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormGroup, FormControl, ControlLabel, HelpBlock, Button, Grid, Row, Col} from 'react-bootstrap';
-import {addCandidate} from '../actions/index';
+import {addCandidate} from '../actions/CandidateActions';
 import '../less/addCandidate.less';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -16,6 +16,22 @@ function FieldGroup({id, label, validationState, help, ...props}) {
         </FormGroup>
     )
 }
+
+let fieldsInitialValues = {
+    emailAddress: '',
+    emailAddressValidationMsg: '',
+    emailAddressValidationStatus: null,
+    firstName: '',
+    firstNameValidationMsg: '',
+    firstNameValidationStatus: null,
+    lastName: '',
+    lastNameValidationMsg: '',
+    lastNameValidationStatus: null,
+    phoneNumber: '',
+    phoneNumberValidationMsg: '',
+    phoneNumberValidationStatus: null
+};
+
 /**
  * Component handling the add operation of a candidate
  */
@@ -23,26 +39,11 @@ class AddCandidate extends React.Component {
 
     constructor(props) {
         super(props);
-        this.setInitialValues();
-    }
-
-    setInitialValues = () => {
         this.state = {
-            emailAddress: '',
-            emailAddressValidationMsg: '',
-            emailAddressValidationStatus: null,
-            firstName: '',
-            firstNameValidationMsg: '',
-            firstNameValidationStatus: null,
-            lastName: '',
-            lastNameValidationMsg: '',
-            lastNameValidationStatus: null,
-            phoneNumber: '',
-            phoneNumberValidationMsg: '',
-            phoneNumberValidationStatus: null,
+            ...fieldsInitialValues,
             remainOnPage: false
-        };
-    };
+        }
+    }
 
     handleChangeEmail = (e) => {
 
@@ -124,7 +125,7 @@ class AddCandidate extends React.Component {
         }
 
         else {
-            const regexCheckResult = this.checkRegexAndGetMessage(phoneNumber, /^(\+)?[0-9]{10,}$/);
+            const regexCheckResult = this.checkRegexAndGetMessage(phoneNumber, /^(0|(0040|004\s0)|(\+40|\+4\s0))([0-9]{3}\s?|[0-9]{2}\s[0-9])(([0-9]{3}\s?){2}|([0-9]{2}\s?){3})$/);
             validationMessage = regexCheckResult.validationMessage;
             validationStatus = regexCheckResult.validationStatus;
         }
@@ -173,15 +174,22 @@ class AddCandidate extends React.Component {
         let result = this.props.addCandidate(candidate);
         showNotification(result, HTTP_STATUS_CREATED, "create");
 
-        if (!this.state.remainOnPage) {
-            window.location.href = '#/';
-        }
-
         return result;
     };
 
+    afterSubmit = () => {
+        if (this.state.remainOnPage) {
+            this.setState({
+                ...fieldsInitialValues
+            });
+        } else {
+            window.location.href = '#/';
+        }
+    };
+
     formValid = () => {
-        return (this.state.emailAddressValidationStatus === 'success' && this.state.firstNameValidationStatus === 'success' && this.state.lastNameValidationStatus === 'success' && this.state.phoneNumberValidationStatus === 'success')
+        return (this.state.emailAddressValidationStatus === 'success' && this.state.firstNameValidationStatus === 'success'
+        && this.state.lastNameValidationStatus === 'success' && this.state.phoneNumberValidationStatus === 'success');
     };
 
     render() {
@@ -230,12 +238,12 @@ class AddCandidate extends React.Component {
                                 onChange={this.handleChangePhoneNumber}>
                     </FieldGroup>
                     <input id="checkbox_stay_on_page" type="checkbox" checked={this.state.remainOnPage} onClick={this.handleCheckbox}/>
-                    <label for="checkbox_stay_on_page" className="checkbox-label">Remain on the current page to add another candidate</label>
+                    <label className="checkbox-label">Remain on the current page to add another candidate</label>
                 </form>
                 {/* Buttons section */}
                 <Row>
                     <Col xs={4} md={3}>
-                        <ButtonAddCandidate formValid={this.formValid()} submitCandidate={this.submitCandidate} />
+                        <ButtonAddCandidate formValid={this.formValid()} submitCandidate={() => this.submitCandidate()} afterSubmit={() => this.afterSubmit()}/>
                     </Col>
                     <Col xs={14} md={9}>
                         <Button id="btn-home" className="float-right candidateCustomButton" href="/">Home</Button>

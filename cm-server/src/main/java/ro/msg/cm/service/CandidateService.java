@@ -26,6 +26,16 @@ public class CandidateService {
 
     private final CandidateRepository candidateRepository;
     private final DuplicateFinderService duplicateFinderService;
+    /**
+     * this regex matches Romanian phone numbers like:
+     * +40741 234 567
+     * +40741 23 45 67
+     * +4 074 123 45 67
+     * where all of the spaces are optional, therefore a number without spaces is also valid AND
+     * +4 is optional OR
+     * +4 can be replaced with 004
+     */
+    private static final String PHONE_REGEX="^(0|(0040|004\\s0)|(\\+40|\\+4\\s0))([0-9]{3}\\s?|[0-9]{2}\\s[0-9])(([0-9]{3}\\s?){2}|([0-9]{2}\\s?){3})$";
 
     @Autowired
     public CandidateService(CandidateRepository candidateRepository, DuplicateFinderService duplicateFinderService) {
@@ -36,13 +46,23 @@ public class CandidateService {
     public Candidate patchCandidate(CandidateDto patchCandidate, Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
         if (candidate != null) {
-            if (!isEmail(patchCandidate.getEmail())) {
-                throw new PatchCandidateInvalidValueException();
+            if (!isEmailValid(patchCandidate.getEmail())) {
+                throw new PatchCandidateInvalidValueException("Invalid eMail");
             }
-            if (!isPhoneNr(patchCandidate.getPhone())) {
-                throw new PatchCandidateInvalidValueException();
+            if (!isPhoneNrValid(patchCandidate.getPhone())) {
+                throw new PatchCandidateInvalidValueException("Invalid phone number");
             }
             candidate = CandidateMapper.map(patchCandidate.getChangedAttributes(), candidate);
+            return candidateRepository.save(candidate);
+        } else {
+            throw new CandidateNotFoundException();
+        }
+    }
+
+    public Candidate updateCandidate(CandidateDto candidateDto, Long id) {
+        Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
+        if (candidate != null) {
+            candidate = CandidateMapper.map(candidateDto.toMap(), candidate);
             return candidateRepository.save(candidate);
         } else {
             throw new CandidateNotFoundException();
@@ -117,11 +137,16 @@ public class CandidateService {
         return candidateRepository.findAllByCheckCandidate(CandidateCheck.NOT_YET_VALIDATED);
     }
 
-    private boolean isPhoneNr(Object object) {
-        return object == null || object.toString().matches("^\\d{10,15}$");
+    /**
+     *
+     * @param object phone number to validate
+     * @return true - is the given number matches aur regex
+     */
+    private boolean isPhoneNrValid(Object object) {
+        return object == null || object.toString().matches(PHONE_REGEX);
     }
 
-    private boolean isEmail(Object object) {
+    private boolean isEmailValid(Object object) {
         return object == null || new EmailValidator().isValid(object.toString(), null);
     }
 
