@@ -2,15 +2,22 @@ available-application-users:
   users:
     -
       username: "dinam"
-      password: "init"
+      password: "$2y$10$UZcwpJW5W5XApCAxtzaka.uk1HgWspj/ZkF73xSLpPBiOoSc4S78y"
       firstName: "Madalina"
       lastName: "Dina"
       email: "Madalina.Dina@msg.group"
       active: 1
     -
       username: "deacs"
-      password: "init"
+      password: "$2y$10$l4oIx3wwD8pgzF56Tyu5eO8145S5clW.AW99CX/2vCVVa.qLK1T3G"
       firstName: "Stefania"
       lastName: "Deac"
       email: "Stefania.Deac@msg.group"
+      active: 1
+    -
+      username: "vlasa"
+      password: "$2y$10$faFSJoEwteMzr4xp.nqjDeWKgTVZMI9wwzNEiaJSYiXqw9ghgFAZi"
+      firstName: "Alexandra"
+      lastName: "Vlas"
+      email: "Alexandra.Vlas@msg.group"
       active: 1
