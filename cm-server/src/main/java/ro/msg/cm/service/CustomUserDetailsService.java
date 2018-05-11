@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ro.msg.cm.model.CustomUserDetails;
-import ro.msg.cm.model.User;
+import ro.msg.cm.model.Users;
 import ro.msg.cm.repository.UserRepository;
 
 import java.util.Optional;
@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> optionalUser = userRepository.findByUsername(username);
+		Optional<Users> optionalUser = userRepository.findByUsername(username);
 
 		optionalUser
 				.orElseThrow(() -> new UsernameNotFoundException("Username not found"));
