@@ -1,7 +1,7 @@
 import React from 'react';
-import msgLogo from '../assets/images/msgLogo.png'
-import "roboto-fontface/css/roboto/roboto-fontface.css"
-import '../less/candidateTopNavbar.less';
+import msgLogo from '../assets/images/msgLogo.png';
+import "roboto-fontface/css/roboto/roboto-fontface.css";
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
@@ -9,25 +9,51 @@ import 'react-notifications/lib/notifications.css';
  * Component containing the msg logo and the top navigation bar
  */
 export default class TopNavbar extends React.Component {
+    constructor(props) {
+        super(props);
+        if (window.location.href.indexOf('validation') !== -1 ) {
+            this.state = {
+                activeKey: 2
+            };
+        } else {
+            this.state = {
+                activeKey: 1
+            };
+        }
+
+    }
+
+    handleSelect = (selectedKey) => {
+        this.setState({activeKey:selectedKey});
+        if(selectedKey === 1) {
+            window.location.href = '#/';
+        } else {
+            window.location.href = '#/validation';
+        }
+    };
 
     render() {
-
         return (
             <div>
                 <NotificationContainer/>
-                <nav  className="navbar navbar-default navbar-fixed-top">
-                    <div className="container-fluid">
-                        <div className="navbar-header">
-                            <a className="navbar-brand" href="#">
-                                <img href="${ROOT_URL}:3000" alt="Brand" src={msgLogo} width={100} height={35}/>
-                            </a>
+                <Navbar fluid>
+                    <Navbar.Header>
+                        <Navbar.Brand>
+                            <img href="/" alt="Brand" src={msgLogo} width={100} height={35}/>
+                        </Navbar.Brand>
+                        <Navbar.Toggle/>
+                    </Navbar.Header>
 
-                        </div>
-                    </div>
+                    <Navbar.Collapse>
+                        <Nav activeKey={this.state.activeKey} onSelect={this.handleSelect} className="navBar">
+                            <NavItem eventKey={1}>Home</NavItem>
+                            <NavItem eventKey={2}>Validation</NavItem>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
 
-                </nav>
                 <div className="page-header candidate-top-navbar">
-                                    <h1>Candidate Management</h1>
+                    <h1>Candidate Management</h1>
                 </div>
             </div>
         );

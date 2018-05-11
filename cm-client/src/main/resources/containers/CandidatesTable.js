@@ -1,43 +1,57 @@
 import React from 'react';
-import {SearchField, BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {SearchField} from 'react-bootstrap-table';
 import {Tab, Tabs} from 'react-bootstrap';
-import {sortByLastName, sortByFirstName} from '../utils/sorting-comparators';
 import EditCandidate from './EditCandidate';
 import ConfirmationDialog from './ConfirmationDialog';
 import '../less/candidateTable.less';
 import "../less/roboto.less";
 import SkillsList from '../components/SkillsList'
 import {connect} from 'react-redux';
-import {selectCandidate, loadCandidates} from '../actions/index';
+import {loadCandidates, selectCandidate} from '../actions/CandidateActions';
 import {bindActionCreators} from 'redux';
 import EducationList from "../components/EducationList";
 import NotesList from "../components/NotesList";
-
+import MainCandidatesTable from "../components/MainCandidatesTable";
+import {Columns} from "../utils/Column";
 
 /**
  * Main Component containing the table where all the Candidates will be viewed and
  * processed.
  */
-class CandidatesTable extends React.Component {
+class CandidatesTable extends MainCandidatesTable {
 
     constructor(props) {
         // State does not contain candidate because they are kept in the global state
         super(props);
 
-        // We have 4 custom components
-        // using the deleteBtn as an workaround for missing additionalButtons functionality
-        // alternative :https://github.com/AllenFang/react-bootstrap-table/commit/7e9b799d9ea555c374023fff179040c2ced6d6c0
-        this.options = {
-            defaultSortName: 'lastName',
-            defaultSortOrder: 'asc',
-            insertBtn: this.addCandidateButton,
-            paginationPosition: 'bottom',
-            exportCSVBtn: this.CustomExportCSVButton,
-            searchField: this.CustomSearchField,
-            expandBy: 'column',
-            deleteBtn: this.importButton,
+        this.columnsConfig.addColumn(Columns.createColumnWithOptions("id", "Actions", {
+            dataFormat: this.actionsFormatter,
+            expandable: false
+        }));
+    }
+
+    getTableOptions() {
+        let props = super.getTableOptions();
+
+        props = {
+            ...props,
+            exportCSV: true,
+            expandComponent: this.expandCandidateDetails,
+            insertRow: true,
+            expandableRow: () => {
+                return true;
+            }
         };
 
+        props.options = {
+            ...props.options,
+            insertBtn: this.addCandidateButton,
+            exportCSVBtn: this.CustomExportCSVButton,
+            deleteBtn: this.importButton,
+            expandBy: 'column'
+        };
+
+        return props;
     }
 
     /**
@@ -49,24 +63,29 @@ class CandidatesTable extends React.Component {
      */
     actionsFormatter = (cell, row) => {
         return (<div style={{display: "inline"}} onClick={() => this.props.selectCandidate(row)}>
-            <EditCandidate candidate={row}/>
-            <ConfirmationDialog/>
+            <EditCandidate candidate={row} onEdit={() => this.loadData()}/>
+            <ConfirmationDialog onRemove={() => this.loadData() }/>
         </div>);
     };
 
     componentDidMount() {
-        this.props.loadCandidates();
+        this.loadData();
     }
 
     addCandidateButton = () => {
         return (
-            <a href="#/addCandidate" className="btn-lg candidateCustomButton" role="button" style={ {marginRight: 25}}>Add Candidate</a>
+            <a href="#/addCandidate" className="btn-lg candidateCustomButton" role="button" style={ {marginRight: 25}}>Add
+                Candidate</a>
         );
+    };
+
+    loadData = () => {
+        this.props.loadCandidates();
     };
 
     importButton = () => {
         return (
-            <a href="import" className="btn-lg candidateCustomButton" role="button">Import CSV</a>
+            <a href="#/import" className="btn-lg candidateCustomButton" role="button">Import CSV</a>
         );
     };
 
@@ -79,7 +98,8 @@ class CandidatesTable extends React.Component {
     CustomExportCSVButton = (onClick) => {
         return (
 
-            <a className="btn-lg candidateCustomButton" role="button" onClick={ onClick } style={ {marginRight: 25}}>Export CSV</a>
+            <a className="btn-lg candidateCustomButton" role="button" onClick={onClick} style={{marginRight: 25}}>Export
+                CSV</a>
 
         );
     };
@@ -90,66 +110,15 @@ class CandidatesTable extends React.Component {
      * @returns {JSX}
      */
     expandCandidateDetails = (row) => {
-        let candidate = [];
-        candidate.push(row);
-
         return (
             <Tabs id="controlled-tab-example">
                 <Tab eventKey={1} title="Skills"><SkillsList skillsUrl={row._links.candidateSkillsList.href}/></Tab>
-                <Tab eventKey={2} title="Education"> <EducationList educationLink={row._links.education.href}/></Tab>
-                <Tab eventKey={3} title="Notes"><NotesList notesUrl={row._links.candidateNotesList.href} candidate={row}/></Tab>
+                <Tab eventKey={2} title="Education"> <EducationList
+                    educationLink={row._links.education.href}/></Tab>
+                <Tab eventKey={3} title="Notes"><NotesList notesUrl={row._links.candidateNotesList.href}
+                                                           candidate={row}/></Tab>
             </Tabs>
         )
-    };
-
-    /**
-     * Placeholder for each of the filters
-     * @param placeHolder field name where filter input will be placed
-     * @returns {{type: string, placeholder: *, delay: number}}
-     */
-    getFilter(placeHolder) {
-        return {
-            type: 'RegexFilter',
-            placeholder: placeHolder,
-            delay: 1000
-        }
-    }
-
-    isExpandableRow = () => {
-        return true;
-    };
-
-
-
-    /**
-     * Bootstrap table instance. The table is built based on the data provided in data={this.props.candidates} and the header columns.
-     *  Each Header Column has a dataField which coincides with the a field present in a row(candidate) dataField='id'. The table is automatically built
-     *  based on these two pieces of information. The custom components are fed to the table through the options property.
-     *  @link http://allenfang.github.io/react-bootstrap-table/example.html#custom
-        * @returns {XML}
-     */
-    render() {
-
-        return (
-            <BootstrapTable tableBodyClass='candidateTableBodyClass' tableHeaderClass='candidateTableHeaderClass' bordered={false} hover={true} striped={true}
-                            data={this.props.candidates } options={this.options} pagination
-                            exportCSV={true} expandComponent={ this.expandCandidateDetails }
-                            expandableRow={this.isExpandableRow} search insertRow deleteRow>
-
-                <TableHeaderColumn dataField='id' filter={this.getFilter('Id')} isKey={ true }
-                    width="70">Id</TableHeaderColumn>
-                <TableHeaderColumn dataField='firstName' filter={this.getFilter('First Name')} dataSort
-                                   sortFunc={sortByFirstName}>First
-                    Name</TableHeaderColumn>
-                <TableHeaderColumn dataField='lastName' filter={this.getFilter('Last Name')} dataSort
-                                   sortFunc={sortByLastName}>Last Name</TableHeaderColumn>
-                <TableHeaderColumn dataField='email' filter={this.getFilter('Email')}>Email</TableHeaderColumn>
-                <TableHeaderColumn dataField='phone'>Phone</TableHeaderColumn>
-                <TableHeaderColumn expandable={false} dataField='actions' dataFormat={ this.actionsFormatter } width="120">
-                    Actions
-                </TableHeaderColumn>
-            </BootstrapTable>
-        );
     }
 }
 
@@ -158,6 +127,7 @@ function mapStateToProps(state) {
         candidates: state.candidates
     };
 }
+
 // Anything returned from this function will end up as props
 // on the ConfirmationDialog component
 function mapDispatchToProps(dispatch) {

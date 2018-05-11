@@ -14,11 +14,10 @@ export default class ButtonAddCandidate extends React.Component {
 
     handleClick = () => {
         this.setState({isLoading: true});
-        this.props.setConfirmationStatus('pending');
         this.props.submitCandidate()
             .then((response) => {
                 this.setState({isLoading: false});
-                this.props.setConfirmationStatus(response.payload.response.status === 201 ? 'success' : 'failed');
+                this.props.afterSubmit();
             })
     };
 

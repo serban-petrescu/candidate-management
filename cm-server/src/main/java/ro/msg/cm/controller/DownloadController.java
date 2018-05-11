@@ -1,18 +1,9 @@
 package ro.msg.cm.controller;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
@@ -23,6 +14,15 @@ import ro.msg.cm.model.Tag;
 import ro.msg.cm.repository.CandidateRepository;
 import ro.msg.cm.repository.EducationRepository;
 import ro.msg.cm.repository.TagRepository;
+import ro.msg.cm.types.CandidateCheck;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.Writer;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/download")
@@ -34,44 +34,51 @@ public class DownloadController {
 
     @Autowired
     public DownloadController(CandidateRepository candidateRepository, EducationRepository educationRepository, TagRepository tagRepository) {
-       this.candidateRepository = candidateRepository;
-       this.educationRepository = educationRepository;
-       this.tagRepository =tagRepository;
+        this.candidateRepository = candidateRepository;
+        this.educationRepository = educationRepository;
+        this.tagRepository = tagRepository;
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @PostMapping("/list")
     public void downloadCandidateCsv(HttpServletResponse response) throws IOException {
-        String[] headers= {"firstName", "lastName", "phone", "email", "educationStatus", "originalStudyYear", "event"};
+        String[] headers = {"firstName", "lastName", "phone", "email", "educationStatus", "originalStudyYear", "event"};
         writeResponse(response, candidateRepository, Candidate.class);
         //Local : createCSV(new FileWriter(csvFileName),candidateRepository,Candidate.class);
     }
 
 
-    @RequestMapping(value = "/education", method = RequestMethod.POST)
+    @PostMapping("/education")
     public void downloadEducationCsv(HttpServletResponse response) throws IOException {
         writeResponse(response, educationRepository, Education.class);
 
     }
-    @RequestMapping(value = "/tag", method = RequestMethod.POST)
+
+    @PostMapping("/tag")
     public void downloadTagCsv(HttpServletResponse response) throws IOException {
         writeResponse(response, tagRepository, Tag.class);
     }
 
 
     private void writeResponse(HttpServletResponse response, CrudRepository repository, Class obj) throws IOException {
-        String csvFileName = obj.getSimpleName()+".csv";
+        String csvFileName = obj.getSimpleName() + ".csv";
         String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
 
         response.setContentType("text/csv");
         response.setHeader(headerKey, headerValue);
 
-        createCSV(response.getWriter(),repository,obj);
+        createCSV(response.getWriter(), repository, obj);
     }
 
     private void createCSV(Writer writer, CrudRepository repo, Class obj) throws IOException {
         String[] headers = determineHeader(obj);
-        Iterable repoList = repo.findAll();
+        Iterable repoList;
+        // This is in place to read only the valid candidates
+        if (repo instanceof CandidateRepository) {
+            repoList = ((CandidateRepository) repo).findAllByCheckCandidate(CandidateCheck.VALIDATED);
+        } else {
+            repoList = repo.findAll();
+        }
         // uses the Super CSV API to generate CSV data from the model data
         ICsvBeanWriter csvWriter = new CsvBeanWriter(writer, CsvPreference.STANDARD_PREFERENCE);
         csvWriter.writeHeader(headers);
@@ -81,15 +88,16 @@ public class DownloadController {
         csvWriter.close();
     }
 
-    private String[] determineHeader(Class obj){
+    private String[] determineHeader(Class obj) {
         Field[] fields = obj.getDeclaredFields();
         List<String> header = new ArrayList<>();
 
-        for(Field field:fields)
-            if(!field.getName().equals("id"))
+        for (Field field : fields)
+            if (!field.getName().equals("id")) {
                 header.add(field.getName());
+            }
         System.out.println(Collections.singletonList(header));
-        String[] headers=new String[header.size()];
+        String[] headers = new String[header.size()];
         return header.toArray(headers);
     }
 }

@@ -21,7 +21,9 @@ import javax.persistence.Id;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Education {
-    private @Id @GeneratedValue Long id;
+    private @Id
+    @GeneratedValue
+    Long id;
     @Parsed
     private String educationType; //high-school, requalification, bachelor, master, phd
     @Parsed
@@ -31,9 +33,10 @@ public class Education {
     @Parsed
     private int duration;
 
-    public Education(){}
+    public Education() {
+    }
 
-    public Education(String educationType, String provider, String description, int duration){
+    public Education(String educationType, String provider, String description, int duration) {
         this.educationType = educationType;
         this.provider = provider;
         this.description = description;

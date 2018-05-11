@@ -1,8 +1,9 @@
 import React from 'react';
 import {Button, Modal, FormGroup, Col} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {removeCandidate} from '../actions/index';
-import {bindActionCreators} from 'redux'
+import {removeCandidate} from '../actions/CandidateActions';
+import {bindActionCreators} from 'redux';
+import {showNotification} from '../utils/ApiNotification';
 
 class ConfirmationDialog extends React.Component {
 
@@ -26,7 +27,12 @@ class ConfirmationDialog extends React.Component {
 
     removeCandidate = () => {
         this.setState({showModal: false});
-        this.props.removeCandidate(this.props.activeCandidate.id);
+        let result = this.props.removeCandidate(this.props.activeCandidate.id);
+        result.then (() => {
+            this.props.onRemove();
+        });
+        let HTTP_STATUS_NO_CONTENT = 204;
+        showNotification(result, HTTP_STATUS_NO_CONTENT, "delete");
     };
 
     render() {
@@ -47,7 +53,7 @@ class ConfirmationDialog extends React.Component {
                         <FormGroup>
                             <Col sm={10}>
                                 Are you sure you want to delete candidate
-                                <strong>{activeCandidate != null ? ' ' + activeCandidate.lastName + ' ' + activeCandidate.firstName : ''}</strong>?
+                                <strong>{activeCandidate != null ? ' ' + activeCandidate.firstName + ' ' + activeCandidate.lastName : ''}</strong>?
                             </Col>
                             <Col>
                                 <Button onClick={this._removeCandidate} className="margin-right2">Yes</Button>
@@ -61,7 +67,6 @@ class ConfirmationDialog extends React.Component {
     }
 }
 
-
 function mapStateToProps(state) {
     return {
         activeCandidate: state.activeCandidate
@@ -74,12 +79,12 @@ function mapStateToProps(state) {
  * @param dispatch
  * @returns {{removeCandidate: removeCandidate}|B|N}
  */
-
 function mapDispatchToProps(dispatch) {
     // whenever deleteCandidate is called, the result should be passed
     // to all our reducers
     return bindActionCreators({removeCandidate: removeCandidate}, dispatch);
 }
+
 /**
  * Connect components to the redux store of the application
  */

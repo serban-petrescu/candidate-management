@@ -17,18 +17,33 @@ import java.time.LocalDate;
 @Entity
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CandidateNotes {
-    private @Id @GeneratedValue Long id;
-    private @ManyToOne(fetch = FetchType.EAGER) @JoinColumn(name="candidate_id", insertable=true) Candidate candidate;
+    private @Id
+    @GeneratedValue
+    Long id;
+    private @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "candidate_id", insertable = true)
+    Candidate candidate;
     private String status;
     private String note;
     private LocalDate date;
+    @Transient
+    private Long candidateId;
 
-    public CandidateNotes(){}
+    public CandidateNotes() {
+    }
 
     public CandidateNotes(Candidate candidate, String status, String note, LocalDate date) {
-        this.candidate=candidate;
+        this.candidate = candidate;
         this.status = status;
-        this.note=note;
-        this.date=date;
+        this.note = note;
+        this.date = date;
     }
+
+    public CandidateNotes(Long candidateId, String status, String note, LocalDate date) {
+        this.candidateId = candidateId;
+        this.status = status;
+        this.note = note;
+        this.date = date;
+    }
+
 }
