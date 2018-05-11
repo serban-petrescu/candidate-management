@@ -1,6 +1,8 @@
 package ro.msg.cm.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ro.msg.cm.types.CandidateCheck;
 
 import java.time.LocalDate;
@@ -8,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CandidateDto {
 
     private Map<String, Object> changedAttributes = new HashMap<>();
@@ -76,4 +80,18 @@ public class CandidateDto {
         changedAttributes.put("currentStudyYear", currentStudyYear);
     }
 
+    public Map<String, Object> toMap() {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("firstName", firstName);
+        resultMap.put("lastName", lastName);
+        resultMap.put("phone", phone);
+        resultMap.put("email", email);
+        resultMap.put("educationStatus", educationStatus);
+        resultMap.put("originalStudyYear", originalStudyYear);
+        resultMap.put("event", event);
+        resultMap.put("dateOfAdding", dateOfAdding);
+        resultMap.put("checkCandidate", checkCandidate);
+        resultMap.put("currentStudyYear", currentStudyYear);
+        return resultMap;
+    }
 }

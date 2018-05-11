@@ -2,6 +2,7 @@ import React from 'react';
 import AddCandidate from './AddCandidate';
 import {HashRouter as Router, Route} from 'react-router-dom';
 import TopNavbar from './TopNavbar';
+import Validation from './Validation';
 import Home from './Home';
 import Import from './Import';
 /**
@@ -17,6 +18,7 @@ class App extends React.Component {
                     <TopNavbar/>
                     <Route exact={true} path="/" component={Home}/>
                     <Route path="/addCandidate" component={AddCandidate}/>
+                    <Route path="/validation" component={Validation}/>
                     <Route path="/import" component={Import}/>
 
                 </div>

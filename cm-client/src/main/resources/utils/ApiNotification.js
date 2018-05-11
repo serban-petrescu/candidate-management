@@ -1,26 +1,41 @@
 import {NotificationManager} from 'react-notifications';
 
-
 function getMessages(action) {
-    let verb = "";
+    let successMessage = "";
+    let errorMessage = "";
 
     switch(action) {
         case "update":
-            verb = "updated";
+            successMessage = "Candidate was successfully updated!";
+            errorMessage = "Candidate could not be updated!";
             break;
         case "delete":
-            verb = "deleted";
+            successMessage = "Candidate was successfully deleted!";
+            errorMessage = "Candidate could not be deleted!";
             break;
         case "create":
-            verb = "created";
+            successMessage = "Candidate was successfully created!";
+            errorMessage = "Candidate could not be created!";
+            break;
+        case "validate":
+            successMessage = "Candidate was successfully validated!";
+            errorMessage = "Candidate could not be validated!";
+            break;
+        case "validateSelected":
+            successMessage = "Selected candidates were successfully validated!";
+            errorMessage = "Selected candidates could not be validated!";
+            break;
+        case "deleteSelected":
+            successMessage = "Selected candidates were successfully deleted!";
+            errorMessage = "Selected candidates could not be deleted!";
             break;
         default:
             throw new Error("Invalid action: '" + action + "'");
     }
 
     return {
-        success: "Candidate was successfully " + verb + "!",
-        error: "Candidate could not be " + verb + "!"
+        success: successMessage,
+        error: errorMessage
     };
 }
 
@@ -47,6 +62,5 @@ export function showNotification(promise, requiredStatus, action) {
             }
         }).catch((error) => {
             NotificationManager.error(message.error, "Error", 4000);
-            return;
         });
 }

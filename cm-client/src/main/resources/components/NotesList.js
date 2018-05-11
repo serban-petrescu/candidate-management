@@ -1,13 +1,15 @@
 import React from 'react';
-import {fetchNotesForCandidate} from "../utils/api";
+import {fetchNotesForCandidate} from "../utils/CandidateAPI";
 import { BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import '../less/candidateNotesTable.less';
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 import AddNoteModal from "../containers/AddNoteModal";
 /**
  * Component used to display all the notes of the selected candidate
  * by accessing the Notes tab. Notes List is built from a a list of NotesItems.
  */
-export default class NotesList extends React.Component {
+class NotesList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -25,16 +27,20 @@ export default class NotesList extends React.Component {
     }
 
     componentDidMount() {
+        this.loadNodes();
+    }
+
+    loadNodes = () => {
         fetchNotesForCandidate(this.props.notesUrl).then(data => {
             let candidateA = this.state.candidate;
             candidateA.candidateNotesList=data;
             this.setState({candidate: candidateA});
         });
-    }
+    };
 
     addCandidateNoteButton = () => {
         return (
-            <AddNoteModal candidate={this.state.candidate} existingCandidateNotes={this.state.data}/>
+            <AddNoteModal candidate={this.state.candidate} existingCandidateNotes={this.state.data} onAdd={() => this.loadNodes()}/>
         );
     };
 
@@ -51,3 +57,9 @@ export default class NotesList extends React.Component {
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({fetchNotesForCandidate}, dispatch);
+}
+
+export default connect(null, mapDispatchToProps) (NotesList);

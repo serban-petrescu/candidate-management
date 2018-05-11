@@ -26,6 +26,8 @@ public class CandidateNotes {
     private String status;
     private String note;
     private LocalDate date;
+    @Transient
+    private Long candidateId;
 
     public CandidateNotes() {
     }
@@ -36,4 +38,12 @@ public class CandidateNotes {
         this.note = note;
         this.date = date;
     }
+
+    public CandidateNotes(Long candidateId, String status, String note, LocalDate date) {
+        this.candidateId = candidateId;
+        this.status = status;
+        this.note = note;
+        this.date = date;
+    }
+
 }
