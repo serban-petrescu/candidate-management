@@ -6,6 +6,8 @@ export const ROOT_URL = "http://localhost";
 export const ROOT_URL_ANDROID = "http://10.0.2.2";
 export const PORT = 8080;
 export const CANDIDATES_URL = `${ROOT_URL}:${PORT}/api/candidates`;
+
+export const CANDIDATES_LIST_URL = `${ROOT_URL}:${PORT}/api/not-yet-validated-candidates/multiple`;
 export const CANDIDATES_URL_ANDROID = `${ROOT_URL_ANDROID}:${PORT}/api/candidates`;
 
 
@@ -22,6 +24,13 @@ export function addCandidate(candidate) {
     return {
         type: ADD_CANDIDATE,
         payload: insertCandidate(CANDIDATES_URL, candidate)
+    }
+}
+/**TODO candidates as list**/
+export function addCandidates(candidates) {
+    return {
+        type: ADD_CANDIDATE,
+        payload: insertCandidate(CANDIDATES_LIST_URL, candidates)
     }
 }
 

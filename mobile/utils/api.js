@@ -8,7 +8,7 @@ import axios from 'axios';
 * @returns {Promise}
 */
 export function addCandidate(url, candidate) {
-    console.log(axios);
+    console.log(candidate);
     return axios.post(url, candidate)
         .then((response) => {
         console.log(response);
@@ -21,3 +21,4 @@ export function addCandidate(url, candidate) {
             return error;
         });
 }
+
