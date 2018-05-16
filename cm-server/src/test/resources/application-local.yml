@@ -1,0 +1,5 @@
+zuul:
+  ignoredPatterns: /api/**
+  routes.ui:
+    path: /**
+    url: http://localhost:3000/
