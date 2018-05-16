@@ -1,10 +1,10 @@
 import React from 'react';
-import {SearchField} from 'react-bootstrap-table';
+import {SearchField, ButtonGroup} from 'react-bootstrap-table';
 import {Tab, Tabs} from 'react-bootstrap';
 import EditCandidate from './EditCandidate';
 import ConfirmationDialog from './ConfirmationDialog';
 import '../less/candidateTable.less';
-import "../less/roboto.less";
+import '../less/roboto.less';
 import SkillsList from '../components/SkillsList'
 import {connect} from 'react-redux';
 import {loadCandidates, selectCandidate} from '../actions/CandidateActions';
@@ -38,6 +38,7 @@ class CandidatesTable extends MainCandidatesTable {
             exportCSV: true,
             expandComponent: this.expandCandidateDetails,
             insertRow: true,
+            deleteRow: true,
             expandableRow: () => {
                 return true;
             }

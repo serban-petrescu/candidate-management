@@ -34,5 +34,5 @@ class App extends React.Component {
         );
     }
 }
-// <Route path="/addCandidateNote" component={AddNote}/>
+
 export default App;
