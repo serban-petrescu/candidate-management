@@ -15,7 +15,11 @@ import ro.msg.cm.types.CandidateCheck;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
+/**
+ * Controller responsible for actions on {@link CandidateCheck#VALIDATED} candidates
+ */
 @RestController
 @RequestMapping("/api/candidates")
 public class CandidateController {
@@ -36,7 +40,7 @@ public class CandidateController {
 
     @GetMapping
     public Resources<Resource<Candidate>> getAllValidatedCandidates() {
-        return linkMapper.candidateListToResourceForValidAndNonValid(candidateRepository.findAllByCheckCandidate(CandidateCheck.VALIDATED), true);
+        return linkMapper.candidateListToResource(candidateRepository.findAllByCheckCandidate(CandidateCheck.VALIDATED));
     }
 
     @PostMapping
@@ -53,11 +57,20 @@ public class CandidateController {
         return linkMapper.candidateListToResource((List<Candidate>) candidateRepository.save(candidates));
     }
 
+    /**
+     * update a candidate
+     *
+     * @param id        id of the candidate
+     * @param candidate candidate with changes
+     * @return updated candidate
+     */
     @PutMapping("/{id}")
-    public Resource<Candidate> putCandidate(@PathVariable Long id, @RequestBody Candidate candidate) {
-        if (candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED) != null) {
-            candidate.setCheckCandidate(CandidateCheck.VALIDATED);
-            candidate.setId(id);
+    public Resource<Candidate> updateCandidate(@PathVariable Long id, @RequestBody Candidate candidate) {
+        Optional<Candidate> dbCandidate = candidateRepository.findCandidateById(id);
+        if (dbCandidate.isPresent()) {
+            candidate.setEducation(dbCandidate.get().getEducation());
+            candidate.setCandidateNotesList(dbCandidate.get().getCandidateNotesList());
+            candidate.setCandidateSkillsList(dbCandidate.get().getCandidateSkillsList());
             return linkMapper.candidateToResource(candidateRepository.save(candidate));
         } else {
             throw new EntityNotFoundException();
@@ -67,7 +80,7 @@ public class CandidateController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCandidateWithId(@PathVariable Long id) {
-        if (candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED) != null) {
+        if (candidateRepository.findCandidateById(id) != null) {
             candidateRepository.delete(id);
         } else {
             throw new EntityNotFoundException();
@@ -75,7 +88,7 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}/education")
-    public Resource<Education> getEducation(Long id) {
+    public Resource<Education> getEducation(long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED);
         if (candidate != null) {
             return linkMapper.educationToResource(candidate.getEducation());

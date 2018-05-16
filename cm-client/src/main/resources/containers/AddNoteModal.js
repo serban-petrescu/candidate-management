@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Modal, Form, FormGroup, Col, FormControl, ControlLabel} from 'react-bootstrap';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {addCandidateNote} from '../actions/index';
+import {addCandidateNote} from '../actions/CandidateActions';
 
 /**
  * Component used when the used clicks on the edit button.
@@ -63,12 +63,15 @@ class AddNoteModal extends React.Component {
 
     submitCandidateNote = () => {
         let candidateNote = {
-            candidate_id:this.state.candidate_id,
+            candidateId:this.state.candidate_id,
             date: this.state.date,
             status: this.state.status,
             note: this.state.note
         };
-        this.props.addCandidateNote(candidateNote,this.state.candidate);
+        let result = this.props.addCandidateNote(candidateNote);
+        result.then (() => {
+            this.props.onAdd();
+        });
         this.setState({showModal: false});
     };
 
@@ -79,7 +82,7 @@ class AddNoteModal extends React.Component {
                   Add Note
                 </button>
 
-                <Modal contentLabel="Add Note Candidate" show={this.state.showModal} onHide={this._close}>
+                <Modal label="Add Note Candidate" show={this.state.showModal} onHide={this._close}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add Candidate Note</Modal.Title>
                     </Modal.Header>

@@ -1,6 +1,8 @@
 import {combineReducers} from 'redux';
 import CandidatesReducer from './reducer_candidates';
 import ActiveCandidateReducer from './reducer_active_candidate';
+import CandidateValidationReducer from './reducer_validation';
+
 import LoginReducer from './reducer_login';
 /**
  * This reducer calls every child reducer, and gathers their results into a single
@@ -11,7 +13,8 @@ import LoginReducer from './reducer_login';
 const rootReducer = combineReducers({
     candidates: CandidatesReducer,
     activeCandidate: ActiveCandidateReducer,
-    login:LoginReducer
+    login:LoginReducer,
+    candidatesNYValidated: CandidateValidationReducer
 });
 
 export default rootReducer;

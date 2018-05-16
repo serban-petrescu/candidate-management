@@ -2,6 +2,7 @@ import React from 'react';
 import AddCandidate from './AddCandidate';
 import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import TopNavbar from './TopNavbar';
+import Validation from './Validation';
 import Home from './Home';
 import Import from './Import';
 import Login from './Login';
@@ -22,6 +23,7 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path="/" component={Login}/>
                         <Route path="/home" component={Home}/>
+                        <Route path="/validation" component={Validation}/>
                         <Route path="/addCandidate" component={AddCandidate}/>
                         <Route path="/import" component={Import}/>
                         <Redirect from='*' to='/' />
@@ -32,4 +34,5 @@ class App extends React.Component {
         );
     }
 }
+// <Route path="/addCandidateNote" component={AddNote}/>
 export default App;

@@ -1,24 +1,33 @@
 import {NotificationManager} from 'react-notifications';
 
-
 function getMessages(action) {
-    let templateCandidateSuccess = "Candidate was successfully ";
-    let templateCandidateError = "Candidate could not be ";
-    let successMessage = '';
-    let errorMessage = '';
+    let successMessage = "";
+    let errorMessage = "";
 
-    switch (action) {
+    switch(action) {
         case "update":
-            successMessage = templateCandidateSuccess + "updated!";
-            errorMessage = templateCandidateError + "updated!";
+            successMessage = "Candidate was successfully updated!";
+            errorMessage = "Candidate could not be updated!";
             break;
         case "delete":
-            successMessage = templateCandidateSuccess + "deleted!";
-            errorMessage = templateCandidateError + "deleted!";
+            successMessage = "Candidate was successfully deleted!";
+            errorMessage = "Candidate could not be deleted!";
             break;
         case "create":
-            successMessage = templateCandidateSuccess + "created!";
-            errorMessage = templateCandidateError + "created!";
+            successMessage = "Candidate was successfully created!";
+            errorMessage = "Candidate could not be created!";
+            break;
+        case "validate":
+            successMessage = "Candidate was successfully validated!";
+            errorMessage = "Candidate could not be validated!";
+            break;
+        case "validateSelected":
+            successMessage = "Selected candidates were successfully validated!";
+            errorMessage = "Selected candidates could not be validated!";
+            break;
+        case "deleteSelected":
+            successMessage = "Selected candidates were successfully deleted!";
+            errorMessage = "Selected candidates could not be deleted!";
             break;
         case "login":
             successMessage = "Login successfully!";

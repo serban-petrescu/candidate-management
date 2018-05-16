@@ -9,6 +9,7 @@ import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.CandidateNotes;
 import ro.msg.cm.processor.LinkMapper;
 import ro.msg.cm.repository.CandidateNotesRepository;
+import ro.msg.cm.repository.CandidateRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -18,11 +19,13 @@ import java.util.List;
 public class CandidateNotesController {
 
     private final CandidateNotesRepository candidateNotesRepository;
+    private final CandidateRepository candidateRepository;
     private final LinkMapper linkMapper;
 
     @Autowired
-    public CandidateNotesController(CandidateNotesRepository candidateNotesRepository, LinkMapper linkMapper) {
+    public CandidateNotesController(CandidateNotesRepository candidateNotesRepository, CandidateRepository candidateRepository, LinkMapper linkMapper) {
         this.candidateNotesRepository = candidateNotesRepository;
+        this.candidateRepository = candidateRepository;
         this.linkMapper = linkMapper;
     }
 
@@ -40,6 +43,8 @@ public class CandidateNotesController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Resource<CandidateNotes> postCandidateNotes(@RequestBody CandidateNotes candidateNotes) {
+        Candidate candidate = candidateRepository.findCandidateById(candidateNotes.getCandidateId()).get();
+        candidateNotes.setCandidate(candidate);
         return linkMapper.candidateNotesToResource(candidateNotesRepository.save(candidateNotes));
     }
 
@@ -50,20 +55,21 @@ public class CandidateNotesController {
     }
 
     @PutMapping("/{id}")
-    public Resource<CandidateNotes> putCandidateNotes(@PathVariable Long id, @RequestBody CandidateNotes candidateNotes) {
-        candidateNotes.setId(id);
+    public Resource<CandidateNotes> putCandidateNotes(@PathVariable Long id, @RequestBody Candidate candidate) {
+        CandidateNotes candidateNotes = candidateNotesRepository.findOne(id);
+        candidateNotes.setCandidate(candidate);
         return linkMapper.candidateNotesToResource(candidateNotesRepository.save(candidateNotes));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCandidateNotes(@PathVariable Long id) {
+    public void deleteCandidateNotes(@PathVariable long id) {
         candidateNotesRepository.delete(id);
     }
 
 
     @GetMapping("/{id}/candidate")
-    public Resource<Candidate> getCandidateNotesCandidate(@PathVariable Long id) {
+    public Resource<Candidate> getCandidateNotesCandidate(@PathVariable long id) {
         CandidateNotes candidateNotes = candidateNotesRepository.findOne(id);
         if (candidateNotes != null) {
             return linkMapper.candidateToResource(candidateNotes.getCandidate());

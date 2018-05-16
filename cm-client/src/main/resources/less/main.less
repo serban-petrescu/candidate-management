@@ -3,10 +3,32 @@
  */
 @import '../../../../node_modules/bootstrap/less/bootstrap';
 @gray_color: #AFAFAF;
+@import "theme.less";
 
 .container {
   width: 90% !important;
   max-width: 1300px !important;
+}
+
+.navBar {
+  height: 30px;
+  padding-left: 50px;
+  font-weight: bold;
+  margin-top: 20px;
+  >li >a{
+    width: 100px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    text-align: center;
+    padding: 5px 0 5px 0 !important;
+  }
+  .active >a {
+    background-color: @main-color-theme !important;
+    color: white !important;
+    vertical-align: middle;
+
+  }
+}
 }
 
 .paddingRight16 {
