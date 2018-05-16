@@ -63,13 +63,13 @@ public class CandidateNotesController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCandidateNotes(@PathVariable long id) {
+    public void deleteCandidateNotes(@PathVariable Long id) {
         candidateNotesRepository.delete(id);
     }
 
 
     @GetMapping("/{id}/candidate")
-    public Resource<Candidate> getCandidateNotesCandidate(@PathVariable long id) {
+    public Resource<Candidate> getCandidateNotesCandidate(@PathVariable Long id) {
         CandidateNotes candidateNotes = candidateNotesRepository.findOne(id);
         if (candidateNotes != null) {
             return linkMapper.candidateToResource(candidateNotes.getCandidate());

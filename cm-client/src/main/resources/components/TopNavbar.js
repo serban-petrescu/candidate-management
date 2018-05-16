@@ -21,33 +21,36 @@ export default class TopNavbar extends React.Component {
                 activeKey: 1
             };
         }
-
     }
 
     handleSelect = (selectedKey) => {
         this.setState({activeKey:selectedKey});
         if(selectedKey === 1) {
-            window.location.href = '#/';
+            window.location.href = '#/home';
         } else {
             window.location.href = '#/validation';
         }
     };
 
     render() {
+        let displayNavigation = '';
+        if (!sessionStorage.getItem('userLogged')  || sessionStorage.getItem('userLogged') === "false") {
+            displayNavigation = 'hidden';
+        }
         return (
             <div>
                 <NotificationContainer/>
                 <Navbar fluid>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <img href="/" alt="Brand" src={msgLogo} width={100} height={35}/>
+                            <img href="#/home" alt="Brand" src={msgLogo} width={100} height={35}/>
                         </Navbar.Brand>
                         <Navbar.Toggle/>
-                    <ButtonLogout/>
+                        <ButtonLogout/>
                     </Navbar.Header>
 
                     <Navbar.Collapse>
-                        <Nav activeKey={this.state.activeKey} onSelect={this.handleSelect} className="navBar">
+                        <Nav activeKey={this.state.activeKey} onSelect={this.handleSelect} className={"navBar " + displayNavigation}>
                             <NavItem eventKey={1}>Home</NavItem>
                             <NavItem eventKey={2}>Validation</NavItem>
                         </Nav>

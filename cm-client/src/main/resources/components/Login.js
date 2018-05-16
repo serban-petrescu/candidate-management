@@ -1,10 +1,10 @@
 import React from 'react';
 import ButtonLogin from './ButtonLogin';
 import {Grid, FormGroup, FormControl, ControlLabel, HelpBlock, Row, Col} from 'react-bootstrap';
-import {verifyUser} from '../actions/index';
+import {verifyUser} from '../actions/LoginLogout';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {showNotification} from '../utils/ApiNotification.js';
+import {showNotification} from '../utils/ApiNotification';
 
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
@@ -80,8 +80,6 @@ class Login extends React.Component {
     handleLogin = () => {
 
         let HTTP_STATUS_OK = 200;
-        var md5 = require('md5');
-        this.state.password = md5(this.state.password);
         let result = this.props.verifyUser(this.state.username, this.state.password);
         result.then((success) => {
             if (success.payload.response.status === HTTP_STATUS_OK) {

@@ -1,4 +1,4 @@
-import {USER_LOGIN} from '../actions/index';
+import {USER_LOGIN} from '../actions/LoginLogout';
 
 /**
  * Reducer responsible for returning and passing down as props a selected candidate.

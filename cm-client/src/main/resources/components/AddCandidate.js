@@ -246,7 +246,7 @@ class AddCandidate extends React.Component {
                         <ButtonAddCandidate formValid={this.formValid()} submitCandidate={this.submitCandidate} />
                     </Col>
                     <Col xs={14} md={9}>
-                        <Button id="btn-home" className="float-right candidateCustomButton" href="/">Home</Button>
+                        <Button id="btn-home" className="float-right candidateCustomButton" href="#/home">Home</Button>
                     </Col>
                 </Row>
             </Grid>

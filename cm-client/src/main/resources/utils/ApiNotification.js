@@ -4,7 +4,7 @@ function getMessages(action) {
     let successMessage = "";
     let errorMessage = "";
 
-    switch(action) {
+    switch (action) {
         case "update":
             successMessage = "Candidate was successfully updated!";
             errorMessage = "Candidate could not be updated!";
@@ -44,14 +44,14 @@ function getMessages(action) {
 }
 
 /**
- * Creates a notification which shows a message regarding the promise's status
- *
- * @param promise - the promise to be evaluated
- * @param requiredStatus - the HTTP status code that indicates success
- * @param action - string used to generate the output
- *
- * @todo - Replace hardcoded output with the message from the resulting json. This should be done after replacing API links with the correct ones in api.js.
- */
+* Creates a notification which shows a message regarding the promise's status
+*
+* @param promise - the promise to be evaluated
+* @param requiredStatus - the HTTP status code that indicates success
+* @param action - string used to generate the output
+*
+* @todo - Replace hardcoded output with the message from the resulting json. This should be done after replacing API links with the correct ones in api.js.
+*/
 export function showNotification(promise, requiredStatus, action) {
     let message = getMessages(action);
 

@@ -88,7 +88,7 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}/education")
-    public Resource<Education> getEducation(long id) {
+    public Resource<Education> getEducation(@PathVariable Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.VALIDATED);
         if (candidate != null) {
             return linkMapper.educationToResource(candidate.getEducation());

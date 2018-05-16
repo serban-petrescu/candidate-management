@@ -14,7 +14,7 @@ function getCandidateURLById(sId) {
  * @returns {Promise}
  */
 function fetchCandidates() {
-    return axios.get(CANDIDATES_URL).then(function (response) {
+    return axios.get(CANDIDATES_URL, {withCredentials: true}).then(function (response) {
         return response.data._embedded.candidates;
     });
 }
