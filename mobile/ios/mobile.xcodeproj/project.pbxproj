@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -882,6 +881,17 @@
 				3AF9ACE01FAD0D3E00953166 /* Entypo.ttf in Resources */,
 				3AF9ACE11FAD0D3E00953166 /* MaterialCommunityIcons.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				A146D8A805114D6D9E7C7D6B /* Entypo.ttf in Resources */,
+				0471EAD14E41409886965841 /* EvilIcons.ttf in Resources */,
+				F3D01FC6B6A245408C017C71 /* Feather.ttf in Resources */,
+				B18CE1590D534C9DB05AB876 /* FontAwesome.ttf in Resources */,
+				D5976F6CC7404A7EB45B282B /* Foundation.ttf in Resources */,
+				09E8D58E2195485A9CF2989E /* Ionicons.ttf in Resources */,
+				6AFBC260709F4974A440A0FF /* MaterialCommunityIcons.ttf in Resources */,
+				F69EC6D9DE1449D1A8448AD6 /* MaterialIcons.ttf in Resources */,
+				7CA45E96D06F47EDAA8A2755 /* Octicons.ttf in Resources */,
+				0134B322C2724C2EA8C853F1 /* SimpleLineIcons.ttf in Resources */,
+				293EE726F7D9487AACE9EEF8 /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -950,6 +960,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = msg.group.management.candidate;
 				PRODUCT_NAME = mobile;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
+					"$(SRCROOT)/../node_modules/react-native-toast/ios/RCTToast",
+					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/realm/src/**",
+				);
 			};
 			name = Debug;
 		};
@@ -973,6 +990,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = msg.group.management.candidate;
 				PRODUCT_NAME = mobile;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
+					"$(SRCROOT)/../node_modules/react-native-toast/ios/RCTToast",
+					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/realm/src/**",
+				);
 			};
 			name = Release;
 		};

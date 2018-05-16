@@ -55,7 +55,7 @@ public class ValidationServicePatchCandidateTest {
         candidate.setId(1L);
         candidate.setFirstName("Olimpia");
         candidate.setLastName("Andrei");
-        candidate.setPhone("6097644586");
+        candidate.setPhone("0264 123456");
         candidate.setEmail("rmerrisson9@gmpg.org");
         candidate.setEducationStatus("senior");
         candidate.setOriginalStudyYear(2);
@@ -74,7 +74,7 @@ public class ValidationServicePatchCandidateTest {
         candidate.setId(1L);
         candidate.setFirstName("FirstName");
         candidate.setLastName("LastName");
-        candidate.setPhone("9876543210");
+        candidate.setPhone("+4074 100 53 50");
         candidate.setEmail("user@domain.com");
         candidate.setEducationStatus("status");
         candidate.setOriginalStudyYear(0);

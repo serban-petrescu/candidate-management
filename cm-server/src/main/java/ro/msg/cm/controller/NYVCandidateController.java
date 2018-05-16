@@ -33,13 +33,13 @@ public class NYVCandidateController {
     }
 
     @GetMapping("/{id}")
-    public Resource<Candidate> getOneCandidate(@PathVariable long id) {
+    public Resource<Candidate> getOneCandidate(@PathVariable Long id) {
         return linkMapper.candidateToResource(candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED));
     }
 
     @GetMapping
     public Resources<Resource<Candidate>> getAllNotYetValidatedCandidates() {
-        return linkMapper.candidateListToResourceForValidAndNonValid(candidateRepository.findAllByCheckCandidate(CandidateCheck.NOT_YET_VALIDATED), false);
+        return linkMapper.candidateListToResource(candidateRepository.findAllByCheckCandidate(CandidateCheck.NOT_YET_VALIDATED));
     }
 
     @PostMapping
@@ -57,7 +57,7 @@ public class NYVCandidateController {
     }
 
     @PutMapping("/{id}")
-    public Resource<Candidate> putCandidate(@PathVariable long id, @RequestBody Candidate candidate) {
+    public Resource<Candidate> putCandidate(@PathVariable Long id, @RequestBody Candidate candidate) {
         if (candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED) != null) {
             candidate.setCheckCandidate(CandidateCheck.NOT_YET_VALIDATED);
             candidate.setId(id);
@@ -78,7 +78,7 @@ public class NYVCandidateController {
     }
 
     @GetMapping("/{id}/education")
-    public Resource<Education> getEducation(@PathVariable long id) {
+    public Resource<Education> getEducation(@PathVariable Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
         if (candidate != null) {
             return linkMapper.educationToResource(candidate.getEducation());
@@ -88,7 +88,7 @@ public class NYVCandidateController {
     }
 
     @GetMapping("/{id}/candidateNotesList")
-    public Resources<Resource<CandidateNotes>> getCandidateNotesList(@PathVariable long id) {
+    public Resources<Resource<CandidateNotes>> getCandidateNotesList(@PathVariable Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
         if (candidate != null) {
             return linkMapper.candidateNotesListToResource(candidate.getCandidateNotesList());
@@ -98,7 +98,7 @@ public class NYVCandidateController {
     }
 
     @GetMapping("/{id}/candidateSkillsList")
-    public Resources<Resource<CandidateSkills>> getCandidateSkillsList(@PathVariable long id) {
+    public Resources<Resource<CandidateSkills>> getCandidateSkillsList(@PathVariable Long id) {
         Candidate candidate = candidateRepository.findByIdAndCheckCandidate(id, CandidateCheck.NOT_YET_VALIDATED);
         if (candidate != null) {
             return linkMapper.candidateSkillsListToResource(candidate.getCandidateSkillsList());

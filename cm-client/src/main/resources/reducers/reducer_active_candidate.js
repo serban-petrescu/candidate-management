@@ -1,4 +1,4 @@
-import {SELECT_CANDIDATE} from '../actions/index';
+import {SELECT_CANDIDATE} from '../actions/CandidateActions';
 
 /**
  * Reducer responsible for returning and passing down as props a selected candidate.

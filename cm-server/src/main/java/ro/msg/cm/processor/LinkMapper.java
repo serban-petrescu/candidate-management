@@ -36,10 +36,10 @@ public class LinkMapper {
                 candidateNotesList = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateController.class).getCandidateNotesList(candidate.getId())).withRel("candidateNotesList");
                 candidateSkillsList = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateController.class).getCandidateSkillsList(candidate.getId())).withRel("candidateSkillsList");
             } else {
-                self = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(NYVCandidateController.class).getOneCandidate(candidate.getId())).withSelfRel();
-                education = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(NYVCandidateController.class).getEducation(candidate.getId())).withRel("education");
-                candidateNotesList = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(NYVCandidateController.class).getCandidateNotesList(candidate.getId())).withRel("candidateNotesList");
-                candidateSkillsList = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(NYVCandidateController.class).getCandidateSkillsList(candidate.getId())).withRel("candidateSkillsList");
+                self = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateValidationController.class).getOneCandidate(candidate.getId())).withSelfRel();
+                education = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateValidationController.class).getEducation(candidate.getId())).withRel("education");
+                candidateNotesList = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateValidationController.class).getCandidateNotesList(candidate.getId())).withRel("candidateNotesList");
+                candidateSkillsList = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateValidationController.class).getCandidateSkillsList(candidate.getId())).withRel("candidateSkillsList");
             }
             resource.add(self);
             resource.add(education);
@@ -55,32 +55,16 @@ public class LinkMapper {
         return new Resources<>(candidateList.stream().map(this::candidateToResource).collect(Collectors.toList()));
     }
 
-    public Resources<Resource<Candidate>> candidateListToResourceForValidAndNonValid(List<Candidate> candidateList, boolean isValid) {
-        Link valid = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateController.class).getAllValidatedCandidates()).withRel("valid");
-        Link nonValid = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(NYVCandidateController.class).getAllNotYetValidatedCandidates()).withRel("non-valid");
-        Resources<Resource<Candidate>> resources = candidateListToResource(candidateList);
-        if (isValid) {
-            resources.add(valid.withSelfRel());
-        } else {
-            resources.add(nonValid.withSelfRel());
-        }
-        resources.add(valid);
-        resources.add(nonValid);
-        return resources;
-    }
-
     public Resources<Duplicate> duplicateListToResourceForValidAndNonValid(Long id, List<Duplicate> duplicateList, boolean isValid) {
         Resources<Duplicate> resources = new Resources<>(duplicateList);
-        Link valid = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateValidationController.class).getValidDuplicates(id)).withRel("valid");
-        Link nonValid = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateValidationController.class).getNonValidDuplicates(id)).withRel("non-valid");
         resources.removeLinks();
         if (isValid) {
-            resources.add(valid.withSelfRel());
+            Link valid = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateValidationController.class).getValidDuplicates(id)).withRel("valid");
+            resources.add(valid);
         } else {
-            resources.add(nonValid.withSelfRel());
+            Link nonValid = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(CandidateValidationController.class).getNonValidDuplicates(id)).withRel("non-valid");
+            resources.add(nonValid);
         }
-        resources.add(valid);
-        resources.add(nonValid);
         return resources;
     }
 
@@ -139,7 +123,8 @@ public class LinkMapper {
     public Resource<Education> educationToResource(Education education) {
         if (education != null) {
             Resource<Education> resource = new Resource<>(education);
-            Link self = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(TagController.class).getTag(education.getId())).withSelfRel();
+            Link self = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(EducationController.class).getEducation(
+                    education.getId())).withSelfRel();
             resource.add(self);
             return resource;
         } else {

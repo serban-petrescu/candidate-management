@@ -31,17 +31,17 @@ public interface CandidateRepository extends CrudRepository<Candidate, Long> {
 
     List<Candidate> findAllByCheckCandidate(CandidateCheck candidateCheck);
 
-    Set<Candidate> findAllByFirstNameAndLastNameAndCheckCandidateAndIdIsNot(String firstName, String lastName, CandidateCheck candidateCheck, long id);
+    Set<Candidate> findAllByFirstNameAndLastNameAndCheckCandidateAndIdIsNot(String firstName, String lastName, CandidateCheck candidateCheck, Long id);
 
-    Set<Candidate> findAllByEmailAndCheckCandidateAndIdIsNot(String email, CandidateCheck candidateCheck, long id);
+    Set<Candidate> findAllByEmailAndCheckCandidateAndIdIsNot(String email, CandidateCheck candidateCheck, Long id);
 
-    Set<Candidate> findAllByPhoneAndCheckCandidateAndIdIsNot(String phone, CandidateCheck candidateCheck, long id);
+    Set<Candidate> findAllByPhoneAndCheckCandidateAndIdIsNot(String phone, CandidateCheck candidateCheck, Long id);
 
-    Long countByFirstNameAndLastNameAndCheckCandidateAndIdIsNot(String firstName, String lastName, CandidateCheck candidateCheck, long id);
+    Long countByFirstNameAndLastNameAndCheckCandidateAndIdIsNot(String firstName, String lastName, CandidateCheck candidateCheck, Long id);
 
-    Long countByEmailAndCheckCandidateAndIdIsNot(String email, CandidateCheck candidateCheck, long id);
+    Long countByEmailAndCheckCandidateAndIdIsNot(String email, CandidateCheck candidateCheck, Long id);
 
-    Long countByPhoneAndCheckCandidateAndIdIsNot(String phone, CandidateCheck candidateCheck, long id);
+    Long countByPhoneAndCheckCandidateAndIdIsNot(String phone, CandidateCheck candidateCheck, Long id);
 
     @Transactional
     @Modifying

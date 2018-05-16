@@ -11,7 +11,6 @@ import ro.msg.cm.validator.OneNotNull;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,8 +30,7 @@ public class Candidate {
     @NotNull
     private String lastName;
     @Parsed
-    @Size(min = 10, max = 15)
-    @Pattern(regexp = "[0\\+][0-9]{9,14}")
+    @Pattern(regexp = "^(0|(0040|004\\s0)|(\\+40|\\+4\\s0))([0-9]{3}\\s?|[0-9]{2}\\s[0-9])(([0-9]{3}\\s?){2}|([0-9]{2}\\s?){3})$")
     private String phone;
     @Parsed
     @Email
@@ -46,10 +44,10 @@ public class Candidate {
     private int originalStudyYear;
     @Parsed
     private String event;
-    private @OneToMany(mappedBy = "candidate")
+    private @OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE)
     @OrderBy("tag ASC")
     List<CandidateSkills> candidateSkillsList;
-    private @OneToMany(mappedBy = "candidate")
+    private @OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE)
     List<CandidateNotes> candidateNotesList;
     @Parsed
     @JsonFormat(pattern = "yyyy-MM-dd")

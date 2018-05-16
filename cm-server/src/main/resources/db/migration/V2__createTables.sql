@@ -27,6 +27,7 @@ CREATE TABLE CANDIDATE (
   education_status varchar(255) DEFAULT NULL,
   education_id bigint(20) DEFAULT NULL,
   date_of_adding datetime DEFAULT NULL,
+  check_candidate VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_education FOREIGN KEY (education_id) REFERENCES EDUCATION (id)
 ) DEFAULT CHARSET=utf8;

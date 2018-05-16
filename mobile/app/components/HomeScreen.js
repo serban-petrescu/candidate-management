@@ -139,6 +139,7 @@ const universities = [{
             id: 1066,
             description: 'others'
         }]
+
     }
 
 
@@ -173,6 +174,7 @@ export default class HomeScreen extends React.Component {
                 university: 'University',
                 faculty: 'Faculty',
                 studyYear: 'Study Year',
+
                 studentStatus: 'Student?',
             },
             candidates: [],
@@ -377,6 +379,7 @@ export default class HomeScreen extends React.Component {
                             backgroundColor: '#000000'
                         }}
                         style={{fontSize: 20, color: '#FFFFFF'}}
+
                         onPress={this.submitCandidate}>Submit</Button>
 
 
@@ -540,6 +543,7 @@ export default class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
+
         //this.setState({candidates:[]}
         AsyncStorage.getItem(CANDIDATE_STORAGE)
             .then(req => JSON.parse(req)).catch()
