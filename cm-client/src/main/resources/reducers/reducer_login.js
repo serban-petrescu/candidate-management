@@ -8,7 +8,13 @@ import {USER_LOGIN} from '../actions/LoginLogout';
 export default function (state = null, action) { // if state is undefined set it to null
     switch (action.type) {
         case USER_LOGIN:
-            return action.payload;
+            const responseStatus = action.payload.response.status;
+            if(responseStatus === 200) {
+                let usernameEndIndex = action.payload.response.config.data.indexOf('&');
+                return action.payload.response.config.data.slice(9, usernameEndIndex);
+            } else {
+                return null;
+            }
         default:
     }
 

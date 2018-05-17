@@ -83,6 +83,7 @@ class Login extends React.Component {
         let result = this.props.verifyUser(this.state.username, this.state.password);
         result.then((success) => {
             if (success.payload.response.status === HTTP_STATUS_OK) {
+                //todo: get/set value in reducer
                 sessionStorage.setItem('userLogged', true);
                 window.location = '#/home';
             } else {

@@ -1,5 +1,7 @@
+@import "theme.less";
+
 .candidate-top-navbar {
-  color: #786f6f;
+  color: @grey_color_1;
   font-weight: bold;
   font-size: 25px;
   font-family: Roboto, sans-serif;
@@ -8,7 +10,32 @@
 .candidate-top-navbar >
 h1 {
   font-family: Roboto, sans-serif;
-  margin-top: 100px;
+  margin-top: 50px;
   font-weight: bold;
   font-size: 40px;
+}
+
+.navBar {
+  height: 30px;
+  padding-left: 50px !important;
+  font-weight: bold;
+  margin-top: 20px !important;
+  >li >a{
+    width: 100px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    text-align: center;
+    padding: 5px 0 5px 0 !important;
+  }
+  .active >a {
+    background-color: @main-color-theme !important;
+    color: white !important;
+    vertical-align: middle;
+  }
+}
+
+.logoutButton {
+  position: absolute;
+  right: 20px;
+  top: 5px;
 }

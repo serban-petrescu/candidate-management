@@ -1,41 +1,14 @@
 /*
- Use less bootstrap
+ * Use less bootstrap
  */
 @import '../../../../node_modules/bootstrap/less/bootstrap';
 @gray_color: #AFAFAF;
 @import "theme.less";
+@import "general";
 
 .container {
   width: 90% !important;
   max-width: 1300px !important;
-}
-
-.navBar {
-  height: 30px;
-  padding-left: 50px;
-  font-weight: bold;
-  margin-top: 20px;
-  >li >a{
-    width: 100px;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    text-align: center;
-    padding: 5px 0 5px 0 !important;
-  }
-  .active >a {
-    background-color: @main-color-theme !important;
-    color: white !important;
-    vertical-align: middle;
-
-  }
-}
-
-.paddingRight16 {
-  padding-right: 16px;
-}
-
-.hidden {
-  display: none;
 }
 
 .loginGrid {
@@ -56,8 +29,35 @@ header {
   margin-bottom: 15px;
 }
 
-.logoutButton {
-  position: absolute;
-  right: 20px;
-  top: 5px;
+.candidateCustomButton {
+  color: white !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  border: none !important;
+  background-color: @main-color-theme !important;
+  -webkit-box-shadow: 3px 3px 6px @main-color-shadow; /*Safari 3-4, IOS 4.0.2 - 4.2, Android 2.3+*/
+  -ms-box-shadow: 3px 3px 6px @main-color-shadow; /*Firefox 3.5 - 3.6*/
+  box-shadow: 3px 3px 6px @main-color-shadow;/*Opera 10.5, IE 9, Firefox 4+, Chrome 6+, IOS 5+*/
+  &:hover {
+    background-color: @main-color-hover !important;
+    text-decoration: none !important;
+  }
+  &:active {
+    background-color: @main-color-button-active !important;
+    -webkit-box-shadow: none; /*Safari 3-4, IOS 4.0.2 - 4.2, Android 2.3+*/
+    -ms-box-shadow: none; /*Firefox 3.5 - 3.6*/
+    box-shadow:  none;/*Opera 10.5, IE 9, Firefox 4+, Chrome 6+, IOS 5+*/
+  }
+  &:disabled {
+    background-color: @main-color-disabled !important;
+  }
+}
+
+#btn-home {
+	min-width: 100px;
+}
+
+.checkbox-label {
+  padding-left: 5px;
+  font-weight: normal;
 }

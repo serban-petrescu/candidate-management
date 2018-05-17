@@ -1,6 +1,5 @@
 import React from 'react';
 import {importEducation, importTag, exportTag, exportEducation} from "../actions/CandidateImportActions";
-import '../less/addCandidate.less';
 
 /**
  * Component used to import data like Education and Tags

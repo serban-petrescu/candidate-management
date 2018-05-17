@@ -4,7 +4,6 @@ import {Tab, Tabs} from 'react-bootstrap';
 import EditCandidate from './EditCandidate';
 import ConfirmationDialog from './ConfirmationDialog';
 import '../less/candidateTable.less';
-import '../less/roboto.less';
 import SkillsList from '../components/SkillsList'
 import {connect} from 'react-redux';
 import {loadCandidates, selectCandidate} from '../actions/CandidateActions';

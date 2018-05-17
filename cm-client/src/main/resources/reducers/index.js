@@ -13,7 +13,7 @@ import LoginReducer from './reducer_login';
 const rootReducer = combineReducers({
     candidates: CandidatesReducer,
     activeCandidate: ActiveCandidateReducer,
-    login:LoginReducer,
+    loggedUser:LoginReducer,
     candidatesNYValidated: CandidateValidationReducer
 });
 
