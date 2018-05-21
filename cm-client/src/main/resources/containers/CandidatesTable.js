@@ -91,13 +91,12 @@ class CandidatesTable extends MainCandidatesTable {
 
     CustomSearchField = () => {
         return (
-            <SearchField className="form-control" placeholder='Search ...'/>);
-
+            <SearchField className="form-control" placeholder='Search ...'/>
+        );
     };
 
     CustomExportCSVButton = (onClick) => {
         return (
-
             <a className="btn-lg candidateCustomButton" role="button" onClick={onClick} style={{marginRight: 25}}>Export
                 CSV</a>
 
@@ -133,7 +132,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     // whenever deleteCandidate is called, the result should be passed
     // to all our reducers
-    return bindActionCreators({selectCandidate: selectCandidate, loadCandidates: loadCandidates}, dispatch);
+    return bindActionCreators({selectCandidate, loadCandidates}, dispatch);
 }
 
 

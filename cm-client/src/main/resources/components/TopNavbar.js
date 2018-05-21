@@ -13,30 +13,20 @@ import ButtonLogout from './ButtonLogout';
 export default class TopNavbar extends React.Component {
     constructor(props) {
         super(props);
-        if (window.location.href.indexOf('validation') !== -1 ) {
-            this.state = {
-                activeKey: 2
-            };
-        } else {
-            this.state = {
-                activeKey: 1
-            };
-        }
+        this.state = {
+            activeKey: window.location.href.indexOf('validation') !== -1 ? 2 : 1
+        };
     }
 
     handleSelect = (selectedKey) => {
         this.setState({activeKey:selectedKey});
-        if(selectedKey === 1) {
-            window.location.href = '#/home';
-        } else {
-            window.location.href = '#/validation';
-        }
+        window.location.href = selectedKey === 1 ? '#/home' : '#/validation';
     };
 
     render() {
-        let displayNavigation = '';
+        let userActionsClass = '';
         if (!sessionStorage.getItem('userLogged')  || sessionStorage.getItem('userLogged') === "false") {
-            displayNavigation = 'hidden';
+            userActionsClass = 'hidden';
         }
         return (
             <div>
@@ -47,11 +37,11 @@ export default class TopNavbar extends React.Component {
                             <img href="#/home" alt="Brand" src={msgLogo} width={100} height={35}/>
                         </Navbar.Brand>
                         <Navbar.Toggle/>
-                        <ButtonLogout/>
+                        <ButtonLogout className={userActionsClass}/>
                     </Navbar.Header>
 
                     <Navbar.Collapse>
-                        <Nav activeKey={this.state.activeKey} onSelect={this.handleSelect} className={"navBar " + displayNavigation}>
+                        <Nav activeKey={this.state.activeKey} onSelect={this.handleSelect} className={"navBar " + userActionsClass}>
                             <NavItem eventKey={1}>Home</NavItem>
                             <NavItem eventKey={2}>Validation</NavItem>
                         </Nav>
