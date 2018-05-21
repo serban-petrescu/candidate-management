@@ -192,75 +192,70 @@ class AddCandidate extends React.Component {
     };
 
     render() {
-        if (sessionStorage.getItem('userLogged') === "false") {
-            window.location = '#/';
-            return null;
-        } else {
-            return (
-                <div>
-                    <Grid>
-                        {/* Personal info section */}
-                        <form>
-                            <FieldGroup id="formFirstName"
-                                        label="First Name"
-                                        validationState={this.state.firstNameValidationStatus}
-                                        help={this.state.firstNameValidationMsg}
-                                        type="text"
-                                        value={this.state.firstName}
-                                        placeholder="Enter first name"
-                                        onChange={this.handleChangeFirstName}>
-                            </FieldGroup>
+        return (
+            <div>
+                <Grid>
+                    {/* Personal info section */}
+                    <form>
+                        <FieldGroup id="formFirstName"
+                                    label="First Name"
+                                    validationState={this.state.firstNameValidationStatus}
+                                    help={this.state.firstNameValidationMsg}
+                                    type="text"
+                                    value={this.state.firstName}
+                                    placeholder="Enter first name"
+                                    onChange={this.handleChangeFirstName}>
+                        </FieldGroup>
 
-                            <FieldGroup id="formLastName"
-                                        label="Last Name"
-                                        validationState={this.state.lastNameValidationStatus}
-                                        help={this.state.lastNameValidationMsg}
-                                        type="text"
-                                        value={this.state.lastName}
-                                        placeholder="Enter last name"
-                                        onChange={this.handleChangeLastName}>
-                            </FieldGroup>
+                        <FieldGroup id="formLastName"
+                                    label="Last Name"
+                                    validationState={this.state.lastNameValidationStatus}
+                                    help={this.state.lastNameValidationMsg}
+                                    type="text"
+                                    value={this.state.lastName}
+                                    placeholder="Enter last name"
+                                    onChange={this.handleChangeLastName}>
+                        </FieldGroup>
 
-                            <FieldGroup id="formEmailAddress"
-                                        label="Email address"
-                                        validationState={this.state.emailAddressValidationStatus}
-                                        help={this.state.emailAddressValidationMsg}
-                                        type="text"
-                                        value={this.state.emailAddress}
-                                        placeholder="Enter email"
-                                        onChange={this.handleChangeEmail}>
-                            </FieldGroup>
+                        <FieldGroup id="formEmailAddress"
+                                    label="Email address"
+                                    validationState={this.state.emailAddressValidationStatus}
+                                    help={this.state.emailAddressValidationMsg}
+                                    type="text"
+                                    value={this.state.emailAddress}
+                                    placeholder="Enter email"
+                                    onChange={this.handleChangeEmail}>
+                        </FieldGroup>
 
-                            <FieldGroup id="formPhoneNumber"
-                                        label="Phone number"
-                                        validationState={this.state.phoneNumberValidationStatus}
-                                        help={this.state.phoneNumberValidationMsg}
-                                        type="text"
-                                        value={this.state.phoneNumber}
-                                        placeholder="Enter phone number"
-                                        onChange={this.handleChangePhoneNumber}>
-                            </FieldGroup>
-                            <input id="checkbox_stay_on_page" type="checkbox" checked={this.state.remainOnPage}
-                                   onClick={this.handleCheckbox}/>
-                            <label className="checkbox-label">Remain on the current page to add another
-                                candidate</label>
-                        </form>
-                        {/* Buttons section */}
-                        <Row>
-                            <Col xs={4} md={3}>
-                                <ButtonAddCandidate formValid={this.formValid()}
-                                                    submitCandidate={() => this.submitCandidate()}
-                                                    afterSubmit={() => this.afterSubmit()}/>
-                            </Col>
-                            <Col xs={14} md={9}>
-                                <Button id="btn-home" className="float-right candidateCustomButton"
-                                        href="#/home">Home</Button>
-                            </Col>
-                        </Row>
-                    </Grid>
-                </div>
-            )
-        }
+                        <FieldGroup id="formPhoneNumber"
+                                    label="Phone number"
+                                    validationState={this.state.phoneNumberValidationStatus}
+                                    help={this.state.phoneNumberValidationMsg}
+                                    type="text"
+                                    value={this.state.phoneNumber}
+                                    placeholder="Enter phone number"
+                                    onChange={this.handleChangePhoneNumber}>
+                        </FieldGroup>
+                        <input id="checkbox_stay_on_page" type="checkbox" checked={this.state.remainOnPage}
+                               onClick={this.handleCheckbox}/>
+                        <label className="checkbox-label">Remain on the current page to add another
+                            candidate</label>
+                    </form>
+                    {/* Buttons section */}
+                    <Row>
+                        <Col xs={4} md={3}>
+                            <ButtonAddCandidate formValid={this.formValid()}
+                                                submitCandidate={() => this.submitCandidate()}
+                                                afterSubmit={() => this.afterSubmit()}/>
+                        </Col>
+                        <Col xs={14} md={9}>
+                            <Button id="btn-home" className="float-right candidateCustomButton"
+                                    href="#/home">Home</Button>
+                        </Col>
+                    </Row>
+                </Grid>
+            </div>
+        )
     }
 }
 

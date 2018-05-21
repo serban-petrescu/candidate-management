@@ -7,16 +7,11 @@ import CandidatesTableRedux from '../containers/CandidatesTable';
  */
 const Home = () => {
 
-    if (sessionStorage.getItem('userLogged') === "false") {
-        window.location = '#/';
-        return null;
-    } else {
-        return (
-           <div>
-               <CandidatesTableRedux/>
-           </div>
-        );
-    }
+    return (
+        <div>
+            <CandidatesTableRedux/>
+        </div>
+    );
 };
 
 export default Home;
