@@ -5,6 +5,7 @@ import {verifyUser} from '../actions/LoginLogout';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {showNotification} from '../utils/ApiNotification';
+import {logoutUser} from '../actions/LoginLogout';
 
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
@@ -19,7 +20,9 @@ function FieldGroup({id, label, validationState, help, ...props}) {
 class Login extends React.Component {
     constructor(props) {
         super(props);
-        sessionStorage.setItem('userLogged', false);
+        if(sessionStorage.getItem('userLogged') && sessionStorage.getItem('userLogged') === "true") {
+            this.logoutUser();
+        }
         this.state = {
             username: '',
             usernameValidationMsg: '',
@@ -30,6 +33,11 @@ class Login extends React.Component {
             passwordValidationState: null
         };
     }
+
+    logoutUser = () => {
+        this.props.logoutUser();
+        sessionStorage.setItem('userLogged', false);
+    };
 
     handleChangeUsername = (e) => {
 
@@ -83,7 +91,6 @@ class Login extends React.Component {
         let result = this.props.verifyUser(this.state.username, this.state.password);
         result.then((success) => {
             if (success.payload.response.status === HTTP_STATUS_OK) {
-                //todo: get/set value in reducer
                 sessionStorage.setItem('userLogged', true);
                 window.location = '#/home';
             } else {
@@ -141,7 +148,7 @@ class Login extends React.Component {
 
 function mapDispatchToProps(dispatch) {
 
-    return bindActionCreators({verifyUser: verifyUser}, dispatch);
+    return bindActionCreators({verifyUser, logoutUser}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(Login);

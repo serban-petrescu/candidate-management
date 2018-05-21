@@ -20,6 +20,18 @@ function searchUser(username, password) {
         .catch((error) => {return error;});
 }
 
+function logout() {
+    let postUrl = `${getBaseURL()}/logout`;
+    return axios.post(postUrl)
+        .then((response) => {
+            return {
+                response
+            };
+        })
+        .catch((error) => {return error;});
+}
+
 export {
-    searchUser
+    searchUser,
+    logout
     }

@@ -1,26 +1,25 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
+import {logoutUser} from '../actions/LoginLogout';
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 
-export default
 class ButtonLogout extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     handleClick = () => {
-        sessionStorage.setItem('userLogged', false);
-        window.location='/';
+        let HTTP_STATUS_OK = 200;
+        let result = this.props.logoutUser();
+        result.then((success) => {
+            window.location = '#/';
+            sessionStorage.setItem('userLogged', false);
+        });
     };
 
     render() {
-        let displayButton = '';
-        if (sessionStorage.getItem('userLogged') === "false") {
-            displayButton = 'hidden';
-        }
         return (
             <div>
                 <Button
-                    className={'candidateCustomButton logoutButton ' + displayButton}
+                    className={'candidateCustomButton logoutButton ' + this.props.className}
                     onClick={this.handleClick}
                     title={'Logout'}>
                     {'Logout'}
@@ -29,3 +28,10 @@ class ButtonLogout extends React.Component {
         )
     }
 }
+
+function mapDispatchToProps(dispatch) {
+
+    return bindActionCreators({logoutUser}, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(ButtonLogout);

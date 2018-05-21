@@ -18,6 +18,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -62,11 +63,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.accessDeniedHandler(getAccessDeniedHandler())
 				.and()
 			.logout()
+				.logoutUrl("/logout")
+				.logoutSuccessHandler(getLogoutSuccessHandler())
 				.deleteCookies("JSESSIONID")
 				.and()
 			.cors()
 				.and()
-			.csrf().disable();
+				.csrf().disable();
 	}
 
 	@Bean
@@ -119,5 +122,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             }
         };
     }
+
+	private LogoutSuccessHandler getLogoutSuccessHandler() {
+		return new LogoutSuccessHandler() {
+			@Override
+			public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+										Authentication authentication) throws IOException, ServletException {
+				httpServletResponse.getWriter().append("OK");
+				httpServletResponse.setStatus(200);
+			}
+		};
+	}
 
 }
