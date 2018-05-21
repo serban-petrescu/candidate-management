@@ -13,42 +13,30 @@ class Column {
  */
 function createFilter(sPlaceHolder) {
     return {
-        filter: {
-            type: 'RegexFilter',
-            placeholder: sPlaceHolder,
-            delay: 1000
-        }
+        type: 'RegexFilter',
+        placeholder: sPlaceHolder,
+        delay: 1000
     };
 }
 
 export class Columns {
-    static createColumn(sDataField, sLabel) {
-        return new Column(sDataField, sLabel);
-    }
-
     static createColumnWithOptions(sDataField, sLabel, oOptions) {
         return new Column(sDataField, sLabel, oOptions);
     }
 
-    static createColumnWithFilter(sDataField, sLabel) {
-        return new Column(sDataField, sLabel, createFilter(sLabel));
-    }
-
-    static createColumnWithFilterAndOtherOptions(sDataField, sLabel, oOptions) {
-        return new Column(sDataField, sLabel,
-            {
-                ...oOptions,
-                filter: createFilter(sLabel)
-            });
+    static createColumnWithFilterAndSort(sDataField, sLabel) {
+        return new Column(sDataField, sLabel, {
+            dataSort: true,
+            filter: createFilter(sLabel)});
     }
 }
 
 export class DefaultColumnsConfig {
     aColumns = [
-        Columns.createColumnWithFilter('firstName', 'First Name'),
-        Columns.createColumnWithFilter('lastName', 'Last Name'),
-        Columns.createColumnWithFilter('email', 'Email'),
-        Columns.createColumnWithFilter('phone', 'Phone')
+        Columns.createColumnWithFilterAndSort('firstName', 'First Name'),
+        Columns.createColumnWithFilterAndSort('lastName', 'Last Name'),
+        Columns.createColumnWithFilterAndSort('email', 'Email'),
+        Columns.createColumnWithFilterAndSort('phone', 'Phone')
     ];
 
     getColumns() {
