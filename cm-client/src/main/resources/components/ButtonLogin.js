@@ -23,6 +23,6 @@ class ButtonLogin extends React.Component {
                     {'Login'}
                 </Button>
             </div>
-        )
+        );
     }
 }

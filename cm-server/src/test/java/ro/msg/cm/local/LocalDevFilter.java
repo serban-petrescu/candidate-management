@@ -14,7 +14,7 @@ public class LocalDevFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) {
-
+		//nothing to do
 	}
 
 	@Override
@@ -24,12 +24,10 @@ public class LocalDevFilter implements Filter {
 			HttpServletResponse response = (HttpServletResponse) servletResponse;
 			String uri = request.getRequestURI();
 			String referer = request.getHeader("Referer");
-			if (referer != null) {
-				if (!referer.startsWith(host + "/api")) {
-					response.setStatus(307);
-					response.setHeader("Location", "http://localhost:3000" + uri);
-					return;
-				}
+			if (referer != null && !referer.startsWith(host + "/api")) {
+				response.setStatus(307);
+				response.setHeader("Location", "http://localhost:3000" + uri);
+				return;
 			}
 		}
 		filterChain.doFilter(servletRequest, servletResponse);
@@ -37,6 +35,6 @@ public class LocalDevFilter implements Filter {
 
 	@Override
 	public void destroy() {
-
+		//nothing to do
 	}
 }

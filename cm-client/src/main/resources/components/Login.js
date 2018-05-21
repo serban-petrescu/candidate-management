@@ -14,7 +14,7 @@ function FieldGroup({id, label, validationState, help, ...props}) {
             <FormControl {...props}/>
             { help && <HelpBlock>{help}</HelpBlock>}
         </FormGroup>
-    )
+    );
 }
 
 class Login extends React.Component {
@@ -57,10 +57,10 @@ class Login extends React.Component {
         }
 
         this.setState({
-            username: username,
+            username,
             usernameValidationMsg: validationMessage,
             usernameValidationState: validationStatus
-        })
+        });
     };
 
     handleChangePassword = (e) => {
@@ -80,7 +80,7 @@ class Login extends React.Component {
             }
         }
         this.setState({
-            password: password,
+            password,
             passwordValidationMsg: validationMessage,
             passwordValidationState: validationStatus
         });
@@ -102,7 +102,7 @@ class Login extends React.Component {
     };
 
     formValid = () => {
-        return (this.state.usernameValidationState === 'success' && this.state.passwordValidationState === 'success')
+        return (this.state.usernameValidationState === 'success' && this.state.passwordValidationState === 'success');
     };
 
     render() {
@@ -142,7 +142,7 @@ class Login extends React.Component {
 
                 </Grid>
             </div>
-        )
+        );
     }
 }
 

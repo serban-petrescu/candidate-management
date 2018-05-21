@@ -25,7 +25,7 @@ class ButtonLogout extends React.Component {
                     {'Logout'}
                 </Button>
             </div>
-        )
+        );
     }
 }
 

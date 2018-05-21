@@ -1,7 +1,7 @@
 import React from 'react';
 import msgLogo from '../assets/images/msgLogo.png';
 import "roboto-fontface/css/roboto/roboto-fontface.css";
-import "../less/candidateTopNavbar.less"
+import "../less/candidateTopNavbar.less";
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';

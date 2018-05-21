@@ -34,4 +34,4 @@ function logout() {
 export {
     searchUser,
     logout
-    }
+    };
