@@ -51,7 +51,7 @@ class AddCandidate extends React.Component {
         let validationMessage = '';
         let validationStatus = 'error';
 
-        if (emailAddress === '') {
+        if (!emailAddress) {
             validationMessage = 'Email required!';
         }
         else {
@@ -76,7 +76,7 @@ class AddCandidate extends React.Component {
         let validationMessage = '';
         let validationStatus = 'error';
 
-        if (firstName === '') {
+        if (!firstName) {
             validationMessage = 'First name required!';
         }
 
@@ -98,7 +98,7 @@ class AddCandidate extends React.Component {
         let validationMessage = '';
         let validationStatus = 'error';
 
-        if (lastName === '') {
+        if (!lastName) {
             validationMessage = 'Last name required!';
         }
 
@@ -120,7 +120,7 @@ class AddCandidate extends React.Component {
         let validationMessage = '';
         let validationStatus = 'error';
 
-        if (phoneNumber === '') {
+        if (!phoneNumber) {
             validationMessage = 'Phone number required';
         }
 

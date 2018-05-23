@@ -37,7 +37,7 @@ class Login extends React.Component {
         let validationMessage = '';
         let validationStatus = 'error';
 
-        if (username === '') {
+        if (!username) {
             validationMessage = 'Username required!';
         } else {
             const regex = /^\w{3,}$/;
@@ -61,7 +61,7 @@ class Login extends React.Component {
         let validationMessage = '';
         let validationStatus = 'error';
 
-        if (password === '') {
+        if (!password) {
             validationMessage = 'Password required!';
         } else {
             const regex = /^[a-zA-Z0-9 \W].{7,}$/;
