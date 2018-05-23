@@ -1,10 +1,9 @@
 import React from 'react';
-import {SearchField} from 'react-bootstrap-table';
+import {SearchField, ButtonGroup} from 'react-bootstrap-table';
 import {Tab, Tabs} from 'react-bootstrap';
 import EditCandidate from './EditCandidate';
 import ConfirmationDialog from './ConfirmationDialog';
 import '../less/candidateTable.less';
-import "../less/roboto.less";
 import SkillsList from '../components/SkillsList'
 import {connect} from 'react-redux';
 import {loadCandidates, selectCandidate} from '../actions/CandidateActions';
@@ -38,6 +37,7 @@ class CandidatesTable extends MainCandidatesTable {
             exportCSV: true,
             expandComponent: this.expandCandidateDetails,
             insertRow: true,
+            deleteRow: true,
             expandableRow: () => {
                 return true;
             }
@@ -91,18 +91,18 @@ class CandidatesTable extends MainCandidatesTable {
 
     CustomSearchField = () => {
         return (
-            <SearchField className="form-control" placeholder='Search ...'/>);
-
+            <SearchField className="form-control" placeholder='Search ...'/>
+        );
     };
 
     CustomExportCSVButton = (onClick) => {
         return (
-
             <a className="btn-lg candidateCustomButton" role="button" onClick={onClick} style={{marginRight: 25}}>Export
                 CSV</a>
 
         );
     };
+
     /**
      * Called when a user clicks on a row. For each row, three tabs will be displayed one containing
      * the Skill, one containing the Education list and one Candidates Notes.
@@ -118,7 +118,7 @@ class CandidatesTable extends MainCandidatesTable {
                 <Tab eventKey={3} title="Notes"><NotesList notesUrl={row._links.candidateNotesList.href}
                                                            candidate={row}/></Tab>
             </Tabs>
-        )
+        );
     }
 }
 
@@ -133,7 +133,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     // whenever deleteCandidate is called, the result should be passed
     // to all our reducers
-    return bindActionCreators({selectCandidate: selectCandidate, loadCandidates: loadCandidates}, dispatch);
+    return bindActionCreators({selectCandidate, loadCandidates}, dispatch);
 }
 
 

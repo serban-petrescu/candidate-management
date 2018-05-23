@@ -19,7 +19,10 @@ export function importEducation(file) {
 }
 
 export function exportEducation() {
-    return exportEducationFile('Education');
+    return {
+        type: EXPORT_EDUCATION,
+        payload: exportEducationFile('Education')
+    };
 }
 
 export function importTag(file) {
@@ -30,5 +33,8 @@ export function importTag(file) {
 }
 
 export function exportTag() {
-    return exportTagFile('Tag');
+    return {
+        type: EXPORT_TAG,
+        payload: exportTagFile('Tag')
+    };
 }

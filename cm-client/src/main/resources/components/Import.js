@@ -1,6 +1,6 @@
 import React from 'react';
 import {importEducation, importTag, exportTag, exportEducation} from "../actions/CandidateImportActions";
-import '../less/addCandidate.less';
+import TopNavbar from './TopNavbar';
 
 /**
  * Component used to import data like Education and Tags
@@ -42,6 +42,7 @@ export default class Import extends React.Component {
     render() {
         return (
             <div>
+                <TopNavbar/>
                 <label for="Education">Education</label><br/>
                 <input type="file" onChange={this.onChange.bind(this)} name="newcsv" id="newcsv" ref="newcsv"/><br/>
                 <input className="btn-defaultCustom btn btn-default" type="submit" value="Upload" onClick={this.uploadEducationCSV.bind(this)}/>

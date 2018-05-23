@@ -4,7 +4,7 @@ function getMessages(action) {
     let successMessage = "";
     let errorMessage = "";
 
-    switch(action) {
+    switch (action) {
         case "update":
             successMessage = "Candidate was successfully updated!";
             errorMessage = "Candidate could not be updated!";
@@ -28,6 +28,10 @@ function getMessages(action) {
         case "deleteSelected":
             successMessage = "Selected candidates were successfully deleted!";
             errorMessage = "Selected candidates could not be deleted!";
+            break;
+        case "login":
+            successMessage = "Login successfully!";
+            errorMessage = "Username or Password invalid!";
             break;
         default:
             throw new Error("Invalid action: '" + action + "'");
@@ -55,7 +59,7 @@ export function showNotification(promise, requiredStatus, action) {
         .then((response) => {
             let statusCode = response.payload.response.status;
 
-            if(statusCode === requiredStatus) {
+            if (statusCode === requiredStatus) {
                 NotificationManager.success(message.success, "Success", 4000);
             } else {
                 NotificationManager.error(message.error, "Error", 4000);

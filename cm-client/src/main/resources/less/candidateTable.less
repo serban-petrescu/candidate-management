@@ -1,88 +1,13 @@
-@import "theme.less";
+@import "theme";
+@import "roboto";
 
-//@color_1: lightgrey;
-//@color_2: initial;
 //@background_color_1: rgba(0, 0, 0, 0.5);
-@color_1: #786f6f;
-@color_2: white;
 @background_color_1: #f9f9f9;
-@background_color_2: transparent;
-//@background_color_2: #ececec;
 
-
-
-@color_1_pagination_btn: #fff;
-@background_color_1_pagination_btn: @main-color-theme;
-@border_color_1_pagination_btn:  @main-color-theme;
-
-.pagination {
-	>.active {
-		>a {
-			z-index: 3;
-			color: @color_1_pagination_btn;
-			background-color: @background_color_1_pagination_btn !important;
-			border-color: @border_color_1_pagination_btn;
-			cursor: default;
-			&:hover {
-				z-index: 3;
-				color: @color_1_pagination_btn;
-				background-color: @background_color_1_pagination_btn;
-				border-color: @border_color_1_pagination_btn;
-				cursor: default;
-			}
-			&:focus {
-				z-index: 3;
-				color: @color_1_pagination_btn;
-				background-color: @background_color_1_pagination_btn;
-				border-color: @border_color_1_pagination_btn;
-				cursor: default;
-			}
-		}
-		>span {
-			z-index: 3;
-			color: @color_1_pagination_btn;
-			background-color: @background_color_1_pagination_btn;
-			border-color: @border_color_1_pagination_btn;
-			cursor: default;
-			&:hover {
-				z-index: 3;
-				color: @color_1_pagination_btn;
-				background-color: @background_color_1_pagination_btn;
-				border-color: @border_color_1_pagination_btn;
-				cursor: default;
-			}
-			&:focus {
-				z-index: 3;
-				color: @color_1_pagination_btn;
-				background-color: @background_color_1_pagination_btn;
-				border-color: @border_color_1_pagination_btn;
-				cursor: default;
-			}
-		}
-	}
-}
-
-.candidateCustomButton {
-  color: white !important;
-  font-size: 16px !important;
-  font-weight: bold !important;
-  border: none !important;
-  background-color: @main-color-theme !important;
-  -webkit-box-shadow: 3px 3px 6px @main-color-shadow; /*Safari 3-4, IOS 4.0.2 - 4.2, Android 2.3+*/
-  -ms-box-shadow: 3px 3px 6px @main-color-shadow; /*Firefox 3.5 - 3.6*/
-  box-shadow: 3px 3px 6px @main-color-shadow;/*Opera 10.5, IE 9, Firefox 4+, Chrome 6+, IOS 5+*/
-  &:hover {
-    background-color: @main-color-hover !important;
-    text-decoration: none !important;
-  }
-  &:active {
-    background-color: @main-color-button-active !important;
-    -webkit-box-shadow: none; /*Safari 3-4, IOS 4.0.2 - 4.2, Android 2.3+*/
-    -ms-box-shadow: none; /*Firefox 3.5 - 3.6*/
-    box-shadow:  none;/*Opera 10.5, IE 9, Firefox 4+, Chrome 6+, IOS 5+*/
-  }
-  &:disabled {
-    background-color: #95646f !important;
+.pagination > .active > a {
+  &, &:hover, &:focus {
+    background-color: @main-color-theme !important;
+    border-color: @main-color-theme !important;
   }
 }
 
@@ -99,34 +24,30 @@
   }
 }
 
-.width40 {
-  width: 40px !important;
-}
-
 .candidateTableBodyClass {
   font-size: 16px;
   font-family: Roboto, sans-serif;
-  background-color: #f9f9f9;
+  background-color: @grey_color_5;
   border-bottom: groove #FFF;
   td {
     font-weight: lighter !important;
     padding-left:20px !important;
   }
   tr:nth-child(4n-1) {
-    background-color: #e8e8e8 !important;
+    background-color: @grey_color_3 !important;
     &:hover {
-      background-color: #e3e3e3 !important;
+      background-color: @grey_color_2 !important;
     }
     .btn-defaultCustom {
       &:hover {
-        background-color: #F4F4F4 !important;
+        background-color: @grey_color_4 !important;
         }
     }
   }
   /*the even rows are the expanded rows, and the odd ones are the rows we see in the main table*/
   tr:nth-child(even) {
     background-color: white !important;
-    border: 1px solid #F4F4F4;
+    border: 1px solid @grey_color_4;
   }
   tr:nth-child(odd) {
     &:hover {
@@ -143,17 +64,14 @@ input.filter.text-filter.form-control {
   background-color: transparent !important;
   border-style: hidden !important;
   &:hover {
-    background-color: #FCFCFC !important;
+    background-color: @grey_color_6 !important;
   }
-}
-.margin-right2 {
-  margin-right: 2px;
 }
 
 .nav-tabs {
   > li {
     > a {
-      color: @color_1;
+      color: @grey_color_1;
       font-size: 18px;
       font-weight: 700;
     }
@@ -161,14 +79,14 @@ input.filter.text-filter.form-control {
   > li.active {
     > a {
       background-color: @main-color-theme !important;
-      color: @color_2 !important;
+      color: white !important;
       &:hover {
         background-color: @main-color-theme !important;
-        color: @color_2 !important;
+        color: white !important;
       }
       &:focus {
         background-color: @main-color-theme !important;
-        color: @color_2 !important;
+        color: white !important;
       }
     }
   }
@@ -353,29 +271,29 @@ input.filter.text-filter.form-control {
             .filter {
               font-weight: normal;
               &::-webkit-input-placeholder {
-                color: @color_1;
+                color: @grey_color_1;
                 font-style: italic;
               }
             }
             .select-filter {
               option[value=''] {
-                color: @color_1;
+                color: @grey_color_1;
                 font-style: italic;
               }
             }
             .select-filter.placeholder-selected {
-              color: @color_1;
+              color: @grey_color_1;
               font-style: italic;
               option {
                 &:not([value='']) {
-                  color: @color_2;
+                  color: white;
                   font-style: initial;
                 }
               }
             }
             .number-filter-input {
               &::-webkit-input-placeholder {
-                color: @color_1;
+                color: @grey_color_1;
                 font-style: italic;
               }
               margin-left: 5px;
@@ -485,7 +403,7 @@ input.filter.text-filter.form-control {
 
 .ReactModal__Content.modal-dialog {
   border: none;
-  background-color: @background_color_2;
+  background-color: transparent;
 }
 
 .animated {

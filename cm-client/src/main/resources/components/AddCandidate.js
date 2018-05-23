@@ -1,11 +1,11 @@
 import React from 'react';
 import {FormGroup, FormControl, ControlLabel, HelpBlock, Button, Grid, Row, Col} from 'react-bootstrap';
 import {addCandidate} from '../actions/CandidateActions';
-import '../less/addCandidate.less';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import ButtonAddCandidate from './ButtonAddCandidate';
 import {showNotification} from '../utils/ApiNotification.js';
+import TopNavbar from './TopNavbar';
 
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
@@ -51,7 +51,7 @@ class AddCandidate extends React.Component {
         let validationMessage = '';
         let validationStatus = 'error';
 
-        if (emailAddress === '') {
+        if (!emailAddress) {
             validationMessage = 'Email required!';
         }
         else {
@@ -76,7 +76,7 @@ class AddCandidate extends React.Component {
         let validationMessage = '';
         let validationStatus = 'error';
 
-        if (firstName === '') {
+        if (!firstName) {
             validationMessage = 'First name required!';
         }
 
@@ -98,7 +98,7 @@ class AddCandidate extends React.Component {
         let validationMessage = '';
         let validationStatus = 'error';
 
-        if (lastName === '') {
+        if (!lastName) {
             validationMessage = 'Last name required!';
         }
 
@@ -120,7 +120,7 @@ class AddCandidate extends React.Component {
         let validationMessage = '';
         let validationStatus = 'error';
 
-        if (phoneNumber === '') {
+        if (!phoneNumber) {
             validationMessage = 'Phone number required';
         }
 
@@ -183,7 +183,7 @@ class AddCandidate extends React.Component {
                 ...fieldsInitialValues
             });
         } else {
-            window.location.href = '#/';
+            window.location.href = '#/home';
         }
     };
 
@@ -194,62 +194,68 @@ class AddCandidate extends React.Component {
 
     render() {
         return (
-        <div>
-            <Grid>
-                {/* Personal info section */}
-                <form>
-                    <FieldGroup id="formFirstName"
-                                label="First Name"
-                                validationState={this.state.firstNameValidationStatus}
-                                help={this.state.firstNameValidationMsg}
-                                type="text"
-                                value={this.state.firstName}
-                                placeholder="Enter first name"
-                                onChange={this.handleChangeFirstName}>
-                    </FieldGroup>
+            <div>
+                <TopNavbar/>
+                <Grid>
+                    {/* Personal info section */}
+                    <form>
+                        <FieldGroup id="formFirstName"
+                                    label="First Name"
+                                    validationState={this.state.firstNameValidationStatus}
+                                    help={this.state.firstNameValidationMsg}
+                                    type="text"
+                                    value={this.state.firstName}
+                                    placeholder="Enter first name"
+                                    onChange={this.handleChangeFirstName}>
+                        </FieldGroup>
 
-                    <FieldGroup id="formLastName"
-                                label="Last Name"
-                                validationState={this.state.lastNameValidationStatus}
-                                help={this.state.lastNameValidationMsg}
-                                type="text"
-                                value={this.state.lastName}
-                                placeholder="Enter last name"
-                                onChange={this.handleChangeLastName}>
-                    </FieldGroup>
+                        <FieldGroup id="formLastName"
+                                    label="Last Name"
+                                    validationState={this.state.lastNameValidationStatus}
+                                    help={this.state.lastNameValidationMsg}
+                                    type="text"
+                                    value={this.state.lastName}
+                                    placeholder="Enter last name"
+                                    onChange={this.handleChangeLastName}>
+                        </FieldGroup>
 
-                    <FieldGroup id="formEmailAddress"
-                                label="Email address"
-                                validationState={this.state.emailAddressValidationStatus}
-                                help={this.state.emailAddressValidationMsg}
-                                type="text"
-                                value={this.state.emailAddress}
-                                placeholder="Enter email"
-                                onChange={this.handleChangeEmail}>
-                    </FieldGroup>
+                        <FieldGroup id="formEmailAddress"
+                                    label="Email address"
+                                    validationState={this.state.emailAddressValidationStatus}
+                                    help={this.state.emailAddressValidationMsg}
+                                    type="text"
+                                    value={this.state.emailAddress}
+                                    placeholder="Enter email"
+                                    onChange={this.handleChangeEmail}>
+                        </FieldGroup>
 
-                    <FieldGroup id="formPhoneNumber"
-                                label="Phone number"
-                                validationState={this.state.phoneNumberValidationStatus}
-                                help={this.state.phoneNumberValidationMsg}
-                                type="text"
-                                value={this.state.phoneNumber}
-                                placeholder="Enter phone number"
-                                onChange={this.handleChangePhoneNumber}>
-                    </FieldGroup>
-                    <input id="checkbox_stay_on_page" type="checkbox" checked={this.state.remainOnPage} onClick={this.handleCheckbox}/>
-                    <label className="checkbox-label">Remain on the current page to add another candidate</label>
-                </form>
-                {/* Buttons section */}
-                <Row>
-                    <Col xs={4} md={3}>
-                        <ButtonAddCandidate formValid={this.formValid()} submitCandidate={() => this.submitCandidate()} afterSubmit={() => this.afterSubmit()}/>
-                    </Col>
-                    <Col xs={14} md={9}>
-                        <Button id="btn-home" className="float-right candidateCustomButton" href="/">Home</Button>
-                    </Col>
-                </Row>
-            </Grid>
+                        <FieldGroup id="formPhoneNumber"
+                                    label="Phone number"
+                                    validationState={this.state.phoneNumberValidationStatus}
+                                    help={this.state.phoneNumberValidationMsg}
+                                    type="text"
+                                    value={this.state.phoneNumber}
+                                    placeholder="Enter phone number"
+                                    onChange={this.handleChangePhoneNumber}>
+                        </FieldGroup>
+                        <input id="checkbox_stay_on_page" type="checkbox" checked={this.state.remainOnPage}
+                               onClick={this.handleCheckbox}/>
+                        <label className="checkbox-label">Remain on the current page to add another
+                            candidate</label>
+                    </form>
+                    {/* Buttons section */}
+                    <Row>
+                        <Col xs={4} md={3}>
+                            <ButtonAddCandidate formValid={this.formValid()}
+                                                submitCandidate={() => this.submitCandidate()}
+                                                afterSubmit={() => this.afterSubmit()}/>
+                        </Col>
+                        <Col xs={14} md={9}>
+                            <Button id="btn-home" className="float-right candidateCustomButton"
+                                    href="#/home">Home</Button>
+                        </Col>
+                    </Row>
+                </Grid>
             </div>
         )
     }

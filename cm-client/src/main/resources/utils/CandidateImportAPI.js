@@ -1,6 +1,7 @@
 import getBaseURL from './BasePath';
 import axios from 'axios';
 import fileDownload from 'react-file-download';
+import {logout} from './UserLogingAPI';
 
 function getImportURL() {
     return `${getBaseURL()}/api/import/`;
@@ -55,6 +56,18 @@ function importEducationFile(sFileName) {
 function exportEducationFile(sFileName) {
     exportCSV(EXPORT_EDUCATION_URL, sFileName);
 }
+
+axios.interceptors.response.use((response) => {
+    return response;
+}, function (error) {
+    // Do something with response error
+    if (error.status === 403) {
+        console.log('unauthorized, logging out ...');
+        logout();
+        window.location.href='#/';
+    }
+    return Promise.reject(error.response);
+});
 
 export {
     importTagFile,

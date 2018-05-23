@@ -96,7 +96,8 @@ class CandidatesValidationTable extends MainCandidatesTable {
     selectFormatter = (cell, row) => {
         return (
             <div>
-                <input id="checkbox_select_candidate" type="checkbox" checked={this.state.selected[row.id] === true} onChange={() => this.handleCheckbox(row.id)}/>
+                <input id="checkbox_select_candidate" type="checkbox" checked={this.state.selected[row.id] === true}
+                       onChange={() => this.handleCheckbox(row.id)}/>
             </div>
         );
     };

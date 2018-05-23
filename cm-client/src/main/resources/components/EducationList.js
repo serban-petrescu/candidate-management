@@ -20,12 +20,13 @@ export default class EducationList extends React.Component {
     componentDidMount() {
         let result = fetchCandidateEducation(this.props.educationLink).payload;
         result.then( (response) => {
-
-            this.setState({
-                educationType: response.educationType,
-                provider: response.provider,
-                description: response.description
-            });
+            if(response) {
+                this.setState({
+                    educationType: response.educationType,
+                    provider: response.provider,
+                    description: response.description
+                });
+            }
         });
     }
 

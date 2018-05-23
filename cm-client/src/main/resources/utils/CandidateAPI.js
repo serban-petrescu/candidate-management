@@ -1,5 +1,6 @@
 import getBaseURL from './BasePath';
 import axios from 'axios';
+import {logout} from './UserLogingAPI';
 
 const CANDIDATES_URL = `${getBaseURL()}/api/candidates`,
       CANDIDATES_NOTES_URL = `${getBaseURL()}/api/candidateNotes`;
@@ -14,11 +15,11 @@ function getCandidateURLById(sId) {
  * @returns {Promise}
  */
 function fetchCandidates() {
-    return axios.get(CANDIDATES_URL).then(function (response) {
-        return response.data._embedded.candidates;
-    });
+    return axios.get(CANDIDATES_URL)
+        .then((response) => {
+            return response.data._embedded.candidates;
+        });
 }
-
 
 /**
  * Add a candidate to the list of available candidates.
@@ -83,8 +84,6 @@ function deleteCandidate(candidateId) {
         });
 }
 
-
-
 /**
  * Get a list of all the notes a candidate has. Iterate over each response using
  * the map function and for every object return a newly create object containing the
@@ -109,7 +108,6 @@ function fetchNotesForCandidate(sURL) {
         console.log(error);
     });
 }
-
 
 /**
  * Add a candidate note to the list of available candidate notes.
@@ -195,6 +193,21 @@ function fetchTagForCandidateSkill(sURL) {
         console.log(error);
     });
 }
+
+axios.interceptors.response.use((response) => {
+    return response;
+}, function (error) {
+    // Do something with response error
+    if (error.status === 403) {
+        console.log('unauthorized, logging out ...');
+        logout();
+        window.location.href='#/';
+        return Promise.reject(error.response);
+    } else {
+        console.log(error);
+    }
+});
+
 export {
     addCandidate,
 

@@ -26,8 +26,11 @@ export default function (state = [], action) {
         case LOAD_CANDIDATES:
         case FETCH_CANDIDATE_SKILLS:
         case FETCH_CANDIDATE_EDUCATION:
-            return action.payload;
-
+            if (action.error) {
+                return null;
+            } else {
+                return action.payload;
+            }
     }
     return state;
 }
