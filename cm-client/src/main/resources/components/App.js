@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import AddCandidate from './AddCandidate';
 import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
-import TopNavbar from './TopNavbar';
 import Validation from './Validation';
 import Home from './Home';
 import Import from './Import';
@@ -17,24 +16,15 @@ import Login from './Login';
 class App extends React.Component {
 
     render() {
-        let PrivateRoute = ({ component: Component, ...rest }) => (
-          <Route {...rest} render={(props) => (
-            sessionStorage.getItem('userLogged') && sessionStorage.getItem('userLogged') === "true"
-              ? <Component {...props} />
-              : <Redirect to='/' />
-          )} />
-        );
-
         return (
             <Router>
                 <div>
-                    <TopNavbar/>
                     <Switch>
                         <Route exact path='/' component={Login}/>
-                        <PrivateRoute path='/home' component={Home}/>
-                        <PrivateRoute path='/validation' component={Validation}/>
-                        <PrivateRoute path='/addCandidate' component={AddCandidate}/>
-                        <PrivateRoute path='/import' component={Import}/>
+                        <Route path='/home' component={Home}/>
+                        <Route path='/validation' component={Validation}/>
+                        <Route path='/addCandidate' component={AddCandidate}/>
+                        <Route path='/import' component={Import}/>
                         <Redirect push from='*' to='/'/>
                     </Switch>
 

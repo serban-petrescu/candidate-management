@@ -102,6 +102,7 @@ class CandidatesTable extends MainCandidatesTable {
 
         );
     };
+
     /**
      * Called when a user clicks on a row. For each row, three tabs will be displayed one containing
      * the Skill, one containing the Education list and one Candidates Notes.
@@ -117,7 +118,7 @@ class CandidatesTable extends MainCandidatesTable {
                 <Tab eventKey={3} title="Notes"><NotesList notesUrl={row._links.candidateNotesList.href}
                                                            candidate={row}/></Tab>
             </Tabs>
-        )
+        );
     }
 }
 

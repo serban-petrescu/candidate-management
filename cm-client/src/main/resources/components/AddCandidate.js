@@ -5,6 +5,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import ButtonAddCandidate from './ButtonAddCandidate';
 import {showNotification} from '../utils/ApiNotification.js';
+import TopNavbar from './TopNavbar';
 
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
@@ -194,6 +195,7 @@ class AddCandidate extends React.Component {
     render() {
         return (
             <div>
+                <TopNavbar/>
                 <Grid>
                     {/* Personal info section */}
                     <form>

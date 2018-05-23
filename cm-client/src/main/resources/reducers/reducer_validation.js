@@ -16,7 +16,11 @@ export default function (state = [], action) {
             return null;
         case LOAD_NOT_VALIDATED_CANDIDATES:
         case EDIT_NOT_VALIDATED_CANDIDATE:
-            return action.payload;
+            if (action.error) {
+                return null;
+            } else {
+                return action.payload;
+            }
     }
     return state;
 }

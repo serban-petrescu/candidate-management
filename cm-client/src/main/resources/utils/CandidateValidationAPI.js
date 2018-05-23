@@ -1,5 +1,6 @@
 import getBaseURL from "./BasePath";
 import axios from "axios";
+import {logout} from './UserLogingAPI';
 
 const CANDIDATES_VALIDATION_URL = `${getBaseURL()}/api/candidate-validation`;
 
@@ -72,20 +73,19 @@ function deleteCandidates(candidates){
                 return error;
             });
 }
-/*
 
-function deleteCandidate(candidateId){
-    return axios.delete(getCandidateURLById(candidateId))
-        .then((response) => {
-            return {
-                response
-            };
-        })
-        .catch((error) => {
-            return error;
-        });
-}
-*/
+axios.interceptors.response.use((response) => {
+    return response;
+}, function (error) {
+    // Do something with response error
+    if (error.status === 403) {
+        console.log('unauthorized, logging out ...');
+        logout();
+        window.location.href='#/';
+    }
+    return Promise.reject(error.response);
+});
+
 export {
     fetchCandidates,
     updateCandidate,

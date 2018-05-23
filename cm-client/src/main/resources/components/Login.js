@@ -20,9 +20,6 @@ function FieldGroup({id, label, validationState, help, ...props}) {
 class Login extends React.Component {
     constructor(props) {
         super(props);
-        if(sessionStorage.getItem('userLogged') && sessionStorage.getItem('userLogged') === "true") {
-            this.logoutUser();
-        }
         this.state = {
             username: '',
             usernameValidationMsg: '',
@@ -33,11 +30,6 @@ class Login extends React.Component {
             passwordValidationState: null
         };
     }
-
-    logoutUser = () => {
-        this.props.logoutUser();
-        sessionStorage.setItem('userLogged', false);
-    };
 
     handleChangeUsername = (e) => {
 
@@ -148,7 +140,7 @@ class Login extends React.Component {
 
 function mapDispatchToProps(dispatch) {
 
-    return bindActionCreators({verifyUser, logoutUser}, dispatch);
+    return bindActionCreators({verifyUser}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(Login);

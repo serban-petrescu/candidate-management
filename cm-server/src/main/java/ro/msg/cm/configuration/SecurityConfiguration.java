@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -24,10 +25,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import ro.msg.cm.repository.UserRepository;
 import ro.msg.cm.service.CustomUserDetailsService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Arrays;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -60,15 +59,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 			.exceptionHandling()
 				.accessDeniedHandler(getAccessDeniedHandler())
+				.authenticationEntryPoint(sendUnauthorized403AuthenticationEntryPoint())
 				.and()
 			.logout()
 				.logoutUrl("/logout")
 				.logoutSuccessHandler(getLogoutSuccessHandler())
 				.deleteCookies("JSESSIONID")
+				.invalidateHttpSession(true)
 				.and()
 			.cors()
 				.and()
-				.csrf().disable();
+				.csrf().disable()
+			.sessionManagement()
+				.maximumSessions(1);
+	}
+
+	@Bean
+	public AuthenticationEntryPoint sendUnauthorized403AuthenticationEntryPoint(){
+
+		return (HttpServletRequest request, HttpServletResponse response,
+				AuthenticationException authException) -> {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN);
+		};
 	}
 
 	@Bean
@@ -90,47 +102,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
     private AuthenticationSuccessHandler getSuccessHandler() {
-        return new AuthenticationSuccessHandler() {
-            @Override
-            public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                                                Authentication authentication) throws IOException, ServletException {
-				httpServletResponse.getWriter().append("OK");
-				httpServletResponse.setStatus(200);
-            }
-        };
-    }
-
-    private AuthenticationFailureHandler getFailureHandler() {
-        return new AuthenticationFailureHandler() {
-            @Override
-            public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                                                AuthenticationException e) throws IOException, ServletException {
-                httpServletResponse.getWriter().append("Authentication failure");
-                httpServletResponse.setStatus(401);
-            }
-        };
-    }
-
-    private AccessDeniedHandler getAccessDeniedHandler() {
-        return new AccessDeniedHandler() {
-            @Override
-            public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                               AccessDeniedException e) throws IOException, ServletException {
-                httpServletResponse.getWriter().append("Access denied");
-                httpServletResponse.setStatus(403);
-            }
-        };
-    }
-
-	private LogoutSuccessHandler getLogoutSuccessHandler() {
-		return new LogoutSuccessHandler() {
-			@Override
-			public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-										Authentication authentication) throws IOException, ServletException {
-				httpServletResponse.getWriter().append("OK");
-				httpServletResponse.setStatus(200);
-			}
+		return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+				Authentication authentication) -> {
+			httpServletResponse.getWriter().append("OK");
+			httpServletResponse.setStatus(200);
 		};
 	}
 
+	private AuthenticationFailureHandler getFailureHandler() {
+		return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+				AuthenticationException e) -> {
+			httpServletResponse.getWriter().append("Authentication failure");
+			httpServletResponse.setStatus(401);
+		};
+	}
+
+	private AccessDeniedHandler getAccessDeniedHandler() {
+		return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+				AccessDeniedException e) -> {
+			httpServletResponse.getWriter().append("Access denied");
+			httpServletResponse.setStatus(403);
+		};
+	}
+
+	private LogoutSuccessHandler getLogoutSuccessHandler() {
+		return (HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+				Authentication authentication) -> {
+			httpServletResponse.getWriter().append("OK");
+			httpServletResponse.setStatus(200);
+		};
+	}
 }
