@@ -9,12 +9,12 @@ cache:
 
 services:
   - mysql
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS candidate_management;'
-  - mysql -e "GRANT ALL PRIVILEGES ON candidate_management.* To 'dev_user'@'localhost' IDENTIFIED BY 'letmein';"
 
 before_install:
   - nvm install 8
   - npm install newman --global
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS candidate_management;'
+  - mysql -e "GRANT ALL PRIVILEGES ON candidate_management.* To 'dev_user'@'localhost' IDENTIFIED BY 'letmein';"
 
 script:
   - cd client
