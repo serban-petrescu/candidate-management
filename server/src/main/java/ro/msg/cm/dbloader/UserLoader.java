@@ -13,9 +13,7 @@ import java.util.Optional;
 
 @Component
 public class UserLoader implements CommandLineRunner {
-
     private final UserRepository userRepository;
-
     private final AvailableUserConfiguration availableUserConfiguration;
 
     @Autowired
@@ -25,13 +23,11 @@ public class UserLoader implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... strings) throws Exception {
-        List<AvailableUserConfiguration.UserConfiguration> userList = availableUserConfiguration.getUsers();
-
-        for(AvailableUserConfiguration.UserConfiguration newUser : userList){
+    public void run(String... strings) {
+        List<Users> userList = availableUserConfiguration.getUsers();
+        for(Users newUser : userList){
             Optional<Users> optionalUser = userRepository.findByUsername(newUser.getUsername());
-            if(!optionalUser.isPresent())
-                userRepository.save(new Users(newUser));
+            optionalUser.ifPresent(userRepository::save);
         }
     }
 }

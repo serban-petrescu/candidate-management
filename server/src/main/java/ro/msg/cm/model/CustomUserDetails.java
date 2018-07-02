@@ -1,29 +1,25 @@
 package ro.msg.cm.model;
 
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
 
-public class CustomUserDetails extends Users implements UserDetails {
-	public CustomUserDetails(final Users user) {
-		super(user);
+@Getter
+public class CustomUserDetails implements UserDetails {
+	private final String username;
+	private final String password;
+
+	public CustomUserDetails(Users user) {
+		this.username = user.getUsername();
+		this.password = user.getPassword();
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Collections.emptyList();
-	}
-
-	@Override
-	public String getUsername() {
-		return super.getUsername();
-	}
-
-	@Override
-	public String getPassword() {
-		return super.getPassword();
 	}
 
 	@Override

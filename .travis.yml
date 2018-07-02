@@ -26,9 +26,7 @@ script:
 
   - cd server 
   - mvn clean install
-
-  - mvn spring-boot:start
-  - newman run "src/test/resources/postman/Candidate Management Tests.postman_collection.json"
-  - mvn spring-boot:stop
   - cd ..
+env:
+  - CI: ""
  

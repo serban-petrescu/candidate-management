@@ -16,26 +16,16 @@ import javax.persistence.Id;
  */
 
 @Data
-@Getter
-@Setter
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Tag {
-
-    private @Id
+    @Id
     @GeneratedValue
-    Long id;
+    private Long id;
+
     @Parsed
     private String description; // German, French, Java, Javascript, SQL
+
     @Parsed
     private String tagType; //Foreign, Programming Languages
-
-    public Tag() {
-    }
-
-    public Tag(String description, String tagType) {
-        this.description = description;
-        this.tagType = tagType;
-    }
-
 }

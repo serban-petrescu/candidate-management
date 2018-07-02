@@ -23,7 +23,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/candidates")
 public class CandidateController {
-
     private final CandidateRepository candidateRepository;
     private final LinkMapper linkMapper;
 
@@ -61,16 +60,19 @@ public class CandidateController {
      * update a candidate
      *
      * @param id        id of the candidate
-     * @param candidate candidate with changes
+     * @param inboundCandidate candidate with changes
      * @return updated candidate
      */
     @PutMapping("/{id}")
-    public Resource<Candidate> updateCandidate(@PathVariable Long id, @RequestBody Candidate candidate) {
-        Optional<Candidate> dbCandidate = candidateRepository.findCandidateById(id);
-        if (dbCandidate.isPresent()) {
-            candidate.setEducation(dbCandidate.get().getEducation());
-            candidate.setCandidateNotesList(dbCandidate.get().getCandidateNotesList());
-            candidate.setCandidateSkillsList(dbCandidate.get().getCandidateSkillsList());
+    public Resource<Candidate> updateCandidate(@PathVariable Long id, @RequestBody Candidate inboundCandidate) {
+        Optional<Candidate> optionalCandidate = candidateRepository.findCandidateById(id);
+        if (optionalCandidate.isPresent()) {
+            Candidate candidate = optionalCandidate.get();
+            candidate.setEmail(inboundCandidate.getEmail());
+            candidate.setFirstName(inboundCandidate.getFirstName());
+            candidate.setLastName(inboundCandidate.getLastName());
+            candidate.setOriginalStudyYear(inboundCandidate.getOriginalStudyYear());
+            candidate.setPhone(inboundCandidate.getPhone());
             return linkMapper.candidateToResource(candidateRepository.save(candidate));
         } else {
             throw new EntityNotFoundException();
@@ -80,7 +82,7 @@ public class CandidateController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCandidateWithId(@PathVariable Long id) {
-        if (candidateRepository.findCandidateById(id) != null) {
+        if (candidateRepository.findCandidateById(id).isPresent()) {
             candidateRepository.delete(id);
         } else {
             throw new EntityNotFoundException();

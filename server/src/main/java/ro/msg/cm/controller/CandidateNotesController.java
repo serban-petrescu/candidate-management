@@ -13,6 +13,7 @@ import ro.msg.cm.repository.CandidateRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/candidateNotes")
@@ -43,9 +44,14 @@ public class CandidateNotesController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Resource<CandidateNotes> postCandidateNotes(@RequestBody CandidateNotes candidateNotes) {
-        Candidate candidate = candidateRepository.findCandidateById(candidateNotes.getCandidateId()).get();
-        candidateNotes.setCandidate(candidate);
-        return linkMapper.candidateNotesToResource(candidateNotesRepository.save(candidateNotes));
+        Optional<Candidate> optionalCandidate = candidateRepository.findCandidateById(candidateNotes.getCandidateId());
+        if (optionalCandidate.isPresent()) {
+            Candidate candidate = optionalCandidate.get();
+            candidateNotes.setCandidate(candidate);
+            return linkMapper.candidateNotesToResource(candidateNotesRepository.save(candidateNotes));
+        } else {
+            throw new EntityNotFoundException();
+        }
     }
 
     @PostMapping("/multiple")

@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.model.Education;
-import ro.msg.cm.model.StartYearProperties;
+import ro.msg.cm.configuration.StartYearProperties;
 
 import java.time.LocalDate;
 

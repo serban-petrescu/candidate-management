@@ -1,13 +1,14 @@
 {
 	"info": {
+		"_postman_id": "8465a843-0cb4-45ef-8f2e-6ccfd2257e8d",
 		"name": "Candidate Management Tests",
-		"_postman_id": "2fb15e8d-bd47-6fff-3517-ac7b49c6707e",
 		"description": "This collection contains all of the rest points' tests of our app.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Candidate (Validated)",
+			"description": null,
 			"item": [
 				{
 					"name": "Find a Candidate - With checkCandidate set as \"VALIDATED\"",
@@ -45,7 +46,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "29a4e118-1818-4e79-b92b-dbd79b7beb23",
+								"id": "122b1e68-8839-4481-9c1f-ba268711aa83",
 								"type": "text/javascript",
 								"exec": [
 									"pm.sendRequest({",
@@ -60,7 +61,7 @@
 									"            \"email\": \"email@email.email\",",
 									"            \"phone\": \"0000000000\",",
 									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
+									"        })",
 									"    }",
 									"}, function (err, res) {",
 									"    pm.globals.set(\"temp_id\", res.json().id);",
@@ -191,7 +192,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a28e7a76-2944-4d62-b004-dd7d8045f30c",
+								"id": "024ce2e6-b5e9-4072-85f2-d74cb03aa622",
 								"type": "text/javascript",
 								"exec": [
 									"var id_n_1=pm.globals.get(\"temp_id_n_1\");",
@@ -208,7 +209,7 @@
 									"});",
 									"",
 									"pm.test(\"Found all Candidates\", function () {",
-									"    var all_id = pm.response.json()._embedded.candidates.map(x => x.id);",
+									"    var all_id = pm.response.json()._embedded.candidateList.map(x => x.id);",
 									"\tvar shoud_not_find=[id_n_1,id_n_2];",
 									"    var needed_id = [id_v_1,id_v_2];",
 									"    var found_id = all_id.filter(x => needed_id.includes(x) || shoud_not_find.includes(x));",
@@ -516,7 +517,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "99496d69-b6ef-49bd-ae32-6216abd6ab5e",
+								"id": "9695b8a4-0497-4936-a019-478c333f75b5",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 201\", function () {",
@@ -525,7 +526,7 @@
 									"",
 									"var exist1,exist2,exist3;",
 									"",
-									"var list=pm.response.json()._embedded.candidates;",
+									"var list=pm.response.json()._embedded.candidateList;",
 									"for(i=list.length-3;i<list.length;i++){",
 									"    if(list[i].email===\"email1@email.email\"){",
 									"        exist1=true;",
@@ -889,6 +890,7 @@
 		},
 		{
 			"name": "Candidate (Not Yet Validated)",
+			"description": null,
 			"item": [
 				{
 					"name": "Find a Candidate - With checkCandidate set as \"VALIDATED\"",
@@ -1072,7 +1074,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "31609f86-f4bd-4e38-b5c7-473c66232722",
+								"id": "25bf5cbe-acaf-41e8-89c0-e82583a00960",
 								"type": "text/javascript",
 								"exec": [
 									"var id_n_1 =pm.globals.get(\"temp_id_n_1\");",
@@ -1089,7 +1091,7 @@
 									"});",
 									"",
 									"pm.test(\"Found all Candidates\", function () {",
-									"    var all_id = pm.response.json()._embedded.candidates.map(x => x.id);",
+									"    var all_id = pm.response.json()._embedded.candidateList.map(x => x.id);",
 									"\tvar needed_id = [id_n_1,id_n_2];",
 									"    var shoud_not_find = [id_v_1,id_v_2];",
 									"    var found_id = all_id.filter(x => needed_id.includes(x) || shoud_not_find.includes(x))",
@@ -1396,7 +1398,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3bc76fef-6b4c-4412-a2c9-154762fa907b",
+								"id": "63aa9e04-2803-4f33-ae2c-039b3339e1f6",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 201\", function () {",
@@ -1405,7 +1407,7 @@
 									"",
 									"var exist1,exist2,exist3;",
 									"",
-									"var list=pm.response.json()._embedded.candidates;",
+									"var list=pm.response.json()._embedded.candidateList;",
 									"for(i=list.length-3;i<list.length;i++){",
 									"    if(list[i].email===\"email1@email.email\"){",
 									"        exist1=true;",
@@ -1797,6 +1799,7 @@
 		},
 		{
 			"name": "CandidateSkills",
+			"description": null,
 			"item": [
 				{
 					"name": "Find a CandidateSkills - normal",
@@ -1927,8 +1930,7 @@
 								"candidateSkills",
 								"{{temp_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2017,7 +2019,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "726bd03f-d02f-435a-bd95-8d6d6fab9ad4",
+								"id": "0400f3d2-a081-4b46-b0f9-ba6ceed91fd5",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -2032,9 +2034,9 @@
 									"pm.globals.unset(\"tag_id\");",
 									"pm.globals.unset(\"cand_id\");",
 									"",
-									"pm.test(\"It found the two inserted candidateSkillses\",function(){",
+									"pm.test(\"It found the two inserted candidateSkills\",function(){",
 									"    var existId1,existId2;",
-									"    var candidateSkills = pm.response.json()._embedded.candidateSkillses;",
+									"    var candidateSkills = pm.response.json()._embedded.candidateSkillsList;",
 									"    for(i=candidateSkills.length-1;i>=0;i--){",
 									"        if(candidateSkills[i].id === id1){",
 									"            existId1 = true;",
@@ -2220,8 +2222,7 @@
 								"candidateSkills",
 								""
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2271,7 +2272,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c089965c-b083-42c1-90ea-5fa9a833175a",
+								"id": "89dd28d2-f352-4a98-9623-67b08d6064dd",
 								"type": "text/javascript",
 								"exec": [
 									"var t_id=pm.globals.get(\"tag_id\");",
@@ -2285,7 +2286,7 @@
 									"",
 									"var exist1,exist2,exist3;",
 									"",
-									"var list=pm.response.json()._embedded.candidateSkillses;",
+									"var list=pm.response.json()._embedded.candidateSkillsList;",
 									"for(i=list.length-3;i<list.length;i++){",
 									"    if(list[i].rating===\"rating1\"){",
 									"        exist1=true;",
@@ -2363,8 +2364,7 @@
 								"candidateSkills",
 								"multiple"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2505,8 +2505,7 @@
 								"candidateSkills",
 								"{{temp_id}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -2643,543 +2642,7 @@
 								"candidateSkills",
 								"{{temp_id}}"
 							]
-						},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "CandidateNotes",
-			"description": "",
-			"item": [
-				{
-					"name": "Find a CandidateNotes - normal",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "0f020008-2456-457e-a4ce-c18b9c5fe2fe",
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/candidateNotes',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"\t        \"status\":\"status\", ",
-									"\t        \"note\":\"note\",",
-									"            \"date\": \"1947-12-23\"",
-									"        })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_id\", res.json().id);",
-									"});"
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "42ab5177-7969-47b5-aaa6-af6d57b5f9ce",
-								"type": "text/javascript",
-								"exec": [
-									"var id =pm.globals.get(\"temp_id\");",
-									"pm.globals.unset(\"temp_id\");",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"removeCandidateNotes(id);",
-									"",
-									"function removeCandidateNotes(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidateNotes/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}"
-								]
-							}
 						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidateNotes/{{temp_id}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidateNotes",
-								"{{temp_id}}"
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Find all CandidateNotes - normal",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "d7f10f6e-583b-4dd0-8aab-40e8eb9b47ae",
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/candidateNotes',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"\t        \"status\":\"status\", ",
-									"\t        \"note\":\"note\",",
-									"            \"date\": \"1947-12-23\"",
-									"        })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_id1\", res.json().id);",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/candidateNotes',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"\t        \"status\":\"status\", ",
-									"\t        \"note\":\"note\",",
-									"            \"date\": \"1947-12-23\"",
-									"        })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_id2\", res.json().id);",
-									"});"
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "89079bb8-8cd6-4b3c-82af-77f21ca2662a",
-								"type": "text/javascript",
-								"exec": [
-									"var id1 = pm.globals.get(\"temp_id1\");",
-									"var id2 = pm.globals.get(\"temp_id2\");",
-									"pm.globals.unset(\"temp_id1\");",
-									"pm.globals.unset(\"temp_id2\");",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"It found the two inserted candidateNotes\",function(){",
-									"    var existId1,existId2;",
-									"    var candidateNotes = pm.response.json()._embedded.candidateNoteses;",
-									"    for(i=candidateNotes.length-1;i>=0;i--){",
-									"        if(candidateNotes[i].id === id1){",
-									"            existId1 = true;",
-									"            ",
-									"        }",
-									"        if(candidateNotes[i].id === id2){",
-									"            existId2 = true;",
-									"            ",
-									"        }",
-									"        if(existId1 && existId2){",
-									"            break;",
-									"        }",
-									"    }",
-									"    pm.expect(existId1).to.eql(true);",
-									"    pm.expect(existId2).to.eql(true);",
-									"});",
-									"",
-									"removeCandidateNotes(id1);",
-									"removeCandidateNotes(id2);",
-									"",
-									"function removeCandidateNotes(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidateNotes/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"firstName\": \"lala\"}"
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidateNotes/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidateNotes",
-								""
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Create a CandidateNotes - normal",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "0692994c-8052-4b44-941a-e06273897937",
-								"type": "text/javascript",
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidateNotes/'+pm.response.json().id,",
-									"        method: 'GET'",
-									"        }, function (err, res) {",
-									"        pm.test(\"CandidateNotes was inserted\", function () {",
-									"            pm.expect(res.code).to.eql(200);",
-									"        });",
-									"        removeCandidateNotes(pm.response.json().id);",
-									"});",
-									"",
-									"function removeCandidateNotes(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidateNotes/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"status\":\"status\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidateNotes/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidateNotes",
-								""
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Create multiple CandidateNotes - normal",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "eb8dc3f5-807c-4513-8972-0af78193c5c6",
-								"type": "text/javascript",
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});",
-									"",
-									"var exist1,exist2,exist3;",
-									"",
-									"var list=pm.response.json()._embedded.candidateNoteses;",
-									"for(i=list.length-3;i<list.length;i++){",
-									"    if(list[i].status===\"status1\"){",
-									"        exist1=true;",
-									"    }else{",
-									"        if(list[i].status===\"status2\"){",
-									"            exist2=true;",
-									"        }else{",
-									"            if(list[i].status===\"status3\"){",
-									"                exist3=true;",
-									"            }",
-									"        } ",
-									"    }",
-									"    removeCandidateNotes(list[i].id);",
-									"}",
-									"",
-									"pm.test(\"CandidateNotes1 was inserted\", function () {",
-									"    pm.expect(exist1).to.be.true;",
-									"});",
-									"",
-									"pm.test(\"CandidateNotes2 was inserted\", function () {",
-									"    pm.expect(exist2).to.be.true;",
-									"});",
-									"",
-									"pm.test(\"CandidateNotes3 was inserted\", function () {",
-									"    pm.expect(exist3).to.be.true;",
-									"});",
-									"",
-									"function removeCandidateNotes(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidateNotes/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n{\n\t\"status\":\"status1\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n},{\n\t\"status\":\"status2\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n},{\n\t\"status\":\"status3\", \n\t\"note\":\"note\",\n    \"date\": \"1947-12-23\"\n}\n\t]"
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidateNotes/multiple",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidateNotes",
-								"multiple"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Edit a CandidateNotes - normal",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "b64f4776-80ae-428f-9aac-b084f116d50a",
-								"type": "text/javascript",
-								"exec": [
-									"var id=pm.globals.get(\"temp_id\");",
-									"pm.globals.unset(\"temp_id\");",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"removeCandidateNotes(id);",
-									"",
-									"pm.test(\"EducationType is changed\",function(){",
-									"    pm.expect(pm.response.json().status).to.eql(\"newStatus\");",
-									"});",
-									"",
-									"pm.test(\"Provider is changed\",function(){",
-									"    pm.expect(pm.response.json().note).to.eql(\"NewNote\");",
-									"});",
-									"",
-									"pm.test(\"Description is changed\",function(){",
-									"    pm.expect(pm.response.json().date).to.eql(\"1996-12-23\");",
-									"});",
-									"",
-									"function removeCandidateNotes(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidateNotes/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "811a50d9-bd32-4590-9566-055b9ded3b10",
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/candidateNotes',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"\t        \"status\":\"status\", ",
-									"\t        \"note\":\"note\",",
-									"            \"date\": \"1947-12-23\"",
-									"        })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_id\", res.json().id);",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"status\":\"newStatus\", \n\t\"note\":\"NewNote\",\n    \"date\": \"1996-12-23\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidateNotes/{{temp_id}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidateNotes",
-								"{{temp_id}}"
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Delete a CandidateNotes - normal",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "b317d9cd-5036-4828-bcff-10996d0f5905",
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/candidateNotes',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"\t        \"status\":\"status\", ",
-									"\t        \"note\":\"note\",",
-									"            \"date\": \"1947-12-23\"",
-									"        })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_id\", res.json().id);",
-									"});"
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "565fafd8-b888-4637-9d2c-e94126832e56",
-								"type": "text/javascript",
-								"exec": [
-									"var id =pm.globals.get(\"temp_id\");",
-									"pm.globals.unset(\"temp_id\");",
-									"",
-									"pm.test(\"Status code is 204\", function () {",
-									"    pm.response.to.have.status(204);",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/candidateNotes/' + id,",
-									"    method: 'GET'",
-									"}, function (err, res) {",
-									"    pm.test(\"Trying to find it returns the status 404\", function () {",
-									"        pm.expect(res.code).to.eql(404);",
-									"    });",
-									"});",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidateNotes/{{temp_id}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidateNotes",
-								"{{temp_id}}"
-							]
-						},
-						"description": ""
 					},
 					"response": []
 				}
@@ -3187,6 +2650,7 @@
 		},
 		{
 			"name": "Education",
+			"description": null,
 			"item": [
 				{
 					"name": "Find an Education - normal",
@@ -3319,7 +2783,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "29e40945-8cfb-4127-94fc-6851c2d7e2b4",
+								"id": "100f68ef-05ca-494c-9fd4-e7b8469e7c1b",
 								"type": "text/javascript",
 								"exec": [
 									"var id1 = pm.globals.get(\"temp_id\");",
@@ -3333,7 +2797,7 @@
 									"",
 									"pm.test(\"It found the two inserted educations\",function(){",
 									"    var existId1,existId2;",
-									"    var educations = pm.response.json()._embedded.educations;",
+									"    var educations = pm.response.json()._embedded.educationList;",
 									"    for(i=educations.length-1;i>=0;i--){",
 									"        if(educations[i].id === id1){",
 									"            existId1 = true;",
@@ -3466,7 +2930,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e89ceb66-1c2a-4c3d-a856-51faf10e4c1c",
+								"id": "d6d3ecb5-c77d-4e86-8e30-9ef865423496",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 201\", function () {",
@@ -3475,7 +2939,7 @@
 									"",
 									"var exist1,exist2,exist3;",
 									"",
-									"var list=pm.response.json()._embedded.educations;",
+									"var list=pm.response.json()._embedded.educationList;",
 									"for(i=list.length-3;i<list.length;i++){",
 									"    if(list[i].description===\"description1\"){",
 									"        exist1=true;",
@@ -3728,6 +3192,7 @@
 		},
 		{
 			"name": "Tag",
+			"description": null,
 			"item": [
 				{
 					"name": "Find a Tag - normal",
@@ -3854,7 +3319,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "47a099a0-0871-4e0a-873d-c1fbfd9fbb29",
+								"id": "ff839c64-bd73-4418-b960-ac8db3df0208",
 								"type": "text/javascript",
 								"exec": [
 									"var id1 = pm.globals.get(\"temp_id\");",
@@ -3868,7 +3333,7 @@
 									"",
 									"pm.test(\"It found the two inserted tags\",function(){",
 									"    var existId1,existId2;",
-									"    var tags = pm.response.json()._embedded.tags;",
+									"    var tags = pm.response.json()._embedded.tagList;",
 									"    for(i=tags.length-1;i>=0;i--){",
 									"        if(tags[i].id === id1){",
 									"            existId1 = true;",
@@ -4000,7 +3465,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "82449221-db04-4417-92c3-bd1f2a71e1d4",
+								"id": "2f76c7ab-fc42-4806-9b45-41c5ee063b86",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 201\", function () {",
@@ -4009,7 +3474,7 @@
 									"",
 									"var exist1,exist2,exist3;",
 									"",
-									"var list=pm.response.json()._embedded.tags;",
+									"var list=pm.response.json()._embedded.tagList;",
 									"for(i=list.length-3;i<list.length;i++){",
 									"    if(list[i].description===\"description1\"){",
 									"        exist1=true;",
@@ -4250,6 +3715,7 @@
 		},
 		{
 			"name": "Import",
+			"description": null,
 			"item": [
 				{
 					"name": "Import Candidates from CSV - normal",
@@ -4257,7 +3723,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "abefaf75-5aaa-4e13-b697-8a2ab5c7bae8",
+								"id": "36d18a50-3aaf-4a38-a1b3-51cae1017b85",
 								"type": "text/javascript",
 								"exec": [
 									"var candidate1,candidate2,t;",
@@ -4266,7 +3732,7 @@
 									"    url: 'http://localhost:8080/api/not-yet-validated-candidates/',",
 									"    method: 'GET'",
 									"}, function (err, res) {",
-									"    var candidates=res.json()._embedded.candidates;",
+									"    var candidates=res.json()._embedded.candidateList;",
 									"    for(i=0;i<candidates.length;i++){",
 									"        if(candidates[i].email===\"emailImport@email.email\"){",
 									"            candidate1=candidates[i];",
@@ -4336,7 +3802,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "afbffc08-d8c5-4be9-bfe5-002f61e0908c",
+								"id": "b454b821-9e04-432a-a86f-ff6a2ac32c96",
 								"type": "text/javascript",
 								"exec": [
 									"var tag1,tag2;",
@@ -4345,7 +3811,7 @@
 									"    url: 'http://localhost:8080/api/tags/',",
 									"    method: 'GET'",
 									"}, function (err, res) {",
-									"    var tags=res.json()._embedded.tags;",
+									"    var tags=res.json()._embedded.tagList;",
 									"    for(i=0;i<tags.length;i++){",
 									"        if(tags[i].description===\"unique1\"){",
 									"            tag1=tags[i];",
@@ -4405,7 +3871,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b1eaace9-9406-4c31-8f62-0220586ce168",
+								"id": "2ff50fef-9ec1-45d5-b766-9856915dfc33",
 								"type": "text/javascript",
 								"exec": [
 									"var education1,education2;",
@@ -4414,7 +3880,7 @@
 									"    url: 'http://localhost:8080/api/educations/',",
 									"    method: 'GET'",
 									"}, function (err, res) {",
-									"    var educations=res.json()._embedded.educations;",
+									"    var educations=res.json()._embedded.educationList;",
 									"    for(i=0;i<educations.length;i++){",
 									"        if(educations[i].educationType===\"educationType1\"){",
 									"            education1=educations[i];",
@@ -4476,6 +3942,7 @@
 		},
 		{
 			"name": "Validation",
+			"description": null,
 			"item": [
 				{
 					"name": "Validate Candidate - Validable",
@@ -4560,7 +4027,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/validate/{{temp_id}}",
+							"raw": "http://localhost:8080/api/not-yet-validated-candidates/{{temp_id}}/validate",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -4568,9 +4035,9 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidate-validation",
-								"validate",
-								"{{temp_id}}"
+								"not-yet-validated-candidates",
+								"{{temp_id}}",
+								"validate"
 							]
 						},
 						"description": "with no duplicates"
@@ -4694,7 +4161,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/validate/{{temp_id}}",
+							"raw": "http://localhost:8080/api/not-yet-validated-candidates/{{temp_id}}/validate",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -4702,910 +4169,9 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"candidate-validation",
-								"validate",
-								"{{temp_id}}"
-							]
-						},
-						"description": "with duplicates"
-					},
-					"response": []
-				},
-				{
-					"name": "Validate Candidates - Validable",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "7d6dc460-fd6d-4307-8e43-9651c7780876",
-								"type": "text/javascript",
-								"exec": [
-									"var id1=pm.globals.get(\"temp_id\");",
-									"var id2=pm.globals.get(\"temp_id2\");",
-									"pm.globals.unset(\"temp_id\");",
-									"pm.globals.unset(\"temp_id2\");",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"findAndTest(id1,function(candidate){",
-									"    pm.test(\"The Candidate 1 is Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"findAndTest(id2,function(candidate){",
-									"    pm.test(\"The Candidate 2 is Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"function removeCandidate(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidates/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}",
-									"",
-									"function findAndTest(id,func){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidates/' + id,",
-									"        method: 'GET'",
-									"    }, function (err, res) {",
-									"        func(res.json());",
-									"        removeCandidate(id);",
-									"    });",
-									"}"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "5fe59948-5d73-4cee-b5ee-81bdcfe25f72",
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName\",",
-									"            \"lastName\": \"lastName\",",
-									"            \"email\": \"one@and.only\",",
-									"            \"phone\": \"0000000000\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_id\", res.json().id);",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName2\",",
-									"            \"lastName\": \"lastName2\",",
-									"            \"email\": \"one2@and2.only2\",",
-									"            \"phone\": \"0000000001\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_id2\", res.json().id);",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/multiple-validate/{{temp_id}},{{temp_id2}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidate-validation",
-								"multiple-validate",
-								"{{temp_id}},{{temp_id2}}"
-							]
-						},
-						"description": "with no duplicates"
-					},
-					"response": []
-				},
-				{
-					"name": "Validate Candidates - Partial Because Of DB",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "197fc42a-389f-48a4-86d9-d24ff83ce322",
-								"type": "text/javascript",
-								"exec": [
-									"var db_id=pm.globals.get(\"temp_db\");",
-									"var id=pm.globals.get(\"temp_id\");",
-									"var v_id1=pm.globals.get(\"temp_v1\");",
-									"var v_id2=pm.globals.get(\"temp_v2\");",
-									"pm.globals.unset(\"temp_db\");",
-									"pm.globals.unset(\"temp_id\");",
-									"pm.globals.unset(\"temp_v1\");",
-									"pm.globals.unset(\"temp_v2\");",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"findAndTestNYV(id,function (candidate) {",
-									"    pm.test(\"The Candidate 1 is Not Yet Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"findAndTest(v_id1,function (candidate) {",
-									"    pm.test(\"The Candidate 2 is Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"findAndTest(v_id2,function (candidate) {",
-									"    pm.test(\"The Candidate 3 is Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"removeCandidate(db_id);",
-									"",
-									"function removeCandidate(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidates/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}",
-									"",
-									"function removeNYVCandidate(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}",
-									"",
-									"function findAndTest(id,func){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidates/' + id,",
-									"        method: 'GET'",
-									"    }, function (err, res) {",
-									"        func(res.json());",
-									"        removeCandidate(id);",
-									"    });",
-									"}",
-									"",
-									"function findAndTestNYV(id,func){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates/' + id,",
-									"        method: 'GET'",
-									"    }, function (err, res) {",
-									"        func(res.json());",
-									"        removeNYVCandidate(id);",
-									"    });",
-									"}"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "bf5534dd-6a53-41c7-8a3c-be6c65fd2c20",
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/candidates/',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName1\",",
-									"            \"lastName\": \"lastName1\",",
-									"            \"email\": \"not@so.unique\",",
-									"            \"phone\": \"0000000001\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_db\", res.json().id);",
-									"    ",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"        method: 'POST',",
-									"        header: 'Content-Type:application/json',",
-									"        body: {",
-									"            mode: 'raw',",
-									"            raw: JSON.stringify({",
-									"                \"firstName\": \"firstName2\",",
-									"                \"lastName\": \"lastName2\",",
-									"                \"email\": \"not@so.unique\",",
-									"                \"phone\": \"0000000002\",",
-									"                \"checkCandidate\" : \"VALIDATED\"",
-									"                })",
-									"        }",
-									"    }, function (err, res) {",
-									"        pm.globals.set(\"temp_id\", res.json().id);",
-									"    });",
-									"",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName\",",
-									"            \"lastName\": \"lastName\",",
-									"            \"email\": \"one@and.only\",",
-									"            \"phone\": \"0000000000\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_v1\", res.json().id);",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName2\",",
-									"            \"lastName\": \"lastName2\",",
-									"            \"email\": \"one2@and2.only2\",",
-									"            \"phone\": \"0000000001\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_v2\", res.json().id);",
-									"});",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/multiple-validate/{{temp_id}},{{temp_v1}},{{temp_v2}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidate-validation",
-								"multiple-validate",
-								"{{temp_id}},{{temp_v1}},{{temp_v2}}"
-							]
-						},
-						"description": "with duplicates"
-					},
-					"response": []
-				},
-				{
-					"name": "Validate Candidates - Partial Because Of input",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "892ce40d-7cfa-4f17-a70b-637830e80fbc",
-								"type": "text/javascript",
-								"exec": [
-									"var id=pm.globals.get(\"temp_id\");",
-									"var id2=pm.globals.get(\"temp_id2\");",
-									"var v_id1=pm.globals.get(\"temp_v1\");",
-									"var v_id2=pm.globals.get(\"temp_v2\");",
-									"pm.globals.unset(\"temp_id\");",
-									"pm.globals.unset(\"temp_id2\");",
-									"pm.globals.unset(\"temp_v1\");",
-									"pm.globals.unset(\"temp_v2\");",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"findAndTest(id, function(candidate){",
-									"    pm.test(\"The Candidate 1 is Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"findAndTestNYV(id2, function(candidate){",
-									"    pm.test(\"The Candidate 2 is Not Yet Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"findAndTest(v_id1, function(candidate){",
-									"    pm.test(\"The Candidate 3 is Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"findAndTest(v_id2, function(candidate){",
-									"    pm.test(\"The Candidate 4 is Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"",
-									"function removeCandidate(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidates/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}",
-									"",
-									"function removeNYVCandidate(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}",
-									"",
-									"function findAndTest(id,func){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidates/' + id,",
-									"        method: 'GET'",
-									"    }, function (err, res) {",
-									"        func(res.json());",
-									"        removeCandidate(id);",
-									"    });",
-									"}",
-									"",
-									"function findAndTestNYV(id,func){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates/' + id,",
-									"        method: 'GET'",
-									"    }, function (err, res) {",
-									"        func(res.json());",
-									"        removeNYVCandidate(id);",
-									"    });",
-									"}"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "01c43ef8-a9da-40f1-8093-7601289c8083",
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName2\",",
-									"            \"lastName\": \"lastName2\",",
-									"            \"email\": \"not@so.unique\",",
-									"            \"phone\": \"0000000002\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_id\", res.json().id);",
-									"    ",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"        method: 'POST',",
-									"        header: 'Content-Type:application/json',",
-									"        body: {",
-									"            mode: 'raw',",
-									"            raw: JSON.stringify({",
-									"                \"firstName\": \"firstName3\",",
-									"                \"lastName\": \"lastName3\",",
-									"                \"email\": \"not@so.unique\",",
-									"                \"phone\": \"0000000003\",",
-									"                \"checkCandidate\" : \"VALIDATED\"",
-									"                })",
-									"        }",
-									"    }, function (err, res) {",
-									"        pm.globals.set(\"temp_id2\", res.json().id);",
-									"    });",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName\",",
-									"            \"lastName\": \"lastName\",",
-									"            \"email\": \"one@and.only\",",
-									"            \"phone\": \"0000000000\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_v1\", res.json().id);",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName2\",",
-									"            \"lastName\": \"lastName2\",",
-									"            \"email\": \"one2@and2.only2\",",
-									"            \"phone\": \"0000000001\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_v2\", res.json().id);",
-									"});",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/multiple-validate/{{temp_id}},{{temp_id2}},{{temp_v1}},{{temp_v2}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidate-validation",
-								"multiple-validate",
-								"{{temp_id}},{{temp_id2}},{{temp_v1}},{{temp_v2}}"
-							]
-						},
-						"description": "with duplicates"
-					},
-					"response": []
-				},
-				{
-					"name": "Validate Candidates - Partial Because Of DB and input",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "137e9c53-86d6-4720-b38d-cbbdc9bf9f67",
-								"type": "text/javascript",
-								"exec": [
-									"var db_id=pm.globals.get(\"temp_db\");",
-									"var id=pm.globals.get(\"temp_id\");",
-									"var id2=pm.globals.get(\"temp_id2\");",
-									"var v_id1=pm.globals.get(\"temp_v1\");",
-									"var v_id2=pm.globals.get(\"temp_v2\");",
-									"pm.globals.unset(\"temp_db\");",
-									"pm.globals.unset(\"temp_id\");",
-									"pm.globals.unset(\"temp_id2\");",
-									"pm.globals.unset(\"temp_v1\");",
-									"pm.globals.unset(\"temp_v2\");",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"findAndTestNYV(id,function(candidate){",
-									"    pm.test(\"The Candidate 1 is Not Yet Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"findAndTestNYV(id2,function(candidate){",
-									"    pm.test(\"The Candidate 2 is Not Yet Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"findAndTest(v_id1,function(candidate){",
-									"    pm.test(\"The Candidate 3 is Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"findAndTest(v_id2,function(candidate){",
-									"    pm.test(\"The Candidate 4 is Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"removeCandidate(db_id);",
-									"",
-									"function removeCandidate(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidates/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}",
-									"",
-									"function removeNYVCandidate(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}",
-									"",
-									"function findAndTest(id,func){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidates/' + id,",
-									"        method: 'GET'",
-									"    }, function (err, res) {",
-									"        func(res.json());",
-									"        removeCandidate(id);",
-									"    });",
-									"}",
-									"",
-									"function findAndTestNYV(id,func){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates/' + id,",
-									"        method: 'GET'",
-									"    }, function (err, res) {",
-									"        func(res.json());",
-									"        removeNYVCandidate(id);",
-									"    });",
-									"}"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "6665202c-03da-47d1-98ed-a8e304148f5e",
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/candidates/',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName1\",",
-									"            \"lastName\": \"lastName1\",",
-									"            \"email\": \"not@so.unique\",",
-									"            \"phone\": \"0000000001\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_db\", res.json().id);",
-									"    ",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"        method: 'POST',",
-									"        header: 'Content-Type:application/json',",
-									"        body: {",
-									"            mode: 'raw',",
-									"            raw: JSON.stringify({",
-									"                \"firstName\": \"firstName2\",",
-									"                \"lastName\": \"lastName2\",",
-									"                \"email\": \"not@so.unique\",",
-									"                \"phone\": \"0000000002\",",
-									"                \"checkCandidate\" : \"VALIDATED\"",
-									"                })",
-									"        }",
-									"    }, function (err, res) {",
-									"        pm.globals.set(\"temp_id\", res.json().id);",
-									"        ",
-									"        pm.sendRequest({",
-									"            url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"            method: 'POST',",
-									"            header: 'Content-Type:application/json',",
-									"            body: {",
-									"                mode: 'raw',",
-									"                raw: JSON.stringify({",
-									"                    \"firstName\": \"firstName3\",",
-									"                    \"lastName\": \"lastName3\",",
-									"                    \"email\": \"not@so.unique\",",
-									"                    \"phone\": \"0000000003\",",
-									"                    \"checkCandidate\" : \"VALIDATED\"",
-									"                    })",
-									"            }",
-									"        }, function (err, res) {",
-									"            pm.globals.set(\"temp_id2\", res.json().id);",
-									"        });",
-									"    });",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName\",",
-									"            \"lastName\": \"lastName\",",
-									"            \"email\": \"one@and.only\",",
-									"            \"phone\": \"0000000000\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_v1\", res.json().id);",
-									"});",
-									"",
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName2\",",
-									"            \"lastName\": \"lastName2\",",
-									"            \"email\": \"one2@and2.only2\",",
-									"            \"phone\": \"0000000001\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_v2\", res.json().id);",
-									"});"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/multiple-validate/{{temp_id}},{{temp_id2}},{{temp_v1}},{{temp_v2}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidate-validation",
-								"multiple-validate",
-								"{{temp_id}},{{temp_id2}},{{temp_v1}},{{temp_v2}}"
-							]
-						},
-						"description": "with duplicates"
-					},
-					"response": []
-				},
-				{
-					"name": "Validate Candidates - Invalidable Because Of DB",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "3dd21d6c-4e93-429b-8481-15c1c38c363c",
-								"type": "text/javascript",
-								"exec": [
-									"var db_id=pm.globals.get(\"temp_db\");",
-									"var id=pm.globals.get(\"temp_id\");",
-									"var id2=pm.globals.get(\"temp_id2\");",
-									"pm.globals.unset(\"temp_db\");",
-									"pm.globals.unset(\"temp_id\");",
-									"pm.globals.unset(\"temp_id2\");",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"findAndTest(id,function(candidate){",
-									"    pm.test(\"The Candidate 1 is Not Yet Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"findAndTest(id2,function(candidate){",
-									"    pm.test(\"The Candidate 2 is Not Yet Validated\", function () {",
-									"        pm.expect(candidate.checkCandidate).to.eql(\"NOT_YET_VALIDATED\");",
-									"    });",
-									"});",
-									"",
-									"removeCandidate(db_id);",
-									"",
-									"function removeCandidate(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/candidates/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}",
-									"",
-									"function removeNYVCandidate(id){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates/'+id,",
-									"        method: 'DELETE'",
-									"        }, function (err, res) {",
-									"    ",
-									"    });",
-									"}",
-									"",
-									"function findAndTest(id,func){",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates/' + id,",
-									"        method: 'GET'",
-									"    }, function (err, res) {",
-									"        func(res.json());",
-									"        removeNYVCandidate(id);",
-									"    });",
-									"}"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "d09b7ed3-ce8f-4e94-bfb8-0a1dc40dcbdc",
-								"type": "text/javascript",
-								"exec": [
-									"pm.sendRequest({",
-									"    url: 'http://localhost:8080/api/candidates/',",
-									"    method: 'POST',",
-									"    header: 'Content-Type:application/json',",
-									"    body: {",
-									"        mode: 'raw',",
-									"        raw: JSON.stringify({",
-									"            \"firstName\": \"firstName1\",",
-									"            \"lastName\": \"lastName1\",",
-									"            \"email\": \"not@so.unique\",",
-									"            \"phone\": \"0000000001\",",
-									"            \"checkCandidate\" : \"VALIDATED\"",
-									"            })",
-									"    }",
-									"}, function (err, res) {",
-									"    pm.globals.set(\"temp_db\", res.json().id);",
-									"    ",
-									"    pm.sendRequest({",
-									"        url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"        method: 'POST',",
-									"        header: 'Content-Type:application/json',",
-									"        body: {",
-									"            mode: 'raw',",
-									"            raw: JSON.stringify({",
-									"                \"firstName\": \"firstName2\",",
-									"                \"lastName\": \"lastName2\",",
-									"                \"email\": \"not@so.unique\",",
-									"                \"phone\": \"0000000002\",",
-									"                \"checkCandidate\" : \"VALIDATED\"",
-									"                })",
-									"        }",
-									"    }, function (err, res) {",
-									"        pm.globals.set(\"temp_id\", res.json().id);",
-									"        ",
-									"        pm.sendRequest({",
-									"            url: 'http://localhost:8080/api/not-yet-validated-candidates',",
-									"            method: 'POST',",
-									"            header: 'Content-Type:application/json',",
-									"            body: {",
-									"                mode: 'raw',",
-									"                raw: JSON.stringify({",
-									"                    \"firstName\": \"firstName3\",",
-									"                    \"lastName\": \"lastName3\",",
-									"                    \"email\": \"not@so.unique\",",
-									"                    \"phone\": \"0000000003\",",
-									"                    \"checkCandidate\" : \"VALIDATED\"",
-									"                    })",
-									"            }",
-									"        }, function (err, res) {",
-									"            pm.globals.set(\"temp_id2\", res.json().id);",
-									"        });",
-									"    });",
-									"});",
-									"",
-									"    ",
-									"",
-									"    ",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/candidate-validation/multiple-validate/{{temp_id}},{{temp_id2}}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"candidate-validation",
-								"multiple-validate",
-								"{{temp_id}},{{temp_id2}}"
+								"not-yet-validated-candidates",
+								"{{temp_id}}",
+								"validate"
 							]
 						},
 						"description": "with duplicates"
@@ -5698,7 +4264,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8e7ddb01-0240-4635-a6cc-07a613ebaeb2",
+								"id": "cf5fe2c4-3adc-4ddb-b7aa-d88038cf5a3b",
 								"type": "text/javascript",
 								"exec": [
 									"var id_v1=pm.globals.get(\"temp_v1\");",
@@ -5710,7 +4276,7 @@
 									"pm.globals.unset(\"temp_n1\");",
 									"pm.globals.unset(\"temp_n2\");",
 									"",
-									"var dup_list=pm.response.json()._embedded.duplicates;",
+									"var dup_list=pm.response.json()._embedded.duplicateList;",
 									"var ids_nr=0;",
 									"for(i=dup_list.length-2;i<dup_list.length;i++){",
 									"    ids_nr+=dup_list[i].ids.length;",
@@ -5761,7 +4327,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/api/candidate-validation/duplicates-on-valid/{{temp_v1}}",
 							"protocol": "http",
@@ -5866,7 +4435,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0384f987-4184-4361-9d5d-a29f6d094bb0",
+								"id": "332dd248-2649-4c3f-82c2-8d618ac2a108",
 								"type": "text/javascript",
 								"exec": [
 									"var id_v1=pm.globals.get(\"temp_v1\");",
@@ -5878,7 +4447,7 @@
 									"pm.globals.unset(\"temp_n1\");",
 									"pm.globals.unset(\"temp_n2\");",
 									"",
-									"var dup_list=pm.response.json()._embedded.duplicates;",
+									"var dup_list=pm.response.json()._embedded.duplicateList;",
 									"var ids_nr=0;",
 									"for(i=dup_list.length-2;i<dup_list.length;i++){",
 									"    ids_nr+=dup_list[i].ids.length;",
@@ -5929,7 +4498,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "http://localhost:8080/api/candidate-validation/duplicates-on-non-valid/{{temp_n1}}",
 							"protocol": "http",
@@ -5952,6 +4524,7 @@
 		},
 		{
 			"name": "Download",
+			"description": null,
 			"item": [
 				{
 					"name": "Download Candiates as a CSV - normal",
@@ -6346,31 +4919,41 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Verify",
-			"item": []
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"exec": [
-					""
-				],
 				"id": "dfc59610-5ef2-4f3c-ba7e-bbe9a787458c",
-				"type": "text/javascript"
+				"type": "text/javascript",
+				"exec": [
+					"pm.sendRequest({",
+					"    url: 'http://localhost:8080/authentication',",
+					"    method: 'POST',",
+					"    body: {",
+					"        mode: 'formdata',",
+					"        formdata: [{",
+					"            \"key\": \"username\",",
+					"            \"value\": \"admin\"",
+					"        }, {",
+					"            \"key\": \"password\",",
+					"            \"value\": \"init1234\"",
+					"        }]",
+					"    }",
+					"});",
+					""
+				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
+				"id": "f3e782c6-36c1-4937-ad43-7167202bd04d",
+				"type": "text/javascript",
 				"exec": [
 					""
-				],
-				"id": "f3e782c6-36c1-4937-ad43-7167202bd04d",
-				"type": "text/javascript"
+				]
 			}
 		}
 	]

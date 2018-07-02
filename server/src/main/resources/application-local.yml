@@ -1,0 +1,30 @@
+# Show or not log for each sql query
+spring.jpa.show-sql: true
+
+# Logging level
+logging.level:
+  org.springframework.web: INFO
+  ro.msg.cm: DEBUG
+
+# Local database
+spring.datasource:
+  url: jdbc:mysql://localhost:3306/candidate_management?useSSL=false
+  username: dev_user
+  password: letmein
+
+# Local admin user
+ro.msg.cm.users:
+  - username: "admin"
+    password: "$2a$10$dKfjNTmR.R4J4RBIN2uMvuAkTRUP6cUF0YCmzwGORdd8AsMdQ8cS6"
+    firstName: "Testus"
+    lastName: "Tester"
+    email: "Testus.Tester@msg.group"
+
+# Clear DB locally if validation fails
+flyway.clean-on-validation-error: true
+
+zuul:
+  ignoredPatterns: /api/**
+  routes.ui:
+    path: /**
+    url: http://localhost:3000/

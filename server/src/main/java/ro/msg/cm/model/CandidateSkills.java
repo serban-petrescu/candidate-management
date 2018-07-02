@@ -1,34 +1,33 @@
 package ro.msg.cm.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
-/**
- * Created by oana on 4/24/17.
- */
-
 @Data
-@Getter
-@Setter
 @Entity
+@NoArgsConstructor
+@ToString(exclude = "candidate")
+@EqualsAndHashCode(exclude = "candidate")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "candidate"})
 public class CandidateSkills {
-    private @Id
+    @Id
     @GeneratedValue
-    Long id;
-    private @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "candidate_id")
-    Candidate candidate;
-    private @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Candidate candidate;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tag_id")
-    Tag tag;
+    private Tag tag;
     private String rating;
     private String certifier;
-
-    public CandidateSkills() {
-    }
 
     public CandidateSkills(Candidate candidate, Tag tag, String rating) {
         this(candidate, tag, rating, null);

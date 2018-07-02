@@ -19,39 +19,50 @@ import java.util.List;
 @NoArgsConstructor
 @OneNotNull({"phone", "email"})
 public class Candidate {
-
-    private @Id
+    @Id
     @GeneratedValue
-    Long id;
+    private Long id;
+
     @Parsed
     @NotNull
     private String firstName;
+
     @Parsed
     @NotNull
     private String lastName;
+
     @Parsed
     @Pattern(regexp = "^(0|(0040|004\\s0)|(\\+40|\\+4\\s0))([0-9]{3}\\s?|[0-9]{2}\\s[0-9])(([0-9]{3}\\s?){2}|([0-9]{2}\\s?){3})$")
     private String phone;
+
     @Parsed
     @Email
     private String email;
-    private @ManyToOne
+
+    @ManyToOne
     @JoinColumn(name = "education_id")
-    Education education;
+    private Education education;
+
     @Parsed
     private String educationStatus;
+
     @Parsed
     private int originalStudyYear;
+
     @Parsed
     private String event;
-    private @OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE)
+
     @OrderBy("tag ASC")
-    List<CandidateSkills> candidateSkillsList;
-    private @OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE)
-    List<CandidateNotes> candidateNotesList;
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE)
+    private List<CandidateSkills> candidateSkillsList;
+
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.REMOVE)
+    private List<CandidateNotes> candidateNotesList;
+
     @Parsed
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfAdding;
+
     @Enumerated(EnumType.STRING)
     private CandidateCheck checkCandidate = CandidateCheck.NOT_YET_VALIDATED;
 

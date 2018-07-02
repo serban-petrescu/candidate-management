@@ -1,30 +1,18 @@
 package ro.msg.cm.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CandidateSkillsJson {
-    @Id
-    @GeneratedValue
     private Long id;
     private Long candidateId;
     private Long tagId;
     private String rating;
     private String certifier;
-
-    public CandidateSkillsJson() {
-    }
-
-    public CandidateSkillsJson(Long id, Long candidateId, Long tagId, String rating, String certifier) {
-        this.id = id;
-        this.candidateId = candidateId;
-        this.tagId = tagId;
-        this.rating = rating;
-        this.certifier = certifier;
-    }
 
     public CandidateSkillsJson(CandidateSkills candidateSkills) {
         if (candidateSkills != null) {

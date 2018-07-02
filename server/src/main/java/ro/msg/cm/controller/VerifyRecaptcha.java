@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import ro.msg.cm.model.GoogleResponse;
 import ro.msg.cm.model.GoogleValidationCode;
-import ro.msg.cm.model.RecaptchaProperties;
+import ro.msg.cm.configuration.RecaptchaProperties;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;

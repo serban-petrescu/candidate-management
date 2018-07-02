@@ -3,7 +3,7 @@ package ro.msg.cm.util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.msg.cm.model.Candidate;
-import ro.msg.cm.model.StartYearProperties;
+import ro.msg.cm.configuration.StartYearProperties;
 
 import javax.validation.ValidationException;
 import java.time.LocalDate;
