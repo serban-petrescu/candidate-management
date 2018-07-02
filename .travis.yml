@@ -17,12 +17,6 @@ before_install:
   - npm install newman --global
 
 script:
-  - cd server
-  - mvn spring-boot:start
-  - newman run "src/test/resources/postman/Candidate Management Tests.postman_collection.json"
-  - mvn spring-boot:stop
-  - cd ..
- 
   - cd client
   - npm install
   - npm run build
@@ -32,4 +26,9 @@ script:
 
   - cd server 
   - mvn clean install
+
+  - mvn spring-boot:start
+  - newman run "src/test/resources/postman/Candidate Management Tests.postman_collection.json"
+  - mvn spring-boot:stop
   - cd ..
+ 
