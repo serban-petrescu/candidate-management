@@ -1,11 +1,35 @@
 language: java
 jdk: oraclejdk8
-script:
-  - mvn clean install -X
+
 cache:
   directories:
   - "$HOME/.m2"
   - node_modules
   - node
-env:
-  - CI=""
+
+services:
+  - mysql
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS candidate_management;'
+  - mysql -e "GRANT ALL PRIVILEGES ON candidate_management.* To 'dev_user'@'localhost' IDENTIFIED BY 'letmein';"
+
+before_install:
+  - nvm install 8
+  - npm install newman --global
+
+script:
+  - cd server
+  - mvn spring-boot:start
+  - newman run "src/test/resources/postman/Candidate Management Tests.postman_collection.json"
+  - mvn spring-boot:stop
+  - cd ..
+ 
+  - cd client
+  - npm install
+  - npm run build
+  - cd ..
+
+  - cp -a client/build/. server/src/main/resources/static/
+
+  - cd server 
+  - mvn clean install
+  - cd ..
