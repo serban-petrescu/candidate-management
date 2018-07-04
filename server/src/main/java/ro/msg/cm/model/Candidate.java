@@ -20,7 +20,7 @@ import java.util.List;
 @OneNotNull({"phone", "email"})
 public class Candidate {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Parsed

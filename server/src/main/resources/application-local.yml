@@ -8,20 +8,16 @@ logging.level:
 
 # Local database
 spring.datasource:
-  url: jdbc:mysql://localhost:3306/candidate_management?useSSL=false
+  url: jdbc:postgresql://localhost:5432/candidate_management
   username: dev_user
   password: letmein
 
 # Local admin user
-ro.msg.cm.users:
-  - username: "admin"
-    password: "$2a$10$dKfjNTmR.R4J4RBIN2uMvuAkTRUP6cUF0YCmzwGORdd8AsMdQ8cS6"
-    firstName: "Testus"
-    lastName: "Tester"
-    email: "Testus.Tester@msg.group"
+ro.msg.cm.ldap.enabled: false
 
-# Clear DB locally if validation fails
-flyway.clean-on-validation-error: true
+flyway:
+  clean-on-validation-error: true # Clear DB locally if validation fails
+  locations: classpath:db/migration,classpath:db/test # Also use mock data
 
 zuul:
   ignoredPatterns: /api/**

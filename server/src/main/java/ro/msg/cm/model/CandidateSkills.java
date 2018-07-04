@@ -16,7 +16,7 @@ import javax.persistence.*;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "candidate"})
 public class CandidateSkills {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

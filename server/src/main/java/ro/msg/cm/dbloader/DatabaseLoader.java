@@ -30,10 +30,9 @@ import java.util.List;
 public class DatabaseLoader {
 
     private static <T> List processBeans(InputStream csvContent, Class<T> tClass) {
-
         BeanListProcessor<T> rowProcessor = new BeanListProcessor<>(tClass);
         CsvParserSettings parserSettings = new CsvParserSettings();
-        parserSettings.setProcessor(rowProcessor); //setRowProcessor was changed to setProcessor because setRowProcessor is deprecated
+        parserSettings.setProcessor(rowProcessor);
         parserSettings.setHeaderExtractionEnabled(true);
         CsvParser parser = new CsvParser(parserSettings);
         //this submits all rows parsed from the input to the BeanListProcessor

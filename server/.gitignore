@@ -11,7 +11,7 @@ target/
 .properties
 
 # Idea
-**/.idea/*
+.idea/*
 *.iws
 *.iml
 *.ipr

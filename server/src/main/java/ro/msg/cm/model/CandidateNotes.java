@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Entity
 public class CandidateNotes {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)

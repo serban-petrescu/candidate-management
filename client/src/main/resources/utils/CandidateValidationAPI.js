@@ -14,7 +14,7 @@ function getCandidateURLById(sId) {
  */
 function fetchCandidates() {
     return axios.get(CANDIDATES_VALIDATION_URL).then(function (response) {
-        return response.data._embedded.candidates;
+        return response.data._embedded.candidateList;
     });
 }
 

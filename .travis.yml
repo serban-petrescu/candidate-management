@@ -8,13 +8,14 @@ cache:
   - node
 
 services:
-  - mysql
+  - postgresql
 
 before_install:
   - nvm install 8
   - npm install newman --global
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS candidate_management;'
-  - mysql -e "GRANT ALL PRIVILEGES ON candidate_management.* To 'dev_user'@'localhost' IDENTIFIED BY 'letmein';"
+  - psql -c "CREATE DATABASE candidate_management;" -U postgres
+  - psql -c "CREATE USER dev_user WITH LOGIN NOSUPERUSER INHERIT CREATEDB NOCREATEROLE NOREPLICATION PASSWORD 'letmein';" -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON DATABASE candidate_management to dev_user;" -U postgres
 
 script:
   - cd client

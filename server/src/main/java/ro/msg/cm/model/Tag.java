@@ -3,11 +3,10 @@ package ro.msg.cm.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.univocity.parsers.annotations.Parsed;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -20,7 +19,7 @@ import javax.persistence.Id;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Tag {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Parsed

@@ -17,7 +17,7 @@ function getCandidateURLById(sId) {
 function fetchCandidates() {
     return axios.get(CANDIDATES_URL)
         .then((response) => {
-            return response.data._embedded.candidates;
+            return response.data._embedded.candidateList;
         });
 }
 
@@ -94,7 +94,7 @@ function deleteCandidate(candidateId) {
 function fetchNotesForCandidate(sURL) {
     return axios.get(sURL).then(function (response) {
         if(response.data._embedded) {
-            return response.data._embedded.candidateNoteses.map(function (key) {
+            return response.data._embedded.candidateNotesList.map(function (key) {
                 return {
                     status: key.status,
                     note: key.note,
@@ -139,7 +139,7 @@ function addCandidateNote(note) {
 function fetchSkillsForCandidate(url) {
     return axios.get(url).then(function (response) {
         if(response.data._embedded) {
-            return response.data._embedded.candidateSkillses.map(function (key) {
+            return response.data._embedded.candidateSkillsList.map(function (key) {
                         return {
                             tagLink: key._links.tag.href,
                             rating: key.rating,
