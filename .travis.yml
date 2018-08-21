@@ -1,11 +1,35 @@
+dist: trusty
+sudo: required
 language: java
 jdk: oraclejdk8
-script:
-  - mvn clean install -X
+
 cache:
   directories:
   - "$HOME/.m2"
   - node_modules
   - node
+
+addons:
+  postgresql: "9.5"
+
+before_install:
+  - nvm install 8
+  - npm install newman --global
+  - psql -c "CREATE DATABASE candidate_management;" -U postgres
+  - psql -c "CREATE USER dev_user WITH LOGIN NOSUPERUSER INHERIT CREATEDB NOCREATEROLE NOREPLICATION PASSWORD 'letmein';" -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON DATABASE candidate_management to dev_user;" -U postgres
+
+script:
+  - cd client
+  - npm install
+  - npm run build
+  - cd ..
+
+  - cp -a client/build/. server/src/main/resources/static/
+
+  - cd server 
+  - mvn clean install
+  - cd ..
 env:
-  - CI=""
+  - CI: ""
+ 

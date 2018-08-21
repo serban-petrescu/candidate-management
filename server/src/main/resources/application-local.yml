@@ -1,0 +1,26 @@
+# Show or not log for each sql query
+spring.jpa.show-sql: true
+
+# Logging level
+logging.level:
+  org.springframework.web: INFO
+  ro.msg.cm: DEBUG
+
+# Local database
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/candidate_management
+  username: dev_user
+  password: letmein
+
+# Local admin user
+ro.msg.cm.ldap.enabled: false
+
+flyway:
+  clean-on-validation-error: true # Clear DB locally if validation fails
+  locations: classpath:db/migration,classpath:db/test # Also use mock data
+
+zuul:
+  ignoredPatterns: /api/**
+  routes.ui:
+    path: /**
+    url: http://localhost:3000/

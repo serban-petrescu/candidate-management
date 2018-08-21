@@ -1,0 +1,30 @@
+package ro.msg.cm.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.univocity.parsers.annotations.Parsed;
+import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+/**
+ * Tag entity
+ * Has a description and a type(e.g. programming languages)
+ */
+
+@Data
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Tag {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Parsed
+    private String description; // German, French, Java, Javascript, SQL
+
+    @Parsed
+    private String tagType; //Foreign, Programming Languages
+}
