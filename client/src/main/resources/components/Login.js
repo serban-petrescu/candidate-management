@@ -5,7 +5,6 @@ import {verifyUser} from '../actions/LoginLogout';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {showNotification} from '../utils/ApiNotification';
-import {logoutUser} from '../actions/LoginLogout';
 
 function FieldGroup({id, label, validationState, help, ...props}) {
     return (
@@ -82,7 +81,7 @@ class Login extends React.Component {
         let HTTP_STATUS_OK = 200;
         let result = this.props.verifyUser(this.state.username, this.state.password);
         result.then((success) => {
-            if (success.payload.response.status === HTTP_STATUS_OK) {
+            if (success.payload.response && success.payload.response.status === HTTP_STATUS_OK) {
                 sessionStorage.setItem('userLogged', true);
                 window.location = '#/home';
             } else {

@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import AddCandidate from './AddCandidate';
 import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import Validation from './Validation';
 import Home from './Home';
 import Import from './Import';
 import Login from './Login';
+import {NotificationContainer} from "react-notifications";
 
 /**
  * Each route will be identified in a <Route> component. The <Route> component will take two properties:
@@ -19,6 +20,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
+                    <NotificationContainer/>
                     <Switch>
                         <Route exact path='/' component={Login}/>
                         <Route path='/home' component={Home}/>

@@ -4,11 +4,11 @@ import fileDownload from 'react-file-download';
 import {logout} from './UserLogingAPI';
 
 function getImportURL() {
-    return `${getBaseURL()}/api/import/`;
+    return `${getBaseURL()}/api/import`;
 }
 
 function getExportURL() {
-    return `${getBaseURL()}/api/export/`;
+    return `${getBaseURL()}/api/download`;
 }
 
 const IMPORT_EDUCATION_URL = `${getImportURL()}/education`;
@@ -16,7 +16,7 @@ const IMPORT_TAG_URL = `${getImportURL()}/tag`;
 const EXPORT_EDUCATION_URL = `${getExportURL()}/education`;
 const EXPORT_TAG_URL = `${getExportURL()}/tag`;
 
-function importCSV(aFiles, sImportUrl) {
+function importCSV(sImportUrl, aFiles) {
     const config = {headers: {'Content-Type': 'text/csv'}};
     console.log("Should have a file");
     console.log(aFiles);
@@ -24,9 +24,11 @@ function importCSV(aFiles, sImportUrl) {
     return axios.post(sImportUrl, aFiles, config)
         .then((response) => {
             console.log(response);
+            return response;
         })
         .catch((error) => {
             console.log(error);
+            return error;
         });
 }
 
@@ -35,9 +37,11 @@ function exportCSV(sExportUrl, sFilename) {
     return axios.post(sExportUrl)
         .then((response) => {
             fileDownload(response.data, sCSV);
+            return response;
         })
         .catch((error) => {
             console.log(error);
+            return error;
         });
 }
 
@@ -46,7 +50,7 @@ function importTagFile(sFileName) {
 }
 
 function exportTagFile(sFileName) {
-    exportCSV(EXPORT_TAG_URL, sFileName);
+    return exportCSV(EXPORT_TAG_URL, sFileName);
 }
 
 function importEducationFile(sFileName) {
@@ -54,7 +58,7 @@ function importEducationFile(sFileName) {
 }
 
 function exportEducationFile(sFileName) {
-    exportCSV(EXPORT_EDUCATION_URL, sFileName);
+    return exportCSV(EXPORT_EDUCATION_URL, sFileName);
 }
 
 axios.interceptors.response.use((response) => {

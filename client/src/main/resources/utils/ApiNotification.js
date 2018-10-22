@@ -33,6 +33,14 @@ function getMessages(action) {
             successMessage = "Login successfully!";
             errorMessage = "Username or Password invalid!";
             break;
+        case "import":
+            successMessage = "File imported successfully!";
+            errorMessage = "Import failed!";
+            break;
+        case "export":
+            successMessage = "Data exported successfully!";
+            errorMessage = "Data export failed!";
+            break;
         default:
             throw new Error("Invalid action: '" + action + "'");
     }
@@ -57,7 +65,12 @@ export function showNotification(promise, requiredStatus, action) {
 
     promise
         .then((response) => {
-            let statusCode = response.payload.response.status;
+            let statusCode;
+            if(response.payload) {
+                statusCode = response.payload.response.status;
+            } else {
+                statusCode = response.status;
+            }
 
             if (statusCode === requiredStatus) {
                 NotificationManager.success(message.success, "Success", 4000);
