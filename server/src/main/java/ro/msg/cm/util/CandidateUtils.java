@@ -102,6 +102,9 @@ public class CandidateUtils {
      */
     public String getCandidateForeignLanguages(Candidate candidate) {
         String result = "";
+        if (candidate == null || candidate.getCandidateSkillsList() == null) {
+            return "";
+        }
         for (CandidateSkills skill : candidate.getCandidateSkillsList()) {
             if (skill.getTag() != null && skill.getTag().getTagType() == TagType.FOREIGN_LANGUAGE) {
                 result += skill.getTag().getDescription() + ", ";
@@ -112,7 +115,7 @@ public class CandidateUtils {
 
     public String getAcademicInformation(Candidate candidate) {
         if (candidate.getEducation() != null) {
-            return candidate.getEducation().getProvider()+ " " + candidate.getEducation().getDescription();
+            return candidate.getEducation().getProvider() + " " + candidate.getEducation().getDescription();
         }
         return "";
     }
