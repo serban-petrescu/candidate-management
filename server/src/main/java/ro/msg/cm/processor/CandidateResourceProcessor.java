@@ -17,9 +17,14 @@ public class CandidateResourceProcessor implements ResourceProcessor<Resource<Ca
     @Override
     public Resource<Candidate> process(Resource<Candidate> resource) {
         Candidate candidate = resource.getContent();
-        if (candidate != null && candidate.getDateOfAdding() != null) {
-            candidate.setCurrentStudyYear(utils.determineYearBasedOnDuration(candidate));
+        if (candidate != null) {
+            if(candidate.getDateOfAdding() != null) {
+                candidate.setCurrentStudyYear(utils.determineYearBasedOnDuration(candidate));
+            }
+            candidate.setForeignLanguages(utils.getCandidateForeignLanguages(candidate));
+            candidate.setAcademicInformation(utils.getAcademicInformation(candidate));
         }
+
         return resource;
     }
 }

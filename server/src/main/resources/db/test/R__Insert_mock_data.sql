@@ -9,6 +9,11 @@ SELECT pg_catalog.setval(pg_get_serial_sequence('candidate_skills', 'id'), 1) FR
 SELECT pg_catalog.setval(pg_get_serial_sequence('tag', 'id'), 1) FROM tag;
 SELECT pg_catalog.setval(pg_get_serial_sequence('candidate', 'id'), 1) FROM candidate;
 
+ALTER SEQUENCE candidate_id_seq RESTART WITH 1;
+ALTER SEQUENCE tag_id_seq RESTART WITH 1;
+ALTER SEQUENCE candidate_skills_id_seq RESTART WITH 1;
+ALTER SEQUENCE candidate_notes_id_seq RESTART WITH 1;
+
 -- candidate(first_name, last_name, email, event, phone, original_study_year, education_status, education_id, date_of_adding) table:
 INSERT INTO candidate(first_name, last_name, email, event, phone, original_study_year, education_status, education_id, date_of_adding, check_candidate) VALUES ('Huberto','Moxon','hmoxon0@is.gd','conference','+40729 123 456',1,'master',1001,'2015-09-23 00:00:00', 'NOT_YET_VALIDATED');
 INSERT INTO candidate(first_name, last_name, email, event, phone, original_study_year, education_status, education_id, date_of_adding, check_candidate) VALUES ('Dorisa','Jope','djope1@amazonaws.com','conference','+40729 123 456',3,'student',1001,'2016-10-25 00:00:00', 'NOT_YET_VALIDATED');
@@ -111,7 +116,7 @@ INSERT INTO candidate(first_name, last_name, email, event, phone, original_study
 INSERT INTO candidate(first_name, last_name, email, event, phone, original_study_year, education_status, education_id, date_of_adding, check_candidate) VALUES ('Wolfy','Thring','wthring2q@netscape.com','internship','0040723 11 11 11',5,'freelancer',1012,'2017-06-16 00:00:00', 'VALIDATED');
 INSERT INTO candidate(first_name, last_name, email, event, phone, original_study_year, education_status, education_id, date_of_adding, check_candidate) VALUES ('Rafaelia','Rallings','rrallings2r@tinypic.com','conference','0040723 111 111',1,'graduate',1002,'2016-12-14 00:00:00', 'VALIDATED');
 
-INSERT INTO tag(description, tag_type) VALUES('german', 'Foreign');
+INSERT INTO tag(description, tag_type) VALUES('german', 'FOREIGN_LANGUAGE');
 
 INSERT INTO candidate_skills(certifier, rating, candidate_id, tag_id) VALUES('certif', '3', 1, 1);
 INSERT INTO candidate_skills(certifier, rating, candidate_id, tag_id) VALUES('certif', '3', 2, 1);

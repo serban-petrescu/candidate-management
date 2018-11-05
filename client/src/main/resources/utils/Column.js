@@ -35,6 +35,9 @@ export class DefaultColumnsConfig {
     aColumns = [
         Columns.createColumnWithFilterAndSort('firstName', 'First Name'),
         Columns.createColumnWithFilterAndSort('lastName', 'Last Name'),
+        Columns.createColumnWithFilterAndSort('academicInformation','Education'),
+        Columns.createColumnWithFilterAndSort('currentStudyYear','Study Year'),
+        Columns.createColumnWithFilterAndSort('foreignLanguages','Languages'),
         Columns.createColumnWithFilterAndSort('email', 'Email'),
         Columns.createColumnWithFilterAndSort('phone', 'Phone')
     ];

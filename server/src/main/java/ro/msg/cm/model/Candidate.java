@@ -68,6 +68,10 @@ public class Candidate {
 
     @Transient
     private int currentStudyYear;
+    @Transient
+    private String foreignLanguages;
+    @Transient
+    private String academicInformation;
 
     public Candidate(String firstName, String lastName) {
         this(firstName, lastName, null, null);
