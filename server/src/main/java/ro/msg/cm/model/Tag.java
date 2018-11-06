@@ -3,11 +3,9 @@ package ro.msg.cm.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.univocity.parsers.annotations.Parsed;
 import lombok.Data;
+import ro.msg.cm.types.TagType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Tag entity
@@ -26,5 +24,6 @@ public class Tag {
     private String description; // German, French, Java, Javascript, SQL
 
     @Parsed
-    private String tagType; //Foreign, Programming Languages
+    @Enumerated(EnumType.STRING)
+    private TagType tagType; //FOREIGN_LANGUAGE, PROGRAMMING_LANGUAGE or OTHER
 }

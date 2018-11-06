@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.msg.cm.model.Candidate;
 import ro.msg.cm.configuration.StartYearProperties;
+import ro.msg.cm.model.CandidateSkills;
+import ro.msg.cm.types.TagType;
 
 import javax.validation.ValidationException;
 import java.time.LocalDate;
@@ -90,5 +92,31 @@ public class CandidateUtils {
      */
     protected LocalDate getToday() {
         return LocalDate.now();
+    }
+
+    /**
+     * return a string enumeration of the candidate foreign languages
+     *
+     * @param candidate current Candidate
+     * @return String
+     */
+    public String getCandidateForeignLanguages(Candidate candidate) {
+        String result = "";
+        if (candidate == null || candidate.getCandidateSkillsList() == null) {
+            return "";
+        }
+        for (CandidateSkills skill : candidate.getCandidateSkillsList()) {
+            if (skill.getTag() != null && skill.getTag().getTagType() == TagType.FOREIGN_LANGUAGE) {
+                result += skill.getTag().getDescription() + ", ";
+            }
+        }
+        return result.isEmpty() ? "" : result.substring(0, result.length() - 2);
+    }
+
+    public String getAcademicInformation(Candidate candidate) {
+        if (candidate.getEducation() != null) {
+            return candidate.getEducation().getProvider() + " " + candidate.getEducation().getDescription();
+        }
+        return "";
     }
 }
