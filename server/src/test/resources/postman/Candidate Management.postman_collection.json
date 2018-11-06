@@ -1253,7 +1253,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n}"
+							"raw": "{\n\t\"description\": \"german\",\n    \"tagType\": \"FOREIGN_LANGUAGE\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/tags/",
@@ -1284,7 +1284,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n},{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n}\n\t\n\t]"
+							"raw": "[\n\t{\n\t\"description\": \"german\",\n    \"tagType\": \"FOREIGN_LANGUAGE\"\n},{\n\t\"description\": \"english\",\n    \"tagType\": \"FOREIGN_LANGUAGE\"\n}\n\t\n\t]"
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/tags/multiple",
@@ -1315,7 +1315,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"description\": \"description\",\n    \"tagType\": \"tagType\"\n}"
+							"raw": "{\n\t\"description\": \"german\",\n    \"tagType\": \"FOREIGN_LANGUAGE\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/tags/{id}",
