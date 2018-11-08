@@ -7,7 +7,6 @@ import ModalPicker from 'react-native-modal-picker';
 import Button from 'react-native-button';
 import CodePin from 'react-native-pin-code';
 import PopupDialog from 'react-native-popup-dialog';
-
 const CANDIDATE_STORAGE = 'candidates';
 const styles = StyleSheet.create({
     container: {
@@ -165,6 +164,9 @@ export default class HomeScreen extends React.Component {
                 university: 'university',
                 faculty: 'graduation-cap',
                 studyYear: 'book',
+                studentStatus:'status',
+                german:'flag',
+                english:'flag'
             },
             labels: {
                 firstName: 'First Name',
@@ -174,8 +176,10 @@ export default class HomeScreen extends React.Component {
                 university: 'University',
                 faculty: 'Faculty',
                 studyYear: 'Study Year',
-
                 studentStatus: 'Student?',
+                german:'German',
+                english:'English'
+
             },
             candidates: [],
             availableFaculties: [{key: 0, section: true, label: 'Choose University First'}],
@@ -216,7 +220,7 @@ export default class HomeScreen extends React.Component {
 
     hrMode = () => {
         this.props.navigation.navigate('Detail', {candidates: this.state.candidates, onReturn: this.onReturn});
-    }
+    };
 
     render() {
         let index = 0;
@@ -276,7 +280,9 @@ export default class HomeScreen extends React.Component {
                         value={this.state.firstName}
                         autoCorrect={false}
                         onFocus={this.resetIconFirstName.bind(this)}
-                        onBlur={this.checkFirstName.bind(this)}
+                        /*onBlur={this.checkFirstName.bind(this)}*/
+                        onEndEditing={this.checkFirstName.bind(this)}
+
                     />
                     <Fumi
                         style={styles.input}
@@ -287,7 +293,8 @@ export default class HomeScreen extends React.Component {
                         value={this.state.lastName}
                         autoCorrect={false}
                         onFocus={this.resetIconLastName.bind(this)}
-                        onBlur={this.checkLastName.bind(this)}
+                        /*onBlur={this.checkLastName.bind(this)}*/
+                        onEndEditing={this.checkLastName.bind(this)}
                     />
                     <Fumi
                         style={styles.input}
@@ -299,7 +306,8 @@ export default class HomeScreen extends React.Component {
                         keyboardType="numeric"
                         autoCorrect={false}
                         onFocus={this.resetIconPhone.bind(this)}
-                        onBlur={this.checkPhone.bind(this)}
+                       /* onChange={this.checkPhone.bind(this)}*/
+                        onEndEditing={this.checkPhone.bind(this)}
                     />
                     <Fumi
                         style={styles.input}
@@ -311,7 +319,8 @@ export default class HomeScreen extends React.Component {
                         autoCorrect={false}
                         autoCapitalize="none"
                         onFocus={this.resetIconEmail.bind(this)}
-                        onBlur={this.checkEmail.bind(this)}
+                       /* onBlur={this.checkEmail.bind(this)}*/
+                        onEndEditing={this.checkEmail.bind(this)}
                     />
                     <ModalPicker
                         data={d3ata}
@@ -355,6 +364,24 @@ export default class HomeScreen extends React.Component {
                             autoCorrect={false}
                         />
                     </ModalPicker>
+                    <ModalPicker
+                        data={educationStatuses}
+                        initValue="Are you a student"
+                        onChange={(option) => {
+                            this.setState({educationStatus: option.label})
+                        }}>
+
+                        <Fumi
+                            editable={false}
+                            style={styles.input}
+                            label={this.state.labels.studentStatus}
+                            iconClass={FontAwesomeIcon}
+                            iconName={this.state.icons.faculty}
+                            iconColor={colors.default}
+                            value={this.state.educationStatus}
+                            autoCorrect={false}
+                        />
+                    </ModalPicker>
                     <Fumi
                         style={styles.input}
                         label={this.state.labels.studyYear}
@@ -365,7 +392,8 @@ export default class HomeScreen extends React.Component {
                         onFocus={this.resetIconStudyYear.bind(this)}
                         value={this.state.studyYear}
                         autoCorrect={false}
-                        onBlur={this.checkStudyYear.bind(this)}
+                        onEndEditing={this.checkStudyYear.bind(this)}
+                        /*onBlur={this.checkStudyYear.bind(this)}*/
                     />
 
                 </View>
@@ -484,7 +512,7 @@ export default class HomeScreen extends React.Component {
 
     checkEmail = (e) => {
         const emailAddress = e.nativeEvent.text;
-        let currentState = this.state;
+        let currentState = this.state
         // language=JSRegexp
         //const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         // language=JSRegexp

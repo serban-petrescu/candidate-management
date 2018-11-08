@@ -5,6 +5,7 @@ import Button from 'react-native-button';
 const CANDIDATE_STORAGE = 'candidates';
 
 import {addCandidates} from "../actions/index";
+import RNFetchBlob from 'rn-fetch-blob';
 
 const styles = StyleSheet.create({
     container: {
@@ -46,9 +47,31 @@ class DetailScreen extends Component {
     /*Set the candidate information*/
     syncCandidate = () => {
         addCandidates(this.state.data);
-        let candidates=[];
-        this.setState({data:candidates});
-        AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(candidates));
+        //let candidates = this.state.data;
+        //let candidates=[];
+        //this.setState({data:candidates});
+        AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(this.state.data));
+
+        // construct csvString
+        const headerString = 'nume, prenume, email, phone, universitate, facultate, an\n';
+        const rowString = this.state.data.map(candidate => `${candidate.lastName},${candidate.firstName},${candidate.email},${candidate.phone},${candidate.university},${candidate.faculty},${candidate.studyYear}\n`).join('');
+        const csvString = `${headerString}${rowString}`;
+        const dirs = RNFetchBlob.fs.dirs;
+        console.log(dirs.DocumentDir);
+        console.log(dirs.CacheDir);
+        console.log(dirs.DCIMDir);
+        console.log(dirs.DownloadDir);
+// write the current list of answers to a local csv file
+        const pathToWrite = `${RNFetchBlob.fs.dirs.DownloadDir}`+`/data.csv`;
+        console.log('pathToWrite', pathToWrite);
+// pathToWrite /storage/emulated/0/Download/data.csv
+        RNFetchBlob.fs
+            .writeFile(pathToWrite, csvString, 'utf8')
+            .then(() => {
+                console.log(`wrote file ${pathToWrite}`);
+                // wrote file /storage/emulated/0/Download/data.csv
+            })
+            .catch(error => console.error(error));
     };
     //Flatlist
     // data = array of data used to create the list
@@ -78,7 +101,7 @@ class DetailScreen extends Component {
                 <Button
                     containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:24, backgroundColor: 'black'}}
                     style={{fontSize: 20, color: 'white'}}
-                    onPress={this.syncCandidate}>Sync</Button>
+                    onPress={this.syncCandidate}>Export</Button>
                 <Button
                     containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:24, backgroundColor: 'black'}}
                     style={{fontSize: 20, color: 'white'}}
