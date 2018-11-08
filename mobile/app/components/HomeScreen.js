@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, Image, View, AsyncStorage, ScrollView} from 'react-native';
+import {StyleSheet, Text, Image, View, AsyncStorage, ScrollView, ToastAndroid} from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome, {Icons} from 'react-native-fontawesome';
 import {Fumi,} from 'react-native-textinput-effects';
@@ -11,15 +11,15 @@ const CANDIDATE_STORAGE = 'candidates';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 24,
-        backgroundColor: '#841439',
+        paddingTop: 4,
+        backgroundColor: '#A30234',
     },
     content: {
         // not cool but good enough to make all inputs visible when keyboard is active
-        paddingBottom: 300,
+        paddingBottom: 10,
     },
     card2: {
-        padding: 16,
+        padding: 10,
     },
 
     inputFirst: {
@@ -37,11 +37,10 @@ const styles = StyleSheet.create({
         opacity: 0.8,
     },
     logo: {
-        width: 300,
-        height: 100
+        width: 746,
+        height: 300
     },
     loginButtonSection: {
-
         justifyContent: 'center',
         alignItems: 'center'
     }
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
 
 const colors = {
     default: '#77116a',
-    correct: '#14900f',
+    correct: '#A30234',
     incorrect: '#c8121c'
 };
 
@@ -157,6 +156,7 @@ export default class HomeScreen extends React.Component {
             education: {id: 1011},
             educationStatus: '',
             studyYear: '',
+            german:'',
             icons: {
                 name: 'user',
                 email: 'envelope',
@@ -191,6 +191,14 @@ export default class HomeScreen extends React.Component {
     /*Set the candidate information*/
     submitCandidate = () => {
         console.log(this.state.studyYear);
+        if(this.state.firstName.length===0||
+            this.state.lastName.length===0||
+            this.state.email.length===0){
+            let toastMessage = `Please provide additional informations for applying`;
+            ToastAndroid.show(toastMessage, ToastAndroid.SHORT);
+            return;
+        }
+
         let candidate = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -199,13 +207,14 @@ export default class HomeScreen extends React.Component {
             university: this.state.university,
             faculty: this.state.faculty,
             originalStudyYear: parseInt(this.state.studyYear), /**TODO**/
-            event: 'Simulator Testing', /**TODO**/
+            event: 'Targ de Cariere 2018', /**TODO**/
             educationStatus: this.state.educationStatus,
-            dateOfAdding: '2018-03-01', /**TODO**/
-            education: {id: this.state.education.id}
-        };
-        // let toastMessage = `Thanks for submitting your application ${this.state.lastName} ${this.state.firstName}`;
-        // ToastAndroid.show(toastMessage, ToastAndroid.SHORT);
+            dateOfAdding: '2018-11-09', /**TODO**/
+            education: {id: this.state.education.id},
+            german:this.state.german,}
+        ;
+         let toastMessage = `Thanks for submitting your application ${this.state.lastName} ${this.state.firstName}`;
+         ToastAndroid.show(toastMessage, ToastAndroid.SHORT);
 
         this.setState({
             candidates: [...this.state.candidates, candidate]
@@ -240,37 +249,21 @@ export default class HomeScreen extends React.Component {
         let availableFaculties = this.state.availableFaculties;
 
         const educationStatuses = [
-            {key: 0, label: "student"},
-            {key: 1, label: "graduate"}];
+            {key: 0, label: "Student"},
+            {key: 1, label: "Graduate"},
+            {key: 2, label: "Master"}];
+
+        const germanLevel = [
+                {key: 0, label: "None"},
+                {key: 1, label: "Beginner"},
+                {key: 2, label: "Intermediate"},
+                {key: 3, label: "Advanced"}];
 
         return (
             <ScrollView style={styles.container} contentContainerStyle={styles.content}>
 
-                <View style={[styles.card2, {backgroundColor: '#841439'}]}>
-                    <PopupDialog
-                        ref={(popupDialog) => {
-                            this.popupDialog = popupDialog;
-                        }}
-                    >
-                        <View>
-                            <CodePin code="2018" success={this.hrMode}
-                                     text="Enter HR Mode" error="Talk to our HR specialists" autoFocusFirst={false}
-                                     keyboardType="numeric"/>
-                        </View>
-                    </PopupDialog>
-                    <View>
-                        <Text style={styles.title}>Welcome</Text>
-                        <Button
-                            style={{
-                                fontSize: 20, color: '#FFFFFF', alignSelf: 'flex-end'
-                            }}
-                            onPress={() => {
-                                this.popupDialog.show();
-                            }}
-                        >
-                            <FontAwesome>{Icons.cog}</FontAwesome>
-                        </Button></View>
-                    <Image source={require('../assets/images/msgLogo.png')} style={styles.logo}/>
+                <View style={[styles.card2, {backgroundColor: '#A30234'}]}>
+                    <Image source={require('../assets/images/headerCandidateManagement.png')} style={styles.logo}/>
                     <Fumi
                         style={styles.inputFirst}
                         label={this.state.labels.firstName}
@@ -280,7 +273,6 @@ export default class HomeScreen extends React.Component {
                         value={this.state.firstName}
                         autoCorrect={false}
                         onFocus={this.resetIconFirstName.bind(this)}
-                        /*onBlur={this.checkFirstName.bind(this)}*/
                         onEndEditing={this.checkFirstName.bind(this)}
 
                     />
@@ -293,7 +285,6 @@ export default class HomeScreen extends React.Component {
                         value={this.state.lastName}
                         autoCorrect={false}
                         onFocus={this.resetIconLastName.bind(this)}
-                        /*onBlur={this.checkLastName.bind(this)}*/
                         onEndEditing={this.checkLastName.bind(this)}
                     />
                     <Fumi
@@ -306,7 +297,6 @@ export default class HomeScreen extends React.Component {
                         keyboardType="numeric"
                         autoCorrect={false}
                         onFocus={this.resetIconPhone.bind(this)}
-                       /* onChange={this.checkPhone.bind(this)}*/
                         onEndEditing={this.checkPhone.bind(this)}
                     />
                     <Fumi
@@ -319,7 +309,6 @@ export default class HomeScreen extends React.Component {
                         autoCorrect={false}
                         autoCapitalize="none"
                         onFocus={this.resetIconEmail.bind(this)}
-                       /* onBlur={this.checkEmail.bind(this)}*/
                         onEndEditing={this.checkEmail.bind(this)}
                     />
                     <ModalPicker
@@ -393,8 +382,25 @@ export default class HomeScreen extends React.Component {
                         value={this.state.studyYear}
                         autoCorrect={false}
                         onEndEditing={this.checkStudyYear.bind(this)}
-                        /*onBlur={this.checkStudyYear.bind(this)}*/
                     />
+                    <ModalPicker
+                        data={germanLevel}
+                        initValue="Do you speak german?"
+                        onChange={(option) => {
+                            this.setState({german: option.label})
+                        }}>
+
+                        <Fumi
+                            editable={false}
+                            style={styles.input}
+                            label={this.state.labels.german}
+                            iconClass={FontAwesomeIcon}
+                            iconName={this.state.icons.german}
+                            iconColor={colors.default}
+                            value={this.state.german}
+                            autoCorrect={false}
+                        />
+                    </ModalPicker>
 
                 </View>
                 <View style={styles.loginButtonSection}>
@@ -412,6 +418,29 @@ export default class HomeScreen extends React.Component {
 
 
                 </View>
+                <PopupDialog
+                    ref={(popupDialog) => {
+                        this.popupDialog = popupDialog;
+                    }}
+                >
+                    <View>
+                        <CodePin code="2018" success={this.hrMode}
+                                 text="Enter HR Mode" error="Talk to our HR specialists" autoFocusFirst={false}
+                                 keyboardType="numeric"/>
+                    </View>
+                </PopupDialog>
+                <View>
+                    <Text style={styles.title}>Welcome</Text>
+                    <Button
+                        style={{
+                            fontSize: 20, color: '#FFFFFF', alignSelf: 'flex-end'
+                        }}
+                        onPress={() => {
+                            this.popupDialog.show();
+                        }}
+                    >
+                        <FontAwesome>{Icons.cog}</FontAwesome>
+                    </Button></View>
             </ScrollView>
         );
     }
@@ -567,6 +596,7 @@ export default class HomeScreen extends React.Component {
             faculty: '',
             studyYear: '',
             educationStatus: '',
+            german:''
         });
     }
 

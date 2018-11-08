@@ -14,15 +14,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: 300,
-        height: 100
+        width: 744,
+        height: 300
     },
     textMsg: {
         fontSize: 18,
         color: 'white',
         textAlign: 'center',
         margin: 5,
-        backgroundColor: '#841439'
+        backgroundColor: '#A30234'
     },
     textInputMsg: {
         textAlign: 'center',
@@ -53,8 +53,8 @@ class DetailScreen extends Component {
         AsyncStorage.setItem(CANDIDATE_STORAGE, JSON.stringify(this.state.data));
 
         // construct csvString
-        const headerString = 'nume, prenume, email, phone, universitate, facultate, an\n';
-        const rowString = this.state.data.map(candidate => `${candidate.lastName},${candidate.firstName},${candidate.email},${candidate.phone},${candidate.university},${candidate.faculty},${candidate.studyYear}\n`).join('');
+        const headerString = 'nume, prenume, email, telefon, universitate, facultate, student, an, germana\n';
+        const rowString = this.state.data.map(candidate => `${candidate.lastName},${candidate.firstName},${candidate.email},${candidate.phone},${candidate.university},${candidate.faculty},${candidate.educationStatus},${candidate.originalStudyYear},${candidate.german}\n`).join('');
         const csvString = `${headerString}${rowString}`;
         const dirs = RNFetchBlob.fs.dirs;
         console.log(dirs.DocumentDir);
@@ -72,6 +72,8 @@ class DetailScreen extends Component {
                 // wrote file /storage/emulated/0/Download/data.csv
             })
             .catch(error => console.error(error));
+        this.props.navigation.goBack();
+        this.props.navigation.state.params.onReturn({ candidates: this.state.data });
     };
     //Flatlist
     // data = array of data used to create the list
@@ -82,7 +84,7 @@ class DetailScreen extends Component {
         return (
             <ScrollView>
             <View>
-                <Image source={require('../assets/images/msgLogo.png')} style={styles.logo}/>
+                <Image source={require('../assets/images/headerCandidateManagement.png')} style={styles.logo}/>
                 <List>
                 <FlatList
                     data={this.state.data}
