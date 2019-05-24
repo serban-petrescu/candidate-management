@@ -1,35 +1,14 @@
 dist: trusty
-sudo: required
-language: java
-jdk: oraclejdk8
+language: generic
 
-cache:
-  directories:
-  - "$HOME/.m2"
-  - node_modules
-  - node
-
-addons:
-  postgresql: "9.5"
-
-before_install:
-  - nvm install 8
-  - npm install newman --global
-  - psql -c "CREATE DATABASE candidate_management;" -U postgres
-  - psql -c "CREATE USER dev_user WITH LOGIN NOSUPERUSER INHERIT CREATEDB NOCREATEROLE NOREPLICATION PASSWORD 'letmein';" -U postgres
-  - psql -c "GRANT ALL PRIVILEGES ON DATABASE candidate_management to dev_user;" -U postgres
+services:
+  - docker
 
 script:
-  - cd client
-  - npm install
-  - npm run build
-  - cd ..
-
-  - cp -a client/build/. server/src/main/resources/static/
-
-  - cd server 
-  - mvn clean install
-  - cd ..
-env:
-  - CI: ""
- 
+- |
+  docker build -t candidate-management .
+  if [ -z "$TRAVIS_TAG" ]; then
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    docker tag candidate-management "$DOCKER_USERNAME/candidate-management:$TRAVIS_TAG"
+    docker push $DOCKER_USERNAME/travis-ci-build-stages-demo
+  fi
