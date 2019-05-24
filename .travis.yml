@@ -10,5 +10,5 @@ script:
   if [ -n "$TRAVIS_TAG" ]; then
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     docker tag candidate-management "$DOCKER_USERNAME/candidate-management:$TRAVIS_TAG"
-    docker push $DOCKER_USERNAME/travis-ci-build-stages-demo
+    docker push $DOCKER_USERNAME/candidate-management
   fi
