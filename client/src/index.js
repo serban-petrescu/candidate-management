@@ -6,10 +6,12 @@ import ReduxPromise from 'redux-promise';
 import App from './components/App';
 import reducers from './reducers';
 import $ from 'jquery';
-import 'bootstrap';
 import './less/main.less'
 
 window.$ = $;
+window.jQuery = $;
+
+require('bootstrap');
 
 /**
  * Middleware with ReduxPromise applied means that the promise sent from actions
