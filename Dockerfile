@@ -13,4 +13,6 @@ FROM openjdk:8-alpine
 RUN mkdir /code
 COPY --from=1 /code/target/cm.jar /code/cm.jar
 VOLUME [ "/code/config" ]
-CMD ["java", "-jar", "/code/cm.jar", "-Dspring.config.location=/code/config/", "-Djava.security.egd=file:/dev/./urandom"]
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.5.0/wait /wait
+RUN chmod +x /wait
+CMD ["/wait", "&&", "java", "-jar", "/code/cm.jar", "-Dspring.config.location=/code/config/", "-Djava.security.egd=file:/dev/./urandom"]
