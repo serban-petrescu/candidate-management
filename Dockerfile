@@ -13,4 +13,4 @@ FROM openjdk:8-alpine
 RUN mkdir /code
 COPY --from=1 /code/target/cm.jar /code/cm.jar
 VOLUME [ "/code/config" ]
-CMD ["java", "-jar", "/code/cm.jar"]
+CMD ["java", "-jar", "/code/cm.jar", "-Dspring.config.location=/code/config/", "-Djava.security.egd=file:/dev/./urandom"]
