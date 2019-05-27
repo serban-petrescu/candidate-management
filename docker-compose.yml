@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  postgres:
+    image: postgres:10-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  cm:
+    build:
+      context: .
+    restart: always
+    links: ["postgres"]
+    ports:
+      - 9001:8080
+    environment:
+      WAIT_HOSTS: postgres:5432
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres

@@ -154,7 +154,8 @@ module.exports = {
             {
                 test: /\.json$/,
                 loader: 'json'
-            },{
+            },
+            {
               test: /\.less$/,
               loader: "style-loader!css-loader!less-loader"
             },

@@ -2,7 +2,6 @@ import React from 'react';
 import {importEducation, importTag, exportTag, exportEducation} from "../actions/CandidateImportActions";
 import {Grid} from 'react-bootstrap';
 import TopNavbar from './TopNavbar';
-import '../less/main.less';
 import {showNotification} from "../utils/ApiNotification";
 
 /**
